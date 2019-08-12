@@ -6,10 +6,28 @@
     <description>Recent content in Posts on Nekonull&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 04 Aug 2019 02:25:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 23:48:00 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>博客迁移记录</title>
+      <link>/posts/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Mon, 12 Aug 2019 23:48:00 +0800</pubDate>
+      
+      <guid>/posts/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/</guid>
+      <description>在之前的文章中有提及，因为各种原因，已经很久没有打理这个博客了，一直荒废到了几周前。本文主要记录从 Hexo 迁移到 Hugo，并配置 Terminal 主题的过程。 文章</description>
+    </item>
+    
+    <item>
+      <title>我最近在用什么软件？</title>
+      <link>/posts/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6/</link>
+      <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
+      
+      <guid>/posts/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6/</guid>
+      <description>看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列</description>
+    </item>
     
     <item>
       <title>耶[ ]复活啦！</title>

@@ -4,14 +4,24 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-08-04T02:25:00+08:00</lastmod>
+    <lastmod>2019-08-12T23:48:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/posts/</loc>
-    <lastmod>2019-08-04T02:25:00+08:00</lastmod>
+    <lastmod>2019-08-12T23:48:00+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/posts/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2019-08-12T23:48:00+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6/</loc>
+    <lastmod>2019-08-12T23:11:00+08:00</lastmod>
   </url>
   
   <url>
