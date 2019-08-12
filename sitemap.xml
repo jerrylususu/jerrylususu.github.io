@@ -3,73 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>nekonull.me/</loc>
+    <loc>/</loc>
     <lastmod>2019-08-04T02:25:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>nekonull.me/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2019-08-04T02:25:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>nekonull.me/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</loc>
+    <loc>/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</loc>
     <lastmod>2019-08-04T02:25:00+08:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/project/</loc>
+    <loc>/project/</loc>
     <lastmod>2019-08-04T00:21:20+08:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/about/</loc>
+    <loc>/about/</loc>
     <lastmod>2019-08-04T00:21:09+08:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/archive/</loc>
+    <loc>/archive/</loc>
     <lastmod>2018-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>nekonull.me/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</loc>
+    <loc>/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</loc>
     <lastmod>2018-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</loc>
+    <loc>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/tags/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>nekonull.me/tags/%E7%BB%8F%E9%AA%8C/</loc>
+    <loc>/tags/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>nekonull.me/tags/%E7%BC%96%E7%A8%8B/</loc>
+    <loc>/tags/%E7%BB%8F%E9%AA%8C/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</loc>
+    <loc>/tags/%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</loc>
     <lastmod>2017-08-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>nekonull.me/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   

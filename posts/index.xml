@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Nekonull&#39;s Home</title>
-    <link>nekonull.me/posts/</link>
+    <link>/posts/</link>
     <description>Recent content in Posts on Nekonull&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 04 Aug 2019 02:25:00 +0800</lastBuildDate>
     
-	<atom:link href="nekonull.me/posts/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>耶[ ]复活啦！</title>
-      <link>nekonull.me/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</link>
+      <link>/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</link>
       <pubDate>Sun, 04 Aug 2019 02:25:00 +0800</pubDate>
       
-      <guid>nekonull.me/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</guid>
+      <guid>/posts/%E8%80%B6%E5%A4%8D%E6%B4%BB%E4%BA%86/</guid>
       <description>标题用了一个梗，你能看出来吗？ （尽管我尝试以乐观的方式开场，但这对本篇文章的基调并无改善。） 转眼间大二已经结束了，大学生涯也已经过去一半了。</description>
     </item>
     

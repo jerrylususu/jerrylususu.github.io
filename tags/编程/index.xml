@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>编程 on Nekonull&#39;s Home</title>
-    <link>nekonull.me/tags/%E7%BC%96%E7%A8%8B/</link>
+    <link>/tags/%E7%BC%96%E7%A8%8B/</link>
     <description>Recent content in 编程 on Nekonull&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Mon, 14 Aug 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="nekonull.me/tags/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Python, Flask, Jinja, SQLite 里的坑</title>
-      <link>nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
+      <link>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
+      <guid>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
       <description>上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。 400 Bad Request 问题：表单与后台程序不匹配（后</description>
     </item>
     

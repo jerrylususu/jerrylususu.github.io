@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Archives on Nekonull&#39;s Home</title>
-    <link>nekonull.me/archive/</link>
+    <link>/archive/</link>
     <description>Recent content in Archives on Nekonull&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 31 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="nekonull.me/archive/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/archive/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>近况更新</title>
-      <link>nekonull.me/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</link>
+      <link>/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</link>
       <pubDate>Sat, 31 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>nekonull.me/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</guid>
+      <guid>/archive/%E8%BF%91%E5%86%B5%E6%8A%A5%E5%91%8A/</guid>
       <description>一个学期过去了，又一个学期开始了，可能会慢慢恢复更新吧。 度过了一个还算是充实的大一上，又度过了一个更充实的寒假。来到新的学期，基本上各方面都</description>
     </item>
     
     <item>
       <title>Python, Flask, Jinja, SQLite 里的坑</title>
-      <link>nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
+      <link>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
+      <guid>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
       <description>上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。 400 Bad Request 问题：表单与后台程序不匹配（后</description>
     </item>
     
     <item>
       <title>备忘：重装系统后需要重新安装的程序</title>
-      <link>nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</link>
+      <link>/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Sun, 06 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</guid>
+      <guid>/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</guid>
       <description>RT Windows 浏览器：Chrome（大家都懂的，快就一个字） 压缩软件：Bandizip（没广告，界面简洁） 音乐播放：网易云音乐（云村老用户，出不来了）</description>
     </item>
     
