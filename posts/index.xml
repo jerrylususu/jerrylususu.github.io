@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Nekonull&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 12 Aug 2019 23:48:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Aug 2019 13:55:00 +0800</lastBuildDate>
     
 	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Utils.ahk</title>
+      <link>/posts/utils.ahk/</link>
+      <pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate>
+      
+      <guid>/posts/utils.ahk/</guid>
+      <description>各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip; GitHub Gist 快速启动 Win+N 记事本 Win+C cmd cmd下Ctrl+V</description>
+    </item>
     
     <item>
       <title>博客迁移记录</title>
