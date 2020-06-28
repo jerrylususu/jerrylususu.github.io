@@ -14,7 +14,7 @@ function final_table() {
 
     var data = [];
 
-    var color = ["#fdfdfd","#c2c2c2","#9444bc","#c27c32","#6ca65c","#d3de9a","#9f9c9d","#4259a7","#c11417"];
+    var color = ["#000000","#3d3d3d","#9444bc","#c27c32","#6ca65c","#7d8f21","#9f9c9d","#4259a7","#c11417"];
 
     // get input
     var input_table = document.getElementById('input_table');
@@ -33,13 +33,18 @@ function final_table() {
 
     var table_width = document.getElementById('width').value;
     var table_height = document.getElementById('height').value;
-    var cell_width = table_width/3;
-    var cell_height = table_height/3;
+    var cell_width = table_width/4;
+    var cell_height = table_height/4;
+    
+    var first_row_height = cell_height/2;
+    var first_col_width = cell_width*0.75;
+
     var img_height = cell_height*0.7*0.9;
     var img_width = cell_width*0.9;
     var title_size = document.getElementById('size0').value;
     var type_size = document.getElementById('size1').value;
     var word_size = document.getElementById('size2').value;
+    var internal_size = document.getElementById('size3').value;
 
     var title = document.getElementById('title').value;
     var author = document.getElementById("creator").value;
@@ -72,10 +77,10 @@ function final_table() {
 
     var final_table = document.createElement('table');
     final_div.appendChild(final_table);
-    final_table.style.cssText+="background-color: black;table-layout: fixed; height:"+table_width+"px; width:"+table_height+"px;";
+    final_table.style.cssText+="background-color: white;table-layout: fixed; height:"+table_width+"px; width:"+table_height+"px;";
     final_table.classList.add('table');
     final_table.classList.add('table-bordered');
-    final_table.id = 'nine-by-nine';
+    final_table.id = 'four-by-four';
 
     var final_table_c = final_table;
 
@@ -83,7 +88,7 @@ function final_table() {
         var final_watermark = document.createElement("p");
         final_watermark.id = "final-watermark";
         final_watermark.style.cssText+="width:"+table_width+"px;";
-        final_watermark.innerHTML="由⑨宫格生成器生成<br>https://nekonull.me/9"
+        final_watermark.innerHTML="由逐渐离谱生成器生成<br>https://nekonull.me/9/lipu.html"
         final_div.appendChild(final_watermark);
     }
    
@@ -93,10 +98,10 @@ function final_table() {
     final_table = document.createElement('tbody');
     final_table_c.appendChild(final_table);
 
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 4; i++) {
         var row = document.createElement('tr');
         final_table.appendChild(row);
-        for (var j = 0; j < 3; j++) {
+        for (var j = 0; j < 4; j++) {
             var cell = document.createElement('td');
             cell.classList.add('cell');
             row.appendChild(cell);
@@ -105,25 +110,31 @@ function final_table() {
             cell.appendChild(cell_table);
             var cell_tbody = document.createElement('tbody');
             cell_table.appendChild(cell_tbody);
-            var cell_tr_img = document.createElement('tr');
-            cell_tr_img.classList.add('cell-img');
-            cell_tr_img.style.cssText+="border: 1px solid "+color[3*i+j]+";";
+            if (i!=0 && j!=0){
+                var cell_tr_img = document.createElement('tr');
+                cell_tr_img.classList.add('cell-img');
+                cell_tr_img.style.cssText+="border: 1px solid "+color[3*(i-1)+(j-1)]+";";
+                cell_tbody.appendChild(cell_tr_img);
+            }
+
             var cell_tr_text = document.createElement('tr');
-            cell_tbody.appendChild(cell_tr_img);
             cell_tbody.appendChild(cell_tr_text);
             var cell_tr_img_td = document.createElement('td');
             var cell_tr_text_td = document.createElement('td');
             cell_tr_text_td.classList.add("text");
-            cell_tr_img.appendChild(cell_tr_img_td);
+            if (i!=0 && j!=0){
+                cell_tr_img.appendChild(cell_tr_img_td);
+            }
             cell_tr_text.appendChild(cell_tr_text_td);
 
-            var imgn = document.createElement('img');
-            var srcimg = data[3*i + j].children[2].children[0];
-            imgn.src = srcimg.src;
-            imgn.classList.add("center-block");
-            imgn.classList.add("img-repsonsive");
-            var img_new_height=0;
-            var img_new_width=0;
+            if (i!=0&&j!=0){
+                var imgn = document.createElement('img');
+                var srcimg = data[4*i + j].children[2].children[0];
+                imgn.src = srcimg.src;
+                imgn.classList.add("center-block");
+                imgn.classList.add("img-repsonsive");
+                var img_new_height=0;
+                var img_new_width=0;
 
                 if(srcimg.height/img_height>srcimg.width/img_width){
                     imgn.style.cssText+="height: "+img_height+"px;"
@@ -133,17 +144,25 @@ function final_table() {
                     imgn.style.cssText+="height: "+srcimg.height * img_width / srcimg.width +"px;"
                 }
             
-            cell_tr_img_td.appendChild(imgn);
+                cell_tr_img_td.appendChild(imgn);
+            }
 
             var typew = document.createElement('div');
-            typew.textContent = data[3*i + j].children[0].value;
+            typew.textContent = data[4*i + j].children[0].value;
             typew.classList.add("type");
-            typew.style.cssText+="font-size: "+type_size+"px;";
-            typew.style.cssText+="color: "+color[3*i+j]+";";
+            if(i==0 || j==0){
+                typew.style.cssText+="font-size: "+type_size+"px;";
+            } else {
+                typew.style.cssText+="font-size: "+internal_size+"px;";
+            }
+
+            if (i!=0 && j!=0){
+                typew.style.cssText+="color: "+color[3*(i-1)+(j-1)]+";";
+            }
             cell_tr_text_td.appendChild(typew);
 
             var wordw = document.createElement('div');
-            wordw.textContent = data[3*i + j].children[1].value;
+            wordw.textContent = data[4*i + j].children[1].value;
             wordw.classList.add("word");
             wordw.style.cssText+="font-size: "+word_size+"px;";
             cell_tr_text_td.appendChild(wordw);

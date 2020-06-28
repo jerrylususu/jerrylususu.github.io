@@ -2,16 +2,16 @@
 <html>
 
 <head>
-    <title>阵营⑨宫格生成</title>
+    <title>逐渐离谱生成器</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="generate9.css">
+    <link rel="stylesheet" href="lipu.css">
  
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.bootcss.com/html2canvas/0.4.1/html2canvas.js"></script>
-    <script src="generate9.js"></script>
+    <script src="lipu.js"></script>
 </head>
 
 
@@ -28,15 +28,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">阵营⑨宫格生成</a>
+                <a class="navbar-brand" href="#">逐渐离谱生成器</a>
             </div>
     
             <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
     
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">生成图片版<span class="sr-only">(current)</span></a></li>
+                    <li><a href="index.html">生成图片版</a></li>
                     <li><a href="text.html">生成文字版</a></li>
-                    <li><a href="lipu.html">逐渐离谱</a></li>
+                    <li class="active"><a href="#">逐渐离谱<span class="sr-only">(current)</span></a></li>
                     <li><a href="https://github.com/jerrylususu/9square">关于</a></li>
                 </ul>
     
@@ -68,17 +68,37 @@
                 <tr>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="守序善良" value="守序善良">
-                            <input type="text" class="form-control" id="word" placeholder="文字">
-                            <div class="file-box">
-                                <img class="img-preview"  width="100%" height="100%" />
-                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-                                    onchange="imgPreview(this)">
-                            </div>
+                            <input type="text" class="form-control" id="type" placeholder="表头" value="">
+                            <input type="text" class="form-control" id="type" placeholder="表头" value="">
                         </div>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="中立善良" value="中立善良">
+                            <input type="text" class="form-control" id="type" placeholder="XX纯粹"" value="XX纯粹">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX中立" value="XX中立">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX自由" value="XX自由">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX纯粹" value="XX纯粹">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                        </div>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -89,7 +109,18 @@
                     </td>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="混乱善良" value="混乱善良">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                            <div class="file-box">
+                                <img class="img-preview"  width="100%" height="100%" />
+                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                                    onchange="imgPreview(this)">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -102,17 +133,12 @@
                 <tr>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="守序中立" value="守序中立">
+                            <input type="text" class="form-control" id="type" placeholder="XX中立" value="XX中立">
                             <input type="text" class="form-control" id="word" placeholder="文字">
-                            <div class="file-box">
-                                <img class="img-preview"  width="100%" height="100%" />
-                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-                                    onchange="imgPreview(this)">
-                            </div>
                         </div>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="绝对中立" value="绝对中立">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -123,7 +149,18 @@
                     </td>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="混乱中立" value="混乱中立">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                            <div class="file-box">
+                                <img class="img-preview"  width="100%" height="100%" />
+                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                                    onchange="imgPreview(this)">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -136,17 +173,12 @@
                 <tr>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="守序邪恶" value="守序邪恶">
+                            <input type="text" class="form-control" id="type" placeholder="XX自由" value="XX自由">
                             <input type="text" class="form-control" id="word" placeholder="文字">
-                            <div class="file-box">
-                                <img class="img-preview"  width="100%" height="100%" />
-                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
-                                    onchange="imgPreview(this)">
-                            </div>
                         </div>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="中立邪恶" value="中立邪恶">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -157,7 +189,18 @@
                     </td>
                     <td>
                         <div class="ins">
-                            <input type="text" class="form-control" id="type" placeholder="混乱邪恶" value="混乱邪恶">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
+                            <input type="text" class="form-control" id="word" placeholder="文字">
+                            <div class="file-box">
+                                <img class="img-preview"  width="100%" height="100%" />
+                                <input type="file" name="file" id="input_file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                                    onchange="imgPreview(this)">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ins">
+                            <input type="text" class="form-control" id="type" placeholder="XX是XX" value="XX是XX">
                             <input type="text" class="form-control" id="word" placeholder="文字">
                             <div class="file-box">
                                 <img class="img-preview"  width="100%" height="100%" />
@@ -183,6 +226,8 @@
                 <input type="number" class="form-control" id="size0" placeholder="标题字号" value="60">
                 阵营
                 <input type="number" class="form-control" id="size1" placeholder="阵营字号" value="30">
+                内部项
+                <input type="number" class="form-control" id="size3" placeholder="文字字号" value="25">
                 说明文字
                 <input type="number" class="form-control" id="size2" placeholder="文字字号" value="16"> <br>
         
