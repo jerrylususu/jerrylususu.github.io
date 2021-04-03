@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 03 Apr 2021 22:30:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Apr 2021 23:54:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mdBook 代码折行（wrap）</title>
+      <link>/share/mdbook-%E4%BB%A3%E7%A0%81%E6%8D%A2%E8%A1%8C/</link>
+      <pubDate>Sat, 03 Apr 2021 23:54:00 +0300</pubDate>
+      
+      <guid>/share/mdbook-%E4%BB%A3%E7%A0%81%E6%8D%A2%E8%A1%8C/</guid>
+      <description>mdBook 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需</description>
+    </item>
+    
     <item>
       <title>Hugo 的 Disqus 整合</title>
       <link>/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/</link>
