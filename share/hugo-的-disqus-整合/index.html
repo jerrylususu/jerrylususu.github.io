@@ -4,9 +4,9 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>用 Slides 标题栏颜色区分重要性 - Nekonull&#39;s Garden</title>
+		<title>Hugo 的 Disqus 整合 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。 例子： 「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。 「蓝色/幻灯片">
+		<meta name="description" content="Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后">
 
 
 		
@@ -43,39 +43,38 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>用 Slides 标题栏颜色区分重要性</h1>
+	<h1>Hugo 的 Disqus 整合</h1>
 	<h5>
 		
-		<time datetime="2021-04-02 02:25:00 &#43;0800 &#43;0800">Apr 02, 2021</time>
+		<time datetime="2021-04-03 22:30:00 &#43;0300 &#43;03">Apr 03, 2021</time>
 		<span class="no-print">
 			-
 				
-				<a href="/tags/%e5%b1%95%e7%a4%ba">展示</a>
+				<a href="/tags/%e5%9d%91">坑</a>
 				<span>
 	</h5>
 	
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。</p>
-<p>例子：</p>
+	<p>Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 <code>config.toml</code> 的顶层设定 <code>disqusShortname</code> 属性即可，不过实际用起来稍微有些坑。具体步骤如下。</p>
+<ol>
+<li>在 Disqus 官网注册自己的账户</li>
+<li>在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （<code>{site_name}.disqus.com</code>）就是 <code>disqusShortname</code> 应该用的值</li>
+<li>站点创建完成后，Billing 页选择 Free Plan</li>
+<li>在 Hugo 的 <code>config.toml</code> 文件中设定 <code>disqusShortname</code></li>
+</ol>
+<p>其他小问题：</p>
 <ul>
-<li>「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。</li>
-<li>「蓝色/幻灯片主题色」代表本页一般重要，即一般的正文层级</li>
-<li>「绿色」代表本页内容为延伸、扩展或详细说明</li>
-<li>「灰色」代表本页内容为参考文献、资料总览</li>
+<li>本地没有评论显示：主题的<code>disqus.html</code>中（位于<code>{site_folder}\themes\{theme_name}\layouts\partials\disqus.html</code>），在本地执行（<code>indow.location.hostname == &quot;localhost&quot;</code>）的时候不会加载评论框。如果调试需要，可以给这个判断加上注释，即可在本地正常显示了。</li>
 </ul>
-<p>来源：<a href="https://youtu.be/cTN1Qar4HSw?t=1854">Google TechTalk - Haskell 101</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="/share/wsl2-docker-virtualbox/">
-		<img class="icon-text" src="/img/prev.svg"/>WSL2, Docker, Virtualbox</a>
+	<a class="prev-post" href="/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/">
+		<img class="icon-text" src="/img/prev.svg"/>JavaFX 打包并设定 UTF-8</a>
 
-
-	<a class="next-post" href="/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/">JavaFX 打包并设定 UTF-8<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
@@ -84,11 +83,11 @@
   <h4>See Also</h4>
   <ul>
     
-  	<li><a href="/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/">JavaFX 打包并设定 UTF-8</a></li>
+  	<li><a href="/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/">Python, Flask, Jinja, SQLite 里的坑</a></li>
   	
-  	<li><a href="/project/">Projects</a></li>
+  	<li><a href="/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/">再次复活</a></li>
   	
-  	<li><a href="/posts/%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E8%A3%85/">不丢失数据的重装 - Repair Install</a></li>
+  	<li><a href="/about/">About</a></li>
   	
   </ul>
 </section>

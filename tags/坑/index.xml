@@ -6,7 +6,16 @@
     <description>Recent content in 坑 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Aug 2017 00:00:00 +0000</lastBuildDate><atom:link href="/tags/%E5%9D%91/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Apr 2021 22:30:00 +0300</lastBuildDate><atom:link href="/tags/%E5%9D%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo 的 Disqus 整合</title>
+      <link>/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/</link>
+      <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
+      
+      <guid>/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/</guid>
+      <description>Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后</description>
+    </item>
+    
     <item>
       <title>Python, Flask, Jinja, SQLite 里的坑</title>
       <link>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
