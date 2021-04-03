@@ -1,15 +1,38 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Nekonull&#39;s Home</title>
+    <title>Posts on Nekonull&#39;s Garden</title>
     <link>/posts/</link>
-    <description>Recent content in Posts on Nekonull&#39;s Home</description>
+    <description>Recent content in Posts on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 18 Aug 2019 13:55:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Apr 2021 01:47:01 +0300</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>再次复活</title>
+      <link>/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/</link>
+      <pubDate>Sat, 03 Apr 2021 01:47:01 +0300</pubDate>
+      
+      <guid>/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/</guid>
+      <description>2020 年发生了很多事，一直没有时间更新博客，然而突然意识到，很多有趣的事情、实用的技巧，并没有得到足够的分享，于是打算重新拾起这个博客。 把文件重</description>
+    </item>
     
-	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>不丢失数据的重装 - Repair Install</title>
+      <link>/posts/%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E8%A3%85/</link>
+      <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
+      
+      <guid>/posts/%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E8%A3%85/</guid>
+      <description>本文原载于「小众软件论坛」link 前言 最近主力机上的 Windows 10 遇到了一些诡异的问题，开始菜单部分时候无法打开。这种系统层面的问题，第一反应当然是 sfc/dism</description>
+    </item>
     
+    <item>
+      <title>给 WSL 安装桌面环境</title>
+      <link>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</guid>
+      <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
+    </item>
     
     <item>
       <title>Utils.ahk</title>

@@ -1,15 +1,86 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Nekonull&#39;s Home</title>
+    <title>Nekonull&#39;s Garden</title>
     <link>/</link>
-    <description>Recent content on Nekonull&#39;s Home</description>
+    <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 18 Aug 2019 13:55:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 03 Apr 2021 01:47:01 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>再次复活</title>
+      <link>/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/</link>
+      <pubDate>Sat, 03 Apr 2021 01:47:01 +0300</pubDate>
+      
+      <guid>/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/</guid>
+      <description>2020 年发生了很多事，一直没有时间更新博客，然而突然意识到，很多有趣的事情、实用的技巧，并没有得到足够的分享，于是打算重新拾起这个博客。 把文件重</description>
+    </item>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Sat, 03 Apr 2021 00:21:09 +0800</pubDate>
+      
+      <guid>/about/</guid>
+      <description>-- Who am I? A(n)
+ student / undergraduate / master developer (of some kind?) designer (to some extent?) anime lover &amp;hellip;  What&amp;rsquo;s my goal? Nice question. Sadly, I don&amp;rsquo;t know.
+Why Nekonull? Neko, as everyone knows, stands for cat. Cat is great, but having one is not. Therefore, nekonull seems to be a great situation: expecting a cat, while not having one.
+Handles  email: jerrylu.ms#outlook.com GitHub: @jerrylususu LinkedIn: TBD Bgm.</description>
+    </item>
     
+    <item>
+      <title>JavaFX 打包并设定 UTF-8</title>
+      <link>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</link>
+      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
+      
+      <guid>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</guid>
+      <description>IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见视频。 然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下</description>
+    </item>
+    
+    <item>
+      <title>用 Slides 标题栏颜色区分重要性</title>
+      <link>/share/%E7%94%A8-slides-%E6%A0%87%E9%A2%98%E6%A0%8F%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86%E9%87%8D%E8%A6%81%E6%80%A7/</link>
+      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
+      
+      <guid>/share/%E7%94%A8-slides-%E6%A0%87%E9%A2%98%E6%A0%8F%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86%E9%87%8D%E8%A6%81%E6%80%A7/</guid>
+      <description>Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。 例子： 「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。 「蓝色/幻灯片</description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>/project/</link>
+      <pubDate>Thu, 01 Apr 2021 00:21:20 +0800</pubDate>
+      
+      <guid>/project/</guid>
+      <description>Some of my previous projects, listed in reverse time order. 2020-2021 毕业设计：用于多媒体教学的实时字幕识别和分发系统 (Link:TBD) First Order Logic Solver (Link:TBD) 2019-2020-2 软件工程：Github Fixit：给 Java CLI 库 Picocli 和 Java 服务器框</description>
+    </item>
+    
+    <item>
+      <title>不丢失数据的重装 - Repair Install</title>
+      <link>/posts/%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E8%A3%85/</link>
+      <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
+      
+      <guid>/posts/%E4%B8%8D%E4%B8%A2%E5%A4%B1%E6%95%B0%E6%8D%AE%E7%9A%84%E9%87%8D%E8%A3%85/</guid>
+      <description>本文原载于「小众软件论坛」link 前言 最近主力机上的 Windows 10 遇到了一些诡异的问题，开始菜单部分时候无法打开。这种系统层面的问题，第一反应当然是 sfc/dism</description>
+    </item>
+    
+    <item>
+      <title>WSL2, Docker, Virtualbox</title>
+      <link>/share/wsl2-docker-virtualbox/</link>
+      <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <description>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转</description>
+    </item>
+    
+    <item>
+      <title>给 WSL 安装桌面环境</title>
+      <link>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</guid>
+      <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
+    </item>
     
     <item>
       <title>Utils.ahk</title>
@@ -48,25 +119,12 @@
     </item>
     
     <item>
-      <title>Projects</title>
-      <link>/project/</link>
-      <pubDate>Sun, 04 Aug 2019 00:21:20 +0800</pubDate>
+      <title>重庆成都游记</title>
+      <link>/archive/%E9%87%8D%E5%BA%86%E6%88%90%E9%83%BD%E6%B8%B8%E8%AE%B0/</link>
+      <pubDate>Fri, 31 Aug 2018 02:25:00 +0800</pubDate>
       
-      <guid>/project/</guid>
-      <description>Some of my previous projects, listed in reverse time. 2018-2019-2 NUS: EmojiCam 计组: CPU in MIPS 2018-2019-1 数字逻辑: Digital Clock MailStat 九宫格生成器 2017-2018-2 Java 2: 机上娱乐系统 舍友推荐系统 2017-2018-1 Java 1: 答疑预约系统 捐款查询系统 超简单视频播放</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Sun, 04 Aug 2019 00:21:09 +0800</pubDate>
-      
-      <guid>/about/</guid>
-      <description>Who am I? A(n)
- student / undergraduate developer (of some kind?) designer (to some extent?) anime lover &amp;hellip;  What&amp;rsquo;s my goal? Nice question. Sadly, I don&amp;rsquo;t know.
-Why Nekonull? Neko, as everyone knows, stands for cat. Cat is great, but having one is not. Therefore, nekonull seems to be a great situation: expecting a cat, while not having one.
-Coordinate? Find me via email: jerrylu.mail#qq.com
-Find me in real world: If you can read this, you should be able to do so.</description>
+      <guid>/archive/%E9%87%8D%E5%BA%86%E6%88%90%E9%83%BD%E6%B8%B8%E8%AE%B0/</guid>
+      <description>重庆成都游记 争取每天有时间就写一点吧&amp;hellip;虽然估计不是很可能可以发出来&amp;hellip;不过就当作是自己的记录了 Day 0 深圳-&amp;gt;重</description>
     </item>
     
     <item>
