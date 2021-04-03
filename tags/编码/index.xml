@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>编码 on Nekonull&#39;s Garden</title>
+    <link>/tags/%E7%BC%96%E7%A0%81/</link>
+    <description>Recent content in 编码 on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Apr 2021 02:25:00 +0800</lastBuildDate><atom:link href="/tags/%E7%BC%96%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaFX 打包并设定 UTF-8</title>
+      <link>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</link>
+      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
+      
+      <guid>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</guid>
+      <description>IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见视频。 然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下</description>
+    </item>
+    
+  </channel>
+</rss>

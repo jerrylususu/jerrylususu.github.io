@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VM on Nekonull&#39;s Garden</title>
+    <link>/tags/vm/</link>
+    <description>Recent content in VM on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="/tags/vm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL2, Docker, Virtualbox</title>
+      <link>/share/wsl2-docker-virtualbox/</link>
+      <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <description>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>WSL2, Docker, Virtualbox - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>WSL2, Docker, Virtualbox</h1>
+	<h5>
+		
+		<time datetime="2020-10-29 02:25:00 &#43;0800 &#43;0800">Oct 29, 2020</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/WSL">WSL</a>
+				
+				<a href="/tags/Docker">Docker</a>
+				
+				<a href="/tags/VM">VM</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转而使用 Windows 内置的 Hyper-V 作为底层 VM。但是 Hyper-V 平台一旦启用，就会导致 Virtualbox / VMWare 等其他虚拟机工具不可用，这一问题直到 VirtualBox 6 之后才算解决，此时 VirtualBox / VMWare 都可以调用 Windows 内置的 Hypervisor API 作为 VM 的执行引擎。</p>
+<p>所以来到 2020 年，在 Windows 10 20H2 上同时运行 WSL 2, Docker 和 VirtualBox 已经几乎是 painless 的了，只需要记住</p>
+<ul>
+<li>WSL 2 底层是一个跑在 Hyper-V 里的 VM</li>
+<li>因为 WSL 2 是一个真正的 VM，Docker 可以直接安装到 WSL 2 中，而不会遇到 WSL 1 的不兼容问题</li>
+<li>VirtualBox 通过 Hypervisor API 调用 Hyper-V 来执行 VM</li>
+</ul>
+<p>步骤也很简单：</p>
+<ol>
+<li>Windows 开启相关功能：Hyper-V, 虚拟机监视器，虚拟机平台</li>
+<li>WSL 迁移到 version 2 (如果喜欢也可以留一个 WSL 1，毕竟比 VM 轻量，日常也基本够用)</li>
+<li>Docker Desktop 安装最新稳定版</li>
+<li>VirtualBox 安装最新版（大版本号 6 及以上）</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>VirtualBox 因为换了虚拟化后端，已有的暂停的虚拟机，启动的时候会丢失数据，建议关机之后再迁移</li>
+<li>VirtualBox 的 VM 性能可能会下降，64-bit Guest 尤其严重，32-bit Guest 还好（如果用 Hyper-V 作为后端，可以看到 VM 执行界面右下角是一个乌龟图标）</li>
+</ul>
+
+</article>
+<nav class="no-print post-nav">
+
+
+	<a class="next-post" href="/share/%E7%94%A8-slides-%E6%A0%87%E9%A2%98%E6%A0%8F%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86%E9%87%8D%E8%A6%81%E6%80%A7/">用 Slides 标题栏颜色区分重要性<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/">给 WSL 安装桌面环境</a></li>
+  	
+  	<li><a href="/posts/utils.ahk/">Utils.ahk</a></li>
+  	
+  	<li><a href="/posts/%E5%8D%9A%E5%AE%A2%E8%BF%81%E7%A7%BB%E8%AE%B0%E5%BD%95/">博客迁移记录</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

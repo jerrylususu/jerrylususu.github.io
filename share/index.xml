@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Share on Nekonull&#39;s Garden</title>
+    <link>/share/</link>
+    <description>Recent content in Share on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Apr 2021 02:25:00 +0800</lastBuildDate><atom:link href="/share/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaFX 打包并设定 UTF-8</title>
+      <link>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</link>
+      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
+      
+      <guid>/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/</guid>
+      <description>IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见视频。 然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下</description>
+    </item>
+    
+    <item>
+      <title>用 Slides 标题栏颜色区分重要性</title>
+      <link>/share/%E7%94%A8-slides-%E6%A0%87%E9%A2%98%E6%A0%8F%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86%E9%87%8D%E8%A6%81%E6%80%A7/</link>
+      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
+      
+      <guid>/share/%E7%94%A8-slides-%E6%A0%87%E9%A2%98%E6%A0%8F%E9%A2%9C%E8%89%B2%E5%8C%BA%E5%88%86%E9%87%8D%E8%A6%81%E6%80%A7/</guid>
+      <description>Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。 例子： 「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。 「蓝色/幻灯片</description>
+    </item>
+    
+    <item>
+      <title>WSL2, Docker, Virtualbox</title>
+      <link>/share/wsl2-docker-virtualbox/</link>
+      <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <description>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转</description>
+    </item>
+    
+  </channel>
+</rss>

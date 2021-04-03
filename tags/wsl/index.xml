@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WSL on Nekonull&#39;s Garden</title>
+    <link>/tags/wsl/</link>
+    <description>Recent content in WSL on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="/tags/wsl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL2, Docker, Virtualbox</title>
+      <link>/share/wsl2-docker-virtualbox/</link>
+      <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <description>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转</description>
+    </item>
+    
+    <item>
+      <title>给 WSL 安装桌面环境</title>
+      <link>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
+      
+      <guid>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</guid>
+      <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>备忘 on Nekonull&#39;s Garden</title>
+    <link>/tags/%E5%A4%87%E5%BF%98/</link>
+    <description>Recent content in 备忘 on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 12 Aug 2019 23:11:00 +0800</lastBuildDate><atom:link href="/tags/%E5%A4%87%E5%BF%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我最近在用什么软件？</title>
+      <link>/posts/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6/</link>
+      <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
+      
+      <guid>/posts/%E6%88%91%E6%9C%80%E8%BF%91%E5%9C%A8%E7%94%A8%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6/</guid>
+      <description>看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列</description>
+    </item>
+    
+    <item>
+      <title>备忘：重装系统后需要重新安装的程序</title>
+      <link>/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</link>
+      <pubDate>Sun, 06 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</guid>
+      <description>RT Windows 浏览器：Chrome（大家都懂的，快就一个字） 压缩软件：Bandizip（没广告，界面简洁） 音乐播放：网易云音乐（云村老用户，出不来了）</description>
+    </item>
+    
+  </channel>
+</rss>
