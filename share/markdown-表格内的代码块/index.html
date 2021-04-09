@@ -73,6 +73,11 @@ if (!doNotTrack) {
 <hr class="sep" />
 </header>
 	<p>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。</p>
+<p>需要注意之处：</p>
+<ul>
+<li>对应的 table cell 的 <code>&lt;td&gt;</code>, <code>&lt;/td&gt;</code> 标签需要在新行的行首（前面不能有缩进）</li>
+<li>table cell 内的 Markdown 文本上下和 <code>&lt;td&gt;</code>, <code>&lt;/td&gt;</code> 标签之间需要间隔一个空行</li>
+</ul>
 <p>效果：</p>
 <table>
 <tr>
@@ -100,13 +105,13 @@ if (!doNotTrack) {
 &lt;/<span style="color:#f92672">tr</span>&gt;
 &lt;<span style="color:#f92672">tr</span>&gt;
 &lt;<span style="color:#f92672">td</span>&gt; Code Block &lt;/<span style="color:#f92672">td</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt;
-
+&lt;<span style="color:#f92672">td</span>&gt;                           <span style="color:#75715e">&lt;!--line start--&gt;</span>
+                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
 ```python
 print(&#34;hello world&#34;)
-`` &lt;<span style="color:#f92672">-</span> <span style="color:#a6e22e">Should</span> <span style="color:#a6e22e">be</span> <span style="color:#a6e22e">3</span> <span style="color:#a6e22e">tilt</span> <span style="color:#a6e22e">here</span><span style="color:#960050;background-color:#1e0010">!</span>
-
-<span style="color:#960050;background-color:#1e0010">&lt;/</span><span style="color:#a6e22e">td</span>&gt;
+``                             <span style="color:#75715e">&lt;!--Should be 3 tilt here!--&gt;</span>
+                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
+&lt;/<span style="color:#f92672">td</span>&gt;                          <span style="color:#75715e">&lt;!--line start--&gt;</span>
 &lt;/<span style="color:#f92672">tr</span>&gt;
 &lt;<span style="color:#f92672">tr</span>&gt;
 &lt;<span style="color:#f92672">td</span>&gt; Horizontal Line &lt;/<span style="color:#f92672">td</span>&gt;
