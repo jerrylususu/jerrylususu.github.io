@@ -6,7 +6,25 @@
     <description>Recent content in Share on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 03 Apr 2021 23:54:00 +0300</lastBuildDate><atom:link href="/share/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/share/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown 表格内的代码块</title>
+      <link>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</link>
+      <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
+      
+      <guid>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</guid>
+      <description>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格</description>
+    </item>
+    
+    <item>
+      <title>Python __hash__ 继承</title>
+      <link>/share/python-hash-%E7%BB%A7%E6%89%BF/</link>
+      <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
+      
+      <guid>/share/python-hash-%E7%BB%A7%E6%89%BF/</guid>
+      <description>最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要</description>
+    </item>
+    
     <item>
       <title>mdBook 代码折行（wrap）</title>
       <link>/share/mdbook-%E4%BB%A3%E7%A0%81%E6%8D%A2%E8%A1%8C/</link>
@@ -49,7 +67,7 @@
       <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
       
       <guid>/share/wsl2-docker-virtualbox/</guid>
-      <description>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转</description>
+      <description>2021/4/9 更新: VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。 Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是</description>
     </item>
     
   </channel>

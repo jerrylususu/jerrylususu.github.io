@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on Nekonull&#39;s Garden</title>
+    <link>/tags/python/</link>
+    <description>Recent content in Python on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Markdown 表格内的代码块</title>
+      <link>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</link>
+      <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
+      
+      <guid>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</guid>
+      <description>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格</description>
+    </item>
+    
+    <item>
+      <title>Python __hash__ 继承</title>
+      <link>/share/python-hash-%E7%BB%A7%E6%89%BF/</link>
+      <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
+      
+      <guid>/share/python-hash-%E7%BB%A7%E6%89%BF/</guid>
+      <description>最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要</description>
+    </item>
+    
+  </channel>
+</rss>

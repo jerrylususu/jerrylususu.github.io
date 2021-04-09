@@ -2,22 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/tags/python/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/share/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/tags/%E5%9D%91/</loc>
+    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
+  </url><url>
+    <loc>/share/python-hash-%E7%BB%A7%E6%89%BF/</loc>
+    <lastmod>2021-04-09T17:06:00+03:00</lastmod>
+  </url><url>
     <loc>/share/mdbook-%E4%BB%A3%E7%A0%81%E6%8D%A2%E8%A1%8C/</loc>
     <lastmod>2021-04-03T23:54:00+03:00</lastmod>
   </url><url>
-    <loc>/</loc>
-    <lastmod>2021-04-03T23:54:00+03:00</lastmod>
-  </url><url>
-    <loc>/share/</loc>
-    <lastmod>2021-04-03T23:54:00+03:00</lastmod>
-  </url><url>
     <loc>/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/</loc>
-    <lastmod>2021-04-03T22:30:00+03:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2021-04-03T22:30:00+03:00</lastmod>
-  </url><url>
-    <loc>/tags/%E5%9D%91/</loc>
     <lastmod>2021-04-03T22:30:00+03:00</lastmod>
   </url><url>
     <loc>/posts/</loc>

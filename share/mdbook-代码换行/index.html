@@ -70,22 +70,22 @@ if (!doNotTrack) {
 	<p><a href="https://rust-lang.github.io/mdBook/">mdBook</a> 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需要手动左右移动，体验不佳。</p>
 <p>查阅<a href="https://rust-lang.github.io/mdBook/format/theme/editor.html?highlight=editor#customizing-the-editor">文档</a>可知，mdBook 使用的是 Ace Editor。再查询 Ace Editor 的<a href="https://github.com/ajaxorg/ace/wiki/Embedding-API">文档</a>，可以发现通过 <code>editor.getSession().setUseWrapMode(true);</code> 启用折行。</p>
 <p>在 mdBook 生成的 book 文件夹中，可以找到 <code>book.js</code> 文件，在 line 6 开始进行如下修改，手动设定 editor 属性即可。</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// Global variable, shared between modules
-</span><span class="c1"></span><span class="kd">function</span> <span class="nx">playground_text</span><span class="p">(</span><span class="nx">playground</span><span class="p">)</span> <span class="p">{</span>
-    <span class="kd">let</span> <span class="nx">code_block</span> <span class="o">=</span> <span class="nx">playground</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;code&#34;</span><span class="p">);</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// Global variable, shared between modules
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">playground_text</span>(<span style="color:#a6e22e">playground</span>) {
+    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">code_block</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">playground</span>.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;code&#34;</span>);
 
-    <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">ace</span> <span class="o">&amp;&amp;</span> <span class="nx">code_block</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="s2">&#34;editable&#34;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="kd">let</span> <span class="nx">editor</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">ace</span><span class="p">.</span><span class="nx">edit</span><span class="p">(</span><span class="nx">code_block</span><span class="p">);</span>
+    <span style="color:#66d9ef">if</span> (window.<span style="color:#a6e22e">ace</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;editable&#34;</span>)) {
+        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">ace</span>.<span style="color:#a6e22e">edit</span>(<span style="color:#a6e22e">code_block</span>);
 
-        <span class="c1">// CODE ADDED BEGIN
-</span><span class="c1"></span>        <span class="nx">editor</span><span class="p">.</span><span class="nx">getSession</span><span class="p">().</span><span class="nx">setUseWrapMode</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-        <span class="c1">// CODE ADDED END
-</span><span class="c1"></span>
-        <span class="k">return</span> <span class="nx">editor</span><span class="p">.</span><span class="nx">getValue</span><span class="p">();</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="nx">code_block</span><span class="p">.</span><span class="nx">textContent</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+        <span style="color:#75715e">// CODE ADDED BEGIN
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getSession</span>().<span style="color:#a6e22e">setUseWrapMode</span>(<span style="color:#66d9ef">true</span>);
+        <span style="color:#75715e">// CODE ADDED END
+</span><span style="color:#75715e"></span>
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getValue</span>();
+    } <span style="color:#66d9ef">else</span> {
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">textContent</span>;
+    }
+}
 
 </code></pre></div>
 </article>
@@ -94,6 +94,9 @@ if (!doNotTrack) {
 	<a class="prev-post" href="/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/">
 		<img class="icon-text" src="/img/prev.svg"/>Hugo 的 Disqus 整合</a>
 
+
+	<a class="next-post" href="/share/python-hash-%E7%BB%A7%E6%89%BF/">Python __hash__ 继承<img class="icon-text" src="/img/next.svg"/>
+	</a>
 
 </nav>
 
