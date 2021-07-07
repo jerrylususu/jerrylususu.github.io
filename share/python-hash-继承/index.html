@@ -74,6 +74,12 @@ if (!doNotTrack) {
 </header>
 	<p>最近写作业的时候踩上了一个 Python 的坑：</p>
 <p>如果父类实现了 <code>__hash__</code> 方法，而子类重写了 <code>__eq__</code> 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 <code>__hash__</code> 方法。如果需要子类的 <code>__hash__</code> 方法调用父类的实现，则需要手动声明。</p>
+<p>这个之所以是一个坑，因为在代码中的行为看起来很正常：</p>
+<ul>
+<li>Pycharm 的方法跳转可以定位到父类 <code>__hash__</code> 方法</li>
+<li>inspect.getmro 的父类列表正常</li>
+<li>dir(object) 得到的方法列表中的确含有 <code>__hash__</code></li>
+</ul>
 <p><a href="https://docs.python.org/3/reference/datamodel.html#object.__hash__">文档</a>原文：</p>
 <blockquote>
 <p>A class that overrides <code>__eq__()</code> and does not define <code>__hash__()</code> will have its <code>__hash__()</code> implicitly set to None.</p>
@@ -81,6 +87,13 @@ if (!doNotTrack) {
 <blockquote>
 <p>If a class that overrides <code>__eq__()</code> needs to retain the implementation of <code>__hash__()</code> from a parent class, the interpreter must be told this explicitly by setting <code>__hash__ = &lt;ParentClass&gt;.__hash__</code>.</p>
 </blockquote>
+<p>具体的<a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432">实现</a>（基于 CPython）</p>
+<ol>
+<li><code>inherit_slots</code> 函数负责继承 slots <a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432">Line 5432</a></li>
+<li><code>inherit_slots</code> 在处理比较相关的函数（comparison-related）的时候（<a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432">Line 5432</a>），会使用 <code>overrides_hash</code> 方法检查子类是否有重写 <code>__eq__</code>, <code>__hash__</code> (<a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5274">Line 5274</a>)</li>
+<li><code>overrides_hash</code> 中使用 <code>_PyDict_ContainsId</code> 方法先检查 <code>__eq__</code>，再检查 <code>__hash__</code>，如果任一存在则返回 1，否则返回 0</li>
+<li>如果 <code>overrides_hash</code> 返回 1，则认为不能继承父类的 <code>__hash__</code> 方法，<code>type-&gt;tp_hash</code> 不会被设定</li>
+</ol>
 <p>以下为一个示例：</p>
 <table>
 <thead>

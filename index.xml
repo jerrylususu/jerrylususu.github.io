@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tensorflow 开发者认证记录</title>
+      <link>/posts/tf-cert-blog/</link>
+      <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
+      
+      <guid>/posts/tf-cert-blog/</guid>
+      <description>又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？ 作者在 2021/7/4 参加考试。本文写于 2021/7/7。文中内容可能在未来发生变化。 下文简</description>
+    </item>
+    
     <item>
       <title>Markdown 表格内的代码块</title>
       <link>/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/</link>
