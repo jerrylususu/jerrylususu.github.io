@@ -4,9 +4,9 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>Hugo 的 Disqus 整合 - Nekonull&#39;s Garden</title>
+		<title>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后">
+		<meta name="description" content="昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时">
 
 
 		
@@ -56,10 +56,10 @@ if (!doNotTrack) {
 
 <article>
 	<header><hgroup id="brand">
-	<h1>Hugo 的 Disqus 整合</h1>
+	<h1>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</h1>
 	<h5>
 		
-		<time datetime="2021-04-03 22:30:00 &#43;0300 &#43;03">Apr 03, 2021</time>
+		<time datetime="2021-07-12 13:00:00 &#43;0300 &#43;03">Jul 12, 2021</time>
 		<span class="no-print">
 			-
 				
@@ -70,27 +70,35 @@ if (!doNotTrack) {
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 <code>config.toml</code> 的顶层设定 <code>disqusShortname</code> 属性即可，不过实际用起来稍微有些坑。具体步骤如下。</p>
+	<p>昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。</p>
+<p>以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：<a href="https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network">Remote laptop disconnects from wireless network | Microsoft Docs</a>，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。</p>
+<p>找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：</p>
 <ol>
-<li>在 Disqus 官网注册自己的账户</li>
-<li>在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （<code>{site_name}.disqus.com</code>）就是 <code>disqusShortname</code> 应该用的值</li>
-<li>站点创建完成后，Billing 页选择 Free Plan</li>
-<li>在 Hugo 的 <code>config.toml</code> 文件中设定 <code>disqusShortname</code></li>
+<li>
+<p>打开「设置」应用，选择「网络和 Internet / WLAN」，在右侧相关设置选择「网络和共享中心」</p>
+</li>
+<li>
+<p>在「查看活动网络下」找到自己连接到的 WiFi，点击蓝色的连接</p>
+<p><img src="/img/ms-rdp-bug-1.png" alt="网络设置"></p>
+</li>
+<li>
+<p>点击「无线属性」，选择「安全」选项卡，点击「高级设置」</p>
+</li>
+<li>
+<p>在「指定身份验证模式」中，选择「用户或计算机身份认证」</p>
+</li>
+<li>
+<p>至此无线连接会中断。点击任务栏的 WiFi 图标，重新输入用户名密码连接到网络。</p>
+</li>
 </ol>
-<p>其他小问题：</p>
-<ul>
-<li>本地没有评论显示：主题的<code>disqus.html</code>中（位于<code>{site_folder}\themes\{theme_name}\layouts\partials\disqus.html</code>），在本地执行（<code>indow.location.hostname == &quot;localhost&quot;</code>）的时候不会加载评论框。如果调试需要，可以给这个判断加上注释，即可在本地正常显示了。</li>
-</ul>
+<p>设置完成后，建议使用手头的设备（平板 / 手机）尝试在同一网络下用 RDP 连接，如果能正常连接应该就没问题了。</p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="/share/javafx-%E6%89%93%E5%8C%85%E8%87%AA%E5%8A%A8%E5%90%AF%E7%94%A8-utf-8/">
-		<img class="icon-text" src="/img/prev.svg"/>JavaFX 打包并设定 UTF-8</a>
+	<a class="prev-post" href="/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/">
+		<img class="icon-text" src="/img/prev.svg"/>Markdown 表格内的代码块</a>
 
-
-	<a class="next-post" href="/share/mdbook-%E4%BB%A3%E7%A0%81%E6%8D%A2%E8%A1%8C/">mdBook 代码折行（wrap）<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
@@ -99,11 +107,11 @@ if (!doNotTrack) {
   <h4>See Also</h4>
   <ul>
     
-  	<li><a href="/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/">Python, Flask, Jinja, SQLite 里的坑</a></li>
+  	<li><a href="/share/markdown-%E8%A1%A8%E6%A0%BC%E5%86%85%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97/">Markdown 表格内的代码块</a></li>
   	
-  	<li><a href="/posts/%E5%86%8D%E6%AC%A1%E5%A4%8D%E6%B4%BB/">再次复活</a></li>
+  	<li><a href="/share/python-hash-%E7%BB%A7%E6%89%BF/">Python __hash__ 继承</a></li>
   	
-  	<li><a href="/about/">About</a></li>
+  	<li><a href="/share/hugo-%E7%9A%84-disqus-%E6%95%B4%E5%90%88/">Hugo 的 Disqus 整合</a></li>
   	
   </ul>
 </section>

@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jul 2021 13:00:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</title>
+      <link>/share/ms-rdp-8021x-bug/</link>
+      <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
+      
+      <guid>/share/ms-rdp-8021x-bug/</guid>
+      <description>昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时</description>
+    </item>
+    
     <item>
       <title>Tensorflow 开发者认证记录</title>
       <link>/posts/tf-cert-blog/</link>

@@ -2,13 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/</loc>
-    <lastmod>2021-07-07T15:43:00+03:00</lastmod>
+    <loc>/share/ms-rdp-8021x-bug/</loc>
+    <lastmod>2021-07-12T13:00:00+03:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2021-07-07T15:43:00+03:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2021-07-12T13:00:00+03:00</lastmod>
+  </url><url>
+    <loc>/share/</loc>
+    <lastmod>2021-07-12T13:00:00+03:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
+    <lastmod>2021-07-12T13:00:00+03:00</lastmod>
+  </url><url>
+    <loc>/tags/%E5%9D%91/</loc>
+    <lastmod>2021-07-12T13:00:00+03:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
     <lastmod>2021-07-07T15:43:00+03:00</lastmod>
   </url><url>
     <loc>/posts/tf-cert-blog/</loc>
@@ -21,12 +30,6 @@
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
   </url><url>
     <loc>/tags/python/</loc>
-    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
-  </url><url>
-    <loc>/share/</loc>
-    <lastmod>2021-04-09T17:10:00+03:00</lastmod>
-  </url><url>
-    <loc>/tags/%E5%9D%91/</loc>
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
   </url><url>
     <loc>/share/python-hash-%E7%BB%A7%E6%89%BF/</loc>
