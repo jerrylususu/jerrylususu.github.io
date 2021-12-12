@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 22 Aug 2021 22:02:00 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>分布式系统课程笔记</title>
+      <link>/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
+      
+      <guid>/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/</guid>
+      <description>这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下</description>
+    </item>
+    
     <item>
       <title>调用栈也是栈</title>
       <link>/posts/%E8%B0%83%E7%94%A8%E6%A0%88%E4%B9%9F%E6%98%AF%E6%A0%88/</link>
@@ -115,7 +124,7 @@ Handles  E-mail: jerrylu.ms#outlook.com GitHub: @jerrylususu LinkedIn: LinkedIn 
       <pubDate>Thu, 01 Apr 2021 00:21:20 +0800</pubDate>
       
       <guid>/project/</guid>
-      <description>Some of my previous projects, listed in reverse time order. 2020-2021 毕业设计：用于多媒体教学的实时字幕识别和分发系统 (Link:TBD) First Order Logic Solver (Link:TBD) 2019-2020-2 软件工程：Github Fixit：给 Java CLI 库 Picocli 和 Java 服务器框</description>
+      <description>Some of my previous projects, listed in reverse time order. 2020-2021 毕业设计：用于多媒体教学的实时字幕识别和分发系统 (Link:TBD) First Order Logic Solver (Link:TBD) 分布式系统课程笔记（简体中文）文章 笔记 2019-2020-2 软件工程：Gith</description>
     </item>
     
     <item>
