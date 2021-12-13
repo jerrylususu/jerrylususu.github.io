@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>给 WSL 安装桌面环境 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="WSL 1 &#43; XFCE 4">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+		
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>给 WSL 安装桌面环境</h1>
+	<h5>
+		
+		<time datetime="2020-01-30 02:25:00 &#43;0800 &#43;0800">Jan 30, 2020</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/WSL">WSL</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<h1 id="给-wsl-安装桌面环境">给 WSL 安装桌面环境</h1>
+<blockquote>
+<p>本文是旧文补完计划的一部分。</p>
+</blockquote>
+<p>可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可做&hellip; 总之，你需要在 WSL 下安装一个桌面环境。希望这篇文章能够提供一些小小的帮助。</p>
+<h2 id="开始之前对比-wsl-下的桌面环境与-linux-vm">开始之前：对比 WSL 下的桌面环境与 Linux VM</h2>
+<blockquote>
+<p>DE: Desktop Environment 桌面环境</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DE in WSL</th>
+<th>Linux VM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>启动速度</td>
+<td>即时可用</td>
+<td>VM 启动 / VM 状态恢复</td>
+</tr>
+<tr>
+<td>配置难度</td>
+<td>相对麻烦</td>
+<td>简单，主流 Linux 发行版中都提供良好支持</td>
+</tr>
+<tr>
+<td>资源消耗</td>
+<td>少，仅额外添加 Win 端 XServer 消耗</td>
+<td>多，需要考虑 VM Supervisor 的 overhead</td>
+</tr>
+</tbody>
+</table>
+<h2 id="步骤">步骤</h2>
+<blockquote>
+<p>参考自：https://github.com/QMonkey/wsl-tutorial</p>
+<p>其他链接：</p>
+<ul>
+<li><a href="https://www.lainme.com/doku.php/blog/2018/07/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8windows_10%E4%B8%8A%E8%A3%85x">如何优雅的在windows_10上装x</a></li>
+<li><a href="https://www.jianshu.com/p/c936a8a2180e">https://www.jianshu.com/p/c936a8a2180e</a></li>
+</ul>
+</blockquote>
+<blockquote>
+<p>我自己的环境：Windows 10 1909, WSL 1, Ubuntu 18.04</p>
+</blockquote>
+<ol start="0">
+<li>
+<p>前置要求：配置好 WSL 1，发行版 Ubuntu 18.04</p>
+</li>
+<li>
+<p>在 Windows 下安装 <a href="https://sourceforge.net/projects/vcxsrv/">VcXsrv Windows X Server</a>，安装过程中一路下一步即可。</p>
+</li>
+<li>
+<p>在 WSL 中安装 <code>xfce4</code>, <code>xfce4-terminal</code></p>
+<blockquote>
+<p>为什么用 XFCE：小，资源占用少，比较适合我们当前的需求</p>
+</blockquote>
+<pre><code>sudo apt-get update
+sudo apt-get install xfce4-terminal xfce4
+</code></pre></li>
+<li>
+<p>在 WSL 中配置 <code>dbus</code></p>
+<pre><code>sudo dpkg-reconfigure dbus &amp;&amp; sudo service dbus restart
+</code></pre></li>
+<li>
+<p>修改 <code>~/.bashrc</code>，加入以下内容，随后运行 <code>source ~/.bashrc</code> 使其生效</p>
+<pre><code>export DISPLAY=:0.0
+export LIBGL_ALWAYS_INDIRECT=1
+</code></pre></li>
+<li>
+<p>在 Windows 中运行 <code>XLaunch</code> （先前 <code>VcXsrv</code> 安装的一部分），在第一个配置页面选择 <code>One large window</code> 或者 <code>One large window without titlebar</code>（区别是 Windows 下，DE 的显示窗口是否会有标题栏），随后一路下一步。</p>
+</li>
+<li>
+<p>在 WSL 中运行 <code>startxfce4</code>，观察 Windows 下 <code>VcXsrv</code> 是否正确启动。如果一切正常，此时应该会显示 Xfce 4 的默认壁纸，并开始 DE 初始化过程。</p>
+</li>
+</ol>
+<p>如果只是需要一个正常运行的 DE 的话，到此即可。以下步骤为添加中文支持（字体和输入法）。</p>
+<ol start="7">
+<li>
+<p>在 WSL 中安装中文字体和 <code>fcitx</code> 输入法框架，并生成 <code>systemd</code> Machine ID</p>
+<pre><code>sudo apt-get install fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
+sudo apt-get install fcitx fcitx-pinyin dbus-x11
+sudo systemd-machine-id-setup
+</code></pre></li>
+<li>
+<p>加入输入法设定至 <code>~/.profile</code></p>
+<pre><code>export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+</code></pre></li>
+<li>
+<p>更改 <code>dbus</code> 配置让 <code>fcitx</code> 能正常启动：向 <code>/etc/dbus-1/session.conf</code> 中写入以下内容</p>
+<pre><code>&lt;listen&gt;tcp:host=localhost,port=0&lt;/listen&gt;
+&lt;auth&gt;ANONYMOUS&lt;/auth&gt;
+&lt;allow_anonymous/&gt;
+</code></pre></li>
+<li>
+<p>安装<a href="https://pinyin.sogou.com/linux/?r=pinyin">搜狗拼音</a></p>
+<blockquote>
+<p>安装搜狗拼音的 deb 的时候，第一次会因为缺少依赖而失败，因此先用 <code>-f</code> 补充缺失的依赖，再重新安装，就可以完成了。</p>
+</blockquote>
+<pre><code>wget 'http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb?st=LAPO53d3V5UzEfPO5y_C6g&amp;e=1580122419&amp;fn=sogoupinyin_2.3.1.0112_amd64.deb'
+mv sogoupinyin_2.3.1.0112_amd64.deb\?st\=LAPO53d3V5UzEfPO5y_C6g\&amp;e\=1580122419\&amp;fn\=sogoupinyin_2.3.1.0112_amd64.deb sogoupinyin.deb
+sudo dpkg -i sogoupinyin.deb
+sudo apt-get install -f
+sudo dpkg -i sogoupinyin.deb
+</code></pre></li>
+<li>
+<p>配置搜狗拼音：运行 <code>startxfce4</code> 启动 Xfce，右键单击右上角「键盘」图标，选择 Configure。在打开的窗口中点击左下角「+」按钮，搜索并选中「Sogou Pinyin - Chinese (China)」（如果不想搜索可以直接拖到列表底部），点击「OK」完成添加。</p>
+</li>
+<li>
+<p>（可选）测试输入法：安装 <code>gedit</code>，并测试能否在其中正确输入中文。输入前，可能需要从右上角「键盘」图标选中 Input Method - Sogou Pinyin 作为当前输入法。</p>
+</li>
+</ol>
+<h2 id="原理解析">原理解析</h2>
+<p>为什么这个能 Work 呢？其实这就是上古时代的正确用法：Server 进行主要运算，Client 只作为操作终端，提供图形显示和输入。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/posts/utils-ahk/">
+		<img class="icon-text" src="/img/prev.svg"/>Utils.ahk</a>
+
+
+	<a class="next-post" href="/posts/repair-install/">不丢失数据的重装 - Repair Install<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/posts/utils-ahk/">Utils.ahk</a></li>
+  	
+  	<li><a href="/posts/migrate-note/">博客迁移记录</a></li>
+  	
+  	<li><a href="/posts/what-software-i-am-using/">我最近在用什么软件？</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	<div id="disqus_thread" class="no-print"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'nekonull';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+<a href="https://www.linkedin.com/in/%E4%B9%8B%E7%9D%BF-%E5%8D%A2-8779351b2/"><img class="icon-social" src="/img/linkedin.svg" alt="LinkedIn"/></a>
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

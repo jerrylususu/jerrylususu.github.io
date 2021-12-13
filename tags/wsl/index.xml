@@ -18,10 +18,10 @@
     
     <item>
       <title>给 WSL 安装桌面环境</title>
-      <link>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</link>
+      <link>/posts/install-de-in-wsl/</link>
       <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
       
-      <guid>/posts/%E7%BB%99-wsl-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</guid>
+      <guid>/posts/install-de-in-wsl/</guid>
       <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
     </item>
     

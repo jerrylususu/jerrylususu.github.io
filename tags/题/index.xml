@@ -9,10 +9,10 @@
     <lastBuildDate>Sun, 22 Aug 2021 22:02:00 +0300</lastBuildDate><atom:link href="/tags/%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>调用栈也是栈</title>
-      <link>/posts/%E8%B0%83%E7%94%A8%E6%A0%88%E4%B9%9F%E6%98%AF%E6%A0%88/</link>
+      <link>/posts/call-stack-is-also-a-stack/</link>
       <pubDate>Sun, 22 Aug 2021 22:02:00 +0300</pubDate>
       
-      <guid>/posts/%E8%B0%83%E7%94%A8%E6%A0%88%E4%B9%9F%E6%98%AF%E6%A0%88/</guid>
+      <guid>/posts/call-stack-is-also-a-stack/</guid>
       <description>又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下： 定义一类字符串为 NB 串，每个 NB 串有一个对应的 NB 值 空串是一个 NB 串，且其 NB 值为 1 对一个 NB</description>
     </item>
     

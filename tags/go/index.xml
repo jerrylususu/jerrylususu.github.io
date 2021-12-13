@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Nekonull&#39;s Garden</title>
+    <link>/tags/go/</link>
+    <description>Recent content in Go on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go 监控协程数量</title>
+      <link>/share/go-monitor-goroutine-count/</link>
+      <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
+      
+      <guid>/share/go-monitor-goroutine-count/</guid>
+      <description>继续补全之前写 Raft 的 debug 过程。在解决了 Timer 问题之后，发现如果多次重复测试（用 --count 10），依然会存在 CPU 占用率不断上升的情况，虽然上升幅度有所减小，但多</description>
+    </item>
+    
+    <item>
+      <title>Go Timer 的使用姿势</title>
+      <link>/share/go-timer-correct-usage/</link>
+      <pubDate>Mon, 13 Dec 2021 16:32:43 +0300</pubDate>
+      
+      <guid>/share/go-timer-correct-usage/</guid>
+      <description>之前写 Raft 的时候，用 Timer 来处理定时事件，但是之后在测试的时候遇到了一些诡异的问题，具体表现是随着测试重复进行，CPU 占用率越来越高。上 pprof 检查了一</description>
+    </item>
+    
+  </channel>
+</rss>

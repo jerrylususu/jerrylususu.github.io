@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>调用栈也是栈 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="直接上 eval 就好了">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+		
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>调用栈也是栈</h1>
+	<h5>
+		
+		<time datetime="2021-08-22 22:02:00 &#43;0300 &#43;03">Aug 22, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e9%a2%98">题</a>
+				
+				<a href="/tags/hack">hack</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下：</p>
+<ul>
+<li>
+<p>定义一类字符串为 NB 串，每个 NB 串有一个对应的 NB 值</p>
+</li>
+<li>
+<p>空串是一个 NB 串，且其 NB 值为 1</p>
+</li>
+<li>
+<p>对一个 NB 串，在其两侧加上括号后依然是一个合法的 NB 串，且其 NB 值为原串 NB 值加 1</p>
+</li>
+<li>
+<p>对两个 NB 串，将其拼接后依然是一个合法的 NB 串，且其 NB 值为两个原串 NB 值的乘积</p>
+</li>
+<li>
+<p>问：给定一个已知合法的 NB 串，求其 NB 值</p>
+</li>
+<li>
+<p>样例</p>
+<pre><code>(())() -&gt; 3*2 = 6
+(()())() -&gt; 5*2 = 10
+()()()(()) -&gt; 2*2*2*3 = 24
+</code></pre></li>
+</ul>
+<p>看到括号，第一反应当然是用栈。先想了一会有没有只扫描一遍字符串的做法，但是很可惜没想出来。最后想了一个先构造树，再在树上遍历的做法，解答如下。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> java.util.LinkedList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Stack<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NBString</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        String s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;(()())()&#34;</span><span style="color:#f92672">;</span>
+        NBNode root <span style="color:#f92672">=</span> buildTree<span style="color:#f92672">(</span>s<span style="color:#f92672">);</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>getNode<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> <span style="color:#f92672">-</span> 1<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> NBNode <span style="color:#a6e22e">buildTree</span><span style="color:#f92672">(</span>String s<span style="color:#f92672">){</span>
+        NBNode root <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NBNode<span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">char</span><span style="color:#f92672">[]</span> chars <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span><span style="color:#a6e22e">toCharArray</span><span style="color:#f92672">();</span>
+        Stack<span style="color:#f92672">&lt;</span>NBNode<span style="color:#f92672">&gt;</span> stack <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Stack<span style="color:#f92672">&lt;&gt;();</span>
+
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> chars<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">char</span> c <span style="color:#f92672">=</span> chars<span style="color:#f92672">[</span>i<span style="color:#f92672">];</span>
+
+            <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>c<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;(&#39;</span><span style="color:#f92672">){</span>
+                NBNode father<span style="color:#f92672">;</span>
+                <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>stack<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">()){</span>
+                    father <span style="color:#f92672">=</span> root<span style="color:#f92672">;</span>
+                <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+                    father <span style="color:#f92672">=</span> stack<span style="color:#f92672">.</span><span style="color:#a6e22e">peek</span><span style="color:#f92672">();</span>
+                <span style="color:#f92672">}</span>
+
+                NBNode newNode <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> NBNode<span style="color:#f92672">(</span>father<span style="color:#f92672">);</span>
+                father<span style="color:#f92672">.</span><span style="color:#a6e22e">child</span><span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>newNode<span style="color:#f92672">);</span>
+                stack<span style="color:#f92672">.</span><span style="color:#a6e22e">push</span><span style="color:#f92672">(</span>newNode<span style="color:#f92672">);</span>
+
+            <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>c<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;)&#39;</span><span style="color:#f92672">){</span>
+                stack<span style="color:#f92672">.</span><span style="color:#a6e22e">pop</span><span style="color:#f92672">();</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#66d9ef">return</span> root<span style="color:#f92672">;</span>
+
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">getNode</span><span style="color:#f92672">(</span>NBNode node<span style="color:#f92672">){</span>
+        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>node<span style="color:#f92672">==</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#66d9ef">return</span> 1<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">int</span> layerProd <span style="color:#f92672">=</span> 1<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>NBNode NBNode <span style="color:#f92672">:</span> node<span style="color:#f92672">.</span><span style="color:#a6e22e">child</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            layerProd <span style="color:#f92672">*=</span> getNode<span style="color:#f92672">(</span>NBNode<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> layerProd <span style="color:#f92672">+</span> 1<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NBNode</span> <span style="color:#f92672">{</span>
+    NBNode head<span style="color:#f92672">;</span>
+    List<span style="color:#f92672">&lt;</span>NBNode<span style="color:#f92672">&gt;</span> child<span style="color:#f92672">;</span>
+
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">NBNode</span><span style="color:#f92672">(</span>NBNode _head<span style="color:#f92672">){</span>
+        head <span style="color:#f92672">=</span> _head<span style="color:#f92672">;</span>
+        child <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;&gt;();</span>
+    <span style="color:#f92672">}</span>
+    
+<span style="color:#f92672">}</span>
+</code></pre></div><p>但是如果换个角度来看，其实题目描述的 NB 串，可以被视为是一个简单的类型定义，语法大致如下。然后要做的，就是把输入数据视作代码，构造抽象语法树，然后在语法树上操作得到结果了。</p>
+<pre><code>NBString = &quot;&quot; | &quot;(&quot; NBString &quot;)&quot; | NBString NBString
+</code></pre><p>如果 OJ 提供了类似于 Haskell 之类内置支持模式匹配的语言，那么就很简单了：把输入 tokenize，写一个 <code>calc</code> 函数，然后直接按照题目要求写匹配规则和返回值就好了。伪代码如下。</p>
+<pre><code>calc :: NBString -&gt; Int
+calc = match str
+	case &quot;&quot;: return 1
+	case &quot;(&quot; sub &quot;)&quot;: return 1 + calc sub
+	case sub1 sub2: return calc sub1 * calc sub 2
+</code></pre><p>然而现实并没有这么美好。但是难道就应该就此放弃吗？未必。实际上编程语言内的调用栈，也是一个栈，或者说语言本身就提供了我们所期望的解析语法树的功能。高人指点之下，可以用以下的 hack 来实现：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+    <span style="color:#66d9ef">return</span> x<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+
+s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;(()())()&#34;</span>
+s <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;(&#34;</span>,<span style="color:#e6db74">&#34;f(&#34;</span>)<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;)f(&#34;</span>,<span style="color:#e6db74">&#34;)*f(&#34;</span>)
+<span style="color:#66d9ef">print</span>(eval(s))
+</code></pre></div><p>上文代码所做的，实际上就是把输入串，替换成了一系列函数调用，并添加了符合题目要求的函数体。最后只需要直接调用 Python 内置的 <code>eval</code>，就可以得到正确的答案了。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/posts/tf-cert-blog/">
+		<img class="icon-text" src="/img/prev.svg"/>Tensorflow 开发者认证记录</a>
+
+
+	<a class="next-post" href="/posts/distributed-system-course-notes/">分布式系统课程笔记<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/share/ms-rdp-8021x-bug/">MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</a></li>
+  	
+  	<li><a href="/posts/tf-cert-blog/">Tensorflow 开发者认证记录</a></li>
+  	
+  	<li><a href="/share/markdown-code-in-table/">Markdown 表格内的代码块</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	<div id="disqus_thread" class="no-print"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'nekonull';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+<a href="https://www.linkedin.com/in/%E4%B9%8B%E7%9D%BF-%E5%8D%A2-8779351b2/"><img class="icon-social" src="/img/linkedin.svg" alt="LinkedIn"/></a>
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
