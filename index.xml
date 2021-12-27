@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Dec 2021 10:43:25 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 CSS Filter 反色实现简易黑暗模式</title>
+      <link>/share/css-filter-dark-mode/</link>
+      <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
+      
+      <guid>/share/css-filter-dark-mode/</guid>
+      <description>本博客使用的 Manis 主题 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手</description>
+    </item>
+    
     <item>
       <title>VNC 连接到物理屏幕</title>
       <link>/share/vnc-to-physical-display/</link>

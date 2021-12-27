@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>用 CSS Filter 反色实现简易黑暗模式 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="比想象中的简单">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>用 CSS Filter 反色实现简易黑暗模式</h1>
+	<h5>
+		
+		<time datetime="2021-12-23 10:43:25 &#43;0300 &#43;03">Dec 23, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e5%89%8d%e7%ab%af">前端</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>本博客使用的 <a href="https://github.com/yursan9/manis-hugo-theme">Manis 主题</a> 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手搜索了一下，发现已经有<a href="https://www.zhangxinxu.com/wordpress/2020/11/css-mix-blend-mode-filter-dark-theme/">前人</a>提出了使用 CSS Filter 实现简易黑暗模式的想法，甚至有<a href="https://radu-matei.com/blog/dark-mode/">代码</a>可以直接应用于 Hugo 博客。相较于 media query，直接使用 CSS Filter 不仅操作上更简单，也允许用户直接切换明亮/黑暗模式，而不需要调整系统/浏览器的全局设定。</p>
+<p>具体 CSS 实现中，先使用 <code>invert(1)</code> 对整个网页的颜色反相，但这一操作也会引起颜色的色调反转，因此需要再用 <code>hue-rotate(180deg)</code> 将色调转回来。然而这样的操作对文字而言很合适，但是会影响图片、视频等元素的显示，如同被 X 射线照射一般，最后还需要对这些需要被黑暗模式排除的元素再用一次 <code>invert(1) hue-rotate(180deg)</code> 负负得正转回来。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">html</span> {
+    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#ebebeb</span> <span style="color:#75715e">!important</span>;
+}
+
+<span style="color:#f92672">html</span> {
+<span style="color:#66d9ef">filter</span>: invert(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>) hue-rotate(<span style="color:#ae81ff">180</span><span style="color:#66d9ef">deg</span>);
+}
+
+<span style="color:#75715e">/* using not to exclude certain elements */</span>
+<span style="color:#f92672">img</span>:<span style="color:#a6e22e">not</span><span style="color:#f92672">(</span>.<span style="color:#a6e22e">icon-text</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">icon-social</span><span style="color:#f92672">),</span>
+<span style="color:#f92672">video</span><span style="color:#f92672">,</span>
+<span style="color:#f92672">code</span> {
+<span style="color:#66d9ef">filter</span>: invert(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>) hue-rotate(<span style="color:#ae81ff">180</span><span style="color:#66d9ef">deg</span>) contrast(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>);
+}
+</code></pre></div><p>为了让用户能够切换明亮/黑暗模式，需要引入一个额外的切换图标，点击时会对应插入/删除黑暗模式的 CSS tag，并将用户的设定保存到 <code>localstorage</code>。在用户未明确设定偏好时，应遵循系统/浏览器全局的黑暗模式设定，因此这里又用 <code>window.matchMedia</code> 来探测。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">toggle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;dark-mode-toggle&#34;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">darkTheme</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;dark-mode-theme&#34;</span>);
+
+<span style="color:#75715e">// probe system default dark mode setting
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>
+<span style="color:#66d9ef">if</span> (window.<span style="color:#a6e22e">matchMedia</span> <span style="color:#f92672">&amp;&amp;</span> window.<span style="color:#a6e22e">matchMedia</span>(<span style="color:#e6db74">&#39;(prefers-color-scheme: dark)&#39;</span>).<span style="color:#a6e22e">matches</span>) {
+    <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dark&#34;</span>;
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;light&#34;</span>;
+}
+
+<span style="color:#75715e">// use user preference if possible
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">savedTheme</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">localStorage</span>.<span style="color:#a6e22e">getItem</span>(<span style="color:#e6db74">&#34;dark-mode-storage&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">systemDefault</span>;
+<span style="color:#a6e22e">setTheme</span>(<span style="color:#a6e22e">savedTheme</span>);
+
+<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;click&#34;</span>, () =&gt; {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">endsWith</span>(<span style="color:#e6db74">&#34;/img/moon.svg&#34;</span>) ) {
+        <span style="color:#a6e22e">setTheme</span>(<span style="color:#e6db74">&#34;dark&#34;</span>);
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">endsWith</span>(<span style="color:#e6db74">&#34;/img/sun.svg&#34;</span>) ) {
+        <span style="color:#a6e22e">setTheme</span>(<span style="color:#e6db74">&#34;light&#34;</span>);
+    }
+
+});
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setTheme</span>(<span style="color:#a6e22e">mode</span>) {
+    <span style="color:#a6e22e">localStorage</span>.<span style="color:#a6e22e">setItem</span>(<span style="color:#e6db74">&#34;dark-mode-storage&#34;</span>, <span style="color:#a6e22e">mode</span>);
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mode</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;dark&#34;</span>) {
+        <span style="color:#a6e22e">darkTheme</span>.<span style="color:#a6e22e">disabled</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+        <span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/img/sun.svg&#34;</span>;
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mode</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;light&#34;</span>) {
+        <span style="color:#a6e22e">darkTheme</span>.<span style="color:#a6e22e">disabled</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+        <span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/img/moon.svg&#34;</span>;
+    }
+} 
+</code></pre></div><p>完整修改可见于我给这一主题实现黑暗模式的 <a href="https://github.com/yursan9/manis-hugo-theme/pull/22">Pull Request</a>，一个简单的示例可见于 <a href="https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5">Gist</a>。最后的效果如下。</p>
+<p><img src="/img/css-filter-dark-mode-demo.png" alt="Demo"></p>
+<p><strong>12/27 更新</strong>：PR 已被接收并合并。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/share/vnc-to-physical-display/">
+		<img class="icon-text" src="/img/prev.svg"/>VNC 连接到物理屏幕</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/share/vnc-to-physical-display/">VNC 连接到物理屏幕</a></li>
+  	
+  	<li><a href="/share/build-emoji-regex/">构造能匹配所有 emoji 的正则表达式</a></li>
+  	
+  	<li><a href="/share/go-monitor-goroutine-count/">Go 监控协程数量</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	<div id="disqus_thread" class="no-print"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'nekonull';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+<a href="https://www.linkedin.com/in/%E4%B9%8B%E7%9D%BF-%E5%8D%A2-8779351b2/"><img class="icon-social" src="/img/linkedin.svg" alt="LinkedIn"/></a>
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
