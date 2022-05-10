@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>理论 on Nekonull&#39;s Garden</title>
+    <link>/tags/%E7%90%86%E8%AE%BA/</link>
+    <description>Recent content in 理论 on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 10 May 2022 17:04:00 +0300</lastBuildDate><atom:link href="/tags/%E7%90%86%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(译) 复杂系统如何失效</title>
+      <link>/posts/how-complex-system-fail-cn/</link>
+      <pubDate>Tue, 10 May 2022 17:04:00 +0300</pubDate>
+      
+      <guid>/posts/how-complex-system-fail-cn/</guid>
+      <description>复杂系统如何失效 原文链接：How Complex Systems Fail 译者注：在阅读 Slack Engineering Team 发布的 2022/2/22 事故报告时，注意到了这篇文章。作者描述了系统的复杂性为维护人员带来的挑战，</description>
+    </item>
+    
+  </channel>
+</rss>
