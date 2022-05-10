@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Python `itertools.permutations` 使用的排列算法 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="似乎之前没人写过？那就我来吧。">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Python `itertools.permutations` 使用的排列算法</h1>
+	<h5>
+		
+		<time datetime="2022-05-10 22:54:00 &#43;0800 &#43;0800">May 10, 2022</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e7%ae%97%e6%b3%95">算法</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p><strong>TL;DR</strong>：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。</p>
+<h2 id="引子">引子</h2>
+<p>最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 <code>itertools</code>，其中有一个 <code>permutations(iterable, r)</code> 方法，可以对一个给定的 iterable 生成所有大小为 <code>r</code> 的排列，且输出按照字典序排列。</p>
+<blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#f92672">&gt;&gt;&gt;</span> list(permutations(<span style="color:#e6db74">&#39;ABCD&#39;</span>, <span style="color:#ae81ff">2</span>))
+[(<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>), (<span style="color:#e6db74">&#39;A&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>), 
+ (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>), (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>), (<span style="color:#e6db74">&#39;B&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>), 
+ (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>), (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;C&#39;</span>, <span style="color:#e6db74">&#39;D&#39;</span>), 
+ (<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;A&#39;</span>), (<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;B&#39;</span>), (<span style="color:#e6db74">&#39;D&#39;</span>, <span style="color:#e6db74">&#39;C&#39;</span>)]
+</code></pre></div></blockquote>
+<p>在我之前所接触的算法中，排列生成要么是基于回溯，要么是基于字典序，但无论哪种都只能生成全排列，而无法生成这样的部分排列（指生成的排列长度 <code>r</code> 和原输入长度 <code>n</code> 不同）。另一条思路是先生成所有长度为 <code>r</code> 的组合，然后再在每个组合内生成全排列，但这样无法保证输出按字典序（除非先手动收集再排序）。</p>
+<p>于是我打开了 Python 的 <code>itertools</code> 的官方文档，其中提供了与 CPython 实现等价的 Python 代码，<code>permutations</code> 方法的代码如下（<a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations">🔗</a>）：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">permutations</span>(iterable, r<span style="color:#f92672">=</span>None):
+    <span style="color:#75715e"># permutations(&#39;ABCD&#39;, 2) --&gt; AB AC AD BA BC BD CA CB CD DA DB DC</span>
+    <span style="color:#75715e"># permutations(range(3)) --&gt; 012 021 102 120 201 210</span>
+    pool <span style="color:#f92672">=</span> tuple(iterable)
+    n <span style="color:#f92672">=</span> len(pool)
+    r <span style="color:#f92672">=</span> n <span style="color:#66d9ef">if</span> r <span style="color:#f92672">is</span> None <span style="color:#66d9ef">else</span> r
+    <span style="color:#66d9ef">if</span> r <span style="color:#f92672">&gt;</span> n:
+        <span style="color:#66d9ef">return</span>
+    indices <span style="color:#f92672">=</span> list(range(n))
+    cycles <span style="color:#f92672">=</span> list(range(n, n<span style="color:#f92672">-</span>r, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>))
+    <span style="color:#66d9ef">yield</span> tuple(pool[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> indices[:r])
+    <span style="color:#66d9ef">while</span> n:
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> reversed(range(r)):
+            cycles[i] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">if</span> cycles[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                indices[i:] <span style="color:#f92672">=</span> indices[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:] <span style="color:#f92672">+</span> indices[i:i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
+                cycles[i] <span style="color:#f92672">=</span> n <span style="color:#f92672">-</span> i
+            <span style="color:#66d9ef">else</span>:
+                j <span style="color:#f92672">=</span> cycles[i]
+                indices[i], indices[<span style="color:#f92672">-</span>j] <span style="color:#f92672">=</span> indices[<span style="color:#f92672">-</span>j], indices[i]
+                <span style="color:#66d9ef">yield</span> tuple(pool[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> indices[:r])
+                <span style="color:#66d9ef">break</span>
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">return</span>
+</code></pre></div><h3 id="尝试初步理解">尝试初步理解</h3>
+<p>虽然顶部有两行注释，不过这也只是描述了这个方法的效果，对其原理并没有任何解释。往后继续看，可以发现算法首先构造了两个 list：<code>indices</code> 和 <code>cycles</code>，且之后每次输出结果（<code>yield</code>）实际上都是将 <code>indices</code> 中的前 <code>r</code> 个输出。再往后算法进入了一个神秘的 <code>for</code> 循环，对 <code>cycles</code> 中的元素做了一些修改，用 <code>cycles</code> 的值对 <code>indices</code> 中的一些元素做了交换。仅从代码层面出发，对算法的理解似乎也就止步于此了。然而这并没有回答一个重要问题：为什么这个算法能工作？</p>
+<h3 id="寻找相关信息">寻找相关信息</h3>
+<p>考虑到 <code>itertools</code> 库是在 Python 2.3 （2003 年 7 月）被引入标准库的，这个算法已经算得上历史悠久了。再加之 <code>itertools</code> 库的广泛使用，这个算法的原理应该是早已被详尽记录的。带着这样的期望，我开始用各种关键词组合搜索相关信息。可惜的是，除了 Stack Overflow 上一个 2010 年的问题（<a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations">🔗</a>），和一个知乎提问（<a href="https://www.zhihu.com/question/440688033">🔗</a>），就没有任何其他相关的网页了，甚至连当年的提交记录都找不到。</p>
+<p>既然如此，那就只能从这两个链接入手了。</p>
+<ul>
+<li>Stack Overflow 的答主 Alex 写了一篇长文回答，但一开头就说「你需要理解 Permutation Cycle 的数学理论，才能理解这个算法」。于是我又回头恶补了一番组合数学，然而就算我大概知道 Permutation Cycle 是怎么一回事，对这个算法依然毫无头绪。（评论中也有人自称有 6 年抽象代数经验，但不认为这个算法与数学相关。）不过 Alex 的回答提供了一些有用的直觉，至少读完这个回答我大概理解 <code>cycles</code> 在算法执行过程中是如何变化的了。具体而言，<code>cycles</code> 的变化类似于「倒计时」，或者说「带借位的减法」，每次最后一位到 0 时，就会触发前面的一位减 1。然而我对<code>indices</code> 的变化依然云里雾里。</li>
+<li>知乎提问中，答主「杨个毛」提供了一个看起来很有说服力的回答（剧透：而且也的确如此）：「那个代码可以看成下列递归程序的强行非递归版」，指出了 <code>cycles</code> 是<strong>变进制数</strong>，并提供了一个原始递归版本。可惜的是，对于这个算法为什么可以输出正确结果依然没有解释（也有可能是我没有完全理解）。</li>
+</ul>
+<h3 id="自己来">自己来</h3>
+<p>已有的信息似乎不是很充分。看来我只能自己来了。在加了一堆 <code>print</code> 并在纸上手动模拟了多次这个算法之后，我认为我可能大概理解它的工作原理，并且可以证明其正确性了。下文将详述我的理解。</p>
+<h2 id="算法">算法</h2>
+<h3 id="起步">起步</h3>
+<p>开始前，需要统一一下后文使用的记号：</p>
+<ul>
+<li><code>n</code> 代表输入 iterable 的长度</li>
+<li><code>r</code> 代表输出的排列元组的长度</li>
+</ul>
+<p>并回顾我们先前阅读算法得到的理解：</p>
+<ul>
+<li>对输入的 <code>iterable</code> 会遍历其所有元素并放在 <code>pool</code> 中</li>
+<li>每次算法输出结果（<code>yield</code>），实际上只是取了 <code>indices</code> 列表的前 <code>r</code> 个 index，并输出 <code>pool</code> 中的对应元素。</li>
+</ul>
+<p>我们将按照如下步骤理解这个算法：</p>
+<ol>
+<li>理解 <code>cycles</code> 的变化</li>
+<li>理解 <code>indices</code> 的变化，并尝试说明这个算法的正确性</li>
+<li>尝试重新实现这个算法的「原始」递归版本</li>
+</ol>
+<h3 id="cycles"><code>cycles</code></h3>
+<p>我们首先从 <code>cycles</code> 变量入手，理解它在这个算法中是如何变化的。这个阶段我们暂时先不考虑 <code>indices</code>。</p>
+<p>可以先指定一些具体的输入，然后尝试加一些 <code>print</code> 语句。以 <code>iterable=&quot;ABCD&quot;, r=2</code> 作为输入，在 <code>if</code> 和 <code>else</code> 两个分支执行前后中都插入 <code>print</code>，可以得到如下结果：（其中中括号说明算法有输出 <code>yield</code>，大括号部分算法无输出）</p>
+<pre><code>[4,3] -&gt; [4,2] -&gt; [4,1] -&gt; {4,0} -&gt; {4,3} -&gt; 
+[3,3] -&gt; [3,2] -&gt; [3,1] -&gt; {3,0} -&gt; {3,3} -&gt; 
+[2,3] -&gt; [2,2] -&gt; [2,1] -&gt; {2,0} -&gt; {2,3} -&gt; 
+[1,3] -&gt; [1,2] -&gt; [1,1] -&gt; {1,0} -&gt; {1,3} -&gt; {0,3} -&gt; {4,3}
+</code></pre><p>我们可以直观感受到，似乎 <code>cycles</code> 变量就像一个「倒计时」，或者说「带借位的减法」。</p>
+<ul>
+<li>一开始 <code>cycles[0]</code> 被初始化为 4，<code>cycles[1]</code> 被初始化为 3。</li>
+<li>之后的循环中，一般是 <code>cycles[1]</code> 不断被减 1。当 <code>cycles[1] != 0</code> 时，算法会产生一次输出。</li>
+<li>如果 <code>cycles[1] == 0</code>，会导致 <code>cycles[0]</code> （前一位）减 1，并将 <code>cycles[1]</code> 重设回其初始值 3。</li>
+<li>最后当 <code>cycles[0] == 0</code> 时，算法结束。</li>
+</ul>
+<p>从这个具体的示例出发，我们可以这样理解 <code>cycles</code> 的变化：</p>
+<ul>
+<li>一开始 <code>cycles</code> 被初始化为 <code>range(n, n-r, -1)</code>，即 <code>cycles[0]=n</code>，<code>cycles[1]=n-1</code>，&hellip;，<code>cycles[i]=n-i</code>。</li>
+<li>之后的循环中，通常只有最后一个元素 <code>cycles[r-1]</code> 在不断递减。如果 <code>cycles[r-1]</code> 递减后值不为 0，则算法会产生一次输出。用我们之前提到的「倒计时」类比，可以将这种情况称之为 tick。</li>
+<li>如果 <code>cycles</code> 中的某个元素（如 <code>cycles[i]</code>）为 0，会导致其前面的元素被（<code>cycles[i-1]</code>）减 1，并将这个元素（<code>cycles[i]</code>）重设回其初始值（<code>n-i</code>）。这一行为类似于倒计时中秒为 0 时会导致分减 1，并将秒重设回 0。继续用「倒计时」类比，可以将这种情况称之为 reset。</li>
+</ul>
+<p>有了这一直观感受，就可以为 <code>cycles</code> 找出一个可能的解释（「物理含义」）了。我认为，<code>cycles</code> 代表的是 <strong>「每个位置上剩余的可用选择数」</strong> 。如果将 <code>cycles</code> 视作一个变进制数，则 <code>cycles</code> 也代表 <strong>「总体剩余还没有输出的排列数」</strong> 。理由如下：</p>
+<ul>
+<li>一开始 <code>cycles</code> 被初始化为 <code>range(n, n-r, -1)</code>，而可以计算出对给定的 <code>n</code>, <code>r</code> 所有的排列有 <code>P(n,r) = n*(n-1)*...*(n-r-1)</code> 种。</li>
+<li>每次 tick，算法生成一个排列，消耗一个选择，<code>cycles[i]</code> 也减 1</li>
+<li>每次 reset，实际上就是在 <code>cycles</code> 这个变进制数上的借位减法</li>
+<li>最后在 <code>cycles</code> 上首位为 0 时算法结束，代表所有排列的选择都已经被消耗（输出）了，已经没有更多的排列了。</li>
+</ul>
+<p>其实 <code>cycles</code> 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 <code>indices</code> 的理解就大部分是我自己的了。</p>
+<h3 id="indices"><code>indices</code></h3>
+<p>现在我们来看看 <code>indices</code> 是如何变化的。和之前对 <code>cycles</code> 的探索一样，我们也先从一个具体的例子开始：<code>iterable=&quot;ABCDE&quot;,r=3</code>，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 <code>print</code> 后，我们可以得到如下的变化过程。</p>
+<p><img src="/img/py_permutation.png" alt="py_permutation"></p>
+<p>这个图稍微有些复杂。以下是进一步解释。</p>
+<ul>
+<li>图的阅读顺序是从上至下，按照时间顺序展示了<code>indices</code> 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。</li>
+<li>这里选择展示前 3 次输出（即 <code>i=2</code>），对应 <code>cycles[2]</code> 从 3 到 0 的过程。别忘了每次进入循环前 <code>cycles[2]</code> 会被递减。</li>
+<li>为方便描述，我们可以把 <code>indices</code> 列表拆成 3 个部分：
+<ul>
+<li>fixed：<code>indices[0:1]</code>，在执行时不会变化</li>
+<li>changing：<code>indices[2]</code>，这是在不断被交换的元素，和 fixed 一起组成了算法输出（<code>indices[0:2]</code>）</li>
+<li>backlog：<code>indices[3:4]</code>，这里存放着已经被使用的元素和还未被使用的元素</li>
+</ul>
+</li>
+<li>在每个 tick 中，changing 位置上的元素和 backlog 中的一个元素交换（<code>swap</code>），并触发一次输出。可以注意到，交换前后 backlog 中元素依然维持其相对顺序。
+<ul>
+<li>ABC{DE} -&gt; ABD{CE} -&gt; ABE{CD}</li>
+<li>注：这里将算法开始时的首次输出也视作一个 tick，因为进入循环前依然触发了递减，消耗了一个可能性。</li>
+<li>相关代码：<code>indices[i], indices[-j] = indices[-j], indices[i]</code></li>
+</ul>
+</li>
+<li>算法结束前，一共触发了 3 次输出。这已经穷尽了固定前缀为 <code>AB</code>，最后一个可选项为 <code>C</code>, <code>D</code>, <code>E</code> 的排列。</li>
+<li>在最后 reset 时，changing 位置上的元素被移到了 backlog 后（<code>move_to_last</code>）。这一步完成后，changing + backlog 这个子列表（<code>indices[2:4]</code>）恢复了和算法开始时一样的顺序。
+<ul>
+<li>AB{E}CD -&gt; ABCD{E}</li>
+<li>相关代码：<code>indices[i:] = indices[i+1:] + indices[i:i+1]</code></li>
+</ul>
+</li>
+</ul>
+<p>可以发现，这部分执行过程，恰好满足了回溯算法的正确性要求：</p>
+<ul>
+<li>分步解决一个问题，每步中固定之前步骤的选择不变</li>
+<li>算法执行中，遍历当前步的所有可能性</li>
+<li>算法执行后，取消当前步的计算，退回上一步，选择下一个可选项</li>
+</ul>
+<p>虽然图中仅描述了一个子问题（<code>i=2</code>，或者说<code>i=r-1</code>），但不难发现对于其他的 <code>i</code>∈<code>[0, r-1]</code> 这一讨论都是成立的。这也（不严格地）说明了这一算法的确可以遍历所有的可能排列。输出顺序为字典序，则是因为每个 tick 中交换元素时都维护了 backlog 中的相对顺序。</p>
+<p>这部分讨论有些复杂，如果不太理解（或者不完全信服）的话，可以自己多加点 <code>print</code> ，或者手动在纸上执行感受一下。</p>
+<h3 id="重新实现">重新实现</h3>
+<p>现在我们已经了解了这个算法的原理，重新实现其原始递归版本也就不难了。</p>
+<ul>
+<li>递归调用时，需要一个参数指定当前修改的元素（changing）的 index</li>
+<li>在每一层调用中，交换 changing 和 backlog 中的所有项，并在每次交换（做出选择）后触发下一层</li>
+<li>如果 backlog 中的所有可选项都已经被选择（消耗）了，就把当前的 changing 移到 backlog 后，以撤销这一层的选择</li>
+</ul>
+<p>以下是一个可能的 Python 重新实现。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## a reimplementation of `itertools.permutation`</span>
+
+<span style="color:#75715e"># helpers</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">swap</span>(list, i, j):
+    list[i], list[j] <span style="color:#f92672">=</span> list[j], list[i]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">move_to_last</span>(list, i):
+    list[i:] <span style="color:#f92672">=</span> list[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:] <span style="color:#f92672">+</span> [list[i]]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_first_n_element</span>(list, n):
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(list[:n]))
+
+<span style="color:#75715e"># backtracking dfs</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">permutations</span>(list, r, changing_index):
+    <span style="color:#66d9ef">if</span> changing_index <span style="color:#f92672">==</span> r:
+        <span style="color:#75715e"># we&#39;ve reached the deepest level</span>
+        print_first_n_element(list, r)
+        <span style="color:#66d9ef">return</span>
+    
+    <span style="color:#75715e"># a pseudo `tick`</span>
+    <span style="color:#75715e"># process initial permutation</span>
+    <span style="color:#75715e"># which is just doing nothing (using the initial value)</span>
+    permutations(list, r, changing_index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+
+    <span style="color:#75715e"># note: initial permutaion has been outputed, thus the minus 1</span>
+    remaining_choices <span style="color:#f92672">=</span> len(list) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> changing_index
+    <span style="color:#75715e"># for (i=1;i&lt;=remaining_choices;i++)</span>
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, remaining_choices<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+        <span style="color:#75715e"># `tick` phases</span>
+        
+        <span style="color:#75715e"># make one swap</span>
+        swap_idx <span style="color:#f92672">=</span> changing_index <span style="color:#f92672">+</span> i
+        swap(list, changing_index, swap_idx)
+        <span style="color:#75715e"># finished one move at current level, now go deeper</span>
+        permutations(list, r, changing_index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+    
+    <span style="color:#75715e"># `reset` phase</span>
+    move_to_last(list, changing_index)
+
+<span style="color:#75715e"># wrapper</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">permutations_wrapper</span>(list, r):
+    permutations(list, r, <span style="color:#ae81ff">0</span>)
+
+<span style="color:#75715e"># main</span>
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    my_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;A&#34;</span>, <span style="color:#e6db74">&#34;B&#34;</span>, <span style="color:#e6db74">&#34;C&#34;</span>, <span style="color:#e6db74">&#34;D&#34;</span>]
+    permutations_wrapper(my_list, <span style="color:#ae81ff">2</span>)
+</code></pre></div><h3 id="递归转循环优化">递归转循环优化</h3>
+<p>出于性能和安全（防止爆栈）的考量，我们会想将这个算法的递归版本转换成循环版本。这需要我们用栈手动维护每一层递归的相关状态，包括递归中的变量和下一次执行的开始位置。幸运的是，对这个算法而言，我们需要维护的状态并不多。</p>
+<ul>
+<li>
+<p><code>r</code> 是已知且固定的，即栈的最大深度为 <code>r</code>，因此可以用一个固定大小的列表来表示栈中（每一层递归）的状态。</p>
+</li>
+<li>
+<p><code>changing_idx</code> 是每层递归的输入，代表当前层变化的元素。<code>changing_idx</code> 可以从栈的深度计算出来，栈底为 0，再上一层为 1&hellip; 因此实际上不需要维护。</p>
+</li>
+<li>
+<p><code>i</code> 或 <code>swap_idx</code> 为下一次交换的目标元素 index。这无法从栈本身的信息计算得到，需要我们维护。</p>
+</li>
+<li>
+<p>进入或重新回到当前层递归的开始位置，可以用 <code>i</code> 或 <code>swap_idx</code> 推算得到：如果还有剩余可选项，则跳转到 tick；反之跳转到 reset</p>
+</li>
+</ul>
+<p>基于上文分析，可以发现我们需要维护的栈有两个特点：</p>
+<ul>
+<li>长度固定为 <code>r</code></li>
+<li>每个元素上维护下一次交换的目标元素 index</li>
+</ul>
+<p>回头看看，这实际上就是 <code>cycles</code>。在「剩余可能数」的身份之外，<code>cycles</code> 也承担起了维护递归状态的职责。而作者巧妙利用了 Python 列表索引可以为负数从后往前的特性，统一了 <code>cycles</code> 的两面。</p>
+<p>至此，我们完成了对这一算法的分析。🎉</p>
+<h2 id="相关链接">相关链接</h2>
+<ul>
+<li>Python <code>itertools.permutation</code> 文档：<a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations">itertools &mdash; 为高效循环而创建迭代器的函数 — Python 3.10.4 文档</a></li>
+<li>CPython <code>itertools.permutation</code> 实现：<a href="https://github.com/python/cpython/blob/main/Modules/itertoolsmodule.c#L3212">cpython/itertoolsmodule.c at main · python/cpython (github.com)</a></li>
+<li>Stack Overflow 相关问题：<a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations">algorithm for python itertools.permutations - Stack Overflow</a></li>
+<li>知乎相关问题：<a href="https://www.zhihu.com/question/440688033">如何理解Python itertools.permutations中的全排列算法？ - 知乎 (zhihu.com)</a></li>
+<li>我给 Stack Overflow 问题写的回答：<a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations/72177891#72177891">algorithm for python itertools.permutations - Stack Overflow</a></li>
+</ul>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/posts/how-complex-system-fail-cn/">
+		<img class="icon-text" src="/img/prev.svg"/>(译) 复杂系统如何失效</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/posts/how-complex-system-fail-cn/">(译) 复杂系统如何失效</a></li>
+  	
+  	<li><a href="/share/css-filter-dark-mode/">用 CSS Filter 反色实现简易黑暗模式</a></li>
+  	
+  	<li><a href="/share/vnc-to-physical-display/">VNC 连接到物理屏幕</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	<div id="disqus_thread" class="no-print"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'nekonull';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

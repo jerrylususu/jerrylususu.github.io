@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Nekonull&#39;s Garden</title>
+    <link>/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 10 May 2022 22:54:00 +0800</lastBuildDate><atom:link href="/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python `itertools.permutations` 使用的排列算法</title>
+      <link>/posts/py-itertools-permutation-algo/</link>
+      <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
+      
+      <guid>/posts/py-itertools-permutation-algo/</guid>
+      <description>TL;DR：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。 引子 最近在算法复健，刷到了排列</description>
+    </item>
+    
+  </channel>
+</rss>
