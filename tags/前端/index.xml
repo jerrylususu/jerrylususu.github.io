@@ -6,7 +6,16 @@
     <description>Recent content in 前端 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 23 Dec 2021 10:43:25 +0300</lastBuildDate><atom:link href="/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>将已有的 Vue App 变为 PWA</title>
+      <link>/posts/vue-app-pwa/</link>
+      <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
+      
+      <guid>/posts/vue-app-pwa/</guid>
+      <description>之前写过一个用来辅助五十音记忆的小 App: Gojuon Quiz (源代码)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然</description>
+    </item>
+    
     <item>
       <title>用 CSS Filter 反色实现简易黑暗模式</title>
       <link>/share/css-filter-dark-mode/</link>
