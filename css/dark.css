@@ -9,6 +9,6 @@ filter: invert(100%) hue-rotate(180deg);
 img:not(.icon-text, .icon-social),
 video,
 code,
-#thread__container {
+iframe {
 filter: invert(100%) hue-rotate(180deg) contrast(100%);
 }
