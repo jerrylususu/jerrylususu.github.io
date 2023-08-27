@@ -1,0 +1,35 @@
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{{ .Hugo.Generator }}
+		{{ partial "metatitle" . }}
+		{{ partial "metadesc" . }}
+
+		{{ with .Site.Params.FaviconImg }}
+		<link rel="shortcut icon" href="{{.}}">
+		{{ end }}
+	
+		{{ partial "style" . }}
+	
+		{{ range .Site.Params.CustomCSS }}
+		<link rel="stylesheet" href="{{ . }}"/>
+		{{ end }}
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		{{ if .Site.Params.HighlightJs }}
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/{{- .Site.Params.HighlightJsStyle -}}.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+		{{ range .Site.Params.HighlightJsLanguages }}
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/{{- . -}}.min.js"></script>
+		{{ end }}
+		{{ end }}
+				
+		{{ template "_internal/google_analytics.html" . }}
+	</head>

@@ -1,0 +1,111 @@
+baseurl = "/"
+languageCode = "zh-cn"
+theme = "manis"
+paginate = 20
+defaultContentLanguage = "zh"
+hasCJKLanguage = true
+
+
+  # Code Highlighting (Chroma)
+# pygmentsCodeFences = true
+# pygmentsUseClasses = true
+
+disqusShortname = "nekonull"
+
+googleAnalytics = "G-R01JLDY2KE"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  # dir name of your blog content (default is `content/posts`)
+  #contentTypeName = "posts"
+  # ["orange", "blue", "red", "green", "pink"]
+  #themeColor = "blue"
+  # if you set this to 0, only submenu trigger will be visible
+  #showMenuItems = 5
+  # set theme to full screen width
+  #fullWidthTheme = false
+  # center theme with default width
+  #centerTheme = true
+  # set a custom favicon (default is a `themeColor` square)
+  # favicon = "favicon.ico"
+
+  mainSections = ["posts"]
+  workSections = ["share"]
+  latestCount = 5
+  utterancesTheme = "github-dark"
+  github = "https://github.com/jerrylususu/"
+  linkedin = "https://www.linkedin.com/in/%E4%B9%8B%E7%9D%BF-%E5%8D%A2-8779351b2/"
+  disqusSections = ["posts","share"]
+
+
+[languages]
+
+  [languages.zh]
+    languageCode = "zh-cn"
+    title = "Nekonull's Garden"
+    subtitle = "Always read. Mostly hack. Sometimes write."
+    tagline = "Always read. Mostly hack. Sometimes write."
+    keywords = ""
+    copyright = ""
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+
+    [languages.zh.params.logo]
+      logoText = "Nekonull's Garden"
+      logoHomeLink = "/"
+
+    [languages.zh.menu]
+      [[languages.zh.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.zh.menu.main]]
+        identifier = "project"
+        name = "Project"
+        url = "/project"
+      [[languages.zh.menu.main]]
+        identifier = "posts"
+        name = "Posts"
+        url = "/posts"
+      [[languages.zh.menu.main]]
+        identifier = "archive"
+        name = "Archive"
+        url = "/archive"
+      [[languages.zh.menu.main]]
+        identifier = "share"
+        name = "Share"
+        url = "/share"
+      [[languages.zh.menu.main]]
+        identifier = "tag"
+        name = "Tag"
+        url = "/tags"
+
+
+#   [languages.en]
+#     languageCode = "en-us"
+#     title = "Terminal"
+#     subtitle = "A simple, retro theme for Hugo"
+#     keywords = ""
+#     copyright = ""
+#     menuMore = "Show more"
+#     readMore = "Read more"
+#     readOtherPosts = "Read other posts"
+
+#     [languages.en.params.logo]
+#       logoText = "Terminal"
+#       logoHomeLink = "/"
+
+#     [languages.en.menu]
+#       [[languages.en.menu.main]]
+#         identifier = "about"
+#         name = "About"
+#         url = "/about"
+#       [[languages.en.menu.main]]
+#         identifier = "showcase"
+#         name = "Showcase"
+#         url = "/showcase"

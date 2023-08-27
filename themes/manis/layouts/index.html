@@ -1,0 +1,30 @@
+{{ partial "header" . }}
+<article>
+	<header>
+		{{ partial "title" . }}
+		{{ with .Content }}{{.}}{{ end }}
+	</header>
+	{{ $latestcount := .Site.Params.LatestCount | default 3 }}
+	<section>
+		<h4>{{ T "latestPost" }}</h4>
+		<ul class="no-bullet">
+			{{ $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+			{{- range (first $latestcount $pages) -}}
+			{{ partial "li" . }}
+			{{- end -}}
+		</ul>
+	</section>
+
+	{{ $pages := where site.RegularPages "Type" "in" .Site.Params.WorkSections }}
+	{{ if ne (len $pages) 0 }}
+	<section>
+		<h4>{{ T "latestWork" }}</h4>
+		<ul class="no-bullet">
+			{{- range (first $latestcount $pages) -}}
+			{{ partial "li" . }}
+			{{- end -}}
+		</ul>
+	</section>
+	{{ end }}
+</article>
+{{ partial "footer" . }}

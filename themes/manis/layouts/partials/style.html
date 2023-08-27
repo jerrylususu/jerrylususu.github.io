@@ -1,0 +1,6 @@
+{{ $normalize := resources.Get "css/normalize.css" }}
+{{ $syntax := resources.Get "css/syntax.css" }}
+{{ $template := resources.Get "css/template.css" }}
+{{ $ui := $template | resources.ExecuteAsTemplate "main.css" . }}
+{{ $css := slice $normalize $ui $syntax | resources.Concat "css/ui.css" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
