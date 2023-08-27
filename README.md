@@ -1,10 +1,8 @@
 # Nekonull's Website
 
-```
-Work in Progress: Automating the publishing process using Github Actions
-```
-
 The published website is under branch `publish`. `master` branch only contains blog data.
+
+When the website is not working, check the Action tab.
 
 ```bash
 # get hugo binary
