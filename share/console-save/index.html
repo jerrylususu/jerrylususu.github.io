@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>在 devtool 控制台里爬网站 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 POST /a">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>在 devtool 控制台里爬网站</h1>
+	<h5>
+		
+		<time datetime="2023-08-20 19:18:26 &#43;0800 &#43;0800">Aug 20, 2023</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e5%89%8d%e7%ab%af">前端</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 <code>POST /api/entity/:id</code>）。用 Edge 浏览器自带的 “编辑并重新发送” 功能测试，手动也可以调通。（这是 Edge 浏览器一个超棒的功能，对于偶尔的小调试可以替代 Postman）。理论上到了这一步就可以写点 Python 把数据遍历 ID 把数据爬下来了，不过可能还要处理一些 cookie 之类的麻烦事。与其再写个外部脚本，为什么不在浏览器的控制台里直接写脚本爬呢？</p>
+<p>大概框架如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">idList</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>]; 
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">results</span> <span style="color:#f92672">=</span> [];
+<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">id</span> <span style="color:#66d9ef">of</span> <span style="color:#a6e22e">idList</span>) {
+    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">resp</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">fetch</span>(<span style="color:#75715e">/* */</span>); <span style="color:#75715e">// F12 网络标签页，右键请求，复制 - 复制为 fetch
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">json</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">json</span>()
+    <span style="color:#a6e22e">results</span>.<span style="color:#a6e22e">push</span>({<span style="color:#a6e22e">id</span>, <span style="color:#a6e22e">json</span>});
+    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">1000</span>); <span style="color:#75715e">// 限制频率
+</span><span style="color:#75715e"></span>}
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">save</span>(<span style="color:#a6e22e">results</span>)
+</code></pre></div><p>还需要一些辅助函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// 可以 await 的 sleep
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">sleep</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">ms</span>) =&gt; <span style="color:#66d9ef">new</span> Promise(<span style="color:#a6e22e">resolve</span> =&gt; <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">resolve</span>, <span style="color:#a6e22e">ms</span>));
+
+
+<span style="color:#75715e">// 以 JSON 保存 console 中的变量
+</span><span style="color:#75715e">// src: http://bgrins.github.io/devtools-snippets/#console-save
+</span><span style="color:#75715e">// via: https://stackoverflow.com/questions/11849562/how-to-save-the-output-of-a-console-logobject-to-a-file
+</span><span style="color:#75715e"></span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">console</span>){
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">save</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">data</span>, <span style="color:#a6e22e">filename</span>){
+
+    <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">data</span>) {
+        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">&#39;Console.save: No data&#39;</span>)
+        <span style="color:#66d9ef">return</span>;
+    }
+
+    <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">filename</span>) <span style="color:#a6e22e">filename</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;console.json&#39;</span>
+
+    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;object&#34;</span>){
+        <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#a6e22e">data</span>, <span style="color:#66d9ef">undefined</span>, <span style="color:#ae81ff">4</span>)
+    }
+
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">blob</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Blob</span>([<span style="color:#a6e22e">data</span>], {<span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;text/json&#39;</span>}),
+        <span style="color:#a6e22e">e</span>    <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createEvent</span>(<span style="color:#e6db74">&#39;MouseEvents&#39;</span>),
+        <span style="color:#a6e22e">a</span>    <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">createElement</span>(<span style="color:#e6db74">&#39;a&#39;</span>)
+
+    <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">download</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">filename</span>
+    <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">href</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">createObjectURL</span>(<span style="color:#a6e22e">blob</span>)
+    <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">dataset</span>.<span style="color:#a6e22e">downloadurl</span> <span style="color:#f92672">=</span>  [<span style="color:#e6db74">&#39;text/json&#39;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">download</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">href</span>].<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;:&#39;</span>)
+    <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">initMouseEvent</span>(<span style="color:#e6db74">&#39;click&#39;</span>, <span style="color:#66d9ef">true</span>, <span style="color:#66d9ef">false</span>, window, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">false</span>, <span style="color:#66d9ef">false</span>, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">null</span>)
+    <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">e</span>)
+ }
+})(<span style="color:#a6e22e">console</span>)
+</code></pre></div><p>以上，祝使用愉快！</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/share/css-filter-dark-mode/">
+		<img class="icon-text" src="/img/prev.svg"/>用 CSS Filter 反色实现简易黑暗模式</a>
+
+
+	<a class="next-post" href="/share/lofi-bat/">播放 Lofi Girl 的小脚本<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/posts/vue-app-pwa/">将已有的 Vue App 变为 PWA</a></li>
+  	
+  	<li><a href="/share/css-filter-dark-mode/">用 CSS Filter 反色实现简易黑暗模式</a></li>
+  	
+  	<li><a href="/posts/py-itertools-permutation-algo/">Python `itertools.permutations` 使用的排列算法</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	<div id="disqus_thread" class="no-print"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+    
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'nekonull';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

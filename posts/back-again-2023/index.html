@@ -4,9 +4,9 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>播放 Lofi Girl 的小脚本 - Nekonull&#39;s Garden</title>
+		<title>再次复活（2023）&amp; 换用 Github Action 部署 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV">
+		<meta name="description" content="又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和上次一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入">
 
 
 		
@@ -62,32 +62,29 @@ if (!doNotTrack) {
 
 <article>
 	<header><hgroup id="brand">
-	<h1>播放 Lofi Girl 的小脚本</h1>
+	<h1>再次复活（2023）&amp; 换用 Github Action 部署</h1>
 	<h5>
 		
-		<time datetime="2023-08-27 19:18:26 &#43;0800 &#43;0800">Aug 27, 2023</time>
+		<time datetime="2023-08-27 19:30:45 &#43;0800 &#43;0800">Aug 27, 2023</time>
 		<span class="no-print">
-			<span>
+			-
+				
+				<a href="/tags/%e6%9d%82%e7%89%a9">杂物</a>
+				<span>
 	</h5>
 	
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> 和 <a href="https://sourceforge.net/projects/mpv-player-windows/files/">mpv</a>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">:<span style="color:#75715e">:set HTTP_PROXY=http://localhost:[some_port]</span>
-<span style="color:#66d9ef">cd</span> C:\Apps\mpv-x86_64-20230723-git-ca4192e
-mpv --no-video  <span style="color:#e6db74">&#34;https://www.youtube.com/watch?v=jfKfPfyJRdk&#34;</span> --script-opts=ytdl_hook-ytdl_path=yt-dlp.exe
-</code></pre></div><p>另外附上一些常见快捷键（<a href="https://defkey.com/mpv-media-player-shortcuts">完整见此</a>）</p>
-<pre><code>9：减小音量
-0：增大音量
-空格：暂停播放（但是依然会在后台继续缓冲）
-M：静音
-</code></pre>
+	<p>又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和<a href="posts/back-again/">上次</a>一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。</p>
+<p>本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 <code>publish</code>），修改 Github Pages 的来源分支，然后写点 <a href="https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml">Github Action</a> 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&hellip;）</p>
+<p>顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（<code>v0.117.0</code>），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。</p>
+
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="/share/console-save/">
-		<img class="icon-text" src="/img/prev.svg"/>在 devtool 控制台里爬网站</a>
+	<a class="prev-post" href="/posts/vue-app-pwa/">
+		<img class="icon-text" src="/img/prev.svg"/>将已有的 Vue App 变为 PWA</a>
 
 
 </nav>
@@ -97,11 +94,11 @@ M：静音
   <h4>另请参阅</h4>
   <ul>
     
-  	<li><a href="/share/console-save/">在 devtool 控制台里爬网站</a></li>
+  	<li><a href="/posts/back-again/">再次复活</a></li>
   	
-  	<li><a href="/posts/vue-app-pwa/">将已有的 Vue App 变为 PWA</a></li>
+  	<li><a href="/posts/back/">耶[ ]复活啦！</a></li>
   	
-  	<li><a href="/posts/py-itertools-permutation-algo/">Python `itertools.permutations` 使用的排列算法</a></li>
+  	<li><a href="/archive/%E9%87%8D%E5%BA%86%E6%88%90%E9%83%BD%E6%B8%B8%E8%AE%B0/">重庆成都游记</a></li>
   	
   </ul>
 </section>

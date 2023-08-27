@@ -3,7 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/</loc>
-    <lastmod>2023-08-27T19:18:26+08:00</lastmod>
+    <lastmod>2023-08-27T19:30:45+08:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2023-08-27T19:30:45+08:00</lastmod>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2023-08-27T19:30:45+08:00</lastmod>
+  </url><url>
+    <loc>/posts/back-again-2023/</loc>
+    <lastmod>2023-08-27T19:30:45+08:00</lastmod>
+  </url><url>
+    <loc>/tags/%E6%9D%82%E7%89%A9/</loc>
+    <lastmod>2023-08-27T19:30:45+08:00</lastmod>
   </url><url>
     <loc>/share/</loc>
     <lastmod>2023-08-27T19:18:26+08:00</lastmod>
@@ -11,14 +23,11 @@
     <loc>/share/lofi-bat/</loc>
     <lastmod>2023-08-27T19:18:26+08:00</lastmod>
   </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2022-09-03T17:21:00+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-09-03T17:21:00+08:00</lastmod>
-  </url><url>
     <loc>/tags/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2022-09-03T17:21:00+08:00</lastmod>
+    <lastmod>2023-08-20T19:18:26+08:00</lastmod>
+  </url><url>
+    <loc>/share/console-save/</loc>
+    <lastmod>2023-08-20T19:18:26+08:00</lastmod>
   </url><url>
     <loc>/posts/vue-app-pwa/</loc>
     <lastmod>2022-09-03T17:21:00+08:00</lastmod>
@@ -105,9 +114,6 @@
     <lastmod>2021-04-03T22:30:00+03:00</lastmod>
   </url><url>
     <loc>/posts/back-again/</loc>
-    <lastmod>2021-04-03T01:47:01+03:00</lastmod>
-  </url><url>
-    <loc>/tags/%E6%9D%82%E7%89%A9/</loc>
     <lastmod>2021-04-03T01:47:01+03:00</lastmod>
   </url><url>
     <loc>/about/</loc>

@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 27 Aug 2023 19:18:26 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Aug 2023 19:30:45 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>再次复活（2023）&amp; 换用 Github Action 部署</title>
+      <link>/posts/back-again-2023/</link>
+      <pubDate>Sun, 27 Aug 2023 19:30:45 +0800</pubDate>
+      
+      <guid>/posts/back-again-2023/</guid>
+      <description>又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和上次一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入</description>
+    </item>
+    
     <item>
       <title>播放 Lofi Girl 的小脚本</title>
       <link>/share/lofi-bat/</link>
@@ -14,6 +23,15 @@
       
       <guid>/share/lofi-bat/</guid>
       <description>自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV</description>
+    </item>
+    
+    <item>
+      <title>在 devtool 控制台里爬网站</title>
+      <link>/share/console-save/</link>
+      <pubDate>Sun, 20 Aug 2023 19:18:26 +0800</pubDate>
+      
+      <guid>/share/console-save/</guid>
+      <description>最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 POST /a</description>
     </item>
     
     <item>

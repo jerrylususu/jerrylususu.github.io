@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>在 devtool 控制台里爬网站</title>
+      <link>/share/console-save/</link>
+      <pubDate>Sun, 20 Aug 2023 19:18:26 +0800</pubDate>
+      
+      <guid>/share/console-save/</guid>
+      <description>最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 POST /a</description>
+    </item>
+    
+    <item>
       <title>用 CSS Filter 反色实现简易黑暗模式</title>
       <link>/share/css-filter-dark-mode/</link>
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
