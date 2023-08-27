@@ -6,7 +6,16 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Aug 2023 19:18:26 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>播放 Lofi Girl 的小脚本</title>
+      <link>/share/lofi-bat/</link>
+      <pubDate>Sun, 27 Aug 2023 19:18:26 +0800</pubDate>
+      
+      <guid>/share/lofi-bat/</guid>
+      <description>自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV</description>
+    </item>
+    
     <item>
       <title>将已有的 Vue App 变为 PWA</title>
       <link>/posts/vue-app-pwa/</link>
