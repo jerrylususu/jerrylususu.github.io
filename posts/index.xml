@@ -13,7 +13,10 @@
       <pubDate>Sun, 27 Aug 2023 19:30:45 +0800</pubDate>
       
       <guid>/posts/back-again-2023/</guid>
-      <description>又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和上次一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入</description>
+      <description>&lt;p&gt;又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和&lt;a href=&#34;posts/back-again/&#34;&gt;上次&lt;/a&gt;一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&amp;hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。&lt;/p&gt;
+&lt;p&gt;本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 &lt;code&gt;publish&lt;/code&gt;），修改 Github Pages 的来源分支，然后写点 &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml&#34;&gt;Github Action&lt;/a&gt; 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&amp;hellip;）&lt;/p&gt;
+&lt;p&gt;顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（&lt;code&gt;v0.117.0&lt;/code&gt;），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&amp;hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -22,7 +25,30 @@
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
       <guid>/posts/vue-app-pwa/</guid>
-      <description>之前写过一个用来辅助五十音记忆的小 App: Gojuon Quiz (源代码)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然</description>
+      <description>&lt;p&gt;之前写过一个用来辅助五十音记忆的小 App: &lt;a href=&#34;https://nekonull.me/gojuon-quiz/&#34;&gt;Gojuon Quiz&lt;/a&gt; (&lt;a href=&#34;https://github.com/jerrylususu/gojuon-quiz&#34;&gt;源代码&lt;/a&gt;)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然可用，二来打开的时候不会显示浏览器地址栏之类的控件，体验上基本和一个原生应用接近了。&lt;/p&gt;
+&lt;p&gt;具体操作起来其实很简单，基本上就是以下几步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Vue PWA 插件：&lt;code&gt;vue add pwa&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;生成不同大小的图标，放置于 &lt;code&gt;img/icons&lt;/code&gt; 下：可以用 &lt;a href=&#34;https://realfavicongenerator.net/&#34;&gt;Real Favicon Generator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;vue.config.js&lt;/code&gt; 中稍微调整下 PWA 插件的配置：可以参考 &lt;a href=&#34;https://cli.vuejs.org/core-plugins/pwa.html#configuration&#34;&gt;@vue/cli-plugin-pwa 文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;（可选）增加更新提示：参考 &lt;a href=&#34;https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip&#34;&gt;Handling Service Worker updates in your Vue PWA&lt;/a&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不过不做这一步也不会影响自动更新功能，只是需要更新完成后用户手动关闭再重新开启，才会应用新的版本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;安装完成后，可以看到以下标志，证明 PWA 功能成功配置了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chrome / Edge 地址栏右侧出现加号&lt;/li&gt;
+&lt;li&gt;console 输出 service worker 相关调试信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;调试的时候有一些小问题需要注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;PWA 在开发模式（如 &lt;code&gt;vue serve&lt;/code&gt;）下是不会启用的，需要先 &lt;code&gt;vue build&lt;/code&gt; 之后，手动在 dist 目录下开一个 HTTP 服务器（可以用 `python -m http.server）才会启用。&lt;/li&gt;
+&lt;li&gt;如果是用局域网的设备，访问开发机上的 HTTP 服务器，也可能无法触发 PWA。原因是 PWA 触发需要 HTTPS（或服务器在本地 localhost）。&lt;/li&gt;
+&lt;li&gt;PWA 自定义名称的话，需要写在 &lt;code&gt;pwa.name&lt;/code&gt; 下，而不是其他内层结构里。（之前装了 &lt;code&gt;i18n&lt;/code&gt; 插件，习惯性的写到 &lt;code&gt;pluginOptions&lt;/code&gt; 里了。）&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>
@@ -31,7 +57,223 @@
       <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
       
       <guid>/posts/py-itertools-permutation-algo/</guid>
-      <description>TL;DR：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。 引子 最近在算法复健，刷到了排列</description>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
+&lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
+&lt;p&gt;最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 &lt;code&gt;itertools&lt;/code&gt;，其中有一个 &lt;code&gt;permutations(iterable, r)&lt;/code&gt; 方法，可以对一个给定的 iterable 生成所有大小为 &lt;code&gt;r&lt;/code&gt; 的排列，且输出按照字典序排列。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; list(permutations(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ABCD&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;))
+[(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
+ (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
+ (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
+ (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;)]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;p&gt;在我之前所接触的算法中，排列生成要么是基于回溯，要么是基于字典序，但无论哪种都只能生成全排列，而无法生成这样的部分排列（指生成的排列长度 &lt;code&gt;r&lt;/code&gt; 和原输入长度 &lt;code&gt;n&lt;/code&gt; 不同）。另一条思路是先生成所有长度为 &lt;code&gt;r&lt;/code&gt; 的组合，然后再在每个组合内生成全排列，但这样无法保证输出按字典序（除非先手动收集再排序）。&lt;/p&gt;
+&lt;p&gt;于是我打开了 Python 的 &lt;code&gt;itertools&lt;/code&gt; 的官方文档，其中提供了与 CPython 实现等价的 Python 代码，&lt;code&gt;permutations&lt;/code&gt; 方法的代码如下（&lt;a href=&#34;https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations&#34;&gt;🔗&lt;/a&gt;）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations&lt;/span&gt;(iterable, r&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;None):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# permutations(&amp;#39;ABCD&amp;#39;, 2) --&amp;gt; AB AC AD BA BC BD CA CB CD DA DB DC&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# permutations(range(3)) --&amp;gt; 012 021 102 120 201 210&lt;/span&gt;
+    pool &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tuple(iterable)
+    n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(pool)
+    r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; r &lt;span style=&#34;color:#f92672&#34;&gt;is&lt;/span&gt; None &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; r
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; r &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; n:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+    indices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(range(n))
+    cycles &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(range(n, n&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;r, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; tuple(pool[i] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; indices[:r])
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; n:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; reversed(range(r)):
+            cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
+                indices[i:] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; indices[i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; indices[i:i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+                cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; i
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+                j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycles[i]
+                indices[i], indices[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; indices[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j], indices[i]
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; tuple(pool[i] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; indices[:r])
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;尝试初步理解&#34;&gt;尝试初步理解&lt;/h3&gt;
+&lt;p&gt;虽然顶部有两行注释，不过这也只是描述了这个方法的效果，对其原理并没有任何解释。往后继续看，可以发现算法首先构造了两个 list：&lt;code&gt;indices&lt;/code&gt; 和 &lt;code&gt;cycles&lt;/code&gt;，且之后每次输出结果（&lt;code&gt;yield&lt;/code&gt;）实际上都是将 &lt;code&gt;indices&lt;/code&gt; 中的前 &lt;code&gt;r&lt;/code&gt; 个输出。再往后算法进入了一个神秘的 &lt;code&gt;for&lt;/code&gt; 循环，对 &lt;code&gt;cycles&lt;/code&gt; 中的元素做了一些修改，用 &lt;code&gt;cycles&lt;/code&gt; 的值对 &lt;code&gt;indices&lt;/code&gt; 中的一些元素做了交换。仅从代码层面出发，对算法的理解似乎也就止步于此了。然而这并没有回答一个重要问题：为什么这个算法能工作？&lt;/p&gt;
+&lt;h3 id=&#34;寻找相关信息&#34;&gt;寻找相关信息&lt;/h3&gt;
+&lt;p&gt;考虑到 &lt;code&gt;itertools&lt;/code&gt; 库是在 Python 2.3 （2003 年 7 月）被引入标准库的，这个算法已经算得上历史悠久了。再加之 &lt;code&gt;itertools&lt;/code&gt; 库的广泛使用，这个算法的原理应该是早已被详尽记录的。带着这样的期望，我开始用各种关键词组合搜索相关信息。可惜的是，除了 Stack Overflow 上一个 2010 年的问题（&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations&#34;&gt;🔗&lt;/a&gt;），和一个知乎提问（&lt;a href=&#34;https://www.zhihu.com/question/440688033&#34;&gt;🔗&lt;/a&gt;），就没有任何其他相关的网页了，甚至连当年的提交记录都找不到。&lt;/p&gt;
+&lt;p&gt;既然如此，那就只能从这两个链接入手了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stack Overflow 的答主 Alex 写了一篇长文回答，但一开头就说「你需要理解 Permutation Cycle 的数学理论，才能理解这个算法」。于是我又回头恶补了一番组合数学，然而就算我大概知道 Permutation Cycle 是怎么一回事，对这个算法依然毫无头绪。（评论中也有人自称有 6 年抽象代数经验，但不认为这个算法与数学相关。）不过 Alex 的回答提供了一些有用的直觉，至少读完这个回答我大概理解 &lt;code&gt;cycles&lt;/code&gt; 在算法执行过程中是如何变化的了。具体而言，&lt;code&gt;cycles&lt;/code&gt; 的变化类似于「倒计时」，或者说「带借位的减法」，每次最后一位到 0 时，就会触发前面的一位减 1。然而我对&lt;code&gt;indices&lt;/code&gt; 的变化依然云里雾里。&lt;/li&gt;
+&lt;li&gt;知乎提问中，答主「杨个毛」提供了一个看起来很有说服力的回答（剧透：而且也的确如此）：「那个代码可以看成下列递归程序的强行非递归版」，指出了 &lt;code&gt;cycles&lt;/code&gt; 是&lt;strong&gt;变进制数&lt;/strong&gt;，并提供了一个原始递归版本。可惜的是，对于这个算法为什么可以输出正确结果依然没有解释（也有可能是我没有完全理解）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;自己来&#34;&gt;自己来&lt;/h3&gt;
+&lt;p&gt;已有的信息似乎不是很充分。看来我只能自己来了。在加了一堆 &lt;code&gt;print&lt;/code&gt; 并在纸上手动模拟了多次这个算法之后，我认为我可能大概理解它的工作原理，并且可以证明其正确性了。下文将详述我的理解。&lt;/p&gt;
+&lt;h2 id=&#34;算法&#34;&gt;算法&lt;/h2&gt;
+&lt;h3 id=&#34;起步&#34;&gt;起步&lt;/h3&gt;
+&lt;p&gt;开始前，需要统一一下后文使用的记号：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;n&lt;/code&gt; 代表输入 iterable 的长度&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;r&lt;/code&gt; 代表输出的排列元组的长度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;并回顾我们先前阅读算法得到的理解：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对输入的 &lt;code&gt;iterable&lt;/code&gt; 会遍历其所有元素并放在 &lt;code&gt;pool&lt;/code&gt; 中&lt;/li&gt;
+&lt;li&gt;每次算法输出结果（&lt;code&gt;yield&lt;/code&gt;），实际上只是取了 &lt;code&gt;indices&lt;/code&gt; 列表的前 &lt;code&gt;r&lt;/code&gt; 个 index，并输出 &lt;code&gt;pool&lt;/code&gt; 中的对应元素。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们将按照如下步骤理解这个算法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;理解 &lt;code&gt;cycles&lt;/code&gt; 的变化&lt;/li&gt;
+&lt;li&gt;理解 &lt;code&gt;indices&lt;/code&gt; 的变化，并尝试说明这个算法的正确性&lt;/li&gt;
+&lt;li&gt;尝试重新实现这个算法的「原始」递归版本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;cycles&#34;&gt;&lt;code&gt;cycles&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;我们首先从 &lt;code&gt;cycles&lt;/code&gt; 变量入手，理解它在这个算法中是如何变化的。这个阶段我们暂时先不考虑 &lt;code&gt;indices&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;可以先指定一些具体的输入，然后尝试加一些 &lt;code&gt;print&lt;/code&gt; 语句。以 &lt;code&gt;iterable=&amp;quot;ABCD&amp;quot;, r=2&lt;/code&gt; 作为输入，在 &lt;code&gt;if&lt;/code&gt; 和 &lt;code&gt;else&lt;/code&gt; 两个分支执行前后中都插入 &lt;code&gt;print&lt;/code&gt;，可以得到如下结果：（其中中括号说明算法有输出 &lt;code&gt;yield&lt;/code&gt;，大括号部分算法无输出）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[4,3] -&amp;gt; [4,2] -&amp;gt; [4,1] -&amp;gt; {4,0} -&amp;gt; {4,3} -&amp;gt; 
+[3,3] -&amp;gt; [3,2] -&amp;gt; [3,1] -&amp;gt; {3,0} -&amp;gt; {3,3} -&amp;gt; 
+[2,3] -&amp;gt; [2,2] -&amp;gt; [2,1] -&amp;gt; {2,0} -&amp;gt; {2,3} -&amp;gt; 
+[1,3] -&amp;gt; [1,2] -&amp;gt; [1,1] -&amp;gt; {1,0} -&amp;gt; {1,3} -&amp;gt; {0,3} -&amp;gt; {4,3}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们可以直观感受到，似乎 &lt;code&gt;cycles&lt;/code&gt; 变量就像一个「倒计时」，或者说「带借位的减法」。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一开始 &lt;code&gt;cycles[0]&lt;/code&gt; 被初始化为 4，&lt;code&gt;cycles[1]&lt;/code&gt; 被初始化为 3。&lt;/li&gt;
+&lt;li&gt;之后的循环中，一般是 &lt;code&gt;cycles[1]&lt;/code&gt; 不断被减 1。当 &lt;code&gt;cycles[1] != 0&lt;/code&gt; 时，算法会产生一次输出。&lt;/li&gt;
+&lt;li&gt;如果 &lt;code&gt;cycles[1] == 0&lt;/code&gt;，会导致 &lt;code&gt;cycles[0]&lt;/code&gt; （前一位）减 1，并将 &lt;code&gt;cycles[1]&lt;/code&gt; 重设回其初始值 3。&lt;/li&gt;
+&lt;li&gt;最后当 &lt;code&gt;cycles[0] == 0&lt;/code&gt; 时，算法结束。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从这个具体的示例出发，我们可以这样理解 &lt;code&gt;cycles&lt;/code&gt; 的变化：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一开始 &lt;code&gt;cycles&lt;/code&gt; 被初始化为 &lt;code&gt;range(n, n-r, -1)&lt;/code&gt;，即 &lt;code&gt;cycles[0]=n&lt;/code&gt;，&lt;code&gt;cycles[1]=n-1&lt;/code&gt;，&amp;hellip;，&lt;code&gt;cycles[i]=n-i&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;之后的循环中，通常只有最后一个元素 &lt;code&gt;cycles[r-1]&lt;/code&gt; 在不断递减。如果 &lt;code&gt;cycles[r-1]&lt;/code&gt; 递减后值不为 0，则算法会产生一次输出。用我们之前提到的「倒计时」类比，可以将这种情况称之为 tick。&lt;/li&gt;
+&lt;li&gt;如果 &lt;code&gt;cycles&lt;/code&gt; 中的某个元素（如 &lt;code&gt;cycles[i]&lt;/code&gt;）为 0，会导致其前面的元素被（&lt;code&gt;cycles[i-1]&lt;/code&gt;）减 1，并将这个元素（&lt;code&gt;cycles[i]&lt;/code&gt;）重设回其初始值（&lt;code&gt;n-i&lt;/code&gt;）。这一行为类似于倒计时中秒为 0 时会导致分减 1，并将秒重设回 0。继续用「倒计时」类比，可以将这种情况称之为 reset。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有了这一直观感受，就可以为 &lt;code&gt;cycles&lt;/code&gt; 找出一个可能的解释（「物理含义」）了。我认为，&lt;code&gt;cycles&lt;/code&gt; 代表的是 &lt;strong&gt;「每个位置上剩余的可用选择数」&lt;/strong&gt; 。如果将 &lt;code&gt;cycles&lt;/code&gt; 视作一个变进制数，则 &lt;code&gt;cycles&lt;/code&gt; 也代表 &lt;strong&gt;「总体剩余还没有输出的排列数」&lt;/strong&gt; 。理由如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一开始 &lt;code&gt;cycles&lt;/code&gt; 被初始化为 &lt;code&gt;range(n, n-r, -1)&lt;/code&gt;，而可以计算出对给定的 &lt;code&gt;n&lt;/code&gt;, &lt;code&gt;r&lt;/code&gt; 所有的排列有 &lt;code&gt;P(n,r) = n*(n-1)*...*(n-r-1)&lt;/code&gt; 种。&lt;/li&gt;
+&lt;li&gt;每次 tick，算法生成一个排列，消耗一个选择，&lt;code&gt;cycles[i]&lt;/code&gt; 也减 1&lt;/li&gt;
+&lt;li&gt;每次 reset，实际上就是在 &lt;code&gt;cycles&lt;/code&gt; 这个变进制数上的借位减法&lt;/li&gt;
+&lt;li&gt;最后在 &lt;code&gt;cycles&lt;/code&gt; 上首位为 0 时算法结束，代表所有排列的选择都已经被消耗（输出）了，已经没有更多的排列了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其实 &lt;code&gt;cycles&lt;/code&gt; 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 &lt;code&gt;indices&lt;/code&gt; 的理解就大部分是我自己的了。&lt;/p&gt;
+&lt;h3 id=&#34;indices&#34;&gt;&lt;code&gt;indices&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;现在我们来看看 &lt;code&gt;indices&lt;/code&gt; 是如何变化的。和之前对 &lt;code&gt;cycles&lt;/code&gt; 的探索一样，我们也先从一个具体的例子开始：&lt;code&gt;iterable=&amp;quot;ABCDE&amp;quot;,r=3&lt;/code&gt;，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 &lt;code&gt;print&lt;/code&gt; 后，我们可以得到如下的变化过程。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;图的阅读顺序是从上至下，按照时间顺序展示了&lt;code&gt;indices&lt;/code&gt; 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。&lt;/li&gt;
+&lt;li&gt;这里选择展示前 3 次输出（即 &lt;code&gt;i=2&lt;/code&gt;），对应 &lt;code&gt;cycles[2]&lt;/code&gt; 从 3 到 0 的过程。别忘了每次进入循环前 &lt;code&gt;cycles[2]&lt;/code&gt; 会被递减。&lt;/li&gt;
+&lt;li&gt;为方便描述，我们可以把 &lt;code&gt;indices&lt;/code&gt; 列表拆成 3 个部分：
+&lt;ul&gt;
+&lt;li&gt;fixed：&lt;code&gt;indices[0:1]&lt;/code&gt;，在执行时不会变化&lt;/li&gt;
+&lt;li&gt;changing：&lt;code&gt;indices[2]&lt;/code&gt;，这是在不断被交换的元素，和 fixed 一起组成了算法输出（&lt;code&gt;indices[0:2]&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;backlog：&lt;code&gt;indices[3:4]&lt;/code&gt;，这里存放着已经被使用的元素和还未被使用的元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;在每个 tick 中，changing 位置上的元素和 backlog 中的一个元素交换（&lt;code&gt;swap&lt;/code&gt;），并触发一次输出。可以注意到，交换前后 backlog 中元素依然维持其相对顺序。
+&lt;ul&gt;
+&lt;li&gt;ABC{DE} -&amp;gt; ABD{CE} -&amp;gt; ABE{CD}&lt;/li&gt;
+&lt;li&gt;注：这里将算法开始时的首次输出也视作一个 tick，因为进入循环前依然触发了递减，消耗了一个可能性。&lt;/li&gt;
+&lt;li&gt;相关代码：&lt;code&gt;indices[i], indices[-j] = indices[-j], indices[i]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;算法结束前，一共触发了 3 次输出。这已经穷尽了固定前缀为 &lt;code&gt;AB&lt;/code&gt;，最后一个可选项为 &lt;code&gt;C&lt;/code&gt;, &lt;code&gt;D&lt;/code&gt;, &lt;code&gt;E&lt;/code&gt; 的排列。&lt;/li&gt;
+&lt;li&gt;在最后 reset 时，changing 位置上的元素被移到了 backlog 后（&lt;code&gt;move_to_last&lt;/code&gt;）。这一步完成后，changing + backlog 这个子列表（&lt;code&gt;indices[2:4]&lt;/code&gt;）恢复了和算法开始时一样的顺序。
+&lt;ul&gt;
+&lt;li&gt;AB{E}CD -&amp;gt; ABCD{E}&lt;/li&gt;
+&lt;li&gt;相关代码：&lt;code&gt;indices[i:] = indices[i+1:] + indices[i:i+1]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以发现，这部分执行过程，恰好满足了回溯算法的正确性要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分步解决一个问题，每步中固定之前步骤的选择不变&lt;/li&gt;
+&lt;li&gt;算法执行中，遍历当前步的所有可能性&lt;/li&gt;
+&lt;li&gt;算法执行后，取消当前步的计算，退回上一步，选择下一个可选项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;虽然图中仅描述了一个子问题（&lt;code&gt;i=2&lt;/code&gt;，或者说&lt;code&gt;i=r-1&lt;/code&gt;），但不难发现对于其他的 &lt;code&gt;i&lt;/code&gt;∈&lt;code&gt;[0, r-1]&lt;/code&gt; 这一讨论都是成立的。这也（不严格地）说明了这一算法的确可以遍历所有的可能排列。输出顺序为字典序，则是因为每个 tick 中交换元素时都维护了 backlog 中的相对顺序。&lt;/p&gt;
+&lt;p&gt;这部分讨论有些复杂，如果不太理解（或者不完全信服）的话，可以自己多加点 &lt;code&gt;print&lt;/code&gt; ，或者手动在纸上执行感受一下。&lt;/p&gt;
+&lt;h3 id=&#34;重新实现&#34;&gt;重新实现&lt;/h3&gt;
+&lt;p&gt;现在我们已经了解了这个算法的原理，重新实现其原始递归版本也就不难了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;递归调用时，需要一个参数指定当前修改的元素（changing）的 index&lt;/li&gt;
+&lt;li&gt;在每一层调用中，交换 changing 和 backlog 中的所有项，并在每次交换（做出选择）后触发下一层&lt;/li&gt;
+&lt;li&gt;如果 backlog 中的所有可选项都已经被选择（消耗）了，就把当前的 changing 移到 backlog 后，以撤销这一层的选择&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以下是一个可能的 Python 重新实现。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## a reimplementation of `itertools.permutation`&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# helpers&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;swap&lt;/span&gt;(list, i, j):
+    list[i], list[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list[j], list[i]
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;move_to_last&lt;/span&gt;(list, i):
+    list[i:] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list[i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; [list[i]]
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;print_first_n_element&lt;/span&gt;(list, n):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(list[:n]))
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# backtracking dfs&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations&lt;/span&gt;(list, r, changing_index):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; changing_index &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; r:
+        &lt;span style=&#34;color:#75715e&#34;&gt;# we&amp;#39;ve reached the deepest level&lt;/span&gt;
+        print_first_n_element(list, r)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# a pseudo `tick`&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# process initial permutation&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# which is just doing nothing (using the initial value)&lt;/span&gt;
+    permutations(list, r, changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# note: initial permutaion has been outputed, thus the minus 1&lt;/span&gt;
+    remaining_choices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(list) &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; changing_index
+    &lt;span style=&#34;color:#75715e&#34;&gt;# for (i=1;i&amp;lt;=remaining_choices;i++)&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, remaining_choices&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;):
+        &lt;span style=&#34;color:#75715e&#34;&gt;# `tick` phases&lt;/span&gt;
+        
+        &lt;span style=&#34;color:#75715e&#34;&gt;# make one swap&lt;/span&gt;
+        swap_idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; i
+        swap(list, changing_index, swap_idx)
+        &lt;span style=&#34;color:#75715e&#34;&gt;# finished one move at current level, now go deeper&lt;/span&gt;
+        permutations(list, r, changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# `reset` phase&lt;/span&gt;
+    move_to_last(list, changing_index)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# wrapper&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations_wrapper&lt;/span&gt;(list, r):
+    permutations(list, r, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# main&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+    my_list &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;D&amp;#34;&lt;/span&gt;]
+    permutations_wrapper(my_list, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;递归转循环优化&#34;&gt;递归转循环优化&lt;/h3&gt;
+&lt;p&gt;出于性能和安全（防止爆栈）的考量，我们会想将这个算法的递归版本转换成循环版本。这需要我们用栈手动维护每一层递归的相关状态，包括递归中的变量和下一次执行的开始位置。幸运的是，对这个算法而言，我们需要维护的状态并不多。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;r&lt;/code&gt; 是已知且固定的，即栈的最大深度为 &lt;code&gt;r&lt;/code&gt;，因此可以用一个固定大小的列表来表示栈中（每一层递归）的状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;changing_idx&lt;/code&gt; 是每层递归的输入，代表当前层变化的元素。&lt;code&gt;changing_idx&lt;/code&gt; 可以从栈的深度计算出来，栈底为 0，再上一层为 1&amp;hellip; 因此实际上不需要维护。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;i&lt;/code&gt; 或 &lt;code&gt;swap_idx&lt;/code&gt; 为下一次交换的目标元素 index。这无法从栈本身的信息计算得到，需要我们维护。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;进入或重新回到当前层递归的开始位置，可以用 &lt;code&gt;i&lt;/code&gt; 或 &lt;code&gt;swap_idx&lt;/code&gt; 推算得到：如果还有剩余可选项，则跳转到 tick；反之跳转到 reset&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;基于上文分析，可以发现我们需要维护的栈有两个特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;长度固定为 &lt;code&gt;r&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;每个元素上维护下一次交换的目标元素 index&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;回头看看，这实际上就是 &lt;code&gt;cycles&lt;/code&gt;。在「剩余可能数」的身份之外，&lt;code&gt;cycles&lt;/code&gt; 也承担起了维护递归状态的职责。而作者巧妙利用了 Python 列表索引可以为负数从后往前的特性，统一了 &lt;code&gt;cycles&lt;/code&gt; 的两面。&lt;/p&gt;
+&lt;p&gt;至此，我们完成了对这一算法的分析。🎉&lt;/p&gt;
+&lt;h2 id=&#34;相关链接&#34;&gt;相关链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Python &lt;code&gt;itertools.permutation&lt;/code&gt; 文档：&lt;a href=&#34;https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations&#34;&gt;itertools &amp;mdash; 为高效循环而创建迭代器的函数 — Python 3.10.4 文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;CPython &lt;code&gt;itertools.permutation&lt;/code&gt; 实现：&lt;a href=&#34;https://github.com/python/cpython/blob/main/Modules/itertoolsmodule.c#L3212&#34;&gt;cpython/itertoolsmodule.c at main · python/cpython (github.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stack Overflow 相关问题：&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations&#34;&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;知乎相关问题：&lt;a href=&#34;https://www.zhihu.com/question/440688033&#34;&gt;如何理解Python itertools.permutations中的全排列算法？ - 知乎 (zhihu.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;我给 Stack Overflow 问题写的回答：&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations/72177891#72177891&#34;&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -40,7 +282,54 @@
       <pubDate>Tue, 10 May 2022 17:04:00 +0300</pubDate>
       
       <guid>/posts/how-complex-system-fail-cn/</guid>
-      <description>复杂系统如何失效 原文链接：How Complex Systems Fail 译者注：在阅读 Slack Engineering Team 发布的 2022/2/22 事故报告时，注意到了这篇文章。作者描述了系统的复杂性为维护人员带来的挑战，</description>
+      <description>&lt;h1 id=&#34;复杂系统如何失效&#34;&gt;复杂系统如何失效&lt;/h1&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://how.complexsystems.fail/&#34;&gt;How Complex Systems Fail&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;译者注：在阅读 Slack Engineering Team 发布的 &lt;a href=&#34;https://slack.engineering/slacks-incident-on-2-22-22/&#34;&gt;2022/2/22 事故报告&lt;/a&gt;时，注意到了这篇文章。作者描述了系统的复杂性为维护人员带来的挑战，并澄清了一些常见误解。个人认为这篇文章很有价值，但可惜暂无中文翻译，于是便自己动手了。本译文在 DeepL 机翻的基础上润色调整而成，错误在所难免，如有发现还请指正。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;1-复杂系统本质上是危险的系统&#34;&gt;1. 复杂系统本质上是危险的系统&lt;/h2&gt;
+&lt;p&gt;所有有趣的系统（如交通、医疗、发电），因其本身的性质，都具有固有的、不可避免的危险性。危险暴露的频率有时可以改变，但系统涉及的流程，依然具有内在的、不可减少的危险性。正是这些危险的存在，推动了防御措施的产生。危险和防御的存在也成为了这些系统的特征。&lt;/p&gt;
+&lt;h2 id=&#34;2-对系统失效复杂系统有大量成功的防御措施&#34;&gt;2. 对系统失效，复杂系统有大量成功的防御措施&lt;/h2&gt;
+&lt;p&gt;随着时间推移，系统失效可能造成的严重后果，推动了多层防御措施的构建。这些防御措施不仅包括明显的技术部分（如备用系统、设备的「安全」特性）和人力部分（如培训、知识），也包括各种组织的、机构的、监管的防御措施（如政策和程序、认证、工作规则、团队建设）。这些措施如同一系列盾牌，通常会将系统运行导向远离事故的方向。&lt;/p&gt;
+&lt;h2 id=&#34;3-灾难发生需要多重故障--单点故障是不够的&#34;&gt;3. 灾难发生需要多重故障 —— 单点故障是不够的&lt;/h2&gt;
+&lt;p&gt;一系列的防御措施是有效的。系统的运作通常是成功的。但当多个看似无害的小故障同时发生时，系统性事故才有机可乘，并最终导致显性的灾难性失效。尽管这些小故障中的每一个都是灾难的必要条件，但只有它们组合起来，才足以引发灾难。换句话说，系统可能失效（但没有失效）的时机，远比公开表现出来的系统失效多得多。大多数故障轨迹一开始就被系统中的安全组件阻挡了，而到达系统运作层面的故障轨迹，通常被一线工作者阻挡。&lt;/p&gt;
+&lt;h2 id=&#34;4-复杂系统包含不断变化的潜在故障&#34;&gt;4. 复杂系统包含不断变化的潜在故障&lt;/h2&gt;
+&lt;p&gt;这类系统的复杂性，使得它们不可能在没有多个缺陷存在的情况下运行。（系统中总是存在缺陷。）因为这些缺陷单独不足以导致失效，所以运行期间它们通常被视为次要因素。消除所有的潜在故障（是不可能的），主要受到经济成本的限制。另一原因是，很难在事故发生前，发现潜在故障引发事故的方式。此外，因为技术、组织和消除故障的努力的变化，这些潜在故障本身也在不断变化。&lt;/p&gt;
+&lt;h2 id=&#34;5-复杂系统带病运行&#34;&gt;5. 复杂系统带病运行&lt;/h2&gt;
+&lt;p&gt;基于前一点，一个必然的推论是：复杂系统像损坏的系统一样运行。尽管存在许多缺陷，系统之所以能继续工作，不仅是因为其本身包含了许多冗余，也是因为工作人员可以让它运行。事故发生后的回顾，几乎总是会注意到，事故发生前，系统就已经有一系列「原事故（proto-accident）」的历史。这些「原事故」差点就会引发灾难。一种论调认为，这些已经退化（降级）的运行条件，在事故发生前就应该被意识到，但这一论调是建立在对系统工作状况的天真认识上的。系统的运作是动态的，这一过程中系统的组成部分（组织、人、技术）不断失效又被替换。&lt;/p&gt;
+&lt;h2 id=&#34;6-灾难总在拐角处&#34;&gt;6. 灾难总在拐角处&lt;/h2&gt;
+&lt;p&gt;复杂系统具有灾难性失效的可能性。灾难可能在任何时间、任何地点发生，而一线工作者几乎总是在物理上和时间上接近这些潜在的故障。潜在的灾难性结果是复杂系统的标志之一。（从复杂系统中）消除这种灾难性失效是不可能的。由于系统本身的性质，失效的可能性始终存在。&lt;/p&gt;
+&lt;h2 id=&#34;7-事后分析的根因根本上是错的&#34;&gt;7. 事后分析的「根因」根本上是错的&lt;/h2&gt;
+&lt;p&gt;因为显性的失效需要多重故障，所以并不存在一个独立的事故「原因」。多种因素导致了事故的发生，其中每个因素单独并不足以引发事故，只有它们联合起来才足以造成事故。正是这些因素联系在一起，才创造了事故所需的环境。因此，不可能将某个事故的「根因（root-cause）」分离出来。事故评估中对「根因」的论证，并非出于对失效本质的技术性理解，而是出于将结果归咎于特定的、局部的力量的社会文化需要。[1]&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[1] 人类学的田野调查为「原因」这一概念的社会构建提供了最清晰的证明。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;8-事后回顾中对人为表现的评估存在偏见&#34;&gt;8. 事后回顾中对人为表现的评估存在偏见&lt;/h2&gt;
+&lt;p&gt;对结果的了解使人认为，对一线人员而言，导致失效的事件比实际情况显得更突出。这意味着对人为表现的事后分析是不准确的。对结果的了解阻碍了事后观察者重现事故前一线人员视角的能力，显得一线人员似乎「应该知道」这些因素「不可避免地」会引发事故。[2] 后见之明偏见仍然是事故调查的主要障碍，尤其是在涉及到人类专家的表现时。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[2] 这不是医学判断或技术判断的特点，而是人类对过去事件及其原因认知上的特点。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;9-人类操作者有双重角色生产者和失效防御者&#34;&gt;9. 人类操作者有双重角色：生产者和失效防御者&lt;/h2&gt;
+&lt;p&gt;一线人员操作系统运转，不仅为了生产所需的产品，也为了防止事故发生。系统运行的动态性，即平衡为满足需求而生产和避免潜在故障，是不可避免的。外人很少承认这一角色的双重性。在没有事故发生时，生产的角色被强调。在事故发生后，失效防御者的角色被强调。无论在哪种情况下，外人的视角都误解了操作者对两种角色的同时参与。&lt;/p&gt;
+&lt;h2 id=&#34;10-所有一线人员的行为都是赌博&#34;&gt;10. 所有一线人员的行为都是赌博&lt;/h2&gt;
+&lt;p&gt;事故发生后，显式的失效看似不可避免，而一线人员的行为则被视为愚蠢的错误，或对迫近事故的故意漠视。但所有一线人员的行为，实际上都是赌博，或者说，是面对不确定结果的行动。不确定性的程度可能时刻变化。一线人员的行为是赌博，这一点在事故后看起来很明显；一般来说，事后分析都认为这些赌博是糟糕的。但反过来说，成功结局也是赌博的结果，但这一点并没有得到广泛重视。&lt;/p&gt;
+&lt;h2 id=&#34;11-棘手之处的行为消除了模糊性&#34;&gt;11. 棘手之处的行为消除了模糊性&lt;/h2&gt;
+&lt;p&gt;组织对生产目标、资源的高效利用、经济和运营成本以及可接受的事故风险是模糊的。这一模糊性往往又是故意为之的。但一线人员在系统棘手之处的行动消除了模糊性。事故发生后，一线人员的行为可能被认为是「错误」或「违规」，但这些评价严重被后见之明偏见影响，而忽略了其他的驱动力，特别是生产压力。&lt;/p&gt;
+&lt;h2 id=&#34;12-人类操作者是复杂系统的改造者&#34;&gt;12. 人类操作者是复杂系统的改造者&lt;/h2&gt;
+&lt;p&gt;一线工作者和一线管理人员积极调整系统，以最大化生产和最小化事故。这些调整往往时刻发生。其中一些调整包括（1）重组系统，以减少脆弱部分在故障下的暴露。（2）将关键资源集中到预期的高需求区域。（3）提供从预期和意外故障中撤退或恢复的途径。（4）建立对系统性能变化的早期检测手段，以允许优雅地削减生产，或是其他增加系统弹性的手段。&lt;/p&gt;
+&lt;h2 id=&#34;13-复杂系统中人的专业知识是不断变化的&#34;&gt;13. 复杂系统中，人的专业知识是不断变化的&lt;/h2&gt;
+&lt;p&gt;复杂系统的运行和管理需要大量的专业知识。这些专业知识随技术变化而变化，但也因为需要替换离开的专家而变化。在任何情况下，对技能和专业知识的训练和完善，都是系统本身功能的一部分。因此，在任何时候，一个特定的复杂系统将包含专业知识程度不同的从业者和受训者。和专业知识相关的关键问题来自于（1）需要将稀缺的专业知识作为资源，用于最困难或最苛刻的生产需求；（2）需要发展专业知识，以供未来使用。&lt;/p&gt;
+&lt;h2 id=&#34;14-变化引入了新的故障形式&#34;&gt;14. 变化引入了新的故障形式&lt;/h2&gt;
+&lt;p&gt;可靠系统中的低显性事故率，可能会鼓励变化，特别是对新技术的应用，以减少后果轻微但出现频率高的故障。这些变化可能实际上为新的、出现频率低但后果严重的故障创造了机会。当新技术被用于消除已经被理解透彻的系统故障，或是为了获得更高性能、更精确结果时，它们往往会引入新的、导致大规模灾难性失效的途径。并不少见的是，这些新的、罕见的灾难，甚至比这些新技术试图消除的故障影响更大。在事故发生前，这些新的故障模式难以被发现；大部分注意力被集中到这些修改带来的假定存在的有益特征上。因为这些新的、后果严重的事故发生的几率很低，在事故发生前可能引入了多个系统修改，使得人们很难看到技术对故障的贡献。&lt;/p&gt;
+&lt;h2 id=&#34;15-对原因的观点限制了对未来事件的防御措施的有效性&#34;&gt;15. 对「原因」的观点限制了对未来事件的防御措施的有效性&lt;/h2&gt;
+&lt;p&gt;事后对「人为错误」的补救措施，通常以阻碍可能「造成」事故的行动为前提。这些链条末端的措施对减少未来发生事故的可能性没有什么作用。实际上，因为潜在故障的模式不断变化，发生相同事故的可能性本身就已经非常低了。事后的补救措施，不仅没有增加安全性，反倒增加了系统的耦合度和复杂性。这不仅增加了潜在故障的数量，也使得检测和组织事故轨迹变得更加困难。&lt;/p&gt;
+&lt;h2 id=&#34;16-安全是系统的特性而非其组成部分的特性&#34;&gt;16. 安全是系统的特性，而非其组成部分的特性&lt;/h2&gt;
+&lt;p&gt;安全是系统的一种涌现（emergent）属性；它不存在于一个组织或系统的某个人、设备和部门中。安全不能被购买和制造；它不是一个独立于系统之外其他组成部分的特征。这意味着，安全不能像原料或原材料那样被操纵。任何系统中的安全状态都是动态的；持续的系统变化保证了（系统中的）危险和对危险的管理都是不断变化的。&lt;/p&gt;
+&lt;h2 id=&#34;17-人不断创造安全&#34;&gt;17. 人不断创造安全&lt;/h2&gt;
+&lt;p&gt;无故障运行是人们通过各种活动，努力将系统保持在可容忍的工作状况边界内的结果。这些活动大部分情况下是正常操作的一部分，表面上看起来也很直接。但因为系统的运作从来都不是没有故障的，人类操作者对不断变化的运行条件的适应，实际上每时每刻都在创造安全。这些适应往往只是从现有的对策中选出一个已经反复排练过的程序；但有时，这些适应是对新方法的全新组合，甚至重新创造。&lt;/p&gt;
+&lt;h2 id=&#34;18-无故障操作需要有故障经验&#34;&gt;18. 无故障操作需要有故障经验&lt;/h2&gt;
+&lt;p&gt;识别危险并成功操纵系统，使其留在可容忍的工作状况边界内（的能力），需要与失败有亲密的接触。在操作人员能辨别「包络边缘」的系统中，可能会产生更健壮的系统效能。（「包络边缘」）是系统的性能开始退化，变得难以预测，或无法轻易恢复之处。在内在危险的系统中，操作者应能面对并理解危险，并将系统导向理想的性能状态。提升安全性，取决于为操作者提供对危险的准确看法，也取决于让操作者准确了解他们的操作将如何影响系统性能，是朝向还是离开包络边缘。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -49,7 +338,25 @@
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
       <guid>/posts/distributed-system-course-notes/</guid>
-      <description>这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下</description>
+      <description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;分布式系统基础：RPC 和消息语义，逻辑时钟，分布式快照，一致性模型, CAP/FLP 理论&lt;/li&gt;
+&lt;li&gt;最终一致性系统：Bayou, DHT, Dynamo&lt;/li&gt;
+&lt;li&gt;共识和状态机复制：Primary-backup, Viewstamped Replication, Paxos, Raft, P-BFT&lt;/li&gt;
+&lt;li&gt;分布式事务与强一致性：2PC, 2PL, Spanner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;回想之前大一大二断断续续上的一些分布式相关的课程，有些东西果然是需要一些经验才会慢慢理解。&lt;/p&gt;
+&lt;p&gt;课程内容之外，作业基本上也是从 MIT 的作业改的，分别是实现以下系统：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MapReduce (Sequential / Distributed)&lt;/li&gt;
+&lt;li&gt;Raft (Election, Log Replication, Fault Tolerance)&lt;/li&gt;
+&lt;li&gt;K-V Storage based on Raft (KV-Raft)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中可能比较值得一提的是后两项作业，因为算是自己可能从来不会主动去写的类型，一想到可能的巨大复杂度就打退堂鼓了。不过实际上因为配套的测试比较完备，最后写起来其实也就是一个 case 一个 case 过，并没有想象中的那么困难。（不过从日志 debug 的确容易烦躁就是了。）最后实际上 Raft 和 KVRaft 都是在两天内写完的，不过的确是全神贯注的两天了。&lt;/p&gt;
+&lt;p&gt;尝试着把自己的（中文）笔记整理了一下，放在下面的链接。不过课件还是要点回课程网站手动获取，我并没有 redistribute 的权限。如有错漏，欢迎指出。
+&lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;All distributed system lectures&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;总而言之，上完这门课并且写完作业，稍微算是对自己实现复杂系统的能力更有一些些信心了吧。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -58,7 +365,109 @@
       <pubDate>Sun, 22 Aug 2021 22:02:00 +0300</pubDate>
       
       <guid>/posts/call-stack-is-also-a-stack/</guid>
-      <description>又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下： 定义一类字符串为 NB 串，每个 NB 串有一个对应的 NB 值 空串是一个 NB 串，且其 NB 值为 1 对一个 NB</description>
+      <description>&lt;p&gt;又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;定义一类字符串为 NB 串，每个 NB 串有一个对应的 NB 值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;空串是一个 NB 串，且其 NB 值为 1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对一个 NB 串，在其两侧加上括号后依然是一个合法的 NB 串，且其 NB 值为原串 NB 值加 1&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对两个 NB 串，将其拼接后依然是一个合法的 NB 串，且其 NB 值为两个原串 NB 值的乘积&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;问：给定一个已知合法的 NB 串，求其 NB 值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;样例&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(())() -&amp;gt; 3*2 = 6
+(()())() -&amp;gt; 5*2 = 10
+()()()(()) -&amp;gt; 2*2*2*3 = 24
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;看到括号，第一反应当然是用栈。先想了一会有没有只扫描一遍字符串的做法，但是很可惜没想出来。最后想了一个先构造树，再在树上遍历的做法，解答如下。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; java.util.LinkedList&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; java.util.List&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; java.util.Stack&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NBString&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+        String s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(()())()&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+        NBNode root &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; buildTree&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+        System&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;out&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;getNode&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;root&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; NBNode &lt;span style=&#34;color:#a6e22e&#34;&gt;buildTree&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;String s&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+        NBNode root &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; NBNode&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;[]&lt;/span&gt; chars &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;toCharArray&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+        Stack&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;NBNode&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; stack &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Stack&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt; chars&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#f92672&#34;&gt;++)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; c &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; chars&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#f92672&#34;&gt;];&lt;/span&gt;
+
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;(&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+                NBNode father&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;stack&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;()){&lt;/span&gt;
+                    father &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; root&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+                &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+                    father &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; stack&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;peek&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+                &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+                NBNode newNode &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; NBNode&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;father&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+                father&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;child&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;add&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;newNode&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+                stack&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;newNode&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+
+            &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;c&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;)&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+                stack&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;();&lt;/span&gt;
+            &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; root&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;getNode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NBNode node&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;node&lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; layerProd &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NBNode NBNode &lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; node&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;child&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+            layerProd &lt;span style=&#34;color:#f92672&#34;&gt;*=&lt;/span&gt; getNode&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NBNode&lt;span style=&#34;color:#f92672&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; layerProd &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NBNode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;
+    NBNode head&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+    List&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;NBNode&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; child&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;NBNode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;NBNode _head&lt;span style=&#34;color:#f92672&#34;&gt;){&lt;/span&gt;
+        head &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; _head&lt;span style=&#34;color:#f92672&#34;&gt;;&lt;/span&gt;
+        child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; LinkedList&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+    
+&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但是如果换个角度来看，其实题目描述的 NB 串，可以被视为是一个简单的类型定义，语法大致如下。然后要做的，就是把输入数据视作代码，构造抽象语法树，然后在语法树上操作得到结果了。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;NBString = &amp;quot;&amp;quot; | &amp;quot;(&amp;quot; NBString &amp;quot;)&amp;quot; | NBString NBString
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果 OJ 提供了类似于 Haskell 之类内置支持模式匹配的语言，那么就很简单了：把输入 tokenize，写一个 &lt;code&gt;calc&lt;/code&gt; 函数，然后直接按照题目要求写匹配规则和返回值就好了。伪代码如下。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;calc :: NBString -&amp;gt; Int
+calc = match str
+	case &amp;quot;&amp;quot;: return 1
+	case &amp;quot;(&amp;quot; sub &amp;quot;)&amp;quot;: return 1 + calc sub
+	case sub1 sub2: return calc sub1 * calc sub 2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然而现实并没有这么美好。但是难道就应该就此放弃吗？未必。实际上编程语言内的调用栈，也是一个栈，或者说语言本身就提供了我们所期望的解析语法树的功能。高人指点之下，可以用以下的 hack 来实现：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;f&lt;/span&gt;(x&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; x&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(()())()&amp;#34;&lt;/span&gt;
+s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;f(&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;)f(&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;)*f(&amp;#34;&lt;/span&gt;)
+&lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(eval(s))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上文代码所做的，实际上就是把输入串，替换成了一系列函数调用，并添加了符合题目要求的函数体。最后只需要直接调用 Python 内置的 &lt;code&gt;eval&lt;/code&gt;，就可以得到正确的答案了。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -67,7 +476,226 @@
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
       <guid>/posts/tf-cert-blog/</guid>
-      <description>又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？ 作者在 2021/7/4 参加考试。本文写于 2021/7/7。文中内容可能在未来发生变化。 下文简</description>
+      <description>&lt;!-- # Tensorflow 开发者认证记录 --&gt;
+&lt;p&gt;又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;作者在 2021/7/4 参加考试。本文写于 2021/7/7。文中内容可能在未来发生变化。&lt;/p&gt;
+&lt;p&gt;下文简称 Tensorflow 为 TF，机器学习（Machine Learning）为 ML，深度学习（Deep Learning）为 DL。虽然 DL 在分类上而言是 ML 的一部分，但鉴于 DL 在各大领域取得的进展，常常将 ML 和 DL 并列。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;7天（甚至更短时间内）通过 TF 开发者认证是可行的。&lt;/li&gt;
+&lt;li&gt;就实践水平而言，这一认证的含金量并不高（有点水），通过认证只意味着认证人具有基本的，使用 TF 进行图像分类/文本分类/时间序列预测任务的能力。&lt;/li&gt;
+&lt;li&gt;与其代表的实际水平相比，这一认证更大的意义可能在于强迫自己去阅读/学习，以及向潜在的雇主证明自己有能力/意向进行 ML/DL 的相关工作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;预备知识&#34;&gt;预备知识&lt;/h2&gt;
+&lt;h3 id=&#34;这个证书是什么&#34;&gt;这个证书是什么？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Tensorflow 是一个 Google 创建的开源的 DL 框架，使用广泛，也在 Google 内部支持着许多服务&lt;/li&gt;
+&lt;li&gt;Tensorflow Developer Certification 是 Google 的一个认证项目，在 2020 年 3 月开始，旨在证明认证人有能力使用 Tensorflow 建立 DL 模型，完成指定任务。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;为什么你可能会想要这个证书&#34;&gt;为什么你可能会想要这个证书？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;通过考证的过程学习 ML/DL 的相关知识&lt;/li&gt;
+&lt;li&gt;向未来的雇主证明自己有意愿/有能力完成 ML/DL 相关的工作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;考试如何进行&#34;&gt;考试如何进行？&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;报名费 $100，缴费后 180 天内需参加考试&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;5 小时时限，5 个任务，全部完成后可以提前结束&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个任务需要提交一个模型，可以随时提交，提交后几乎立刻可以得到一个五分制的反馈&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不同任务的分值不同，但是没有明确列出。理论上要求总分在 90% 以上通过&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个任务包含题目描述和代码框架，并不是从零开始，更接近填空&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;因为模型需要在远端测评架构上进行评分，模型输入和输出是被严格限定的，主要能调整的是模型架构和训练过程&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;考试要求 Pycharm，但 Pycharm 实际上只是考试 UI，实际的模型建立/训练可以在其他设备/平台上进行（如 Colab，Jupyter Notebook），只需要把最后得到的模型文件（.h5）放回考试目录下即可&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不限制网络使用，可以使用任何资源答题&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;考试失败后，需要间隔一段时间才能再次参加（首次 14 日，第二次一个月，第三次一年）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;我的个人背景&#34;&gt;我的个人背景&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;我自己从大三开始，陆陆续续修了一些数据科学/深度学习相关的课程，但是除了课程作业之外没有多少实践。&lt;/li&gt;
+&lt;li&gt;自己之前主要使用的 DL 框架是 PyTorch，对于 TensorFlow 了解不多。&lt;/li&gt;
+&lt;li&gt;现在算是暑假期间，暂时有一些自己的空闲时间。&lt;/li&gt;
+&lt;li&gt;之前一直想通过读 HOML （&lt;em&gt;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition&lt;/em&gt;）来学习使用 TF 的知识，但是静不下心去强迫自己学习。&lt;/li&gt;
+&lt;li&gt;好奇 Google 会如何通过证书考试的形式量化开发者的能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;我参加这一考试的目标&#34;&gt;我参加这一考试的目标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;熟悉 TF 的架构和使用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;掌握使用 TF 构建 DL 模型，完成数据科学任务的全流程（从数据输入到模型在生产环境上线）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;能够完成常见的 DL 任务（图像/文本/时间序列/结构化数据）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;后文将会回顾这些目标的完成度。&lt;/p&gt;
+&lt;h2 id=&#34;考前准备&#34;&gt;考前准备&lt;/h2&gt;
+&lt;p&gt;我首次听说这个考试是在 Daniel Bourke 的&lt;a href=&#34;https://www.youtube.com/watch?v=ya5NwvKafDk&#34;&gt;视频 (YouTube)&lt;/a&gt;，主要使用的相关资料也主要参考了他的&lt;a href=&#34;https://www.mrdbourke.com/how-i-got-tensorflow-developer-certified/&#34;&gt;博客&lt;/a&gt;。此外，TFUG 苏州的这一&lt;a href=&#34;https://www.bilibili.com/video/BV1wf4y117qF/?p=2&#34;&gt;视频讲解 (Bilibili)&lt;/a&gt; 及 &lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzAwNTM2ODk3NA==&amp;amp;mid=2247483889&amp;amp;idx=1&amp;amp;sn=179ae82e14984af2b07f6d5363d60aaa&#34;&gt;微信公众号文章&lt;/a&gt; 也提供了一些帮助。&lt;/p&gt;
+&lt;h3 id=&#34;资源&#34;&gt;资源&lt;/h3&gt;
+&lt;p&gt;以下资源按重要程度排序。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;TF 开发者证书候选人手册（&lt;a href=&#34;https://www.tensorflow.org/site-assets/downloads/marketing/cert/TF_Certificate_Candidate_Handbook_zh-cn.pdf?hl=zh-cn&#34;&gt;中文版 link&lt;/a&gt;，&lt;a href=&#34;https://www.tensorflow.org/extras/cert/TF_Certificate_Candidate_Handbook.pdf&#34;&gt;英文版 link&lt;/a&gt;）
+TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前可从考试平台下载）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;必须。&lt;/strong&gt;《候选人手册》是最重要的官方文档，需要详细阅读。其中有一个技能清单（Skill Checklist），基本上也就是考试会覆盖的主要内容了。《考试指导》和《环境配置》两个文档在为考试缴费后才在考试平台上可见，建议在开考前先通读一遍，并试着自己建立环境，以避免开考后遇到环境配置问题。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在线课程《DeepLearning.AI TensorFlow Developer 专业证书》（&lt;a href=&#34;https://www.coursera.org/professional-certificates/tensorflow-in-practice&#34;&gt;Coursera&lt;/a&gt;， &lt;a href=&#34;https://github.com/lmoroney/dlaicourse&#34;&gt;课程 Notebook Repo&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;必须。&lt;/strong&gt; 实际上是四门课程的集合，分别覆盖深度学习基础、CNN、NLP和时间序列。和技能清单几乎完全重合（实际上课程主讲和证书发放签名人是同一位）。课程内有视频和在线测评环境，习题也和真正的考试试题&lt;strong&gt;差不多&lt;/strong&gt;，基本上能跟着完成课程，考试也就不会有太大问题了。课程本身价格是 $59，但是有一周的免费试用（需要银行卡），可以快速刷完后取消付款方式关联。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;书籍 (HOML)《Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition》（中文版：《&lt;em&gt;Scikit&lt;/em&gt;-&lt;em&gt;Learn&lt;/em&gt;、&lt;em&gt;Keras&lt;/em&gt; 与&lt;em&gt;TensorFlow&lt;/em&gt; 机器学习实用指南(第二版)》）（&lt;a href=&#34;https://learning.oreilly.com/library/view/hands-on-machine-learning/9781491962282/&#34;&gt;O&amp;rsquo;Reilly&lt;/a&gt; ，&lt;a href=&#34;https://github.com/ageron/handson-ml/&#34;&gt;书 NoteBook Repo&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;推荐。&lt;/strong&gt; 这本书更接近延伸阅读材料，内容本身超出考试很多，但是对构建知识体系更有帮助。有些内容在线课程里说的不是很清楚（如 &lt;code&gt;tf.Dataset&lt;/code&gt; 的使用），书里会有更详细的讲解。和考试相关的部分是第 10 章至第 16 章。我所在的学校购买了 O&amp;rsquo;Reilly 的电子订阅，因此我选择在 iPad 上进行阅读，但是也可以购买纸质版本阅读。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TF 官方文档（&lt;a href=&#34;https://www.tensorflow.org/tutorials?hl=zh-cn&#34;&gt;教程&lt;/a&gt;，&lt;a href=&#34;https://www.tensorflow.org/guide&#34;&gt;指南&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可选。&lt;/strong&gt; 教程类似于 Cookbook，有解决各种任务的示例。指南则更注重底层原理和基础知识。可以先浏览一遍目录，在遇到不懂之处的时候进行查阅。如有时间也可通读。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;学习思路&#34;&gt;学习思路&lt;/h3&gt;
+&lt;p&gt;面对这种多种资源覆盖同一主题的情况，一般有两种学习思路：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;纵深：一次学习所有和这个主题相关的资源&lt;/li&gt;
+&lt;li&gt;重复：一次学习一个特定资源，在不同主题间重复&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;纵深&lt;/th&gt;
+&lt;th&gt;重复&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;在 Daniel Bourke 的博客分享中，他使用的是纵深的学习思路（&lt;em&gt;tribird approach&lt;/em&gt;，一石三鸟），每天选定一个主题，首先看对应的在线课程，然后阅读书籍，再花时间写代码练习，最后看 MIT 的视频收尾。但是根据我自己的经验，我更习惯于重复的学习思路，需要让大脑把知识在后台处理一段时间，才能找到一些没想清楚的地方，从而进一步学习。各位读者可以根据自己的习惯选择合适的路线。&lt;/p&gt;
+&lt;h3 id=&#34;学习时间线&#34;&gt;学习时间线&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Day 1：通读《候选人手册》，打印技能清单作为速查备忘。在考试平台上注册考试并缴费（需要提前完成，身份审核需要一段时间）。学习在线课程的前两个课程，完成课后习题。（学习时间约 8h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 2：学习在线课程的后两个课程，完成课后习题。（学习时间约 10h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 3：阅读书籍的 10 ~ 13 章并做笔记，同时查看相关笔记本的代码示例。（学习时间约 8h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 4：阅读书籍的 14 ~ 16 章并做笔记，同时查看相关笔记本的代码示例。阅读 TF 官方指南中的「Keras」部分。（学习时间约 10h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 5：阅读 TF 官方教程中的「Keras 机器学习基础知识」、「加载和预处理数据」、「图像」、「文本」、「结构化数据」部分。处理之前笔记中遗留的部分问题。开始尝试从零实现 Day 1 中的作业（首先复现，然后使用不同的数据集）。（学习时间约 12h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 6：开始尝试从零实现 Day 2 中的作业。复现 TF 官方教程中的几个自己认为有趣的示例。尝试使用 Keras-tuner。根据环境配置文档准备准备考试环境。（学习时间约 12h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 7：复习笔记。重新阅读《候选人手册》和《考试指导》。在 Pycharm 下复现一个之前的作业。（学习时间约 8h）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Day 8：参加考试。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;学习建议&#34;&gt;学习建议&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;建立自己的 code snippet （代码片段）集合，在需要的时候可以快速查阅（常用的网络结构、常用的预处理代码、常用的 Callback&amp;hellip;）&lt;/li&gt;
+&lt;li&gt;建立 checklist（检查清单），如
+&lt;ul&gt;
+&lt;li&gt;模型精度不符合预期的可能出错点（根据自己完成作业的经历建立）&lt;/li&gt;
+&lt;li&gt;过拟合的处理方式（根据自己的经验和阅读的相关资料）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;保留所有自己写过的代码，以备查阅&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;设备与环境&#34;&gt;设备与环境&lt;/h3&gt;
+&lt;p&gt;我自己使用的是实验室内的工作站，GPU (Quardo M2000, 4G VRAM) 比较老旧，系统是 Ubuntu 18.04，Pycharm 版本 2021.1.3 Community。为了保险，考前在学校的超算上申请了一个 GPU 示例备用，GPU 为 RTX2080。&lt;/p&gt;
+&lt;p&gt;考试本身需要训练的模型其实都不会太大，根据《考试指导》中的描述，如果能在本地跑通 &lt;a href=&#34;https://www.tensorflow.org/tutorials/images/classification&#34;&gt;图像分类&lt;/a&gt; 和 &lt;a href=&#34;https://www.tensorflow.org/text/tutorials/text_classification_rnn&#34;&gt;文本分类&lt;/a&gt; 这两个示例，基本就不会有问题了。再加上有五个小时的时间，一般情况下是不用担心本地算力过低导致训练失败的。如果条件是在比较有限，可以使用 Colab 进行训练，或者是在主流的云厂商平台上购买带有 GPU 或是为深度学习优化过的实例。&lt;/p&gt;
+&lt;p&gt;考试是在 virtualenv 的虚拟环境中建立的，需要提前在系统级别安装 Python 3.8 版本。官方的《考试指导》中特别注明了不可以使用 Anaconda，不太确定原因，但是最好遵守。&lt;/p&gt;
+&lt;p&gt;需要注意的是，Pycharm 本身虽然可以设定使用远程 SSH 连接下的 Python Interpreter，但是这一配置是不受到考试插件支持的，因此最好直接在具有 GPU 的设备上安装 Pycharm 和考试插件。&lt;/p&gt;
+&lt;p&gt;网络环境方面，因为考试本身需要从 Google 的服务器下载数据集和上传模型，建议自行确保到国际互联网的连接质量，或是在网络低峰期参加考试。数据集在代码中使用 &lt;code&gt;request&lt;/code&gt; 库进行下载，但是也可以手动使用其他工具下载后放置于考试目录内。&lt;/p&gt;
+&lt;h2 id=&#34;考试中&#34;&gt;考试中&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;需要提前准备系统的 Python 3.8 环境，并在 Pycharm 内安装一个 TF Certification Exam 插件。&lt;/li&gt;
+&lt;li&gt;插件运行后首先需要登录 Google 账户认证，然后会自动创建 venv 并安装依赖。完成后显示「Start Exam」按钮，点击后即考试开始。&lt;/li&gt;
+&lt;li&gt;插件会自动建立一个 Pycharm 工程，其中有 5 个文件夹，命名为 Category1 到 Category5。每个文件夹内有一个 &lt;code&gt;starter.py&lt;/code&gt; 为基本的代码框架，内部有 &lt;code&gt;#TODO&lt;/code&gt; 注释标注需要填写的部分。在编辑&lt;code&gt;starter.py&lt;/code&gt; 时，插件会自动显示本题的描述。&lt;/li&gt;
+&lt;li&gt;完成训练后，会在题目目录下生成 &lt;code&gt;mymodel.h5&lt;/code&gt; 文件。如果使用其他设备训练，也可以从其他设备下载模型文件后，手动放置到文件夹内（需要为 h5 格式）。在插件内选择 &lt;code&gt;Submit and Test model&lt;/code&gt; 就会自动提交到服务器进行测评，右下角进度条会显示上传进度，一般上传完成后 30s 内就会返回评分（0/5 到 5/5）。如果太久没有返回评分，可能是模型过大/过复杂，可以取消当前测评。&lt;/li&gt;
+&lt;li&gt;可以无限次提交模型。测评本身是基于后台的一部分隐藏数据的，根据部分参加者的反馈，数据存在一定随机性，即使是同一模型的多次提交，返回的分数也可能存在浮动。&lt;/li&gt;
+&lt;li&gt;所有题目都拿到 5/5 评分后，即可点击插件，选择「End Exam」，确认后结束考试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我自己的这一次考试比较幸运，因为事前自己根据《环境配置》文档验证过环境，没有遇到环境导致的问题。5 个题目都不是很难，我在开考后的 40 分钟就完成了 4 个题目并拿到 5/5，但是 NLP 的题目十分诡异，尝试了各种架构都只能得到 4/5 评分。最后换了优化器，调小学习率，增大 epoch 数慢慢训练，总算 5/5 了。最后结束考试的时候，还剩余 3 小时 10 分钟。&lt;/p&gt;
+&lt;p&gt;本次我遇到的 5 个题目是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个很简单的回归&lt;/li&gt;
+&lt;li&gt;一个你绝对已经遇到过多次的数据集的分类&lt;/li&gt;
+&lt;li&gt;图像分类&lt;/li&gt;
+&lt;li&gt;自然语言处理（文本分类）&lt;/li&gt;
+&lt;li&gt;时间序列预测&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;考试结束后&#34;&gt;考试结束后&lt;/h2&gt;
+&lt;p&gt;如果通过，几分钟内就会收到通过邮件，并可以填写信息注册到 Google 的认证网络。数字证书需要几个工作日才会通过电子邮件发送。&lt;/p&gt;
+&lt;h2 id=&#34;回顾与总结&#34;&gt;回顾与总结&lt;/h2&gt;
+&lt;p&gt;回顾这一周，我认为这是一次有趣的经历。可能对我而言，花钱是强迫自己学习的有效方式，至少这一周我是好好把 HOML 中的部分章节给啃下来了。考试本身比想象中容易很多，更说明通过这场考试只是一个开始，仅仅证明自己具备了基本的，跟随教程完成部分简单任务的技能，但是离真正掌握还有很远。&lt;/p&gt;
+&lt;p&gt;之前我自己定下的目标的完成情况如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;熟悉 TF 的架构和使用
+&lt;ul&gt;
+&lt;li&gt;完成（至少从完全没有经验到能快速上手构建原型了）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;掌握使用 TF 构建 DL 模型，完成数据科学任务的全流程（从数据输入到模型在生产环境上线）
+&lt;ul&gt;
+&lt;li&gt;部分完成（本次学习主要覆盖的是从数据输入到模型建立，但是后续部署到生产环境没有怎么覆盖）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;能够完成常见的 DL 任务（图像/文本/时间序列/结构化数据）
+&lt;ul&gt;
+&lt;li&gt;基本完成（每个大分类下都还有很多细分任务，本次学习只是覆盖了最基本的一些任务，但是作为基础知识与入门的介绍已经足够好了）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;所以你应该参加这个认证吗&#34;&gt;所以你应该参加这个认证吗？&lt;/h3&gt;
+&lt;p&gt;在我看来，对于未来的计算机/数据科学专业的学生，ML/DL 的技能会被认为是「默认掌握」的。TF 的这个开发者认证，会更接近当前「计算机二级」认证的认可层级：对专业外的学生是额外技能的体现，对于专业内的学生则没有太大的意义。但是就当前而言，获得这一认证可能还是有其意义的，至少在一些小公司可能更容易让你通过 HR 筛。&lt;/p&gt;
+&lt;p&gt;表格：如果满足以下条件，你&amp;hellip;参加这个认证&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;可能应该&lt;/th&gt;
+&lt;th&gt;可能不应该&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;- 想强迫自己学点东西&lt;br /&gt;- 从其他专业转行，需要证明自己的能力和求职意向&lt;br /&gt;- 简历上没有太多能写的经历&lt;/td&gt;
+&lt;td&gt;- 已经有了成熟、丰富的 ML/DL 经验&lt;br /&gt;- 手头没有闲钱/时间&lt;br /&gt;- 觉得 TensorFlow 太难用了，PyTorch 万岁&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
     </item>
     
     <item>
@@ -76,7 +704,16 @@
       <pubDate>Sat, 03 Apr 2021 01:47:01 +0300</pubDate>
       
       <guid>/posts/back-again/</guid>
-      <description>2020 年发生了很多事，一直没有时间更新博客，然而突然意识到，很多有趣的事情、实用的技巧，并没有得到足够的分享，于是打算重新拾起这个博客。 把文件重</description>
+      <description>&lt;p&gt;2020 年发生了很多事，一直没有时间更新博客，然而突然意识到，很多有趣的事情、实用的技巧，并没有得到足够的分享，于是打算重新拾起这个博客。&lt;/p&gt;
+&lt;h2 id=&#34;把文件重新找回来&#34;&gt;把文件重新找回来&lt;/h2&gt;
+&lt;p&gt;复活的第一步显然是把原始的部署文件找到。但是因为换的设备太多，加之保存文件习惯不加，找起来还是花了一些时间的。Onedrive 里虽然有一个版本，但是是之前用 Hexo 的版本，Hugo 版本的博客则是翻了全盘备份才找到的。（再一次凸显了全盘备份的重要性，不过根源大概还是因为 2020 年换了太多设备了）这次复活后，也会把用于生成静态网页的原始文件，使用 Github Private Repo 的方式加以备份，避免再难寻找。&lt;/p&gt;
+&lt;h2 id=&#34;换个主题&#34;&gt;换个主题&lt;/h2&gt;
+&lt;p&gt;文件找回来之后，在本地就可以跑起来了。然而因为复活后的博客大概也需要承担一部分分享任务，当前的主题布局并不是很适合，主要是页面太空，各文章之间间距太大，于是寻思着换个主题。官网上找了找，发现了当前这款 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/&#34;&gt;Manis&lt;/a&gt;，列表页只有标题，相对更简洁一些。不过唯一有些遗憾的就是没有黑暗模式，之后再看看怎么加上吧。&lt;/p&gt;
+&lt;h2 id=&#34;更新文章&#34;&gt;更新文章&lt;/h2&gt;
+&lt;p&gt;实际上之前虽然一直没有更新博客，私底下还是断断续续写了几篇的，于是就趁这个机会一起发上来好了。此外因为有两年没更新，有些博文也已经过时了，在此也一并加上了更新。&lt;/p&gt;
+&lt;h2 id=&#34;加入分享栏目&#34;&gt;加入「分享」栏目&lt;/h2&gt;
+&lt;p&gt;本次复活中，特意加上了「分享」这一栏目。之前旧不更新博客，原因之一就是每次写文章太累了。但我后来意识到，其实有些小技巧、小发现，也可以用博客进行分享，但是并不需要完整的文章，只是简短的摘要供参考就足够了。由此出发，便有了「分享」这一栏目，可点击标题栏「Share」查看。未来的计划大概是遇到什么有趣的东西，就随手在这里加以分享。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -85,7 +722,44 @@
       <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
       
       <guid>/posts/repair-install/</guid>
-      <description>本文原载于「小众软件论坛」link 前言 最近主力机上的 Windows 10 遇到了一些诡异的问题，开始菜单部分时候无法打开。这种系统层面的问题，第一反应当然是 sfc/dism</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文原载于「小众软件论坛」&lt;a href=&#34;https://meta.appinn.net/t/topic/21923&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近主力机上的 Windows 10 遇到了一些诡异的问题，开始菜单部分时候无法打开。这种系统层面的问题，第一反应当然是 &lt;code&gt;sfc&lt;/code&gt;/&lt;code&gt;dism&lt;/code&gt; 修复，然而无果。各种杂七杂八的方法也都去试了，故障依旧。事已至此，大概只有重装了，然而数据备份，软件安装，想想就头大。但是在偶然间发现了「Repair Install」（试译「修复安装」）这个小技巧，尝试后的确解决了问题。试着搜索了一下论坛，似乎还没有人介绍过，故作此贴。&lt;/p&gt;
+&lt;h2 id=&#34;什么是repair-install&#34;&gt;什么是「Repair Install」&lt;/h2&gt;
+&lt;p&gt;作为 Windows 用户的你可能没有听说过 Repair Install，但是大概率你已经体验过了：Windows 10 的大版本更新。在更新完成后，进入 「设置 - 系统 - 关于」，会发现「安装日期」已经被修改为了更新的安装日期。原因在于，&lt;strong&gt;Windows 10 的大版本更新，实际上就是一次保留了用户数据（含文件、应用和设置）的系统重装&lt;/strong&gt;。这也是为什么大版本更新通常比一般更新耗时更长，且安装过程中会见到类似于全新安装的进度百分比显示。&lt;/p&gt;
+&lt;p&gt;换个方向思考，既然 Windows 更新机制可以允许这种特殊的保留用户数据的重装，是否可以让用户自己来进行呢？这实际上就是 Repair Install 的本质了：&lt;strong&gt;用户手动进行的“大版本更新”&lt;/strong&gt;。
+（此处“大版本更新”带引号，因为实际上并不要求安装介质的版本比已安装系统的版本高，相同版本也是可以进行的）&lt;/p&gt;
+&lt;h2 id=&#34;什么场景适合于repair-install&#34;&gt;什么场景适合于「Repair Install」&lt;/h2&gt;
+&lt;p&gt;当 Windows 10 出现了奇怪的问题，且其他途径无法修复时，包括但不限于：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;开始菜单打不开&lt;/li&gt;
+&lt;li&gt;UWP 应用打不开&lt;/li&gt;
+&lt;li&gt;字体/图标丢失&lt;/li&gt;
+&lt;li&gt;注册表混乱&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;进行repair-install的前置要求&#34;&gt;进行「Repair Install」的前置要求&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;可以正常启动 Windows 进入桌面（如果已经启动不了就无能为力了，只能进安全模式也无法使用这个方法）&lt;/li&gt;
+&lt;li&gt;安装 ISO 需要和当前安装的系统：SKU（家庭/专业）相同、架构体系（x86/x64）相同、语言相同、且安装 ISO 版本高于或等于当前安装系统版本&lt;/li&gt;
+&lt;li&gt;当前系统分区有相对充裕的剩余空间（ tenforums 的说法是至少 8.87 G，不过也不知道这个数字的来源。建议至少保留 15 G 以防重蹈 &lt;a href=&#34;https://mrmacintosh.com/big-sur-upgrade-not-enough-hd-space-serious-issue-possible-data-loss/&#34;&gt;MacOS Big Sur 的覆辙&lt;/a&gt;。）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何进行repair-install&#34;&gt;如何进行「Repair Install」&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;获取 Windows 10 ISO （可以使用微软官网的 &lt;a href=&#34;https://www.microsoft.com/en-gb/software-download/windows10&#34;&gt;Media Creation Tool&lt;/a&gt; 或第三方直链 &lt;a href=&#34;https://tb.rg-adguard.net/public.php&#34;&gt;TechBench by WZT (v4.1.1) (rg-adguard.net)&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;双击挂载 ISO （也可以用其他虚拟光驱工具）&lt;/li&gt;
+&lt;li&gt;进入挂载驱动器，运行 &lt;code&gt;setup.exe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一路下一步，在「选择要保留的项目」页选择「保留个人文件、应用和 Windows 设置」&lt;/li&gt;
+&lt;li&gt;耐心等待安装完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://answers.microsoft.com/en-us/windows/forum/windows_10-windows_install-winpc/how-to-perform-a-repair-upgrade-using-the-windows/35160fbe-9352-4e70-9887-f40096ec3085&#34;&gt;How to: Perform a Repair Upgrade Using the Windows 10 ISO file - Microsoft Community&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tenforums.com/tutorials/16397-repair-install-windows-10-place-upgrade.html&#34;&gt;Repair Install Windows 10 with an In-place Upgrade | Tutorials (tenforums.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://neosmart.net/wiki/windows-10-repair-installation/#When_to_repair_install_Windows_10&#34;&gt;How To Reinstall Windows 10 (neosmart.net)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -94,7 +768,125 @@
       <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
       
       <guid>/posts/install-de-in-wsl/</guid>
-      <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
+      <description>&lt;h1 id=&#34;给-wsl-安装桌面环境&#34;&gt;给 WSL 安装桌面环境&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文是旧文补完计划的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可做&amp;hellip; 总之，你需要在 WSL 下安装一个桌面环境。希望这篇文章能够提供一些小小的帮助。&lt;/p&gt;
+&lt;h2 id=&#34;开始之前对比-wsl-下的桌面环境与-linux-vm&#34;&gt;开始之前：对比 WSL 下的桌面环境与 Linux VM&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DE: Desktop Environment 桌面环境&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;DE in WSL&lt;/th&gt;
+&lt;th&gt;Linux VM&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;启动速度&lt;/td&gt;
+&lt;td&gt;即时可用&lt;/td&gt;
+&lt;td&gt;VM 启动 / VM 状态恢复&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;配置难度&lt;/td&gt;
+&lt;td&gt;相对麻烦&lt;/td&gt;
+&lt;td&gt;简单，主流 Linux 发行版中都提供良好支持&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;资源消耗&lt;/td&gt;
+&lt;td&gt;少，仅额外添加 Win 端 XServer 消耗&lt;/td&gt;
+&lt;td&gt;多，需要考虑 VM Supervisor 的 overhead&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;步骤&#34;&gt;步骤&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考自：https://github.com/QMonkey/wsl-tutorial&lt;/p&gt;
+&lt;p&gt;其他链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.lainme.com/doku.php/blog/2018/07/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8windows_10%E4%B8%8A%E8%A3%85x&#34;&gt;如何优雅的在windows_10上装x&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jianshu.com/p/c936a8a2180e&#34;&gt;https://www.jianshu.com/p/c936a8a2180e&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我自己的环境：Windows 10 1909, WSL 1, Ubuntu 18.04&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;0&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;前置要求：配置好 WSL 1，发行版 Ubuntu 18.04&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 Windows 下安装 &lt;a href=&#34;https://sourceforge.net/projects/vcxsrv/&#34;&gt;VcXsrv Windows X Server&lt;/a&gt;，安装过程中一路下一步即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中安装 &lt;code&gt;xfce4&lt;/code&gt;, &lt;code&gt;xfce4-terminal&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为什么用 XFCE：小，资源占用少，比较适合我们当前的需求&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install xfce4-terminal xfce4
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中配置 &lt;code&gt;dbus&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dpkg-reconfigure dbus &amp;amp;&amp;amp; sudo service dbus restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改 &lt;code&gt;~/.bashrc&lt;/code&gt;，加入以下内容，随后运行 &lt;code&gt;source ~/.bashrc&lt;/code&gt; 使其生效&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export DISPLAY=:0.0
+export LIBGL_ALWAYS_INDIRECT=1
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 Windows 中运行 &lt;code&gt;XLaunch&lt;/code&gt; （先前 &lt;code&gt;VcXsrv&lt;/code&gt; 安装的一部分），在第一个配置页面选择 &lt;code&gt;One large window&lt;/code&gt; 或者 &lt;code&gt;One large window without titlebar&lt;/code&gt;（区别是 Windows 下，DE 的显示窗口是否会有标题栏），随后一路下一步。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中运行 &lt;code&gt;startxfce4&lt;/code&gt;，观察 Windows 下 &lt;code&gt;VcXsrv&lt;/code&gt; 是否正确启动。如果一切正常，此时应该会显示 Xfce 4 的默认壁纸，并开始 DE 初始化过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果只是需要一个正常运行的 DE 的话，到此即可。以下步骤为添加中文支持（字体和输入法）。&lt;/p&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中安装中文字体和 &lt;code&gt;fcitx&lt;/code&gt; 输入法框架，并生成 &lt;code&gt;systemd&lt;/code&gt; Machine ID&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
+sudo apt-get install fcitx fcitx-pinyin dbus-x11
+sudo systemd-machine-id-setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;加入输入法设定至 &lt;code&gt;~/.profile&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更改 &lt;code&gt;dbus&lt;/code&gt; 配置让 &lt;code&gt;fcitx&lt;/code&gt; 能正常启动：向 &lt;code&gt;/etc/dbus-1/session.conf&lt;/code&gt; 中写入以下内容&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;listen&amp;gt;tcp:host=localhost,port=0&amp;lt;/listen&amp;gt;
+&amp;lt;auth&amp;gt;ANONYMOUS&amp;lt;/auth&amp;gt;
+&amp;lt;allow_anonymous/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装&lt;a href=&#34;https://pinyin.sogou.com/linux/?r=pinyin&#34;&gt;搜狗拼音&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;安装搜狗拼音的 deb 的时候，第一次会因为缺少依赖而失败，因此先用 &lt;code&gt;-f&lt;/code&gt; 补充缺失的依赖，再重新安装，就可以完成了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;wget &#39;http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb?st=LAPO53d3V5UzEfPO5y_C6g&amp;amp;e=1580122419&amp;amp;fn=sogoupinyin_2.3.1.0112_amd64.deb&#39;
+mv sogoupinyin_2.3.1.0112_amd64.deb\?st\=LAPO53d3V5UzEfPO5y_C6g\&amp;amp;e\=1580122419\&amp;amp;fn\=sogoupinyin_2.3.1.0112_amd64.deb sogoupinyin.deb
+sudo dpkg -i sogoupinyin.deb
+sudo apt-get install -f
+sudo dpkg -i sogoupinyin.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置搜狗拼音：运行 &lt;code&gt;startxfce4&lt;/code&gt; 启动 Xfce，右键单击右上角「键盘」图标，选择 Configure。在打开的窗口中点击左下角「+」按钮，搜索并选中「Sogou Pinyin - Chinese (China)」（如果不想搜索可以直接拖到列表底部），点击「OK」完成添加。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可选）测试输入法：安装 &lt;code&gt;gedit&lt;/code&gt;，并测试能否在其中正确输入中文。输入前，可能需要从右上角「键盘」图标选中 Input Method - Sogou Pinyin 作为当前输入法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;原理解析&#34;&gt;原理解析&lt;/h2&gt;
+&lt;p&gt;为什么这个能 Work 呢？其实这就是上古时代的正确用法：Server 进行主要运算，Client 只作为操作终端，提供图形显示和输入。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -103,7 +895,48 @@
       <pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate>
       
       <guid>/posts/utils-ahk/</guid>
-      <description>各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip; GitHub Gist 快速启动 Win+N 记事本 Win+C cmd cmd下Ctrl+V</description>
+      <description>&lt;p&gt;各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://gist.github.com/jerrylususu/ca434b7c34c77968ceecd4b735af1fcf&#34;&gt;GitHub Gist&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;快速启动&#34;&gt;快速启动&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Win+N 记事本&lt;/li&gt;
+&lt;li&gt;Win+C cmd
+&lt;ul&gt;
+&lt;li&gt;cmd下Ctrl+V直接复制&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Win+Alt+O explorer
+&lt;ul&gt;
+&lt;li&gt;Win+Alt+K kill掉explorer (被注释禁用了 需要自己手动开启 line 221-228)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;窗口透明度&#34;&gt;窗口透明度&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;来源：https://autohotkey.com/board/topic/148619-set-window-always-on-top-and-change-transparency/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Alt+E 获取需要调整透明度的窗口&lt;/li&gt;
+&lt;li&gt;Alt+W 增加透明度&lt;/li&gt;
+&lt;li&gt;Alt+Q 减少透明度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;记事本相关&#34;&gt;记事本相关&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Alt+Shift+S 把所有无标题的记事本内容复制到一个新的记事本示例&lt;/li&gt;
+&lt;li&gt;Alt+Shift+D 关闭所有无标题的记事本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;窗口调整&#34;&gt;窗口调整&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;来源：http://blog.sachleen.com/posts/1370369043/snapping-windows-vertically-on-portrait-display/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Alt+T 当前窗口置顶&lt;/li&gt;
+&lt;li&gt;Win+Alt+↑ 窗口占据上半屏幕&lt;/li&gt;
+&lt;li&gt;Win+Alt+↓ 窗口占据下班屏幕&lt;/li&gt;
+&lt;li&gt;Win+Ctrl+Alt+↑ 窗口占据上1/4屏幕&lt;/li&gt;
+&lt;li&gt;Win+Ctrl+Alt+↓ 窗口占据下1/4屏幕&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -112,7 +945,16 @@
       <pubDate>Mon, 12 Aug 2019 23:48:00 +0800</pubDate>
       
       <guid>/posts/migrate-note/</guid>
-      <description>在之前的文章中有提及，因为各种原因，已经很久没有打理这个博客了，一直荒废到了几周前。本文主要记录从 Hexo 迁移到 Hugo，并配置 Terminal 主题的过程。 文章</description>
+      <description>&lt;p&gt;在之前的文章中有提及，因为各种原因，已经很久没有打理这个博客了，一直荒废到了几周前。本文主要记录从 Hexo 迁移到 Hugo，并配置 Terminal 主题的过程。&lt;/p&gt;
+&lt;h2 id=&#34;文章头&#34;&gt;文章头&lt;/h2&gt;
+&lt;p&gt;大部分静态博客解决方案都通过文章头记录文章元数据，例如标题、创建日期、分类、tag 等。在迁移前，我知道 Hugo 的文章头和 Hexo 略有不同，主要体现在时间格式、数组形式上。但是没想到，Hugo 对 Hexo 下的文章头依然能正常解析，Archive 中有几篇文章就是直接从旧博客中复制过来的。&lt;/p&gt;
+&lt;h2 id=&#34;多语言部署&#34;&gt;多语言部署&lt;/h2&gt;
+&lt;p&gt;Hugo 支持切换访问语言，具体而言，切换的是主题中的一些字符串。在配置的时候，虽然我在 &lt;code&gt;zh-CN&lt;/code&gt; 语言环境下进行了设定，但是发现本地没有生效。查询后才发现，需要用 &lt;code&gt;defaultContentLanguage&lt;/code&gt; 参数设定博客的主语言。&lt;/p&gt;
+&lt;h2 id=&#34;section--文章列表&#34;&gt;Section / 文章列表&lt;/h2&gt;
+&lt;p&gt;Hugo 的官方文档中，支持一种名为 Section 的文章组织方案。在 &lt;code&gt;content&lt;/code&gt; 文件夹下，可以建立不同的 &lt;code&gt;section&lt;/code&gt;，再在其内部放置文章，从而实现一种类似于 category 的文章层级。但是在我自己测试的时候，虽然可以通过手动构造 URL 访问 section 内的文章，但却无法获取 section 的文章列表。经过一番折腾后，发现可能是 Terminal 主题的缺陷，这一主题在设定文件中要求手动指定主要 section，暗示其可能不支持多 section 架构。查阅文档后，可能原因是 Terminal 主题中缺失对 section 的相关 layout 文件。最后我将 &lt;code&gt;themes\terminal\layouts\_defaults&lt;/code&gt; 下的 &lt;code&gt;list.html&lt;/code&gt; 复制到根目录下的 &lt;code&gt;layout\_default&lt;/code&gt; 文件夹下，再删除了一些过滤条件，总算魔改出了一个能用的 section 视图。后续可能会向主题作者提 issue，或者直接发起 Pull Request。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;虽然迁移有点点麻烦，不过能复活，总归还是很开心的。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -121,7 +963,48 @@
       <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
       
       <guid>/posts/what-software-i-am-using/</guid>
-      <description>看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列</description>
+      <description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
+&lt;h2 id=&#34;featured-&#34;&gt;Featured ✨&lt;/h2&gt;
+&lt;h3 id=&#34;stickies&#34;&gt;Stickies&lt;/h3&gt;
+&lt;p&gt;Sticky Notes++。初见只以为和其他的简单便利贴软件一样，但是用起来却发现越用越离不开了：Stack, Solo, 富文本支持, 自带 to do 转换&amp;hellip; 当然，最重要的是数据安全，以及启动速度比 Windows 自带的便笺快太多了。自从用了 Stickies，我打开的 Notepad 窗口大幅减少了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为了解决移除外接屏幕后便利贴无法访问的问题，甚至自带 Rescue Off-screen 功能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注：此前苦于 Windows 下没有合适的速记类应用，我用 Notepad 和自己写的 AHK 插件作为解决方案。按下 Win+N 即可召唤出新的 Notepad 窗口，再按下 Alt+N 即可置顶，从而实现简单的速记效果。当然，长期使用后会导致 Notepad 窗口数暴增，且不便于保存和整理，在系统崩溃时也有数据安全之虞。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;snipaste&#34;&gt;Snipaste&lt;/h3&gt;
+&lt;p&gt;Snip 截图，Paste 贴图。描述看起来简单，用起来却格外使用，能够在狭小的电脑屏幕上模拟出在桌上工作时随意放置各种参考资料的快感。&lt;/p&gt;
+&lt;h3 id=&#34;utools&#34;&gt;Utools&lt;/h3&gt;
+&lt;p&gt;Windows 版本的 Spotlight，一经发现就占据了我的 &lt;code&gt;Alt+Space&lt;/code&gt;。在发现它之前，我用 Windows 自带的搜索，但是总是困扰于索引速度和作为干扰的网页搜索。有了 utools 之后总算是情景了。顺带还有插件支持。&lt;/p&gt;
+&lt;h3 id=&#34;mobaxterm&#34;&gt;MobaXTerm&lt;/h3&gt;
+&lt;p&gt;作为 term 类应用，自然少不了连接远程服务器的功能，但 MobaXTerm 能做的却还有很多：文件传输、服务器性能监控、一键分屏、X11 映射、自带关键词高亮&amp;hellip; 最重要的，是 Home 用途免费！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;v12 在我的环境下表现不佳，偶有崩溃。v11 似乎更稳定一些。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;gridmove&#34;&gt;GridMove&lt;/h3&gt;
+&lt;p&gt;简单的分屏应用，但是支持复杂的自定义布局。尤其适合那种一边看书/教程/论文，一边做笔记的场合。当然，你也可以随意修改配置文件，让它融入你的工作流。支持多屏。&lt;/p&gt;
+&lt;h2 id=&#34;listed-&#34;&gt;Listed 📜&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Hourglass: 有自然语言支持的倒计时器。用来提醒我去取洗/烘干了的衣服。&lt;/li&gt;
+&lt;li&gt;Listen1: 一个软件听全网歌曲，不用担心版权孤岛。（网易云音乐也有类似插件，可用网易云音乐作为前端）&lt;/li&gt;
+&lt;li&gt;WinDynamicDesktop: 定时更换 Windows 壁纸，实现伪 Dynamic Desktop 效果&lt;/li&gt;
+&lt;li&gt;Draw.io: 画流程图/结构图/各种图的唯一指定软件，Visio 的强大开源替代品。&lt;/li&gt;
+&lt;li&gt;NoteHighlight: Onenote 桌面版本插件，用来给笔记中的代码做代码高亮。&lt;/li&gt;
+&lt;li&gt;MiKTex: 更现代的 Latex 解决方案，支持按需安装 package，至少比 TeX Live 小多了。&lt;/li&gt;
+&lt;li&gt;Icecream PDF Editor: 免费的 PDF 编辑工具，Adobe 家对应工具的实用替代。&lt;/li&gt;
+&lt;li&gt;ScreenToGif: Gif 录制工具，轻量好用。&lt;/li&gt;
+&lt;li&gt;LockHunter: 专治&lt;code&gt;文件被占用，无法删除&lt;/code&gt;，界面比 Unlocker 更好看，且能指出占用进程。&lt;/li&gt;
+&lt;li&gt;弹弹 Play: 带弹幕的播放器。支持抓取在线视频站弹幕，也可从中心服务器为离线视频加弹幕。&lt;/li&gt;
+&lt;li&gt;PDF-XChange Viewer: 带强大标注功能和需多实用工具的 PDF 查看器。启动比 Adobe Reader 快太多了。&lt;/li&gt;
+&lt;li&gt;hfs: 当你需要一个临时的，支持上传下载的 HTTP 文件服务器时&amp;hellip;&lt;/li&gt;
+&lt;li&gt;PanDownload: 百度网盘下载加速。&lt;/li&gt;
+&lt;li&gt;Video Speed Controller: (浏览器插件) 快速跳过视频废话，顺带可以练习英语听力？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why&#34;&gt;Why?&lt;/h2&gt;
+&lt;p&gt;常常有人问我：「装这么多软件用得着吗？ 」、「为什么你的托盘区域有 20+ 图标？」&lt;/p&gt;
+&lt;p&gt;我的回答是：「因为我希望，当我在处理任务时，身旁总能有&lt;strong&gt;趁手&lt;/strong&gt;的工具。」&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -130,7 +1013,41 @@
       <pubDate>Sun, 04 Aug 2019 02:25:00 +0800</pubDate>
       
       <guid>/posts/back/</guid>
-      <description>标题用了一个梗，你能看出来吗？ （尽管我尝试以乐观的方式开场，但这对本篇文章的基调并无改善。） 转眼间大二已经结束了，大学生涯也已经过去一半了。</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;标题用了一个梗，你能看出来吗？&lt;br&gt;
+（尽管我尝试以乐观的方式开场，但这对本篇文章的基调并无改善。）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转眼间大二已经结束了，大学生涯也已经过去一半了。之前一直拖着，现在也总算是趁着放假重新把博客捡起来了。趁此机会，顺便也尝试着做做自省吧。&lt;/p&gt;
+&lt;h2 id=&#34;关于博客&#34;&gt;关于博客&lt;/h2&gt;
+&lt;p&gt;从 Hexo 切换到了 Hugo，在 &lt;a href=&#34;https://hugo-terminal.now.sh/&#34;&gt;Terminal&lt;/a&gt; 主题的加持下看起来似乎美观了很多，但转换和部署过程倒是有不少坑，之后可能单独开一篇文章来描述。趁着这次转换，也对旧的文章进行了一些处理，一小部分扔在了 &lt;a href=&#34;/archive/&#34;&gt;Archive&lt;/a&gt; 里头，剩下的本地归档不再放出了。CSDN 上的部分文章估计会择日迁移过来，例如吐槽和 Leetcode 系列，不过 ETA 依然未知。&lt;/p&gt;
+&lt;h2 id=&#34;关于自己&#34;&gt;关于自己&lt;/h2&gt;
+&lt;p&gt;迁移的时候回顾了下大一上结束时的自己写的&lt;code&gt;近况报告&lt;/code&gt;，当年的自己看起来似乎乐观的多。然而现在的我似乎已经没有过去的那种勇气和魄力了。可能是受了早些时候的某件事的影响？但我也不知道。从大一下到大二下结束，上了不少课，写了不少作业，也尝试着做了不少事，但是却依然感觉自己相比大一上而言，并没有多少进步，反倒越来越迷茫了。&lt;/p&gt;
+&lt;p&gt;或许在这里，堆积文字并不是好的表述方法，如果用列表写出来反倒可能会好一点。那就试试看吧。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;感觉失去了探索的勇气。&lt;/li&gt;
+&lt;li&gt;感觉心沉不下来，什么都想做但是什么都不敢做，什么都想学但什么都学不会。&lt;/li&gt;
+&lt;li&gt;越来越怕麻烦了，更期望用现有的东西堆砌出一个“能用”的东西，而不是创造一个“优雅”的解决方案。&lt;/li&gt;
+&lt;li&gt;惧怕重构和更新，固守已有的旧知识。&lt;/li&gt;
+&lt;li&gt;学的时候浅尝辄止，感觉自己懂了但是实际上并没有，用的时候仍然是边用边查，捉襟见肘。&lt;/li&gt;
+&lt;li&gt;对未来一片迷茫。担心自己的能力是否能够支撑自己在工业界活下去，又对学术界所必须的学习能力和数理基础缺乏信心。&lt;/li&gt;
+&lt;li&gt;代码和工程能力低下，且没有任何进步。两年过去了，我写出来的代码和我大一上写的依然没有多少区别，同样的混乱和不可维护，甚至可能因为忘记了一些特性反而更加糟糕了。&lt;/li&gt;
+&lt;li&gt;越发不敢与其他人交流，日趋自闭。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;列举的时候一般都会带上一些示例，此处也不妨放上一些，反正它们也已经喷涌而出了。以下的每一条，都能让我想到另外的正面例子，但是我却感觉自己做不到了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;大一开始前我对编程语言并没有什么了解，大一上学习到了 Java，后来也就把 Java 作为了第一语言。这并没有问题，但是似乎因为有了一门主语言，就似乎没有耐心或者说心境去学习一些新的语言了。例如虽然我可以说自己能写 Python, C, C++, Javascript, Go，但是实际上每一种都只是会一些皮毛，任何一个有正常智商的程序员在接触这些语言的第一个小时内就能达到和我相同的水平。这样的语言学习，在我看来并没有多少意义，但是我却找不到沉进去学习的策略。&lt;/li&gt;
+&lt;li&gt;依然是 Java。平心而论，现在的我知道的 Java，和大一上结束的我知道的 Java，并没有任何增加，甚至反而可能还减少了。大二下 Java 2 的课堂上，很多东西我也是刚刚了解，就要尝试着教给同学们，实在是惭愧。一直说着要读核心技术之类的书籍，但是也一直停留在口头说说的地步。就算读了一部分，也因为没有进行过任何代码实践而早就忘光了。就现在我的水平，不光说我的同级生，很多大一的佼佼者都可以远远超过了，无论是在知识的深度还是广度上。&lt;/li&gt;
+&lt;li&gt;无法通过自学理解复杂概念，更别提工期紧张的时候了。多线程和异步看了很多，感觉会了，自己依然写不出来，但是又静不下心去学。每次都说着要学 Vue，但是到了要用的时候依然是靠 Bootstrap 和 JQuery 救场。大一上我在用 Spring Boot，到了大二下我也只会 Spring Boot，而且依然是当作黑箱，内部原理依旧是一无所知。说着&lt;code&gt;Project-based Learning&lt;/code&gt;，但是工期一紧就更学不进去了，只是想如何赶快把要做的东西拼凑出来。做了再多的 Project，也只是在堆砌其他人也能写的东西。&lt;/li&gt;
+&lt;li&gt;既有项目的维护：捐款系统的自动化、舍友系统的算法更新和验证&amp;hellip; 感觉已经完全没有动力、勇气和信心去做了，更别提开新坑了。&lt;/li&gt;
+&lt;li&gt;大部分同学在这个暑假都已经联系导师，开始搬砖了，自己的却依然没有着落。找借口说自己需要时间探索和选择，但是也没有真正去了解过多少老师。对于未来更有发展潜力的方向：AI, CV, NLP, Robotics 更是直接丧失了信心。我知道他们前途远大，但是我就是认为自己学不下去。&lt;/li&gt;
+&lt;li&gt;数据科学&amp;hellip; 尽管学了三门课，其中两门考的还不错，但是我依然只会最简单的单层调包和基于运气的调参，对分析和其他操作依然是一头雾水。神经网络之类的就更不用提了，完全苦手。&lt;/li&gt;
+&lt;li&gt;暑假，其他同学刷题的刷题、搬砖的搬砖、准备英语、学车。但自己却无所事事，每天不过都是在咸鱼中度过罢了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这大概就是那种绝望感吧，让我想起了初中一千米自己跑在全班最后，看着所有人往前狂奔，自己却精疲力竭，越来越远的感受。&lt;/p&gt;
+&lt;h2 id=&#34;未来&#34;&gt;未来？&lt;/h2&gt;
+&lt;p&gt;核心问题应该还是导师吧，但是我并没有什么解决的思路。我也不知道&amp;hellip;&lt;/p&gt;
+&lt;p&gt;暂且作本文已立此存照吧。&lt;/p&gt;
+</description>
     </item>
     
   </channel>

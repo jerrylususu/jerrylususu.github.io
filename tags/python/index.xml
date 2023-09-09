@@ -13,7 +13,65 @@
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
       <guid>/share/markdown-code-in-table/</guid>
-      <description>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格</description>
+      <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
+&lt;p&gt;需要注意之处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对应的 table cell 的 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签需要在新行的行首（前面不能有缩进）&lt;/li&gt;
+&lt;li&gt;table cell 内的 Markdown 文本上下和 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签之间需要间隔一个空行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;效果：&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt; Column 1 &lt;/td&gt; &lt;td&gt; Column 2 &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Code Block &lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello world&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Horizontal Line &lt;/td&gt;
+&lt;td&gt;
+&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Some Text&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;代码：&lt;strong&gt;注意代码块结束应该是 3 个 tilt&lt;/strong&gt;（这里写两个是因为三个会导致渲染出错，提早结束代码块）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 1 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 2 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Code Block &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                           &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+```python
+print(&amp;#34;hello world&amp;#34;)
+``                             &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--Should be 3 tilt here!--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                          &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Horizontal Line &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+
+**Markdown** 
+
+---
+
+Some Text
+
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参考链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/60502719&#34;&gt;https://stackoverflow.com/a/60502719&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -22,7 +80,97 @@
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
       <guid>/share/python-hash-inherit/</guid>
-      <description>最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要</description>
+      <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
+&lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
+&lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pycharm 的方法跳转可以定位到父类 &lt;code&gt;__hash__&lt;/code&gt; 方法&lt;/li&gt;
+&lt;li&gt;inspect.getmro 的父类列表正常&lt;/li&gt;
+&lt;li&gt;dir(object) 得到的方法列表中的确含有 &lt;code&gt;__hash__&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;文档&lt;/a&gt;原文：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A class that overrides &lt;code&gt;__eq__()&lt;/code&gt; and does not define &lt;code&gt;__hash__()&lt;/code&gt; will have its &lt;code&gt;__hash__()&lt;/code&gt; implicitly set to None.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If a class that overrides &lt;code&gt;__eq__()&lt;/code&gt; needs to retain the implementation of &lt;code&gt;__hash__()&lt;/code&gt; from a parent class, the interpreter must be told this explicitly by setting &lt;code&gt;__hash__ = &amp;lt;ParentClass&amp;gt;.__hash__&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;具体的&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;实现&lt;/a&gt;（基于 CPython）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 函数负责继承 slots &lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 在处理比较相关的函数（comparison-related）的时候（&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;），会使用 &lt;code&gt;overrides_hash&lt;/code&gt; 方法检查子类是否有重写 &lt;code&gt;__eq__&lt;/code&gt;, &lt;code&gt;__hash__&lt;/code&gt; (&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5274&#34;&gt;Line 5274&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;overrides_hash&lt;/code&gt; 中使用 &lt;code&gt;_PyDict_ContainsId&lt;/code&gt; 方法先检查 &lt;code&gt;__eq__&lt;/code&gt;，再检查 &lt;code&gt;__hash__&lt;/code&gt;，如果任一存在则返回 1，否则返回 0&lt;/li&gt;
+&lt;li&gt;如果 &lt;code&gt;overrides_hash&lt;/code&gt; 返回 1，则认为不能继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法，&lt;code&gt;type-&amp;gt;tp_hash&lt;/code&gt; 不会被设定&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下为一个示例：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Original&lt;/th&gt;
+    &lt;th&gt;Modified &lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+&lt;td width=&#34;50%&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# No __hash__ defined&lt;/span&gt;
+
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# gives error&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# NOTE: Added hash&lt;/span&gt;
+    __hash__ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Parent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# now it works&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &amp;quot;scratch.py&amp;quot;, line 17, in &amp;lt;module&amp;gt;
+    print(child.__hash__())
+TypeError: &#39;NoneType&#39; object is not callable
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;相关链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/11716258/python-using-the-default-hash-method-in-hash-method-definition&#34;&gt;&lt;code&gt;Stack Overflow - Python - Using the default __hash__ method in __hash__ method definition&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/53518981/inheritance-hash-sets-to-none-in-a-subclass&#34;&gt;&lt;code&gt;Stack Overflow - Inheritance - __hash__ sets to None in a subclass&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;&lt;code&gt;Python Doc - object.__hash__&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
   </channel>

@@ -13,7 +13,53 @@
       <pubDate>Sun, 20 Aug 2023 19:18:26 +0800</pubDate>
       
       <guid>/share/console-save/</guid>
-      <description>最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 POST /a</description>
+      <description>&lt;p&gt;最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 &lt;code&gt;POST /api/entity/:id&lt;/code&gt;）。用 Edge 浏览器自带的 “编辑并重新发送” 功能测试，手动也可以调通。（这是 Edge 浏览器一个超棒的功能，对于偶尔的小调试可以替代 Postman）。理论上到了这一步就可以写点 Python 把数据遍历 ID 把数据爬下来了，不过可能还要处理一些 cookie 之类的麻烦事。与其再写个外部脚本，为什么不在浏览器的控制台里直接写脚本爬呢？&lt;/p&gt;
+&lt;p&gt;大概框架如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;idList&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;]; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [];
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;idList&lt;/span&gt;) {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resp&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fetch&lt;/span&gt;(&lt;span style=&#34;color:#75715e&#34;&gt;/* */&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// F12 网络标签页，右键请求，复制 - 复制为 fetch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resp&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt;()
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;push&lt;/span&gt;({&lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt;});
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// 限制频率
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}
+&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;save&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还需要一些辅助函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 可以 await 的 sleep
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;ms&lt;/span&gt;) =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt; =&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setTimeout&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;ms&lt;/span&gt;));
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 以 JSON 保存 console 中的变量
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// src: http://bgrins.github.io/devtools-snippets/#console-save
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// via: https://stackoverflow.com/questions/11849562/how-to-save-the-output-of-a-console-logobject-to-a-file
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;){
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;save&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;){
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Console.save: No data&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;) &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;console.json&amp;#39;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;typeof&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;object&amp;#34;&lt;/span&gt;){
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;JSON&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stringify&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;blob&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Blob&lt;/span&gt;([&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;], {&lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text/json&amp;#39;&lt;/span&gt;}),
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;createEvent&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;MouseEvents&amp;#39;&lt;/span&gt;),
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;createElement&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;download&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;URL&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;createObjectURL&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;blob&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dataset&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;downloadurl&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text/json&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;download&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;].&lt;span style=&#34;color:#a6e22e&#34;&gt;join&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;:&amp;#39;&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;initMouseEvent&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, window, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;)
+ }
+})(&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上，祝使用愉快！&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -22,7 +68,30 @@
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
       <guid>/posts/vue-app-pwa/</guid>
-      <description>之前写过一个用来辅助五十音记忆的小 App: Gojuon Quiz (源代码)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然</description>
+      <description>&lt;p&gt;之前写过一个用来辅助五十音记忆的小 App: &lt;a href=&#34;https://nekonull.me/gojuon-quiz/&#34;&gt;Gojuon Quiz&lt;/a&gt; (&lt;a href=&#34;https://github.com/jerrylususu/gojuon-quiz&#34;&gt;源代码&lt;/a&gt;)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然可用，二来打开的时候不会显示浏览器地址栏之类的控件，体验上基本和一个原生应用接近了。&lt;/p&gt;
+&lt;p&gt;具体操作起来其实很简单，基本上就是以下几步：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Vue PWA 插件：&lt;code&gt;vue add pwa&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;生成不同大小的图标，放置于 &lt;code&gt;img/icons&lt;/code&gt; 下：可以用 &lt;a href=&#34;https://realfavicongenerator.net/&#34;&gt;Real Favicon Generator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;vue.config.js&lt;/code&gt; 中稍微调整下 PWA 插件的配置：可以参考 &lt;a href=&#34;https://cli.vuejs.org/core-plugins/pwa.html#configuration&#34;&gt;@vue/cli-plugin-pwa 文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;（可选）增加更新提示：参考 &lt;a href=&#34;https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip&#34;&gt;Handling Service Worker updates in your Vue PWA&lt;/a&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不过不做这一步也不会影响自动更新功能，只是需要更新完成后用户手动关闭再重新开启，才会应用新的版本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;安装完成后，可以看到以下标志，证明 PWA 功能成功配置了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chrome / Edge 地址栏右侧出现加号&lt;/li&gt;
+&lt;li&gt;console 输出 service worker 相关调试信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;调试的时候有一些小问题需要注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;PWA 在开发模式（如 &lt;code&gt;vue serve&lt;/code&gt;）下是不会启用的，需要先 &lt;code&gt;vue build&lt;/code&gt; 之后，手动在 dist 目录下开一个 HTTP 服务器（可以用 `python -m http.server）才会启用。&lt;/li&gt;
+&lt;li&gt;如果是用局域网的设备，访问开发机上的 HTTP 服务器，也可能无法触发 PWA。原因是 PWA 触发需要 HTTPS（或服务器在本地 localhost）。&lt;/li&gt;
+&lt;li&gt;PWA 自定义名称的话，需要写在 &lt;code&gt;pwa.name&lt;/code&gt; 下，而不是其他内层结构里。（之前装了 &lt;code&gt;i18n&lt;/code&gt; 插件，习惯性的写到 &lt;code&gt;pluginOptions&lt;/code&gt; 里了。）&lt;/li&gt;
+&lt;/ol&gt;
+</description>
     </item>
     
     <item>
@@ -31,7 +100,62 @@
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
       
       <guid>/share/css-filter-dark-mode/</guid>
-      <description>本博客使用的 Manis 主题 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手</description>
+      <description>&lt;p&gt;本博客使用的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis 主题&lt;/a&gt; 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手搜索了一下，发现已经有&lt;a href=&#34;https://www.zhangxinxu.com/wordpress/2020/11/css-mix-blend-mode-filter-dark-theme/&#34;&gt;前人&lt;/a&gt;提出了使用 CSS Filter 实现简易黑暗模式的想法，甚至有&lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;代码&lt;/a&gt;可以直接应用于 Hugo 博客。相较于 media query，直接使用 CSS Filter 不仅操作上更简单，也允许用户直接切换明亮/黑暗模式，而不需要调整系统/浏览器的全局设定。&lt;/p&gt;
+&lt;p&gt;具体 CSS 实现中，先使用 &lt;code&gt;invert(1)&lt;/code&gt; 对整个网页的颜色反相，但这一操作也会引起颜色的色调反转，因此需要再用 &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; 将色调转回来。然而这样的操作对文字而言很合适，但是会影响图片、视频等元素的显示，如同被 X 射线照射一般，最后还需要对这些需要被黑暗模式排除的元素再用一次 &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; 负负得正转回来。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;background-color&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;#ebebeb&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;!important&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;);
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/* using not to exclude certain elements */&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;img&lt;/span&gt;:&lt;span style=&#34;color:#a6e22e&#34;&gt;not&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-text&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; .&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-social&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;),&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;video&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;code&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;) contrast(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为了让用户能够切换明亮/黑暗模式，需要引入一个额外的切换图标，点击时会对应插入/删除黑暗模式的 CSS tag，并将用户的设定保存到 &lt;code&gt;localstorage&lt;/code&gt;。在用户未明确设定偏好时，应遵循系统/浏览器全局的黑暗模式设定，因此这里又用 &lt;code&gt;window.matchMedia&lt;/code&gt; 来探测。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-toggle&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-theme&amp;#34;&lt;/span&gt;);
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// probe system default dark mode setting
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;(prefers-color-scheme: dark)&amp;#39;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;matches&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;;
+} &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// use user preference if possible
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt;;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt;);
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addEventListener&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;click&amp;#34;&lt;/span&gt;, () =&amp;gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;);
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;);
+    }
+
+});
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;setItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;);
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;;
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;;
+    }
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;完整修改可见于我给这一主题实现黑暗模式的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt;，一个简单的示例可见于 &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;。最后的效果如下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;12/27 更新&lt;/strong&gt;：PR 已被接收并合并。&lt;/p&gt;
+</description>
     </item>
     
   </channel>

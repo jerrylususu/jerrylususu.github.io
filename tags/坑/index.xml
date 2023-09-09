@@ -13,7 +13,19 @@
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
       <guid>/share/vnc-to-physical-display/</guid>
-      <description>如果搜索 Linux 远程桌面，大部分教程基本上都是 xrdp + xfce4 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用</description>
+      <description>&lt;p&gt;如果搜索 &lt;code&gt;Linux 远程桌面&lt;/code&gt;，大部分教程基本上都是 &lt;code&gt;xrdp + xfce4&lt;/code&gt; 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用场景中，有的时候在实验室的 Linux 工作站上开启了一个比较长时间的任务，回到宿舍后可能需要检查下运行过程是否正常。如果是一般的 CLI 程序，用 &lt;code&gt;screen&lt;/code&gt; 或者 &lt;code&gt;tmux&lt;/code&gt; 之类的 terminal multiplexer （终端多路复用器）就绰绰有余了，可惜我用的是一个 GUI 程序。因此试着搜索了一番，发现是可以实现 VNC 连接到一个进行中的 X session 的，效果和 teamviewer 之类的工具差不多，具体操作如下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 TigerVNC 服务端&lt;/li&gt;
+&lt;li&gt;运行 &lt;code&gt;vncpasswd&lt;/code&gt; 创建 VNC 密码&lt;/li&gt;
+&lt;li&gt;启动 TigerVNC 服务&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;x0vncserver&lt;/code&gt; 开启一个连接到 Display 0 的 VNC 会话
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; x0vncserver -display :0 -PasswordFile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/home/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;username&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/.vnc/passwd 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;在其他设备上使用 VNC 客户端连接&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在 Windows 上，根据我自己的体验，似乎 RealVNC Viewer 的使用体验比 TigerVNC Viewer 更好。&lt;/p&gt;
+&lt;p&gt;另一个可能会影响使用体验的问题是缩放与屏幕分辨率。实验室的工作站是 4K 屏幕，使用 200% 缩放，在用 1080p 的笔记本连接的时候不免感觉字太小。TigerVNC 似乎有一个 auto-scaling 功能，然而因为我们是把 VNC 会话连接到物理屏幕上，这一功能似乎无法使用。我自己的解决方式是先连上去，再手动改远端系统内的分辨率设置（一般改到 2560x1440 就足够了），然后重启 x0vncserver 再重新连接。虽然稍微有些麻烦，但是至少解决能用的问题了。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -22,7 +34,29 @@
       <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
       
       <guid>/share/ms-rdp-8021x-bug/</guid>
-      <description>昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时</description>
+      <description>&lt;p&gt;昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。&lt;/p&gt;
+&lt;p&gt;以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network&#34;&gt;Remote laptop disconnects from wireless network | Microsoft Docs&lt;/a&gt;，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。&lt;/p&gt;
+&lt;p&gt;找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;打开「设置」应用，选择「网络和 Internet / WLAN」，在右侧相关设置选择「网络和共享中心」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在「查看活动网络」下找到自己连接到的 WiFi，点击蓝色文字&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;点击「无线属性」，选择「安全」选项卡，点击「高级设置」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在「指定身份验证模式」中，选择「用户或计算机身份认证」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;至此无线连接会中断。点击任务栏的 WiFi 图标，重新输入用户名密码连接到网络。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;设置完成后，建议使用手头的设备（平板 / 手机）尝试在同一网络下用 RDP 连接，如果能正常连接应该就没问题了。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -31,7 +65,65 @@
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
       <guid>/share/markdown-code-in-table/</guid>
-      <description>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格</description>
+      <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
+&lt;p&gt;需要注意之处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对应的 table cell 的 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签需要在新行的行首（前面不能有缩进）&lt;/li&gt;
+&lt;li&gt;table cell 内的 Markdown 文本上下和 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签之间需要间隔一个空行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;效果：&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt; Column 1 &lt;/td&gt; &lt;td&gt; Column 2 &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Code Block &lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello world&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Horizontal Line &lt;/td&gt;
+&lt;td&gt;
+&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Some Text&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;代码：&lt;strong&gt;注意代码块结束应该是 3 个 tilt&lt;/strong&gt;（这里写两个是因为三个会导致渲染出错，提早结束代码块）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 1 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 2 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Code Block &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                           &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+```python
+print(&amp;#34;hello world&amp;#34;)
+``                             &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--Should be 3 tilt here!--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                          &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Horizontal Line &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+
+**Markdown** 
+
+---
+
+Some Text
+
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参考链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/60502719&#34;&gt;https://stackoverflow.com/a/60502719&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -40,7 +132,97 @@
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
       <guid>/share/python-hash-inherit/</guid>
-      <description>最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要</description>
+      <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
+&lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
+&lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pycharm 的方法跳转可以定位到父类 &lt;code&gt;__hash__&lt;/code&gt; 方法&lt;/li&gt;
+&lt;li&gt;inspect.getmro 的父类列表正常&lt;/li&gt;
+&lt;li&gt;dir(object) 得到的方法列表中的确含有 &lt;code&gt;__hash__&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;文档&lt;/a&gt;原文：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A class that overrides &lt;code&gt;__eq__()&lt;/code&gt; and does not define &lt;code&gt;__hash__()&lt;/code&gt; will have its &lt;code&gt;__hash__()&lt;/code&gt; implicitly set to None.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If a class that overrides &lt;code&gt;__eq__()&lt;/code&gt; needs to retain the implementation of &lt;code&gt;__hash__()&lt;/code&gt; from a parent class, the interpreter must be told this explicitly by setting &lt;code&gt;__hash__ = &amp;lt;ParentClass&amp;gt;.__hash__&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;具体的&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;实现&lt;/a&gt;（基于 CPython）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 函数负责继承 slots &lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 在处理比较相关的函数（comparison-related）的时候（&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;），会使用 &lt;code&gt;overrides_hash&lt;/code&gt; 方法检查子类是否有重写 &lt;code&gt;__eq__&lt;/code&gt;, &lt;code&gt;__hash__&lt;/code&gt; (&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5274&#34;&gt;Line 5274&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;overrides_hash&lt;/code&gt; 中使用 &lt;code&gt;_PyDict_ContainsId&lt;/code&gt; 方法先检查 &lt;code&gt;__eq__&lt;/code&gt;，再检查 &lt;code&gt;__hash__&lt;/code&gt;，如果任一存在则返回 1，否则返回 0&lt;/li&gt;
+&lt;li&gt;如果 &lt;code&gt;overrides_hash&lt;/code&gt; 返回 1，则认为不能继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法，&lt;code&gt;type-&amp;gt;tp_hash&lt;/code&gt; 不会被设定&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下为一个示例：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Original&lt;/th&gt;
+    &lt;th&gt;Modified &lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+&lt;td width=&#34;50%&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# No __hash__ defined&lt;/span&gt;
+
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# gives error&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# NOTE: Added hash&lt;/span&gt;
+    __hash__ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Parent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# now it works&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &amp;quot;scratch.py&amp;quot;, line 17, in &amp;lt;module&amp;gt;
+    print(child.__hash__())
+TypeError: &#39;NoneType&#39; object is not callable
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;相关链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/11716258/python-using-the-default-hash-method-in-hash-method-definition&#34;&gt;&lt;code&gt;Stack Overflow - Python - Using the default __hash__ method in __hash__ method definition&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/53518981/inheritance-hash-sets-to-none-in-a-subclass&#34;&gt;&lt;code&gt;Stack Overflow - Inheritance - __hash__ sets to None in a subclass&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;&lt;code&gt;Python Doc - object.__hash__&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -49,7 +231,18 @@
       <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
       
       <guid>/share/hugo-disqus/</guid>
-      <description>Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后</description>
+      <description>&lt;p&gt;Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 &lt;code&gt;config.toml&lt;/code&gt; 的顶层设定 &lt;code&gt;disqusShortname&lt;/code&gt; 属性即可，不过实际用起来稍微有些坑。具体步骤如下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Disqus 官网注册自己的账户&lt;/li&gt;
+&lt;li&gt;在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （&lt;code&gt;{site_name}.disqus.com&lt;/code&gt;）就是 &lt;code&gt;disqusShortname&lt;/code&gt; 应该用的值&lt;/li&gt;
+&lt;li&gt;站点创建完成后，Billing 页选择 Free Plan&lt;/li&gt;
+&lt;li&gt;在 Hugo 的 &lt;code&gt;config.toml&lt;/code&gt; 文件中设定 &lt;code&gt;disqusShortname&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其他小问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地没有评论显示：主题的&lt;code&gt;disqus.html&lt;/code&gt;中（位于&lt;code&gt;{site_folder}\themes\{theme_name}\layouts\partials\disqus.html&lt;/code&gt;），在本地执行（&lt;code&gt;indow.location.hostname == &amp;quot;localhost&amp;quot;&lt;/code&gt;）的时候不会加载评论框。如果调试需要，可以给这个判断加上注释，即可在本地正常显示了。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -58,7 +251,48 @@
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
-      <description>上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。 400 Bad Request 问题：表单与后台程序不匹配（后</description>
+      <description>&lt;p&gt;上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。&lt;/p&gt;
+&lt;!-- more --&gt;
+&lt;h2 id=&#34;400-bad-request&#34;&gt;400 Bad Request&lt;/h2&gt;
+&lt;p&gt;问题：表单与后台程序不匹配（后台调用了表单里没有的项）
+坑：手动用不可见文本框传递id，但是误将&lt;code&gt;readOnly&lt;/code&gt;设置成了&lt;code&gt;disabled&lt;/code&gt;，id读取不能，于是报错。重新改回来即可解决，亦可使用&lt;code&gt;session&lt;/code&gt;中转。&lt;/p&gt;
+&lt;h2 id=&#34;bootstrap-框架不对劲&#34;&gt;Bootstrap 框架不对劲&lt;/h2&gt;
+&lt;p&gt;问题：本来是10-2的排布，但是却变成上面2 下面10
+坑：最后发现上面的&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;没有写&lt;code&gt;&amp;lt;/table&amp;gt;&lt;/code&gt;，造成10继续向下继承。手动修正即可。&lt;/p&gt;
+&lt;h2 id=&#34;sqlite-新建字段出错&#34;&gt;SQLite 新建字段出错&lt;/h2&gt;
+&lt;p&gt;问题：建立表后再追加字段，选择&lt;code&gt;NOT NULL&lt;/code&gt;属性报错
+坑：SQLite就是这样设定的。&lt;/p&gt;
+&lt;h2 id=&#34;sqlite-多层-sql-嵌套&#34;&gt;SQLite 多层 SQL 嵌套&lt;/h2&gt;
+&lt;p&gt;问题：部分请求中一个 SQL 套一个 SQL，难以判断。
+解决：SQLite 支持视图属性，可用其作为临时表。&lt;/p&gt;
+&lt;h2 id=&#34;sqlite-count-不能在-python-中调用&#34;&gt;SQLite &lt;code&gt;count(*)&lt;/code&gt; 不能在 Python 中调用&lt;/h2&gt;
+&lt;p&gt;问题：在 Python 中引用 db.execute 出来的 &lt;code&gt;count(*)&lt;/code&gt;，总是提示失败
+坑：似乎&lt;code&gt;*&lt;/code&gt;是 Python 中的特殊字符，不能乱用
+解决：用 as 将&lt;code&gt;count(*)&lt;/code&gt;改写为 &lt;code&gt;c&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;h2 id=&#34;sqlalchemy-获取出来的是-proxy-对象不能判断存在&#34;&gt;SQLAlchemy 获取出来的是 Proxy 对象，不能判断存在&lt;/h2&gt;
+&lt;p&gt;解决：用自带的 &lt;code&gt;.scalar()&lt;/code&gt; 方法，在不存在时能返回&lt;code&gt;None&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;sqlalchemy-获取出的-proxy-对象其中的值难以操作&#34;&gt;SQLAlchemy 获取出的 Proxy 对象，其中的值难以操作&lt;/h2&gt;
+&lt;p&gt;坑：试图对&lt;code&gt;lang&lt;/code&gt;进行转换，但是提示 &lt;code&gt;Proxy&lt;/code&gt;对象不可用。
+解决：用 &lt;code&gt;CS50&lt;/code&gt; 函数库中中的 &lt;code&gt;SQL&lt;/code&gt;解决，本质上就是对 SQLAlchemy 的二次封装，获取出来的直接就是&lt;code&gt;dict&lt;/code&gt;格式，更好用了。&lt;/p&gt;
+&lt;h2 id=&#34;sql-返回单条结果读取信息报错&#34;&gt;SQL 返回单条结果，读取信息报错&lt;/h2&gt;
+&lt;p&gt;坑：虽然返回的是单条结果，但是还是要用&lt;code&gt;for elem in dict&lt;/code&gt;处理得到真正的单条数据。&lt;/p&gt;
+&lt;h2 id=&#34;validatorjs-字段匹配总是出错&#34;&gt;Validator.js 字段匹配总是出错&lt;/h2&gt;
+&lt;p&gt;坑：#指定的是id而不是name，要再设定一次id&lt;/p&gt;
+&lt;h2 id=&#34;python-3-编码报错&#34;&gt;Python 3 编码报错&lt;/h2&gt;
+&lt;p&gt;坑：代码中有中文，提示&lt;code&gt;not an ASCII character&lt;/code&gt;
+解决：文件头加上&lt;code&gt;#coding UTF-8&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;excel-导出的-csv-无法在-sqlite-上导入&#34;&gt;Excel 导出的 CSV 无法在 SQLite 上导入&lt;/h2&gt;
+&lt;p&gt;坑：Excel 导出 CSV 的默认文件编码是 ASCI
+解决：用记事本打开，另存为 UTF-8&lt;/p&gt;
+&lt;h2 id=&#34;flask-的消息闪现不显示&#34;&gt;Flask 的消息闪现不显示&lt;/h2&gt;
+&lt;p&gt;解决：检查 layout.html 中页面逻辑，先用&lt;code&gt;with&lt;/code&gt;获取，再用&lt;code&gt;for&lt;/code&gt;得到具体的闪现消息。&lt;/p&gt;
+&lt;h2 id=&#34;页面多次重载结果不同&#34;&gt;页面多次重载结果不同&lt;/h2&gt;
+&lt;p&gt;解决：清空 gunicorn 缓存，重启服务器。&lt;/p&gt;
+&lt;h2 id=&#34;jinja-2-渲染出的文本框露出下一参数&#34;&gt;Jinja 2 渲染出的文本框露出下一参数&lt;/h2&gt;
+&lt;p&gt;解决：看看引号是否完全加上了&lt;/p&gt;
+&lt;h2 id=&#34;python-提示变量定义前使用&#34;&gt;Python 提示变量定义前使用&lt;/h2&gt;
+&lt;p&gt;解决：global&lt;/p&gt;
+</description>
     </item>
     
   </channel>

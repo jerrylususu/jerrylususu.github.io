@@ -13,7 +13,16 @@
       <pubDate>Sun, 27 Aug 2023 19:18:26 +0800</pubDate>
       
       <guid>/share/lofi-bat/</guid>
-      <description>自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV</description>
+      <description>&lt;p&gt;自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 &lt;a href=&#34;https://github.com/yt-dlp/yt-dlp&#34;&gt;yt-dlp&lt;/a&gt; 和 &lt;a href=&#34;https://sourceforge.net/projects/mpv-player-windows/files/&#34;&gt;mpv&lt;/a&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;:&lt;span style=&#34;color:#75715e&#34;&gt;:set HTTP_PROXY=http://localhost:[some_port]&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;cd&lt;/span&gt; C:\Apps\mpv-x86_64-20230723-git-ca4192e
+mpv --no-video  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.youtube.com/watch?v=jfKfPfyJRdk&amp;#34;&lt;/span&gt; --script-opts=ytdl_hook-ytdl_path=yt-dlp.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外附上一些常见快捷键（&lt;a href=&#34;https://defkey.com/mpv-media-player-shortcuts&#34;&gt;完整见此&lt;/a&gt;）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;9：减小音量
+0：增大音量
+空格：暂停播放（但是依然会在后台继续缓冲）
+M：静音
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
@@ -22,7 +31,53 @@
       <pubDate>Sun, 20 Aug 2023 19:18:26 +0800</pubDate>
       
       <guid>/share/console-save/</guid>
-      <description>最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 POST /a</description>
+      <description>&lt;p&gt;最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 &lt;code&gt;POST /api/entity/:id&lt;/code&gt;）。用 Edge 浏览器自带的 “编辑并重新发送” 功能测试，手动也可以调通。（这是 Edge 浏览器一个超棒的功能，对于偶尔的小调试可以替代 Postman）。理论上到了这一步就可以写点 Python 把数据遍历 ID 把数据爬下来了，不过可能还要处理一些 cookie 之类的麻烦事。与其再写个外部脚本，为什么不在浏览器的控制台里直接写脚本爬呢？&lt;/p&gt;
+&lt;p&gt;大概框架如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;idList&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;]; 
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [];
+&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;of&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;idList&lt;/span&gt;) {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resp&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;fetch&lt;/span&gt;(&lt;span style=&#34;color:#75715e&#34;&gt;/* */&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// F12 网络标签页，右键请求，复制 - 复制为 fetch
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;resp&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt;()
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;push&lt;/span&gt;({&lt;span style=&#34;color:#a6e22e&#34;&gt;id&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt;});
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1000&lt;/span&gt;); &lt;span style=&#34;color:#75715e&#34;&gt;// 限制频率
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}
+&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;save&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;results&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还需要一些辅助函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 可以 await 的 sleep
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sleep&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;ms&lt;/span&gt;) =&amp;gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; Promise(&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt; =&amp;gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setTimeout&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;resolve&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;ms&lt;/span&gt;));
+
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 以 JSON 保存 console 中的变量
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// src: http://bgrins.github.io/devtools-snippets/#console-save
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// via: https://stackoverflow.com/questions/11849562/how-to-save-the-output-of-a-console-logobject-to-a-file
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;){
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;save&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;){
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;error&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Console.save: No data&amp;#39;&lt;/span&gt;)
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;;
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;) &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;console.json&amp;#39;&lt;/span&gt;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;typeof&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;object&amp;#34;&lt;/span&gt;){
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;JSON&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;stringify&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;)
+    }
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;blob&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Blob&lt;/span&gt;([&lt;span style=&#34;color:#a6e22e&#34;&gt;data&lt;/span&gt;], {&lt;span style=&#34;color:#a6e22e&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text/json&amp;#39;&lt;/span&gt;}),
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;createEvent&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;MouseEvents&amp;#39;&lt;/span&gt;),
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;    &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;createElement&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;download&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;filename&lt;/span&gt;
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;URL&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;createObjectURL&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;blob&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dataset&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;downloadurl&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;  [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;text/json&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;download&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;href&lt;/span&gt;].&lt;span style=&#34;color:#a6e22e&#34;&gt;join&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;:&amp;#39;&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;initMouseEvent&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;click&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, window, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;)
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;a&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;e&lt;/span&gt;)
+ }
+})(&lt;span style=&#34;color:#a6e22e&#34;&gt;console&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上，祝使用愉快！&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -31,7 +86,62 @@
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
       
       <guid>/share/css-filter-dark-mode/</guid>
-      <description>本博客使用的 Manis 主题 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手</description>
+      <description>&lt;p&gt;本博客使用的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis 主题&lt;/a&gt; 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手搜索了一下，发现已经有&lt;a href=&#34;https://www.zhangxinxu.com/wordpress/2020/11/css-mix-blend-mode-filter-dark-theme/&#34;&gt;前人&lt;/a&gt;提出了使用 CSS Filter 实现简易黑暗模式的想法，甚至有&lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;代码&lt;/a&gt;可以直接应用于 Hugo 博客。相较于 media query，直接使用 CSS Filter 不仅操作上更简单，也允许用户直接切换明亮/黑暗模式，而不需要调整系统/浏览器的全局设定。&lt;/p&gt;
+&lt;p&gt;具体 CSS 实现中，先使用 &lt;code&gt;invert(1)&lt;/code&gt; 对整个网页的颜色反相，但这一操作也会引起颜色的色调反转，因此需要再用 &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; 将色调转回来。然而这样的操作对文字而言很合适，但是会影响图片、视频等元素的显示，如同被 X 射线照射一般，最后还需要对这些需要被黑暗模式排除的元素再用一次 &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; 负负得正转回来。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;background-color&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;#ebebeb&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;!important&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;);
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/* using not to exclude certain elements */&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;img&lt;/span&gt;:&lt;span style=&#34;color:#a6e22e&#34;&gt;not&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-text&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; .&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-social&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;),&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;video&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;code&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;) contrast(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为了让用户能够切换明亮/黑暗模式，需要引入一个额外的切换图标，点击时会对应插入/删除黑暗模式的 CSS tag，并将用户的设定保存到 &lt;code&gt;localstorage&lt;/code&gt;。在用户未明确设定偏好时，应遵循系统/浏览器全局的黑暗模式设定，因此这里又用 &lt;code&gt;window.matchMedia&lt;/code&gt; 来探测。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-toggle&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-theme&amp;#34;&lt;/span&gt;);
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// probe system default dark mode setting
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;(prefers-color-scheme: dark)&amp;#39;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;matches&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;;
+} &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// use user preference if possible
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt;;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt;);
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addEventListener&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;click&amp;#34;&lt;/span&gt;, () =&amp;gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;);
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;);
+    }
+
+});
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;setItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;);
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;;
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;;
+    }
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;完整修改可见于我给这一主题实现黑暗模式的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt;，一个简单的示例可见于 &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;。最后的效果如下。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;12/27 更新&lt;/strong&gt;：PR 已被接收并合并。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -40,7 +150,19 @@
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
       <guid>/share/vnc-to-physical-display/</guid>
-      <description>如果搜索 Linux 远程桌面，大部分教程基本上都是 xrdp + xfce4 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用</description>
+      <description>&lt;p&gt;如果搜索 &lt;code&gt;Linux 远程桌面&lt;/code&gt;，大部分教程基本上都是 &lt;code&gt;xrdp + xfce4&lt;/code&gt; 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用场景中，有的时候在实验室的 Linux 工作站上开启了一个比较长时间的任务，回到宿舍后可能需要检查下运行过程是否正常。如果是一般的 CLI 程序，用 &lt;code&gt;screen&lt;/code&gt; 或者 &lt;code&gt;tmux&lt;/code&gt; 之类的 terminal multiplexer （终端多路复用器）就绰绰有余了，可惜我用的是一个 GUI 程序。因此试着搜索了一番，发现是可以实现 VNC 连接到一个进行中的 X session 的，效果和 teamviewer 之类的工具差不多，具体操作如下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 TigerVNC 服务端&lt;/li&gt;
+&lt;li&gt;运行 &lt;code&gt;vncpasswd&lt;/code&gt; 创建 VNC 密码&lt;/li&gt;
+&lt;li&gt;启动 TigerVNC 服务&lt;/li&gt;
+&lt;li&gt;使用 &lt;code&gt;x0vncserver&lt;/code&gt; 开启一个连接到 Display 0 的 VNC 会话
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; x0vncserver -display :0 -PasswordFile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/home/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;username&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/.vnc/passwd 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;在其他设备上使用 VNC 客户端连接&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在 Windows 上，根据我自己的体验，似乎 RealVNC Viewer 的使用体验比 TigerVNC Viewer 更好。&lt;/p&gt;
+&lt;p&gt;另一个可能会影响使用体验的问题是缩放与屏幕分辨率。实验室的工作站是 4K 屏幕，使用 200% 缩放，在用 1080p 的笔记本连接的时候不免感觉字太小。TigerVNC 似乎有一个 auto-scaling 功能，然而因为我们是把 VNC 会话连接到物理屏幕上，这一功能似乎无法使用。我自己的解决方式是先连上去，再手动改远端系统内的分辨率设置（一般改到 2560x1440 就足够了），然后重启 x0vncserver 再重新连接。虽然稍微有些麻烦，但是至少解决能用的问题了。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -49,7 +171,15 @@
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
       <guid>/share/build-emoji-regex/</guid>
-      <description>在研究一个 CSS 定制 Emoji 字体问题的时候，看到了一个 RegEx，可以匹配所有的 Emoji（至 2018 年版本），也给出了相应的测试例子，见此：Regex to match</description>
+      <description>&lt;p&gt;在研究一个 CSS 定制 Emoji 字体问题的时候，看到了一个 RegEx，可以匹配所有的 Emoji（至 2018 年版本），也给出了相应的测试例子，见此：&lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看完之后我半信半疑，因为这个 RegEx 太简单了，于是手动转换成了对应的 Unicode codepoint 范围检查了一下，结果发现的确有问题：这个 RegEx 的匹配范围太大了，忽略 Copyright 和 Registered 符号（u+00a9, u+00ae），剩下的区间分别是 [u+2000, u+3300] 和 [u+1f000, u+1fbff]。后者还算合理，查 Wikipedia 上 Unicode 平面映射，基本上也就是新增 Emoji 的对应 codepoint；然而前一个区间就太过广泛了，甚至连日文平假名、片假名都会被匹配上。（不过的确覆盖了几乎完全的 Emoji codepoint，虽然有些类似于 Selector 之类的边角没覆盖到）&lt;/p&gt;
+&lt;p&gt;那么怎么做一个能精确匹配 Emoji 的 RegEx 呢？思路很简单，首先从 Unicode 官网获取 Full Emoji List，解析其中所有属于 Emoji 的 codepoint，排序，最后把相邻的 codepoint 合并成一个 range。然而说起来容易做起来难，RegEx 的视角中，字符是 UTF-16 的（如果要用 \uabcd 的形式的话），因此需要把高于 u+ffff 的 codepoint 用代理对的方式表示。&lt;/p&gt;
+&lt;p&gt;最后结果如下：(测试地址：&lt;a href=&#34;https://regex101.com/r/uGUM1M/1&#34;&gt;regex101&lt;/a&gt; ）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|\u203c|\u2049|\u20e3|\u2122|\u2139|[\u2194-\u2199]|[\u21a9-\u21aa]|[\u231a-\u231b]|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\u24c2|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|[\u2600-\u2604]|\u260e|\u2611|[\u2614-\u2615]|\u2618|\u261d|\u2620|[\u2622-\u2623]|\u2626|\u262a|[\u262e-\u262f]|[\u2638-\u263a]|\u2640|\u2642|[\u2648-\u2653]|[\u265f-\u2660]|\u2663|[\u2665-\u2666]|\u2668|\u267b|[\u267e-\u267f]|[\u2692-\u2697]|\u2699|[\u269b-\u269c]|[\u26a0-\u26a1]|\u26a7|[\u26aa-\u26ab]|[\u26b0-\u26b1]|[\u26bd-\u26be]|[\u26c4-\u26c5]|\u26c8|[\u26ce-\u26cf]|\u26d1|[\u26d3-\u26d4]|[\u26e9-\u26ea]|[\u26f0-\u26f5]|[\u26f7-\u26fa]|\u26fd|\u2702|\u2705|[\u2708-\u270d]|\u270f|\u2712|\u2714|\u2716|\u271d|\u2721|\u2728|[\u2733-\u2734]|\u2744|\u2747|\u274c|\u274e|[\u2753-\u2755]|\u2757|[\u2763-\u2764]|[\u2795-\u2797]|\u27a1|\u27b0|\u27bf|[\u2934-\u2935]|[\u2b05-\u2b07]|[\u2b1b-\u2b1c]|\u2b50|\u2b55|\u3030|\u303d|\u3297|\u3299)|(\ud83c(\udc04|\udccf|[\udd70-\udd71]|[\udd7e-\udd7f]|\udd8e|[\udd91-\udd9a]|[\udde6-\uddff]|[\ude01-\ude02]|\ude1a|\ude2f|[\ude32-\ude3a]|[\ude50-\ude51]|[\udf00-\udf21]|[\udf24-\udf93]|[\udf96-\udf97]|[\udf99-\udf9b]|[\udf9e-\udff0]|[\udff3-\udff5]))|(\ud83d([\udc00-\udcfd]|[\udcff-\udd3d]|[\udd49-\udd4e]|[\udd50-\udd67]|[\udd6f-\udd70]|[\udd73-\udd7a]|\udd87|[\udd8a-\udd8d]|\udd90|[\udd95-\udd96]|[\udda4-\udda5]|\udda8|[\uddb1-\uddb2]|\uddbc|[\uddc2-\uddc4]|[\uddd1-\uddd3]|[\udddc-\uddde]|\udde1|\udde3|\udde8|\uddef|\uddf3|[\uddfa-\ude4f]|[\ude80-\udec5]|[\udecb-\uded2]|[\uded5-\uded7]|[\udedd-\udee5]|\udee9|[\udeeb-\udeec]|\udef0|[\udef3-\udefc]|[\udfe0-\udfeb]))|(\ud83e([\udd0c-\udd3a]|[\udd3c-\udd45]|[\udd47-\uddff]|[\ude70-\ude74]|[\ude78-\ude7c]|[\ude80-\ude86]|[\ude90-\udeac]|[\udeb0-\udeba]|[\udec0-\udec5]|[\uded0-\uded9]|[\udee0-\udee7]))|(\udb40([\udc62-\udc63]|\udc65|\udc67|\udc6c|\udc6e|[\udc73-\udc74]))
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最后的灵魂问题：你真的应该用正则处理 Emoji 吗？&lt;/p&gt;
+&lt;p&gt;后记：自己造完了轮子之后，才发现已经有人做过这样的工作了，&lt;a href=&#34;https://github.com/mathiasbynens/emoji-test-regex-pattern&#34;&gt;emoji-test-regex-pattern&lt;/a&gt;。而且相比我的单字符匹配方式，这个 repo 里的 Regex 可以匹配代表 Emoji 的字符序列（如中国国旗=国旗+中国），更加符合 spec。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -58,7 +188,31 @@
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
       <guid>/share/go-monitor-goroutine-count/</guid>
-      <description>继续补全之前写 Raft 的 debug 过程。在解决了 Timer 问题之后，发现如果多次重复测试（用 --count 10），依然会存在 CPU 占用率不断上升的情况，虽然上升幅度有所减小，但多</description>
+      <description>&lt;p&gt;继续补全之前写 Raft 的 debug 过程。在解决了 Timer 问题之后，发现如果多次重复测试（用 &lt;code&gt;--count 10&lt;/code&gt;），依然会存在 CPU 占用率不断上升的情况，虽然上升幅度有所减小，但多次循环之后依然很严重。初步怀疑是角色转换的时候，可能协程没处理好导致出现了 goroutine 泄露，于是找了找 Stack Overflow，魔改了一个能间隔一定时间打印出当前 Go Runtime 中协程数量的代码。最后发现的确是随着测试进行，协程数不断上升；修复泄露问题后（加了各种判断 flag），每次测试重新开始的时候，协程数会降低到和一开始差不多的水平，多次测试的资源占用也正常多了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint32&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;()
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewTicker&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;)
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stop&lt;/span&gt;()
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;:
+			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Since&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt;), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;goroutine count:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;runtime&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NumGoroutine&lt;/span&gt;())
+		}
+	}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;runShowGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;CompareAndSwapUint32&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;()
+	}
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// to start, just invoke `runShowGoroutineCount` at anywhere you like, perhaps at `ServerStart` or something like that.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -67,7 +221,114 @@
       <pubDate>Mon, 13 Dec 2021 16:32:43 +0300</pubDate>
       
       <guid>/share/go-timer-correct-usage/</guid>
-      <description>之前写 Raft 的时候，用 Timer 来处理定时事件，但是之后在测试的时候遇到了一些诡异的问题，具体表现是随着测试重复进行，CPU 占用率越来越高。上 pprof 检查了一</description>
+      <description>&lt;p&gt;之前写 Raft 的时候，用 Timer 来处理定时事件，但是之后在测试的时候遇到了一些诡异的问题，具体表现是随着测试重复进行，CPU 占用率越来越高。上 pprof 检查了一下，发现存在 Timer 泄露，根源是自己 Timer 的使用有些问题。下文记录正确的 Go 中 Timer 的使用姿势。&lt;/p&gt;
+&lt;p&gt;使用场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果有 channel 里有数据（发生了事件），从 channel 里取出，并重置 heartbeat&lt;/li&gt;
+&lt;li&gt;如果没有事件，维持 heartbeat&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;heartbeat interval = 1s&lt;/li&gt;
+&lt;li&gt;event @ 200ms, 600ms&lt;/li&gt;
+&lt;li&gt;预期输出：200ms event, 600ms event, 1600ms heartbeat, 2600ms heartbeat ..&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;错误用法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;错误用法1：在 for 里，select 外用 time.Tick，每次循环都会产生一个新 Ticker 且不会被 GC （CPU 不断上升）&lt;/li&gt;
+&lt;li&gt;错误用法2：在 for 外用 time.NewTicker 创建一个 Ticker，但是不 Close （consumer 退出后 Ticker 依然存在，可以用 pprof 发现）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;正确用法：for 外用 time.NewTicker 创建一个 Ticker，defer close，然后在 select 内，如果有事件则 reset。&lt;/p&gt;
+&lt;p&gt;示例代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;
+
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (
+	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;
+	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;log&amp;#34;&lt;/span&gt;
+	&lt;span style=&#34;color:#75715e&#34;&gt;//&amp;#34;math/rand&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;net/http&amp;#34;&lt;/span&gt;
+	&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;_&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;net/http/pprof&amp;#34;&lt;/span&gt;
+)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;() {
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello world&amp;#34;&lt;/span&gt;)
+
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;() {
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;log&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;http&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;ListenAndServe&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;0.0.0.0:6060&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;nil&lt;/span&gt;))
+	}()
+
+
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; make(&lt;span style=&#34;color:#66d9ef&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt;)
+
+	&lt;span style=&#34;color:#75715e&#34;&gt;// consumer
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;// correct
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;() {
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatInterval&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Millisecond&lt;/span&gt;
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatTicker&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewTicker&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatInterval&lt;/span&gt;)
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatTicker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stop&lt;/span&gt;()
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt;:
+				&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;received &amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#a6e22e&#34;&gt;val&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34; at &amp;#34;&lt;/span&gt; , &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;())
+				&lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatTicker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Reset&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatInterval&lt;/span&gt;)
+				&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; !&lt;span style=&#34;color:#a6e22e&#34;&gt;val&lt;/span&gt;{
+					&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
+				}
+			&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;heartbeatTicker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;:
+				&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;heartbeat: &amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;())
+			}
+		}
+	}()
+
+
+	&lt;span style=&#34;color:#75715e&#34;&gt;// faulty, will cause heartbeak leak
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//go func() {
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//	for {
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//		heartbeat := time.Tick(5 * time.Millisecond)
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//		select {
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//		case val := &amp;lt;- c:
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//			fmt.Println(&amp;#34;received &amp;#34;,val, &amp;#34; at &amp;#34; , time.Now())
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//		case &amp;lt;- heartbeat:
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//			//fmt.Println(&amp;#34;heartbeat: &amp;#34;, time.Now())
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//		}
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//	}
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;//}()
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+	&lt;span style=&#34;color:#75715e&#34;&gt;// producer
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt;() {
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1500&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Millisecond&lt;/span&gt;)
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;50&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Millisecond&lt;/span&gt;)
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Millisecond&lt;/span&gt;)
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;900&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Millisecond&lt;/span&gt;)
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;
+		&lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Sleep&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;)
+        
+        &lt;span style=&#34;color:#75715e&#34;&gt;// stop the simulation
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#a6e22e&#34;&gt;c&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;
+		&lt;span style=&#34;color:#75715e&#34;&gt;//rng := rand.New(rand.NewSource(time.Now().Unix()))
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#75715e&#34;&gt;//for {
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#75715e&#34;&gt;//	time.Sleep(time.Duration(rng.Intn(5000)) * time.Millisecond)
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#75715e&#34;&gt;//	c &amp;lt;- true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#75715e&#34;&gt;//}
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#75715e&#34;&gt;//fmt.Println(&amp;#34;PRODUCER DONE&amp;#34;)
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	}()
+
+	&lt;span style=&#34;color:#75715e&#34;&gt;// keep main alive
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+
+	}
+
+
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# run pprof&lt;/span&gt;
+go tool pprof -http&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.0.0.0:8090  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:6060/debug/pprof/profile?seconds=10&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果使用上文代码中标记 faulty 的版本，在 pprof 的输出中可以发现 &lt;code&gt;epollwait&lt;/code&gt; 和 &lt;code&gt;sendTime&lt;/code&gt; 占用了大量的 CPU 时间。在 Raft 作业的测试中，每个测试样例都会开启一个新的 Raft Run，但是不会重启 Runtime，导致之前样例中泄露的 Timer 在整个测试过程中会一直存活，CPU 占用率不断上升。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/raft_timer_leak.png&#34; alt=&#34;Leak&#34;&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -76,7 +337,29 @@
       <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
       
       <guid>/share/ms-rdp-8021x-bug/</guid>
-      <description>昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时</description>
+      <description>&lt;p&gt;昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。&lt;/p&gt;
+&lt;p&gt;以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network&#34;&gt;Remote laptop disconnects from wireless network | Microsoft Docs&lt;/a&gt;，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。&lt;/p&gt;
+&lt;p&gt;找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;打开「设置」应用，选择「网络和 Internet / WLAN」，在右侧相关设置选择「网络和共享中心」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在「查看活动网络」下找到自己连接到的 WiFi，点击蓝色文字&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;点击「无线属性」，选择「安全」选项卡，点击「高级设置」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在「指定身份验证模式」中，选择「用户或计算机身份认证」&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;至此无线连接会中断。点击任务栏的 WiFi 图标，重新输入用户名密码连接到网络。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;设置完成后，建议使用手头的设备（平板 / 手机）尝试在同一网络下用 RDP 连接，如果能正常连接应该就没问题了。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -85,7 +368,65 @@
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
       <guid>/share/markdown-code-in-table/</guid>
-      <description>Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格</description>
+      <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
+&lt;p&gt;需要注意之处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对应的 table cell 的 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签需要在新行的行首（前面不能有缩进）&lt;/li&gt;
+&lt;li&gt;table cell 内的 Markdown 文本上下和 &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; 标签之间需要间隔一个空行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;效果：&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt; Column 1 &lt;/td&gt; &lt;td&gt; Column 2 &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Code Block &lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello world&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Horizontal Line &lt;/td&gt;
+&lt;td&gt;
+&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Some Text&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;代码：&lt;strong&gt;注意代码块结束应该是 3 个 tilt&lt;/strong&gt;（这里写两个是因为三个会导致渲染出错，提早结束代码块）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 1 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 2 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Code Block &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                           &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+```python
+print(&amp;#34;hello world&amp;#34;)
+``                             &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--Should be 3 tilt here!--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                          &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Horizontal Line &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+
+**Markdown** 
+
+---
+
+Some Text
+
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参考链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/60502719&#34;&gt;https://stackoverflow.com/a/60502719&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -94,7 +435,97 @@
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
       <guid>/share/python-hash-inherit/</guid>
-      <description>最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要</description>
+      <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
+&lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
+&lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pycharm 的方法跳转可以定位到父类 &lt;code&gt;__hash__&lt;/code&gt; 方法&lt;/li&gt;
+&lt;li&gt;inspect.getmro 的父类列表正常&lt;/li&gt;
+&lt;li&gt;dir(object) 得到的方法列表中的确含有 &lt;code&gt;__hash__&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;文档&lt;/a&gt;原文：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A class that overrides &lt;code&gt;__eq__()&lt;/code&gt; and does not define &lt;code&gt;__hash__()&lt;/code&gt; will have its &lt;code&gt;__hash__()&lt;/code&gt; implicitly set to None.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If a class that overrides &lt;code&gt;__eq__()&lt;/code&gt; needs to retain the implementation of &lt;code&gt;__hash__()&lt;/code&gt; from a parent class, the interpreter must be told this explicitly by setting &lt;code&gt;__hash__ = &amp;lt;ParentClass&amp;gt;.__hash__&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;具体的&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;实现&lt;/a&gt;（基于 CPython）&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 函数负责继承 slots &lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 在处理比较相关的函数（comparison-related）的时候（&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;），会使用 &lt;code&gt;overrides_hash&lt;/code&gt; 方法检查子类是否有重写 &lt;code&gt;__eq__&lt;/code&gt;, &lt;code&gt;__hash__&lt;/code&gt; (&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5274&#34;&gt;Line 5274&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;overrides_hash&lt;/code&gt; 中使用 &lt;code&gt;_PyDict_ContainsId&lt;/code&gt; 方法先检查 &lt;code&gt;__eq__&lt;/code&gt;，再检查 &lt;code&gt;__hash__&lt;/code&gt;，如果任一存在则返回 1，否则返回 0&lt;/li&gt;
+&lt;li&gt;如果 &lt;code&gt;overrides_hash&lt;/code&gt; 返回 1，则认为不能继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法，&lt;code&gt;type-&amp;gt;tp_hash&lt;/code&gt; 不会被设定&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;以下为一个示例：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Original&lt;/th&gt;
+    &lt;th&gt;Modified &lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+&lt;td width=&#34;50%&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# No __hash__ defined&lt;/span&gt;
+
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# gives error&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
+    
+    &lt;span style=&#34;color:#75715e&#34;&gt;# NOTE: Added hash&lt;/span&gt;
+    __hash__ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Parent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__
+
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# now it works&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
+  File &amp;quot;scratch.py&amp;quot;, line 17, in &amp;lt;module&amp;gt;
+    print(child.__hash__())
+TypeError: &#39;NoneType&#39; object is not callable
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;相关链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/11716258/python-using-the-default-hash-method-in-hash-method-definition&#34;&gt;&lt;code&gt;Stack Overflow - Python - Using the default __hash__ method in __hash__ method definition&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/53518981/inheritance-hash-sets-to-none-in-a-subclass&#34;&gt;&lt;code&gt;Stack Overflow - Inheritance - __hash__ sets to None in a subclass&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;&lt;code&gt;Python Doc - object.__hash__&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -103,7 +534,27 @@
       <pubDate>Sat, 03 Apr 2021 23:54:00 +0300</pubDate>
       
       <guid>/share/mdbook-code-wrap/</guid>
-      <description>mdBook 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://rust-lang.github.io/mdBook/&#34;&gt;mdBook&lt;/a&gt; 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需要手动左右移动，体验不佳。&lt;/p&gt;
+&lt;p&gt;查阅&lt;a href=&#34;https://rust-lang.github.io/mdBook/format/theme/editor.html?highlight=editor#customizing-the-editor&#34;&gt;文档&lt;/a&gt;可知，mdBook 使用的是 Ace Editor。再查询 Ace Editor 的&lt;a href=&#34;https://github.com/ajaxorg/ace/wiki/Embedding-API&#34;&gt;文档&lt;/a&gt;，可以发现通过 &lt;code&gt;editor.getSession().setUseWrapMode(true);&lt;/code&gt; 启用折行。&lt;/p&gt;
+&lt;p&gt;在 mdBook 生成的 book 文件夹中，可以找到 &lt;code&gt;book.js&lt;/code&gt; 文件，在 line 6 开始进行如下修改，手动设定 editor 属性即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// Global variable, shared between modules
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playground_text&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;playground&lt;/span&gt;) {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playground&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;querySelector&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;);
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (window.&lt;span style=&#34;color:#a6e22e&#34;&gt;ace&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;classList&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;contains&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;editable&amp;#34;&lt;/span&gt;)) {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;ace&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;edit&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;);
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;// CODE ADDED BEGIN
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getSession&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;setUseWrapMode&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;);
+        &lt;span style=&#34;color:#75715e&#34;&gt;// CODE ADDED END
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getValue&lt;/span&gt;();
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;textContent&lt;/span&gt;;
+    }
+}
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -112,7 +563,18 @@
       <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
       
       <guid>/share/hugo-disqus/</guid>
-      <description>Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后</description>
+      <description>&lt;p&gt;Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 &lt;code&gt;config.toml&lt;/code&gt; 的顶层设定 &lt;code&gt;disqusShortname&lt;/code&gt; 属性即可，不过实际用起来稍微有些坑。具体步骤如下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Disqus 官网注册自己的账户&lt;/li&gt;
+&lt;li&gt;在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （&lt;code&gt;{site_name}.disqus.com&lt;/code&gt;）就是 &lt;code&gt;disqusShortname&lt;/code&gt; 应该用的值&lt;/li&gt;
+&lt;li&gt;站点创建完成后，Billing 页选择 Free Plan&lt;/li&gt;
+&lt;li&gt;在 Hugo 的 &lt;code&gt;config.toml&lt;/code&gt; 文件中设定 &lt;code&gt;disqusShortname&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其他小问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本地没有评论显示：主题的&lt;code&gt;disqus.html&lt;/code&gt;中（位于&lt;code&gt;{site_folder}\themes\{theme_name}\layouts\partials\disqus.html&lt;/code&gt;），在本地执行（&lt;code&gt;indow.location.hostname == &amp;quot;localhost&amp;quot;&lt;/code&gt;）的时候不会加载评论框。如果调试需要，可以给这个判断加上注释，即可在本地正常显示了。&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -121,7 +583,10 @@
       <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
       
       <guid>/share/use-utf8-for-javafx-packaging/</guid>
-      <description>IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见视频。 然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下</description>
+      <description>&lt;p&gt;IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见&lt;a href=&#34;https://www.youtube.com/watch?v=_KHCHiH2RZ0&#34;&gt;视频&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下即使用 GBK，代码中若含有中文会造成乱码。&lt;/p&gt;
+&lt;p&gt;解决此问题的方法也很简单，只需要在打包后找到 &lt;code&gt;{artifact_name}/app/{artifact_name}.cfg&lt;/code&gt; 文件，找到 &lt;code&gt;[JVMOptions]&lt;/code&gt; 一行，在其后追加 &lt;code&gt;-Dfile.encoding=utf-8&lt;/code&gt; 即可。然而需要每次打包后手动修改，并非最佳方法。&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -130,7 +595,16 @@
       <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
       
       <guid>/share/slide-title-color-importance/</guid>
-      <description>Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。 例子： 「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。 「蓝色/幻灯片</description>
+      <description>&lt;p&gt;Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。&lt;/p&gt;
+&lt;p&gt;例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。&lt;/li&gt;
+&lt;li&gt;「蓝色/幻灯片主题色」代表本页一般重要，即一般的正文层级&lt;/li&gt;
+&lt;li&gt;「绿色」代表本页内容为延伸、扩展或详细说明&lt;/li&gt;
+&lt;li&gt;「灰色」代表本页内容为参考文献、资料总览&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;来源：&lt;a href=&#34;https://youtu.be/cTN1Qar4HSw?t=1854&#34;&gt;Google TechTalk - Haskell 101&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
@@ -139,7 +613,30 @@
       <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
       
       <guid>/share/wsl2-docker-virtualbox/</guid>
-      <description>2021/4/9 更新: VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。 Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;2021/4/9 更新:
+VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转而使用 Windows 内置的 Hyper-V 作为底层 VM。但是 Hyper-V 平台一旦启用，就会导致 Virtualbox / VMWare 等其他虚拟机工具不可用，这一问题直到 VirtualBox 6 之后才算解决，此时 VirtualBox / VMWare 都可以调用 Windows 内置的 Hypervisor API 作为 VM 的执行引擎。&lt;/p&gt;
+&lt;p&gt;所以来到 2020 年，在 Windows 10 20H2 上同时运行 WSL 2, Docker 和 VirtualBox 已经几乎是 painless 的了，只需要记住&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL 2 底层是一个跑在 Hyper-V 里的 VM&lt;/li&gt;
+&lt;li&gt;因为 WSL 2 是一个真正的 VM，Docker 可以直接安装到 WSL 2 中，而不会遇到 WSL 1 的不兼容问题&lt;/li&gt;
+&lt;li&gt;VirtualBox 通过 Hypervisor API 调用 Hyper-V 来执行 VM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;步骤也很简单：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Windows 开启相关功能：Hyper-V, 虚拟机监视器，虚拟机平台&lt;/li&gt;
+&lt;li&gt;WSL 迁移到 version 2 (如果喜欢也可以留一个 WSL 1，毕竟比 VM 轻量，日常也基本够用)&lt;/li&gt;
+&lt;li&gt;Docker Desktop 安装最新稳定版&lt;/li&gt;
+&lt;li&gt;VirtualBox 安装最新版（大版本号 6 及以上）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VirtualBox 因为换了虚拟化后端，已有的暂停的虚拟机，启动的时候会丢失数据，建议关机之后再迁移&lt;/li&gt;
+&lt;li&gt;VirtualBox 的 VM 性能可能会下降，64-bit Guest 尤其严重，32-bit Guest 还好（如果用 Hyper-V 作为后端，可以看到 VM 执行界面右下角是一个乌龟图标）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
   </channel>

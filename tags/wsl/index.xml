@@ -13,7 +13,30 @@
       <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
       
       <guid>/share/wsl2-docker-virtualbox/</guid>
-      <description>2021/4/9 更新: VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。 Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是</description>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;2021/4/9 更新:
+VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转而使用 Windows 内置的 Hyper-V 作为底层 VM。但是 Hyper-V 平台一旦启用，就会导致 Virtualbox / VMWare 等其他虚拟机工具不可用，这一问题直到 VirtualBox 6 之后才算解决，此时 VirtualBox / VMWare 都可以调用 Windows 内置的 Hypervisor API 作为 VM 的执行引擎。&lt;/p&gt;
+&lt;p&gt;所以来到 2020 年，在 Windows 10 20H2 上同时运行 WSL 2, Docker 和 VirtualBox 已经几乎是 painless 的了，只需要记住&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;WSL 2 底层是一个跑在 Hyper-V 里的 VM&lt;/li&gt;
+&lt;li&gt;因为 WSL 2 是一个真正的 VM，Docker 可以直接安装到 WSL 2 中，而不会遇到 WSL 1 的不兼容问题&lt;/li&gt;
+&lt;li&gt;VirtualBox 通过 Hypervisor API 调用 Hyper-V 来执行 VM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;步骤也很简单：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Windows 开启相关功能：Hyper-V, 虚拟机监视器，虚拟机平台&lt;/li&gt;
+&lt;li&gt;WSL 迁移到 version 2 (如果喜欢也可以留一个 WSL 1，毕竟比 VM 轻量，日常也基本够用)&lt;/li&gt;
+&lt;li&gt;Docker Desktop 安装最新稳定版&lt;/li&gt;
+&lt;li&gt;VirtualBox 安装最新版（大版本号 6 及以上）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;VirtualBox 因为换了虚拟化后端，已有的暂停的虚拟机，启动的时候会丢失数据，建议关机之后再迁移&lt;/li&gt;
+&lt;li&gt;VirtualBox 的 VM 性能可能会下降，64-bit Guest 尤其严重，32-bit Guest 还好（如果用 Hyper-V 作为后端，可以看到 VM 执行界面右下角是一个乌龟图标）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
     </item>
     
     <item>
@@ -22,7 +45,125 @@
       <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
       
       <guid>/posts/install-de-in-wsl/</guid>
-      <description>给 WSL 安装桌面环境 本文是旧文补完计划的一部分。 可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可</description>
+      <description>&lt;h1 id=&#34;给-wsl-安装桌面环境&#34;&gt;给 WSL 安装桌面环境&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本文是旧文补完计划的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;可能你需要运行一些只提供 Linux 版本的 GUI 程序，抑或是你厌倦了 VM 的启动/恢复等待，或者只是过年实在无事可做&amp;hellip; 总之，你需要在 WSL 下安装一个桌面环境。希望这篇文章能够提供一些小小的帮助。&lt;/p&gt;
+&lt;h2 id=&#34;开始之前对比-wsl-下的桌面环境与-linux-vm&#34;&gt;开始之前：对比 WSL 下的桌面环境与 Linux VM&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DE: Desktop Environment 桌面环境&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;DE in WSL&lt;/th&gt;
+&lt;th&gt;Linux VM&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;启动速度&lt;/td&gt;
+&lt;td&gt;即时可用&lt;/td&gt;
+&lt;td&gt;VM 启动 / VM 状态恢复&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;配置难度&lt;/td&gt;
+&lt;td&gt;相对麻烦&lt;/td&gt;
+&lt;td&gt;简单，主流 Linux 发行版中都提供良好支持&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;资源消耗&lt;/td&gt;
+&lt;td&gt;少，仅额外添加 Win 端 XServer 消耗&lt;/td&gt;
+&lt;td&gt;多，需要考虑 VM Supervisor 的 overhead&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;步骤&#34;&gt;步骤&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考自：https://github.com/QMonkey/wsl-tutorial&lt;/p&gt;
+&lt;p&gt;其他链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.lainme.com/doku.php/blog/2018/07/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E5%9C%A8windows_10%E4%B8%8A%E8%A3%85x&#34;&gt;如何优雅的在windows_10上装x&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.jianshu.com/p/c936a8a2180e&#34;&gt;https://www.jianshu.com/p/c936a8a2180e&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我自己的环境：Windows 10 1909, WSL 1, Ubuntu 18.04&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol start=&#34;0&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;前置要求：配置好 WSL 1，发行版 Ubuntu 18.04&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 Windows 下安装 &lt;a href=&#34;https://sourceforge.net/projects/vcxsrv/&#34;&gt;VcXsrv Windows X Server&lt;/a&gt;，安装过程中一路下一步即可。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中安装 &lt;code&gt;xfce4&lt;/code&gt;, &lt;code&gt;xfce4-terminal&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为什么用 XFCE：小，资源占用少，比较适合我们当前的需求&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get update
+sudo apt-get install xfce4-terminal xfce4
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中配置 &lt;code&gt;dbus&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo dpkg-reconfigure dbus &amp;amp;&amp;amp; sudo service dbus restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;修改 &lt;code&gt;~/.bashrc&lt;/code&gt;，加入以下内容，随后运行 &lt;code&gt;source ~/.bashrc&lt;/code&gt; 使其生效&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export DISPLAY=:0.0
+export LIBGL_ALWAYS_INDIRECT=1
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 Windows 中运行 &lt;code&gt;XLaunch&lt;/code&gt; （先前 &lt;code&gt;VcXsrv&lt;/code&gt; 安装的一部分），在第一个配置页面选择 &lt;code&gt;One large window&lt;/code&gt; 或者 &lt;code&gt;One large window without titlebar&lt;/code&gt;（区别是 Windows 下，DE 的显示窗口是否会有标题栏），随后一路下一步。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中运行 &lt;code&gt;startxfce4&lt;/code&gt;，观察 Windows 下 &lt;code&gt;VcXsrv&lt;/code&gt; 是否正确启动。如果一切正常，此时应该会显示 Xfce 4 的默认壁纸，并开始 DE 初始化过程。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果只是需要一个正常运行的 DE 的话，到此即可。以下步骤为添加中文支持（字体和输入法）。&lt;/p&gt;
+&lt;ol start=&#34;7&#34;&gt;
+&lt;li&gt;
+&lt;p&gt;在 WSL 中安装中文字体和 &lt;code&gt;fcitx&lt;/code&gt; 输入法框架，并生成 &lt;code&gt;systemd&lt;/code&gt; Machine ID&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo apt-get install fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
+sudo apt-get install fcitx fcitx-pinyin dbus-x11
+sudo systemd-machine-id-setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;加入输入法设定至 &lt;code&gt;~/.profile&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更改 &lt;code&gt;dbus&lt;/code&gt; 配置让 &lt;code&gt;fcitx&lt;/code&gt; 能正常启动：向 &lt;code&gt;/etc/dbus-1/session.conf&lt;/code&gt; 中写入以下内容&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;listen&amp;gt;tcp:host=localhost,port=0&amp;lt;/listen&amp;gt;
+&amp;lt;auth&amp;gt;ANONYMOUS&amp;lt;/auth&amp;gt;
+&amp;lt;allow_anonymous/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装&lt;a href=&#34;https://pinyin.sogou.com/linux/?r=pinyin&#34;&gt;搜狗拼音&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;安装搜狗拼音的 deb 的时候，第一次会因为缺少依赖而失败，因此先用 &lt;code&gt;-f&lt;/code&gt; 补充缺失的依赖，再重新安装，就可以完成了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;wget &#39;http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb?st=LAPO53d3V5UzEfPO5y_C6g&amp;amp;e=1580122419&amp;amp;fn=sogoupinyin_2.3.1.0112_amd64.deb&#39;
+mv sogoupinyin_2.3.1.0112_amd64.deb\?st\=LAPO53d3V5UzEfPO5y_C6g\&amp;amp;e\=1580122419\&amp;amp;fn\=sogoupinyin_2.3.1.0112_amd64.deb sogoupinyin.deb
+sudo dpkg -i sogoupinyin.deb
+sudo apt-get install -f
+sudo dpkg -i sogoupinyin.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;配置搜狗拼音：运行 &lt;code&gt;startxfce4&lt;/code&gt; 启动 Xfce，右键单击右上角「键盘」图标，选择 Configure。在打开的窗口中点击左下角「+」按钮，搜索并选中「Sogou Pinyin - Chinese (China)」（如果不想搜索可以直接拖到列表底部），点击「OK」完成添加。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可选）测试输入法：安装 &lt;code&gt;gedit&lt;/code&gt;，并测试能否在其中正确输入中文。输入前，可能需要从右上角「键盘」图标选中 Input Method - Sogou Pinyin 作为当前输入法。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;原理解析&#34;&gt;原理解析&lt;/h2&gt;
+&lt;p&gt;为什么这个能 Work 呢？其实这就是上古时代的正确用法：Server 进行主要运算，Client 只作为操作终端，提供图形显示和输入。&lt;/p&gt;
+</description>
     </item>
     
   </channel>
