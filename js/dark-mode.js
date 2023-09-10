@@ -22,6 +22,21 @@ toggle.addEventListener("click", () => {
 
 });
 
+// change color scheme for giscus
+// https://github.com/giscus/giscus/issues/336
+function changeGiscusTheme(theme) {
+    function sendMessage(message) {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe) return;
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+    }
+    sendMessage({
+      setConfig: {
+        theme: theme
+      }
+    });
+}
+
 function setTheme(mode) {
     localStorage.setItem("dark-mode-storage", mode);
 
@@ -32,4 +47,5 @@ function setTheme(mode) {
         darkTheme.disabled = true;
         toggle.src = "/img/moon.svg";
     }
+    changeGiscusTheme(mode);
 }
