@@ -6,7 +6,19 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Sep 2023 22:08:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>评论系统从 Disqus 迁移到 Giscus</title>
+      <link>/share/migrate-to-giscus/</link>
+      <pubDate>Sun, 10 Sep 2023 22:08:00 +0800</pubDate>
+      
+      <guid>/share/migrate-to-giscus/</guid>
+      <description>&lt;p&gt;之前一直用的是 disqus，但是一来国内访问有时会有问题，二来新用户需要重新注册。考虑到大部分阅读本站的读者应该也是 Github 用户，迁移到 Giscus（一个基于 Github Dicsussion）的评论系统看起来更合适一些。切换评论系统本身并不难，参考&lt;a href=&#34;https://blog.arkey.fr/2022/10/16/moving-from-disqus-to-giscus/#_preparing_the_migration&#34;&gt;这篇教程&lt;/a&gt;修改 hugo 的模板和配置即可。迁移数据也不算麻烦，毕竟没什么人评论，所以其实只有两条评论，手动迁移也就花不了多少时间（虽然也尝试了&lt;a href=&#34;https://github.com/estruyf/disqus-to-github-discussions&#34;&gt;自动的方案&lt;/a&gt;但似乎有些问题，迁移过去的评论不显示&amp;hellip;）。稍微有些烦人的反倒是 Giscus 明亮/暗黑模式的切换问题。&lt;/p&gt;
+&lt;p&gt;因为本博客有自己的切换按钮（见&lt;a href=&#34;/share/css-filter-dark-mode/&#34;&gt;前文&lt;/a&gt;），用户访问的时候可能从 &lt;code&gt;localstorage&lt;/code&gt; 中取颜色模式偏好，但是目前加载 giscus 是 hugo 在站点生成的时候就将颜色偏好参数写入 html 源码了，因此需要在用户点击按钮切换时，一并切换 giscus 的颜色偏好。参考官方的&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;这个 issue&lt;/a&gt; 这一功能并不难实现。然而这样依然有问题，因为 giscus 加载后，用户点击按钮切换颜色模式偏好前，giscus 的颜色偏好是基于我的 hugo 配置文件，而非用户 localstorage 里存储的，结果就是可能用户手动选择了明亮模式，但浏览器设置里有 &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;，所以 giscus 显示黑色背景+白色文字。之前的 issue 里对这个问题没有太好的解法，看到有人 &lt;code&gt;setTimeout&lt;/code&gt; 不断循环，但感觉这不太优雅。读了一下&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;官方文档&lt;/a&gt;，发现其实 giscus 会在加载完成后向父窗口发送事件，所以其实只要监听这个事件，在 giscus 加载完后再设置 giscus 的颜色偏好即可。相关实现可参考&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;这个 commit&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;可能切换了之后会有更多评论？但愿吧。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
       <link>/share/random-20230910/</link>
@@ -1456,79 +1468,6 @@ TypeError: &#39;NoneType&#39; object is not callable
 &lt;li&gt;「灰色」代表本页内容为参考文献、资料总览&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;来源：&lt;a href=&#34;https://youtu.be/cTN1Qar4HSw?t=1854&#34;&gt;Google TechTalk - Haskell 101&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/project/</link>
-      <pubDate>Thu, 01 Apr 2021 00:21:20 +0800</pubDate>
-      
-      <guid>/project/</guid>
-      <description>&lt;p&gt;Some of my previous projects, listed in reverse time order.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;2020-2021&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;毕业设计：用于多媒体教学的实时字幕识别和分发系统 (Link:TBD)&lt;/li&gt;
-&lt;li&gt;First Order Logic Solver (Link:TBD)&lt;/li&gt;
-&lt;li&gt;分布式系统课程笔记（简体中文）&lt;a href=&#34;/posts/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/&#34;&gt;文章&lt;/a&gt; &lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;笔记&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2019-2020-2&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.bilibili.com/video/BV1zK4y1x7Xz&#34;&gt;软件工程：Github Fixit&lt;/a&gt;：给 Java CLI 库 Picocli 和 Java 服务器框架 Spark 修了一些 bug。&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://nekonull.me/lipu/&#34;&gt;逐渐离谱生成器&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;[Lustre File Stat Gather]：商汤实习，一个扫描 Lustre 文件集群元数据得到统计信息（大小分布、日期分布等）的工具。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2019-2020-1&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;面向对象程序设计：ArchOJ：一个面向教学的在线测评系统（Slides:TBD）&lt;/li&gt;
-&lt;li&gt;计算机安全：联创打印系统安全性研究（Slides:TBD）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/CS305SDN&#34;&gt;计算机网络：Spanning Tree Routing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/ProcessingHomeworks&#34;&gt;生成式新媒体设计&lt;/a&gt;：一些用 Processing 写的动画&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2018-2019-2&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://isteps.comp.nus.edu.sg/event/sws-y2-19/module/Cluster2/project/15&#34;&gt;NUS: EmojiCam&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/MIPS_Single_Cycle_CPU&#34;&gt;计算机组成原理: CPU in MIPS&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2018-2019-1&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/9square&#34;&gt;数字逻辑: Digital Clock&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/mailstat&#34;&gt;MailStat&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/9square&#34;&gt;阵营九宫格生成器&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2017-2018-2&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/CS209A-Flight-Entertainment-System&#34;&gt;Java 2: 机上娱乐系统&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;舍友推荐系统&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;2017-2018-1&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Java 1: 答疑预约系统&lt;/li&gt;
-&lt;li&gt;捐款查询系统&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/supereasyvideoplayer&#34;&gt;超简单视频播放器&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Previous&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/projectsflsmusic&#34;&gt;Project SFLS 🎶&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     

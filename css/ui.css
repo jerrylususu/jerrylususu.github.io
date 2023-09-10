@@ -381,7 +381,7 @@ template {
 .container {
   position: relative;
   width: 100%;
-  max-width: 70rem;
+  max-width: 80rem;
   margin: 0 auto;
   padding: 0 2rem;
   box-sizing: border-box;
@@ -404,7 +404,7 @@ html {
   font-size: 62.5%;
 }
 body {
-  font-size: 1.6em;
+  font-size: 1.7em;
   line-height: 1.7;
   font-weight: 400;
   font-family: 'Lato', sans-serif;
