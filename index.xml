@@ -6,7 +6,116 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 27 Aug 2023 19:30:45 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>随机分享（230910）：Typescript 中 Any 的传染性 &amp; 区分内存占用</title>
+      <link>/share/random-20230910/</link>
+      <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
+      
+      <guid>/share/random-20230910/</guid>
+      <description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
+&lt;h2 id=&#34;本周遇到的-bug&#34;&gt;本周遇到的 Bug&lt;/h2&gt;
+&lt;p&gt;遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人的问题而非代码的问题&amp;hellip;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;CI 坏了还能跑？
+&lt;ul&gt;
+&lt;li&gt;现象：某前端项目，其他人参加开发的时候发现 master 分支无法 &lt;code&gt;npm install&lt;/code&gt;，但之前这个 repo 一直在正常更新版本，看 CI 日志也一切正常&lt;/li&gt;
+&lt;li&gt;原因：发现问题是上游某依赖方对已发布的包重新发布，导致文件 hash 变化，&lt;code&gt;npm install&lt;/code&gt; 时实际文件 hash 和 lock 中 hash 不一致，所以失败；CI 之所以能跑是因为流水线里加了一层 cache，只要 &lt;code&gt;packages-lock.json&lt;/code&gt; 不变就会复用之前的 cache，而恰巧上游重发包之后这个文件一直没变过，所以每次跑 CI 都是拉的已有的 cache，没有实际在流水线里执行 &lt;code&gt;npm install&lt;/code&gt;，未能即使暴露故障&lt;/li&gt;
+&lt;li&gt;解决：重建 &lt;code&gt;packages-lock.json&lt;/code&gt;，让 CI 中的 cache 无效&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;本地坏了，线上是好的？
+&lt;ul&gt;
+&lt;li&gt;现象：某前端项目，例行更新依赖库版本，发布前自测发现某功能测试环境不可用；但相同功能在线上一切正常&lt;/li&gt;
+&lt;li&gt;原因：拉线上版本回本地排查，发现线上的版本和实际代码的主干版本不一致(!)；查阅发布记录，发现线上版本最近发布已经是一年多之前。和开发了解，原来现在的这个前端项目是原来的两个前端项目合并而来的，部署的时候其实要部署两次，但合并后的部署只部署了另一个模块，而没有部署当前模块，所以现在线上跑的实际上还是合并前的版本。&lt;/li&gt;
+&lt;li&gt;解决：修复代码问题，本地验证通过后发布线上；补充 readme 说明发布时需要两个模块都发布&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;typescript-中-any-关闭了类型检查&#34;&gt;Typescript 中 Any 关闭了类型检查&lt;/h2&gt;
+&lt;p&gt;某后端项目，因为历史原因代码中有较多 any。最近发现代码中某处接受用户输入的位置有问题，默认值的类型不正确但依然通过了编译。示例如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 不要这样用！
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
+&lt;span style=&#34;color:#75715e&#34;&gt;//    ^string[]                           ^any     ^string
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意到这里 nullish coalescing （&lt;code&gt;??&lt;/code&gt;）的默认值是个 &lt;code&gt;string&lt;/code&gt; 而非 string[]。这段代码感觉上上不应该通过编译，但是因为 &lt;code&gt;(req.body as any)&lt;/code&gt; 的 &lt;code&gt;any&lt;/code&gt; 类型禁用了类型检查，因此编译时不会再检查缺省值，实际上可以编译通过。而如果不巧后续有函数需要使用 &lt;code&gt;string[]&lt;/code&gt; 才有的方法，而 &lt;code&gt;req.body&lt;/code&gt; 中的 &lt;code&gt;names&lt;/code&gt; 的确为 undefined，就会导致问题。&lt;/p&gt;
+&lt;p&gt;要解决这个问题，需要提供了更强的类型提示，让 Typescript 的检查可以正常执行。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 直接标记可能的类型：string[] 或 undefined
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// 通过一个自定义 type 来实现
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;T&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;T&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[]&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC+WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB+ZzADk7uk3bgIIAWM+EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA&#34;&gt;Typescript Playground&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;本周学到的小知识&#34;&gt;本周学到的小知识&lt;/h2&gt;
+&lt;p&gt;Linux 进程内存不同计算方法的区分：VSS, RSS, PSS, USS&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+  ┌────────┐
+  │        │
+  │        │        ┌────────┐
+  │ Unused │        │        │
+  │  (A)   │        │ ...    │◄───┐
+  │        │        │        │    │Other
+  │        │        ├────────┤    │Program&#39;s
+  │        │        │        │    │Share
+  ├────────┤        │ ...    │◄───┘ (D)
+  │        │        │        │
+  │ Used   │        ├────────┤
+  │  (B)   │        │        │
+  │        │        │My Share│
+  │        │        │   (C)  │
+  └────────┘        └────────┘
+
+   Exclusive         Shared
+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以把进程的内存占用视作上图。首先程序有自己独占的虚拟内存空间（Exclusive），其中可以分为已经使用了的（B）和属于自己但还未使用的（A）。其次进程还会使用一些共享内存（Shared），例如 so 动态运行库和 mmap 映射。考虑到这些共享内存多个进程都会用到，将其完全计算在某个特定进程名下听起来就不太合理，因此这里可以考虑类似于现实中的&amp;quot;公摊面积&amp;quot;，根据实际使用的进程数把这部分内存占用平摊成 N 份，当前进程只计算其中一份（C），剩余的计算在其他进程下（D）。&lt;/p&gt;
+&lt;p&gt;由此我们可以得到四种不同的计算方法，见下表&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;th&gt;组成&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;图例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;VSS&lt;/td&gt;
+&lt;td&gt;虚拟内存集合（Virtual Set Size）&lt;/td&gt;
+&lt;td&gt;所有进程地址空间中的所有内存&lt;/td&gt;
+&lt;td&gt;进程可以访问的虚拟内存空间大小&lt;/td&gt;
+&lt;td&gt;A+B+C+D&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;RSS&lt;/td&gt;
+&lt;td&gt;常驻内存集合（Resident Set Size）&lt;/td&gt;
+&lt;td&gt;进程当前实际使用的物理内存&lt;/td&gt;
+&lt;td&gt;实际分配的内存，不需要缺页中断就可以使用&lt;/td&gt;
+&lt;td&gt;B+C+D&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PSS&lt;/td&gt;
+&lt;td&gt;共享内存集合（Proportional Set Size）&lt;/td&gt;
+&lt;td&gt;进程当前实际使用的物理内存，按比例分配共享内存&lt;/td&gt;
+&lt;td&gt;按比例分配共享内存，适用于多个进程共享同一块内存的情况&lt;/td&gt;
+&lt;td&gt;B+C&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;USS&lt;/td&gt;
+&lt;td&gt;独立内存集合（Unique Set Size）&lt;/td&gt;
+&lt;td&gt;进程独占使用的物理内存&lt;/td&gt;
+&lt;td&gt;只包含进程独占使用的物理内存，不包括共享库和映射的文件&lt;/td&gt;
+&lt;td&gt;B&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Via：&lt;a href=&#34;https://www.bilibili.com/video/BV11z4y1L7Xx&#34;&gt;B站视频：用什么指标来衡量我的程序占用了多少内存&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
+&lt;p&gt;最后顺带一提，本博客目前把 RSS 改为了全文输出模式（参考&lt;a href=&#34;https://www.godo.dev/tutorials/hugo-full-text-rss/&#34;&gt;这篇文章&lt;/a&gt;，&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/89e1c23d0b350baac0378ad735127cf17fb66c4b&#34;&gt;实际 commit&lt;/a&gt;），希望可以帮到在 RSS 阅读器中阅读本博客的读者。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>再次复活（2023）&amp; 换用 Github Action 部署</title>
       <link>/posts/back-again-2023/</link>
@@ -1419,52 +1528,6 @@ TypeError: &#39;NoneType&#39; object is not callable
 &lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/projectsflsmusic&#34;&gt;Project SFLS 🎶&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>不丢失数据的重装 - Repair Install</title>
-      <link>/posts/repair-install/</link>
-      <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
-      
-      <guid>/posts/repair-install/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;本文原载于「小众软件论坛」&lt;a href=&#34;https://meta.appinn.net/t/topic/21923&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;最近主力机上的 Windows 10 遇到了一些诡异的问题，开始菜单部分时候无法打开。这种系统层面的问题，第一反应当然是 &lt;code&gt;sfc&lt;/code&gt;/&lt;code&gt;dism&lt;/code&gt; 修复，然而无果。各种杂七杂八的方法也都去试了，故障依旧。事已至此，大概只有重装了，然而数据备份，软件安装，想想就头大。但是在偶然间发现了「Repair Install」（试译「修复安装」）这个小技巧，尝试后的确解决了问题。试着搜索了一下论坛，似乎还没有人介绍过，故作此贴。&lt;/p&gt;
-&lt;h2 id=&#34;什么是repair-install&#34;&gt;什么是「Repair Install」&lt;/h2&gt;
-&lt;p&gt;作为 Windows 用户的你可能没有听说过 Repair Install，但是大概率你已经体验过了：Windows 10 的大版本更新。在更新完成后，进入 「设置 - 系统 - 关于」，会发现「安装日期」已经被修改为了更新的安装日期。原因在于，&lt;strong&gt;Windows 10 的大版本更新，实际上就是一次保留了用户数据（含文件、应用和设置）的系统重装&lt;/strong&gt;。这也是为什么大版本更新通常比一般更新耗时更长，且安装过程中会见到类似于全新安装的进度百分比显示。&lt;/p&gt;
-&lt;p&gt;换个方向思考，既然 Windows 更新机制可以允许这种特殊的保留用户数据的重装，是否可以让用户自己来进行呢？这实际上就是 Repair Install 的本质了：&lt;strong&gt;用户手动进行的“大版本更新”&lt;/strong&gt;。
-（此处“大版本更新”带引号，因为实际上并不要求安装介质的版本比已安装系统的版本高，相同版本也是可以进行的）&lt;/p&gt;
-&lt;h2 id=&#34;什么场景适合于repair-install&#34;&gt;什么场景适合于「Repair Install」&lt;/h2&gt;
-&lt;p&gt;当 Windows 10 出现了奇怪的问题，且其他途径无法修复时，包括但不限于：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;开始菜单打不开&lt;/li&gt;
-&lt;li&gt;UWP 应用打不开&lt;/li&gt;
-&lt;li&gt;字体/图标丢失&lt;/li&gt;
-&lt;li&gt;注册表混乱&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;进行repair-install的前置要求&#34;&gt;进行「Repair Install」的前置要求&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;可以正常启动 Windows 进入桌面（如果已经启动不了就无能为力了，只能进安全模式也无法使用这个方法）&lt;/li&gt;
-&lt;li&gt;安装 ISO 需要和当前安装的系统：SKU（家庭/专业）相同、架构体系（x86/x64）相同、语言相同、且安装 ISO 版本高于或等于当前安装系统版本&lt;/li&gt;
-&lt;li&gt;当前系统分区有相对充裕的剩余空间（ tenforums 的说法是至少 8.87 G，不过也不知道这个数字的来源。建议至少保留 15 G 以防重蹈 &lt;a href=&#34;https://mrmacintosh.com/big-sur-upgrade-not-enough-hd-space-serious-issue-possible-data-loss/&#34;&gt;MacOS Big Sur 的覆辙&lt;/a&gt;。）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;如何进行repair-install&#34;&gt;如何进行「Repair Install」&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;获取 Windows 10 ISO （可以使用微软官网的 &lt;a href=&#34;https://www.microsoft.com/en-gb/software-download/windows10&#34;&gt;Media Creation Tool&lt;/a&gt; 或第三方直链 &lt;a href=&#34;https://tb.rg-adguard.net/public.php&#34;&gt;TechBench by WZT (v4.1.1) (rg-adguard.net)&lt;/a&gt;）&lt;/li&gt;
-&lt;li&gt;双击挂载 ISO （也可以用其他虚拟光驱工具）&lt;/li&gt;
-&lt;li&gt;进入挂载驱动器，运行 &lt;code&gt;setup.exe&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;一路下一步，在「选择要保留的项目」页选择「保留个人文件、应用和 Windows 设置」&lt;/li&gt;
-&lt;li&gt;耐心等待安装完成&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;参考链接&#34;&gt;参考链接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://answers.microsoft.com/en-us/windows/forum/windows_10-windows_install-winpc/how-to-perform-a-repair-upgrade-using-the-windows/35160fbe-9352-4e70-9887-f40096ec3085&#34;&gt;How to: Perform a Repair Upgrade Using the Windows 10 ISO file - Microsoft Community&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.tenforums.com/tutorials/16397-repair-install-windows-10-place-upgrade.html&#34;&gt;Repair Install Windows 10 with an In-place Upgrade | Tutorials (tenforums.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://neosmart.net/wiki/windows-10-repair-installation/#When_to_repair_install_Windows_10&#34;&gt;How To Reinstall Windows 10 (neosmart.net)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
