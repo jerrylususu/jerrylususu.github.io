@@ -4,7 +4,7 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>随机分享（230910）：Typescript 中 Any 的传染性 &amp; 区分内存占用 - Nekonull&#39;s Garden</title>
+		<title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用 - Nekonull&#39;s Garden</title>
 
 		<meta name="description" content="（没有干货，全是湿货&hellip;不过至少写一些总比完全没有写强？） 本周遇到的 Bug 遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人">
 
@@ -62,7 +62,7 @@ if (!doNotTrack) {
 
 <article>
 	<header><hgroup id="brand">
-	<h1>随机分享（230910）：Typescript 中 Any 的传染性 &amp; 区分内存占用</h1>
+	<h1>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</h1>
 	<h5>
 		
 		<time datetime="2023-09-10 16:05:00 &#43;0800 &#43;0800">Sep 10, 2023</time>
@@ -113,7 +113,7 @@ if (!doNotTrack) {
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Nullable</span>&lt;<span style="color:#f92672">T</span>&gt; <span style="color:#f92672">=</span> <span style="color:#a6e22e">T</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">undefined</span> <span style="color:#f92672">|</span> <span style="color:#66d9ef">null</span>;
 <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">names</span>: <span style="color:#66d9ef">string</span>[] <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span> <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">any</span>).<span style="color:#a6e22e">names</span> <span style="color:#66d9ef">as</span> <span style="color:#a6e22e">Nullable</span>&lt;<span style="color:#f92672">string</span><span style="color:#960050;background-color:#1e0010">[]</span>&gt; <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
 </code></pre></div><p><a href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC+WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB+ZzADk7uk3bgIIAWM+EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA">Typescript Playground</a></p>
-<h2 id="本周学到的小知识">本周学到的小知识</h2>
+<h2 id="linux-中的内存占用">Linux 中的内存占用</h2>
 <p>Linux 进程内存不同计算方法的区分：VSS, RSS, PSS, USS</p>
 <pre><code>
   ┌────────┐

@@ -8,7 +8,7 @@
     <language>zh-cn</language>
     <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>随机分享（230910）：Typescript 中 Any 的传染性 &amp; 区分内存占用</title>
+      <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
       <link>/share/random-20230910/</link>
       <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
       
@@ -46,7 +46,7 @@
 &lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;T&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;T&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[]&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC+WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB+ZzADk7uk3bgIIAWM+EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA&#34;&gt;Typescript Playground&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;本周学到的小知识&#34;&gt;本周学到的小知识&lt;/h2&gt;
+&lt;h2 id=&#34;linux-中的内存占用&#34;&gt;Linux 中的内存占用&lt;/h2&gt;
 &lt;p&gt;Linux 进程内存不同计算方法的区分：VSS, RSS, PSS, USS&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
   ┌────────┐
