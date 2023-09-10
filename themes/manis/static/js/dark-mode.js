@@ -49,3 +49,15 @@ function setTheme(mode) {
     }
     changeGiscusTheme(mode);
 }
+
+// set giscus theme after giscus has been loaded
+function handleGiscusMessage(event) {
+    if (event.origin !== 'https://giscus.app') return;
+    if (!(typeof event.data === 'object' && event.data.giscus)) return;
+  
+    // const giscusData = event.data.giscus;
+    setTheme(savedTheme);
+    window.removeEventListener('message', handleMessage);
+}
+  
+window.addEventListener('message', handleGiscusMessage);
