@@ -41,6 +41,19 @@ googleAnalytics = "G-R01JLDY2KE"
   linkedin = "https://www.linkedin.com/in/%E4%B9%8B%E7%9D%BF-%E5%8D%A2-8779351b2/"
   disqusSections = ["posts","share"]
 
+[params.giscus]
+    repo = "jerrylususu/jerrylususu.github.io"
+    repoId = "MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    category = "Blog Comments"
+    categoryID = "DIC_kwDOCI3wAs4CZNcG"
+    mapping = "pathname"
+    reactions = true
+    inputPosition = "top"
+    theme = "preferred-color-scheme"
+    strictMatching = true
+    lazyLoading = true
+    emitMetadata = false
+    lang = "zh-CN"
 
 [languages]
 

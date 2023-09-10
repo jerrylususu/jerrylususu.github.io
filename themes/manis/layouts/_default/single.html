@@ -22,6 +22,6 @@
 	{{ partial "utterances" .}}
 {{ end }}
 {{ if in .Site.Params.DisqusSections .Section }}
-	{{ partial "disqus" . }}
+	{{ partial "giscus" . }}
 {{ end }}
 {{ partial "footer" . }}
