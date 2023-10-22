@@ -1,6 +1,6 @@
 ---
 title: 用 mitmproxy 重定向 OpenAI 请求到 OpenRouter
-date: 2023-08-20T19:18:26+08:00
+date: 2023-10-22T20:55:00+08:00
 tags:
     - LLM
     - 网络
