@@ -50,6 +50,117 @@
     </item>
     
     <item>
+      <title>健身房等待时间模拟</title>
+      <link>/share/gym-wait-sim/</link>
+      <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
+      
+      <guid>/share/gym-wait-sim/</guid>
+      <description>&lt;p&gt;七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动就是中午去健身房踩20多分钟的椭圆机（顺带看一集番），消耗热量约320卡。然而虽然健身房里的椭圆机数量并不少，足足有10台，但是偶尔还是会发生去了没有位置，需要等人结束的情况，但是因为不知道到底要等多久，还是略微有些焦虑。于是在想，有没有办法量化等待时间，例如模拟计算下概率分布函数，所以有了这篇文章。&lt;/p&gt;
+&lt;p&gt;代码（基本是 GPT3.5 写的，有手动调整）：https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&lt;/p&gt;
+&lt;p&gt;假设：有 10 个椭圆机，每个椭圆机上的运动者的运动时间 &lt;code&gt;t_n&lt;/code&gt; 遵循均值为 &lt;code&gt;μ&lt;/code&gt;，标准差为 &lt;code&gt;σ&lt;/code&gt; 的正态分布。到达健身房时，所有 10 台椭圆机都已被占用，且每个运动者的剩余时间在 &lt;code&gt;[0, t_n]&lt;/code&gt; 中均匀分布。等待时间为所有运动者剩余时间的最小值。&lt;/p&gt;
+&lt;p&gt;考虑到参数 &lt;code&gt;μ&lt;/code&gt; 和 &lt;code&gt;σ&lt;/code&gt; 都无法被准确估计，因此考虑 &lt;code&gt;μ&lt;/code&gt; = 5/10/15，&lt;code&gt;σ&lt;/code&gt; = 20/25/30，组合起来共 9 种情况；对每种情况运行一万次模拟，统计等待时间的 p50/p75/p90/p95，得到下表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;μ&lt;/th&gt;
+&lt;th&gt;σ&lt;/th&gt;
+&lt;th&gt;mean&lt;/th&gt;
+&lt;th&gt;p50&lt;/th&gt;
+&lt;th&gt;p75&lt;/th&gt;
+&lt;th&gt;p90&lt;/th&gt;
+&lt;th&gt;p95&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1.698&lt;/td&gt;
+&lt;td&gt;1.252&lt;/td&gt;
+&lt;td&gt;2.406&lt;/td&gt;
+&lt;td&gt;3.817&lt;/td&gt;
+&lt;td&gt;4.811&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1.258&lt;/td&gt;
+&lt;td&gt;0.858&lt;/td&gt;
+&lt;td&gt;1.772&lt;/td&gt;
+&lt;td&gt;2.944&lt;/td&gt;
+&lt;td&gt;3.813&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.151&lt;/td&gt;
+&lt;td&gt;0.737&lt;/td&gt;
+&lt;td&gt;1.604&lt;/td&gt;
+&lt;td&gt;2.761&lt;/td&gt;
+&lt;td&gt;3.641&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2.198&lt;/td&gt;
+&lt;td&gt;1.632&lt;/td&gt;
+&lt;td&gt;3.123&lt;/td&gt;
+&lt;td&gt;4.978&lt;/td&gt;
+&lt;td&gt;6.229&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1.769&lt;/td&gt;
+&lt;td&gt;1.258&lt;/td&gt;
+&lt;td&gt;2.494&lt;/td&gt;
+&lt;td&gt;4.077&lt;/td&gt;
+&lt;td&gt;5.213&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.477&lt;/td&gt;
+&lt;td&gt;0.967&lt;/td&gt;
+&lt;td&gt;2.069&lt;/td&gt;
+&lt;td&gt;3.508&lt;/td&gt;
+&lt;td&gt;4.634&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2.671&lt;/td&gt;
+&lt;td&gt;1.977&lt;/td&gt;
+&lt;td&gt;3.813&lt;/td&gt;
+&lt;td&gt;6.059&lt;/td&gt;
+&lt;td&gt;7.515&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;2.284&lt;/td&gt;
+&lt;td&gt;1.669&lt;/td&gt;
+&lt;td&gt;3.219&lt;/td&gt;
+&lt;td&gt;5.186&lt;/td&gt;
+&lt;td&gt;6.632&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.965&lt;/td&gt;
+&lt;td&gt;1.364&lt;/td&gt;
+&lt;td&gt;2.720&lt;/td&gt;
+&lt;td&gt;4.624&lt;/td&gt;
+&lt;td&gt;6.019&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src=&#34;/img/gym_wait_sim_result.png&#34; alt=&#34;模拟结果可视化&#34;&gt;&lt;/p&gt;
+&lt;p&gt;结论：考虑所有情况，一般等 2 分钟就有 50% 概率可以等到位置，最坏情况下等 6 分钟也有 90% 的概率等到位置。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>评论系统从 Disqus 迁移到 Giscus</title>
       <link>/share/migrate-to-giscus/</link>
       <pubDate>Sun, 10 Sep 2023 22:08:00 +0800</pubDate>

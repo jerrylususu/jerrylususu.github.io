@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>健身房等待时间模拟 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>健身房等待时间模拟</h1>
+	<h5>
+		
+		<time datetime="2023-09-29 15:34:23 &#43;0800 &#43;0800">Sep 29, 2023</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动就是中午去健身房踩20多分钟的椭圆机（顺带看一集番），消耗热量约320卡。然而虽然健身房里的椭圆机数量并不少，足足有10台，但是偶尔还是会发生去了没有位置，需要等人结束的情况，但是因为不知道到底要等多久，还是略微有些焦虑。于是在想，有没有办法量化等待时间，例如模拟计算下概率分布函数，所以有了这篇文章。</p>
+<p>代码（基本是 GPT3.5 写的，有手动调整）：https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895</p>
+<p>假设：有 10 个椭圆机，每个椭圆机上的运动者的运动时间 <code>t_n</code> 遵循均值为 <code>μ</code>，标准差为 <code>σ</code> 的正态分布。到达健身房时，所有 10 台椭圆机都已被占用，且每个运动者的剩余时间在 <code>[0, t_n]</code> 中均匀分布。等待时间为所有运动者剩余时间的最小值。</p>
+<p>考虑到参数 <code>μ</code> 和 <code>σ</code> 都无法被准确估计，因此考虑 <code>μ</code> = 5/10/15，<code>σ</code> = 20/25/30，组合起来共 9 种情况；对每种情况运行一万次模拟，统计等待时间的 p50/p75/p90/p95，得到下表：</p>
+<table>
+<thead>
+<tr>
+<th>μ</th>
+<th>σ</th>
+<th>mean</th>
+<th>p50</th>
+<th>p75</th>
+<th>p90</th>
+<th>p95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>5</td>
+<td>1.698</td>
+<td>1.252</td>
+<td>2.406</td>
+<td>3.817</td>
+<td>4.811</td>
+</tr>
+<tr>
+<td>20</td>
+<td>10</td>
+<td>1.258</td>
+<td>0.858</td>
+<td>1.772</td>
+<td>2.944</td>
+<td>3.813</td>
+</tr>
+<tr>
+<td>20</td>
+<td>15</td>
+<td>1.151</td>
+<td>0.737</td>
+<td>1.604</td>
+<td>2.761</td>
+<td>3.641</td>
+</tr>
+<tr>
+<td>25</td>
+<td>5</td>
+<td>2.198</td>
+<td>1.632</td>
+<td>3.123</td>
+<td>4.978</td>
+<td>6.229</td>
+</tr>
+<tr>
+<td>25</td>
+<td>10</td>
+<td>1.769</td>
+<td>1.258</td>
+<td>2.494</td>
+<td>4.077</td>
+<td>5.213</td>
+</tr>
+<tr>
+<td>25</td>
+<td>15</td>
+<td>1.477</td>
+<td>0.967</td>
+<td>2.069</td>
+<td>3.508</td>
+<td>4.634</td>
+</tr>
+<tr>
+<td>30</td>
+<td>5</td>
+<td>2.671</td>
+<td>1.977</td>
+<td>3.813</td>
+<td>6.059</td>
+<td>7.515</td>
+</tr>
+<tr>
+<td>30</td>
+<td>10</td>
+<td>2.284</td>
+<td>1.669</td>
+<td>3.219</td>
+<td>5.186</td>
+<td>6.632</td>
+</tr>
+<tr>
+<td>30</td>
+<td>15</td>
+<td>1.965</td>
+<td>1.364</td>
+<td>2.720</td>
+<td>4.624</td>
+<td>6.019</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/img/gym_wait_sim_result.png" alt="模拟结果可视化"></p>
+<p>结论：考虑所有情况，一般等 2 分钟就有 50% 概率可以等到位置，最坏情况下等 6 分钟也有 90% 的概率等到位置。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/share/migrate-to-giscus/">
+		<img class="icon-text" src="/img/prev.svg"/>评论系统从 Disqus 迁移到 Giscus</a>
+
+
+	<a class="next-post" href="/share/openrouter-mitmproxy/">用 mitmproxy 重定向 OpenAI 请求到 OpenRouter<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/share/migrate-to-giscus/">评论系统从 Disqus 迁移到 Giscus</a></li>
+  	
+  	<li><a href="/share/random-20230910/">随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</a></li>
+  	
+  	<li><a href="/posts/back-again-2023/">再次复活（2023）&amp; 换用 Github Action 部署</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
