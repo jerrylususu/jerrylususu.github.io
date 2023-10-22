@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>用 mitmproxy 重定向 OpenAI 请求到 OpenRouter - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="背景 最近在尝试使用一些基于 GPT 开发的工具，但遇到了一些网络相关的小问题。因为支付方式的限制，我自己并没有 OpenAI 的账户，实际使用的 API 是其他中间商（a">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li></ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</h1>
+	<h5>
+		
+		<time datetime="2023-08-20 19:18:26 &#43;0800 &#43;0800">Aug 20, 2023</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/LLM">LLM</a>
+				
+				<a href="/tags/%e7%bd%91%e7%bb%9c">网络</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<h2 id="背景">背景</h2>
+<p>最近在尝试使用一些基于 GPT 开发的工具，但遇到了一些网络相关的小问题。因为支付方式的限制，我自己并没有 OpenAI 的账户，实际使用的 API 是其他中间商（aka 二道贩子）转卖而来的， <a href="https://openrouter.ai/docs#models">OpenRouter</a> 就是其中一家。（实际上 OpenRouter 做的还更多一些，更像是 LLM 的聚合提供商，除了 OpenAI 也有其他家的 LLM，如 Claude 或是 LLama。）但是很多开源工具并未考虑到这种情况，基本上都是假定用户使用的就是 OpenAI 的官方 API 端点，所以很多时候并不能直接使用各类预先构建好的产物（例如 docker 镜像），而是得把源码 clone 下来，找到 <code>import openai</code> 或者是类似的调用发起位置，再在附近补充一些参数才能正常使用。手动改代码固然不是不行，但是总归还是有些繁琐，出问题的时候还额外增加了一个需要排查的环节。</p>
+<h2 id="问题">问题</h2>
+<p>有没有更好的，更自动化的方式，例如在网络上加个代理层，在第三方工具无需修改的前提下，就可以将 OpenAI 的请求转换成 OpenRouter 的请求呢？</p>
+<h2 id="解决">解决</h2>
+<p>那既然都写到这里了，当然是有的。这里的核心是一个 man-in-the-middle （mitm / 中间人）代理，在请求到达代理的时候，修改请求中的内容，使之符合我们的要求，之后再继续对外发送就可以了。<a href="https://mitmproxy.org/">mitmproxy</a> 就是这样一个工具。当然它的功能远不止修改请求，在完善的 Python API 的加成下还能做很多其他的事。（同类的工具其他工具，如 Fiddler，应该也能实现，但方法就需要给位自行探索了。）以下就是实现本次需求的核心代码，应该不需要太多解释。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+<span style="color:#f92672">from</span> mitmproxy <span style="color:#f92672">import</span> http
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">request</span>(flow: http<span style="color:#f92672">.</span>HTTPFlow) <span style="color:#f92672">-&gt;</span> None:
+    <span style="color:#75715e"># 只处理 HOST 为 api.openai.com，且请求体为 JSON 的 POST 请求</span>
+    <span style="color:#66d9ef">if</span> flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>host <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;api.openai.com&#34;</span> <span style="color:#f92672">and</span> flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span> <span style="color:#f92672">and</span> flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;content-type&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;application/json&#34;</span>):
+        <span style="color:#66d9ef">try</span>:
+            flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>host <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;openrouter.ai&#34;</span>
+            flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>path <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/api/v1/chat/completions&#34;</span>
+            flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;authorization&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Bearer sk-xxxxxxxxxx&#34;</span> <span style="color:#75715e"># token</span>
+            flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>headers[<span style="color:#e6db74">&#34;http-referer&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://localhost:8080/my_great_app&#34;</span> <span style="color:#75715e"># 应用标识</span>
+            request_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>get_text())
+
+            <span style="color:#75715e"># 甚至可以在这里切换模型</span>
+            <span style="color:#75715e"># request_data[&#34;model&#34;] = &#34;anthropic/claude-instant-v1&#34;</span>
+
+            flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>set_text(json<span style="color:#f92672">.</span>dumps(request_data))
+            <span style="color:#66d9ef">pass</span>
+        <span style="color:#66d9ef">except</span> json<span style="color:#f92672">.</span>JSONDecodeError:
+            <span style="color:#66d9ef">pass</span>
+
+<span style="color:#75715e"># 需要声明回包支持 stream，否则会等待全部数据到达再返回给应用，无法实现 LLM 打字效果</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">responseheaders</span>(flow):
+    flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>stream <span style="color:#f92672">=</span> True
+</code></pre></div><p>启动 mitmproxy 时需要带上 Python 脚本参数，以及如果有上游代理则需要再声明：</p>
+<pre><code>mitmweb --mode upstream:http://{upstream_addr} -s openrouter.py
+</code></pre><p>启动后会弹出 mitmproxy 的网页控制台，这时候就用第三方工具发请求试试了，一切顺利的话可以看到结果正常返回且网页上显示请求数据。如果出现问题也可以看命令行窗口的输出。如果第三方工具本身支持设置应用内代理（如 <a href="https://github.com/Bin-Huang/chatbox">Chatbox</a>）则最理想；不支持的话可以考虑设置系统代理、用 mitmproxy 的<a href="https://docs.mitmproxy.org/stable/howto-transparent/">透明代理模式</a>、或者用 <a href="https://www.proxifier.com/">Proxifer</a> 这类工具来强制应用代理。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/share/css-filter-dark-mode/">
+		<img class="icon-text" src="/img/prev.svg"/>用 CSS Filter 反色实现简易黑暗模式</a>
+
+
+	<a class="next-post" href="/share/console-save/">在 devtool 控制台里爬网站<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/share/console-save/">在 devtool 控制台里爬网站</a></li>
+  	
+  	<li><a href="/posts/vue-app-pwa/">将已有的 Vue App 变为 PWA</a></li>
+  	
+  	<li><a href="/posts/py-itertools-permutation-algo/">Python `itertools.permutations` 使用的排列算法</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
