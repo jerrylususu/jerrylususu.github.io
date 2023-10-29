@@ -6,7 +6,76 @@
     <description>Recent content in LLM on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 22 Oct 2023 20:55:00 +0800</lastBuildDate><atom:link href="/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Oct 2023 20:17:00 +0800</lastBuildDate><atom:link href="/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>我的 AI Prompt</title>
+      <link>/share/my-ai-prompts/</link>
+      <pubDate>Sun, 29 Oct 2023 20:17:00 +0800</pubDate>
+      
+      <guid>/share/my-ai-prompts/</guid>
+      <description>&lt;p&gt;记录下自己自用的一些 Prompt。只是迭代下来感觉还不错，但不一定是最好的。如有推荐欢迎回复补充。&lt;/p&gt;
+&lt;h2 id=&#34;通用场景&#34;&gt;通用场景&lt;/h2&gt;
+&lt;p&gt;（主要配合 GPT-3.5-Turbo 使用，回答代码类问题）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;You are a helpful assistant and also a professional &amp;amp; experienced developer. You can help me by answering my questions. You can also ask me questions. If you are given code related questions, please answer in a consise manner, give code examples with less explaination.
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;摘要总结英文&#34;&gt;摘要总结（英文）&lt;/h2&gt;
+&lt;p&gt;（主要配合 claude-instant-v1 使用，用于文章摘要、结构化总结）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;You are a professional reader and analyst. Please summarize the following article in a organized manner. Use markdown list format with indentation indicating the layering of ideas. Ignore any text that is unrelated to the main article. Also include a short tl;dr summary (no more than 50 words and 3 sentences). Refer to the following example when summarizing.
+
+---
+[Example Output]
+
+TL;DR summary: Summary in no more than 50 words.
+
+# Title
+## Heading 1
+- Idea 1
+    - Reason 1
+
+## Heading 2
+1. Numbered Item 1
+2. Numbered Item 2
+
+## Conclusion
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;摘要总结中文&#34;&gt;摘要总结（中文）&lt;/h2&gt;
+&lt;p&gt;（主要配合 ChatGLM-Turbo 使用，用于文章摘要）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;您是一名专业的读者和分析者，现在请对下面的文章进行整理总结。使用Markdown列表格式输出总结，每个列表项是一个想法，并用缩进表示思想的层次，更深层的列表项代表论据或想法的演进，忽略任何与主文无关的文字。
+&lt;/code&gt;&lt;/pre&gt;</description>
+    </item>
+    
+    <item>
+      <title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</title>
+      <link>/share/try-chatglm/</link>
+      <pubDate>Sun, 29 Oct 2023 19:41:00 +0800</pubDate>
+      
+      <guid>/share/try-chatglm/</guid>
+      <description>&lt;p&gt;最近看到了几篇关于智谱 AI 的推送文章，才想起来他们的大模型（ChatGLM 系）已经上线好久了。回想 6B 模型刚公布的那会还在 AutoDL 上自己跑过，不过因为模型本身太小，所以其实能做的并不算多。注册了个开发者账户看了看文档，目前可以广泛使用的是 &lt;a href=&#34;https://open.bigmodel.cn/pricing&#34;&gt;ChatGLM-Turbo&lt;/a&gt;，上下文窗口 32k token，定价 0.005 元/千token，还是很便宜的。更不用说因为 GLM 系模型以中文语料为主，所以同等长度的中文文本，用 GLM 的 token 消耗比用 GPT 系列的 token 消耗会小很多（测试下来大概在 4x 左右）。&lt;/p&gt;
+&lt;p&gt;官网的 Playground 玩了一会感觉还不错，生成的中文明显感觉更自然，没有 GPT 系那么浓烈的翻译腔，于是想着怎么接入到我自己用的客户端 &lt;a href=&#34;https://github.com/Bin-Huang/chatbox&#34;&gt;Chatbox&lt;/a&gt; 中日常使用。Chatbox 有内置的 ChatGLM 支持，一般直接设置下 token 就可以了。但是因为我主要用的还是 GPT 系模型，而 Chatbox 又只能全局设置一个 API 服务器字段，所以如果要同时使用 GPT 和 ChatGLM 的话，还是得用之前提到的 mitmproxy，手动完成请求的中转（没有什么是加一个抽象层不能解决的）。这里用 mitm 方式让 GLM 适配 GPT 接口还有个额外的好处，那就是只支持 OpenAI 的第三方应用也可以自动支持 GLM 了（虽然我还没这么用过）。&lt;/p&gt;
+&lt;p&gt;和之前适配 OpenRouter 不一样，这次除了修改请求头，还要修改 SSE 响应体。不知道出于什么考虑，GLM 系列模型的响应事件和 GPT 系列的完全不同，修改起来还是有些复杂的。但总之调试了几个小时之后总算是改完了，代码在此：(不建议在生产环境使用，后果自负)&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://gist.github.com/jerrylususu/3ebcf6262d110da89ce58d1e8d55bc22&#34;&gt;https://gist.github.com/jerrylususu/3ebcf6262d110da89ce58d1e8d55bc22&lt;/a&gt;&lt;/p&gt;
+&lt;script src=&#34;https://gist.github.com/jerrylususu/3ebcf6262d110da89ce58d1e8d55bc22.js&#34;&gt;&lt;/script&gt;
+&lt;p&gt;改请求头比较简单，修改如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;换 host 和 path&lt;/li&gt;
+&lt;li&gt;换 Authorization 头：参考 GLM 开发文档的&amp;quot;鉴权&amp;quot;一节即可（注意这里要用 &lt;code&gt;PyJWT&lt;/code&gt; 库，直接二进制安装的 &lt;code&gt;mitmproxy&lt;/code&gt; 带的 Python 环境不支持安装包，需要走 &lt;code&gt;pipx&lt;/code&gt; 安装，可参考&lt;a href=&#34;https://docs.mitmproxy.org/stable/overview-installation/#installation-from-the-python-package-index-pypi&#34;&gt;官方文档&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;消息列表（&lt;code&gt;messages&lt;/code&gt;）修改：GLM 系里叫做 &lt;code&gt;prompt&lt;/code&gt;，而且根据实测只能支持 &lt;code&gt;user&lt;/code&gt;-&lt;code&gt;assistant&lt;/code&gt; 交替，如果存在 &lt;code&gt;system&lt;/code&gt; 或是有两个连续的 &lt;code&gt;user&lt;/code&gt; 消息都会报错；这里稍微转换了下，把所有的非 &lt;code&gt;user&lt;/code&gt;/&lt;code&gt;assistant&lt;/code&gt; 消息都转成 &lt;code&gt;user&lt;/code&gt;，然后手动连接下连续的同 role 消息，保证最后构造的消息列表是两个角色交替。&lt;/li&gt;
+&lt;li&gt;开启增量返回：默认似乎是全量返回，这里和 OpenAI 对齐，也改成增量&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;比较烦人的是改响应体，如下所示分别是 GLM 系的返回和 GPT 系的返回。可以发现 GLM 系列比较简单，只有事件类型、流 ID 和增量数据；GPT 系列就更复杂一些，返回的是个 JSON，里面还有嵌套结构。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# GLM&lt;/span&gt;
+&lt;span style=&#34;color:#e6db74&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;event:add&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;id:8065135252561182716&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;data:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\xef\xbc\x8c\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# GPT&lt;/span&gt;
+&lt;span style=&#34;color:#e6db74&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;data: {&amp;#34;id&amp;#34;: &amp;#34;chatcmpl-8EymH9k9DS9iQQvIH3BguHaZqmib9&amp;#34;, &amp;#34;object&amp;#34;: &amp;#34;chat.completion.chunk&amp;#34;, &amp;#34;created&amp;#34;: 1698580913, &amp;#34;model&amp;#34;: &amp;#34;gpt-3.5-turbo-0613&amp;#34;, &amp;#34;choices&amp;#34;: [{&amp;#34;index&amp;#34;: 0, &amp;#34;delta&amp;#34;: {&amp;#34;content&amp;#34;: &amp;#34;?&amp;#34;}, &amp;#34;finish_reason&amp;#34;: null}]}&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\n\n&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里的改造思路其实很明确，先解析 GLM 的响应体，再据此拼装成 GPT 的相应格式，然后返回给应用就可以了，然而具体做起来还是有不少坑。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一开始想的是直接 decode 之后分行解析，后来发现不太确定是信道问题还是服务器问题，有的时候接收到的 SSE 事件只有一半（导致 utf-8 decode 失败），或者是两个事件被合并成了一个事件（一个 SSE data 里面有两个 add 事件）。用国内的术语来说这个算粘包？为了解决这个问题，先把行解析改成了正则解析，然后用补充了一个 buffer，如果发现这次的事件不完整就先扔 buffer 里，等下一个事件凑齐了再一起解析。&lt;/li&gt;
+&lt;li&gt;改完发现可以正常显示回复了，但是一直不能结束。还需要参考 OpenAI 的响应，额外补充 &lt;code&gt;DONE&lt;/code&gt; 事件。&lt;/li&gt;
+&lt;li&gt;这样改完倒是基本能用了，但接下来发现还是不太对劲，生成代码的时候会多一个空格。这里看了响应数据，返回响应的确如此，于是在 data 开头两个空格的时候手动删掉一个。&lt;/li&gt;
+&lt;li&gt;然后发现生成 markdown 列表的时候换行消失了。查响应发现有时会有多个 &lt;code&gt;data:&lt;/code&gt;，需要每个都处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目前的效果算是初步可用了吧，但是偶尔如果响应本身不完整（例如某个 SSE 事件返回了不完整的 utf8 编码字符串，下一个事件没有包含丢失的数据），那就会直接报错。不过考虑到实际频率比较低，重试的成本比较小，这里还算可以接受吧。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</title>
       <link>/share/openrouter-mitmproxy/</link>
