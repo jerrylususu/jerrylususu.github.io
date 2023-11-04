@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Connecting to Physical Screen with VNC - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="When searching for &ldquo;Linux remote desktop,&rdquo; most tutorials suggest using the combination of &ldquo;xrdp &#43; xfce4.&rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &ldquo;screen&rdquo; or &ldquo;tmux&rdquo; would be more than sufficient.">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/share/vnc-to-physical-display/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/vnc-to-physical-display/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Connecting to Physical Screen with VNC</h1>
+	<h5>
+		
+		<time datetime="2021-12-13 16:50:43 &#43;0300 &#43;0300">Dec 13, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/Pitfalls">Pitfalls</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>When searching for &ldquo;Linux remote desktop,&rdquo; most tutorials suggest using the combination of &ldquo;xrdp + xfce4.&rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &ldquo;screen&rdquo; or &ldquo;tmux&rdquo; would be more than sufficient. However, I am using a GUI program. So, I searched for a solution and found that it is possible to connect to an ongoing X session using VNC, similar to tools like TeamViewer. Here are the specific steps:</p>
+<ol>
+<li>Install the TigerVNC server.</li>
+<li>Run &ldquo;vncpasswd&rdquo; to create a VNC password.</li>
+<li>Start the TigerVNC service.</li>
+<li>Use &ldquo;x0vncserver&rdquo; to open a VNC session connected to Display 0.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> x0vncserver -display :0 -PasswordFile<span style="color:#f92672">=</span>/home/<span style="color:#f92672">{</span>username<span style="color:#f92672">}</span>/.vnc/passwd 
+</code></pre></div></li>
+<li>Connect using a VNC client on another device.</li>
+</ol>
+<p>In my own experience on Windows, it seems that RealVNC Viewer provides a better user experience compared to TigerVNC Viewer.</p>
+<p>Another issue that may affect the user experience is scaling and screen resolution. The lab workstation has a 4K screen with 200% scaling, and when connecting from a 1080p laptop, the text may appear too small. TigerVNC seems to have an auto-scaling feature, but it doesn&rsquo;t seem to work when connecting the VNC session to a physical screen. My workaround is to first connect and then manually adjust the resolution settings on the remote system (usually setting it to 2560x1440 is sufficient), then restart x0vncserver and reconnect. Although it&rsquo;s a bit cumbersome, at least it solves the problem of usability.</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/share/build-emoji-regex/">
+		<img class="icon-text" src="/img/prev.svg"/>Constructing a RegEx that matches all emojis</a>
+
+
+	<a class="next-post" href="/en/share/css-filter-dark-mode/">Implementing a Simple Dark Mode with CSS Filter<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/share/build-emoji-regex/">Constructing a RegEx that matches all emojis</a></li>
+  	
+  	<li><a href="/en/share/go-monitor-goroutine-count/">Monitor the number of goroutines</a></li>
+  	
+  	<li><a href="/en/posts/distributed-system-course-notes/">Notes on Distributed Systems Course</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

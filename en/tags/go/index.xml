@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Nekonull&#39;s Garden</title>
+    <link>/en/tags/go/</link>
+    <description>Recent content in Go on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="/en/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Monitor the number of goroutines</title>
+      <link>/en/share/go-monitor-goroutine-count/</link>
+      <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
+      
+      <guid>/en/share/go-monitor-goroutine-count/</guid>
+      <description>&lt;p&gt;Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using &lt;code&gt;--count 10&lt;/code&gt;), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals. Finally, it was indeed found that the number of goroutines kept increasing as the tests progressed. After fixing the leak issue (by adding various conditional checks), each time the test restarted, the number of goroutines would decrease to a level similar to the initial state, and the resource consumption during multiple tests also returned to normal.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint32&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;()
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewTicker&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;)
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stop&lt;/span&gt;()
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;:
+			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Since&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt;), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;goroutine count:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;runtime&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NumGoroutine&lt;/span&gt;())
+		}
+	}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;runShowGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;CompareAndSwapUint32&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;()
+	}
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// to start, just invoke `runShowGoroutineCount` at anywhere you like, perhaps at `ServerStart` or something like that.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

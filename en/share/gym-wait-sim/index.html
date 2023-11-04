@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Simulating Wait Times at the Gym - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="In mid-July, I visited the hospital and started exercising regularly upon the doctor&rsquo;s advice. After considering my work schedule and my physical condition, I decided to go to the gym for a workout during lunchtime. Currently, my daily exercise routine consists of spending about 20 minutes on the elliptical machine at the gym (while watching an episode of a TV show), burning approximately 320 calories. However, even though there are plenty of elliptical machines in the gym, a situation occasionally arises where there are no available machines and I have to wait for someone to finish.">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/share/gym-wait-sim/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/gym-wait-sim/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Simulating Wait Times at the Gym</h1>
+	<h5>
+		
+		<time datetime="2023-09-29 15:34:23 &#43;0800 &#43;0800">Sep 29, 2023</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>In mid-July, I visited the hospital and started exercising regularly upon the doctor&rsquo;s advice. After considering my work schedule and my physical condition, I decided to go to the gym for a workout during lunchtime. Currently, my daily exercise routine consists of spending about 20 minutes on the elliptical machine at the gym (while watching an episode of a TV show), burning approximately 320 calories. However, even though there are plenty of elliptical machines in the gym, a situation occasionally arises where there are no available machines and I have to wait for someone to finish. Not knowing how long the wait will be can be slightly anxiety-inducing. So, I started thinking about whether there is a way to quantify the wait time, such as simulating and calculating the probability distribution function. And that&rsquo;s how this article came about.</p>
+<p>Code (mostly written using GPT3.5, with some manual adjustments): <a href="https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895">link to code</a></p>
+<p>Assumption: There are 10 elliptical machines, and the exercise time of each user on a machine, denoted as <code>t_n</code>, follows a normal distribution with a mean of <code>μ</code> and a standard deviation of <code>σ</code>. When I arrive at the gym, all 10 machines are already occupied, and the remaining exercise time for each user is uniformly distributed between 0 and <code>t_n</code>. The wait time is defined as the minimum of the remaining exercise times for all users.</p>
+<p>Considering that the parameters <code>μ</code> and <code>σ</code> cannot be accurately estimated, we consider 9 different scenarios by varying <code>μ</code> as 5/10/15 and <code>σ</code> as 20/25/30. For each scenario, we run 10,000 simulations and calculate the p50/p75/p90/p95 of the wait time. The results are summarized in the following table:</p>
+<table>
+<thead>
+<tr>
+<th>μ</th>
+<th>σ</th>
+<th>mean</th>
+<th>p50</th>
+<th>p75</th>
+<th>p90</th>
+<th>p95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>5</td>
+<td>1.698</td>
+<td>1.252</td>
+<td>2.406</td>
+<td>3.817</td>
+<td>4.811</td>
+</tr>
+<tr>
+<td>20</td>
+<td>10</td>
+<td>1.258</td>
+<td>0.858</td>
+<td>1.772</td>
+<td>2.944</td>
+<td>3.813</td>
+</tr>
+<tr>
+<td>20</td>
+<td>15</td>
+<td>1.151</td>
+<td>0.737</td>
+<td>1.604</td>
+<td>2.761</td>
+<td>3.641</td>
+</tr>
+<tr>
+<td>25</td>
+<td>5</td>
+<td>2.198</td>
+<td>1.632</td>
+<td>3.123</td>
+<td>4.978</td>
+<td>6.229</td>
+</tr>
+<tr>
+<td>25</td>
+<td>10</td>
+<td>1.769</td>
+<td>1.258</td>
+<td>2.494</td>
+<td>4.077</td>
+<td>5.213</td>
+</tr>
+<tr>
+<td>25</td>
+<td>15</td>
+<td>1.477</td>
+<td>0.967</td>
+<td>2.069</td>
+<td>3.508</td>
+<td>4.634</td>
+</tr>
+<tr>
+<td>30</td>
+<td>5</td>
+<td>2.671</td>
+<td>1.977</td>
+<td>3.813</td>
+<td>6.059</td>
+<td>7.515</td>
+</tr>
+<tr>
+<td>30</td>
+<td>10</td>
+<td>2.284</td>
+<td>1.669</td>
+<td>3.219</td>
+<td>5.186</td>
+<td>6.632</td>
+</tr>
+<tr>
+<td>30</td>
+<td>15</td>
+<td>1.965</td>
+<td>1.364</td>
+<td>2.720</td>
+<td>4.624</td>
+<td>6.019</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/img/gym_wait_sim_result.png" alt="Visualization of Simulation Results"></p>
+<p>Conclusion: Taking all scenarios into account, there is a 50% probability of waiting for about 2 minutes to secure a spot, and in the worst-case scenario, there is a 90% probability of waiting for up to 6 minutes to secure a spot.</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/share/migrate-to-giscus/">
+		<img class="icon-text" src="/img/prev.svg"/>Migrating from Disqus to Giscus for the Comment System</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/share/migrate-to-giscus/">Migrating from Disqus to Giscus for the Comment System</a></li>
+  	
+  	<li><a href="/en/posts/vue-app-pwa/">Turning an Existing Vue App into a PWA</a></li>
+  	
+  	<li><a href="/en/share/css-filter-dark-mode/">Implementing a Simple Dark Mode with CSS Filter</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

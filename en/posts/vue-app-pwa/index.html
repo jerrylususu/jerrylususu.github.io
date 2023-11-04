@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Turning an Existing Vue App into a PWA - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="Add PWA plugin, add icons, and it should be good to go">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/posts/vue-app-pwa/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/posts/vue-app-pwa/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Turning an Existing Vue App into a PWA</h1>
+	<h5>
+		
+		<time datetime="2022-09-03 17:21:00 &#43;0800 &#43;0800">Sep 03, 2022</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/frontend">frontend</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>I previously wrote a small app called &ldquo;Gojuon Quiz&rdquo; to assist in memorizing the Japanese phonetic alphabet. Recently, I decided to add Progressive Web App (PWA) functionality to it. This allows the app to be used even without an internet connection after the initial successful loading. Additionally, it provides a user experience that is similar to a native application, without displaying browser address bars or similar controls.</p>
+<p>The specific steps to implement PWA are as follows:</p>
+<ol>
+<li>Install the Vue PWA plugin: <code>vue add pwa</code></li>
+<li>Generate icons of different sizes and place them in the <code>img/icons</code> directory. You can use the <a href="https://realfavicongenerator.net/">Real Favicon Generator</a>.</li>
+<li>Adjust the PWA plugin configuration in <code>vue.config.js</code>. You can refer to the <a href="https://cli.vuejs.org/core-plugins/pwa.html#configuration">@vue/cli-plugin-pwa documentation</a>.</li>
+<li>(Optional) Add update prompts. Refer to <a href="https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip">Handling Service Worker updates in your Vue PWA</a>.
+<blockquote>
+<p>Note: Skipping this step will not affect the automatic update feature. However, users will need to manually close and reopen the app after the update to apply the new version.</p>
+</blockquote>
+</li>
+</ol>
+<p>After installation, you can see the following indicators to confirm that the PWA functionality has been successfully configured:</p>
+<ul>
+<li>The plus icon appears on the right side of the address bar in Chrome/Edge.</li>
+<li>Debugging information related to the service worker is output to the console.</li>
+</ul>
+<p>When debugging, there are a few small issues to keep in mind:</p>
+<ol>
+<li>PWA is not enabled in development mode (e.g., <code>vue serve</code>). You need to first run <code>vue build</code> and manually open an HTTP server in the <code>dist</code> directory (you can use <code>python -m http.server</code>) to enable it.</li>
+<li>If you are using a device on a local network to access the HTTP server on the development machine, PWA may not be triggered. This is because PWA requires HTTPS (or the server to be on localhost).</li>
+<li>If you want to customize the name of the PWA, it should be written under <code>pwa.name</code>, not in other nested structures. (I previously installed the <code>i18n</code> plugin and habitually wrote it under <code>pluginOptions</code>.)</li>
+</ol>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/posts/distributed-system-course-notes/">
+		<img class="icon-text" src="/img/prev.svg"/>Notes on Distributed Systems Course</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/share/css-filter-dark-mode/">Implementing a Simple Dark Mode with CSS Filter</a></li>
+  	
+  	<li><a href="/en/share/build-emoji-regex/">Constructing a RegEx that matches all emojis</a></li>
+  	
+  	<li><a href="/en/share/vnc-to-physical-display/">Connecting to Physical Screen with VNC</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

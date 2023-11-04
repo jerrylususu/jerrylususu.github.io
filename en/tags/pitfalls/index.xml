@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pitfalls on Nekonull&#39;s Garden</title>
+    <link>/en/tags/pitfalls/</link>
+    <description>Recent content in Pitfalls on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/en/tags/pitfalls/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Connecting to Physical Screen with VNC</title>
+      <link>/en/share/vnc-to-physical-display/</link>
+      <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
+      
+      <guid>/en/share/vnc-to-physical-display/</guid>
+      <description>&lt;p&gt;When searching for &amp;ldquo;Linux remote desktop,&amp;rdquo; most tutorials suggest using the combination of &amp;ldquo;xrdp + xfce4.&amp;rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &amp;ldquo;screen&amp;rdquo; or &amp;ldquo;tmux&amp;rdquo; would be more than sufficient. However, I am using a GUI program. So, I searched for a solution and found that it is possible to connect to an ongoing X session using VNC, similar to tools like TeamViewer. Here are the specific steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the TigerVNC server.&lt;/li&gt;
+&lt;li&gt;Run &amp;ldquo;vncpasswd&amp;rdquo; to create a VNC password.&lt;/li&gt;
+&lt;li&gt;Start the TigerVNC service.&lt;/li&gt;
+&lt;li&gt;Use &amp;ldquo;x0vncserver&amp;rdquo; to open a VNC session connected to Display 0.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; x0vncserver -display :0 -PasswordFile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/home/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;username&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/.vnc/passwd 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Connect using a VNC client on another device.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In my own experience on Windows, it seems that RealVNC Viewer provides a better user experience compared to TigerVNC Viewer.&lt;/p&gt;
+&lt;p&gt;Another issue that may affect the user experience is scaling and screen resolution. The lab workstation has a 4K screen with 200% scaling, and when connecting from a 1080p laptop, the text may appear too small. TigerVNC seems to have an auto-scaling feature, but it doesn&amp;rsquo;t seem to work when connecting the VNC session to a physical screen. My workaround is to first connect and then manually adjust the resolution settings on the remote system (usually setting it to 2560x1440 is sufficient), then restart x0vncserver and reconnect. Although it&amp;rsquo;s a bit cumbersome, at least it solves the problem of usability.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

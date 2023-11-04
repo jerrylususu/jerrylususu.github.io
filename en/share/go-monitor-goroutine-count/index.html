@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Monitor the number of goroutines - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using --count 10), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals.">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/go-monitor-goroutine-count/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/share/go-monitor-goroutine-count/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Monitor the number of goroutines</h1>
+	<h5>
+		
+		<time datetime="2021-12-13 16:44:43 &#43;0300 &#43;0300">Dec 13, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/Go">Go</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using <code>--count 10</code>), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals. Finally, it was indeed found that the number of goroutines kept increasing as the tests progressed. After fixing the leak issue (by adding various conditional checks), each time the test restarted, the number of goroutines would decrease to a level similar to the initial state, and the resource consumption during multiple tests also returned to normal.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">Debug</span> = <span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">DebugShowGoroutineCount</span> <span style="color:#66d9ef">uint32</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">showGoroutineCount</span>() {
+	<span style="color:#a6e22e">beginTime</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+	<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">Stop</span>()
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#66d9ef">select</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;time:&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">beginTime</span>), <span style="color:#e6db74">&#34;goroutine count:&#34;</span>, <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">NumGoroutine</span>())
+		}
+	}
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">runShowGoroutineCount</span>() {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">atomic</span>.<span style="color:#a6e22e">CompareAndSwapUint32</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">DebugShowGoroutineCount</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>) {
+		<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">showGoroutineCount</span>()
+	}
+}
+
+<span style="color:#75715e">// to start, just invoke `runShowGoroutineCount` at anywhere you like, perhaps at `ServerStart` or something like that.
+</span></code></pre></div>
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/share/markdown-code-in-table/">
+		<img class="icon-text" src="/img/prev.svg"/>Code blocks within Markdown tables</a>
+
+
+	<a class="next-post" href="/en/share/build-emoji-regex/">Constructing a RegEx that matches all emojis<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/posts/distributed-system-course-notes/">Notes on Distributed Systems Course</a></li>
+  	
+  	<li><a href="/en/posts/tf-cert-blog/">Tensorflow Developer Certification Journey</a></li>
+  	
+  	<li><a href="/en/share/markdown-code-in-table/">Code blocks within Markdown tables</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

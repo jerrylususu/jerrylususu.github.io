@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Share on Nekonull&#39;s Garden</title>
+    <link>/en/share/</link>
+    <description>Recent content in Share on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 29 Sep 2023 15:34:23 +0800</lastBuildDate><atom:link href="/en/share/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simulating Wait Times at the Gym</title>
+      <link>/en/share/gym-wait-sim/</link>
+      <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
+      
+      <guid>/en/share/gym-wait-sim/</guid>
+      <description>&lt;p&gt;In mid-July, I visited the hospital and started exercising regularly upon the doctor&amp;rsquo;s advice. After considering my work schedule and my physical condition, I decided to go to the gym for a workout during lunchtime. Currently, my daily exercise routine consists of spending about 20 minutes on the elliptical machine at the gym (while watching an episode of a TV show), burning approximately 320 calories. However, even though there are plenty of elliptical machines in the gym, a situation occasionally arises where there are no available machines and I have to wait for someone to finish. Not knowing how long the wait will be can be slightly anxiety-inducing. So, I started thinking about whether there is a way to quantify the wait time, such as simulating and calculating the probability distribution function. And that&amp;rsquo;s how this article came about.&lt;/p&gt;
+&lt;p&gt;Code (mostly written using GPT3.5, with some manual adjustments): &lt;a href=&#34;https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&#34;&gt;link to code&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Assumption: There are 10 elliptical machines, and the exercise time of each user on a machine, denoted as &lt;code&gt;t_n&lt;/code&gt;, follows a normal distribution with a mean of &lt;code&gt;μ&lt;/code&gt; and a standard deviation of &lt;code&gt;σ&lt;/code&gt;. When I arrive at the gym, all 10 machines are already occupied, and the remaining exercise time for each user is uniformly distributed between 0 and &lt;code&gt;t_n&lt;/code&gt;. The wait time is defined as the minimum of the remaining exercise times for all users.&lt;/p&gt;
+&lt;p&gt;Considering that the parameters &lt;code&gt;μ&lt;/code&gt; and &lt;code&gt;σ&lt;/code&gt; cannot be accurately estimated, we consider 9 different scenarios by varying &lt;code&gt;μ&lt;/code&gt; as 5/10/15 and &lt;code&gt;σ&lt;/code&gt; as 20/25/30. For each scenario, we run 10,000 simulations and calculate the p50/p75/p90/p95 of the wait time. The results are summarized in the following table:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;μ&lt;/th&gt;
+&lt;th&gt;σ&lt;/th&gt;
+&lt;th&gt;mean&lt;/th&gt;
+&lt;th&gt;p50&lt;/th&gt;
+&lt;th&gt;p75&lt;/th&gt;
+&lt;th&gt;p90&lt;/th&gt;
+&lt;th&gt;p95&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;1.698&lt;/td&gt;
+&lt;td&gt;1.252&lt;/td&gt;
+&lt;td&gt;2.406&lt;/td&gt;
+&lt;td&gt;3.817&lt;/td&gt;
+&lt;td&gt;4.811&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1.258&lt;/td&gt;
+&lt;td&gt;0.858&lt;/td&gt;
+&lt;td&gt;1.772&lt;/td&gt;
+&lt;td&gt;2.944&lt;/td&gt;
+&lt;td&gt;3.813&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.151&lt;/td&gt;
+&lt;td&gt;0.737&lt;/td&gt;
+&lt;td&gt;1.604&lt;/td&gt;
+&lt;td&gt;2.761&lt;/td&gt;
+&lt;td&gt;3.641&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2.198&lt;/td&gt;
+&lt;td&gt;1.632&lt;/td&gt;
+&lt;td&gt;3.123&lt;/td&gt;
+&lt;td&gt;4.978&lt;/td&gt;
+&lt;td&gt;6.229&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;1.769&lt;/td&gt;
+&lt;td&gt;1.258&lt;/td&gt;
+&lt;td&gt;2.494&lt;/td&gt;
+&lt;td&gt;4.077&lt;/td&gt;
+&lt;td&gt;5.213&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.477&lt;/td&gt;
+&lt;td&gt;0.967&lt;/td&gt;
+&lt;td&gt;2.069&lt;/td&gt;
+&lt;td&gt;3.508&lt;/td&gt;
+&lt;td&gt;4.634&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;2.671&lt;/td&gt;
+&lt;td&gt;1.977&lt;/td&gt;
+&lt;td&gt;3.813&lt;/td&gt;
+&lt;td&gt;6.059&lt;/td&gt;
+&lt;td&gt;7.515&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;2.284&lt;/td&gt;
+&lt;td&gt;1.669&lt;/td&gt;
+&lt;td&gt;3.219&lt;/td&gt;
+&lt;td&gt;5.186&lt;/td&gt;
+&lt;td&gt;6.632&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;1.965&lt;/td&gt;
+&lt;td&gt;1.364&lt;/td&gt;
+&lt;td&gt;2.720&lt;/td&gt;
+&lt;td&gt;4.624&lt;/td&gt;
+&lt;td&gt;6.019&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;img src=&#34;/img/gym_wait_sim_result.png&#34; alt=&#34;Visualization of Simulation Results&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Conclusion: Taking all scenarios into account, there is a 50% probability of waiting for about 2 minutes to secure a spot, and in the worst-case scenario, there is a 90% probability of waiting for up to 6 minutes to secure a spot.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Migrating from Disqus to Giscus for the Comment System</title>
+      <link>/en/share/migrate-to-giscus/</link>
+      <pubDate>Sun, 10 Sep 2023 22:08:00 +0800</pubDate>
+      
+      <guid>/en/share/migrate-to-giscus/</guid>
+      <description>&lt;p&gt;I used to use Disqus for the comment system, but there were occasional issues with accessing it from within China, and new users had to register again. Considering that most of the readers of this site are likely GitHub users, migrating to Giscus (a comment system based on GitHub Discussions) seems more suitable. Switching the comment system itself is not difficult, you can refer to &lt;a href=&#34;https://blog.arkey.fr/2022/10/16/moving-from-disqus-to-giscus/#_preparing_the_migration&#34;&gt;this tutorial&lt;/a&gt; to modify the Hugo templates and configurations. Migrating the data is not troublesome either, as there weren&amp;rsquo;t many comments to begin with, so there are only two comments to manually migrate, which shouldn&amp;rsquo;t take much time (although I also tried an &lt;a href=&#34;https://github.com/estruyf/disqus-to-github-discussions&#34;&gt;automated solution&lt;/a&gt;, but it seems to have some issues and the migrated comments don&amp;rsquo;t show up&amp;hellip;). The slightly annoying part is actually the switching between light/dark mode in Giscus.&lt;/p&gt;
+&lt;p&gt;Because this blog has its own toggle button (see &lt;a href=&#34;/share/css-filter-dark-mode/&#34;&gt;previous post&lt;/a&gt;), when users visit, they may retrieve the color mode preference from &lt;code&gt;localstorage&lt;/code&gt;. However, currently, when Giscus is loaded, Hugo writes the color preference parameters into the HTML source code during site generation. Therefore, when the user clicks the button to switch, the color preference in Giscus needs to be switched as well. Referring to &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;this issue&lt;/a&gt; in the official documentation, this feature is not difficult to implement. However, there is still a problem because after Giscus is loaded, if the user clicks the button to switch color mode preference, Giscus will use the color preference based on my Hugo configuration file, rather than what is stored in the user&amp;rsquo;s localstorage. As a result, the user may manually choose the light mode, but if the browser settings have &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;, Giscus will display a black background with white text. There wasn&amp;rsquo;t a good solution to this problem in the previous issue discussions, although I saw someone using &lt;code&gt;setTimeout&lt;/code&gt; to continuously loop, but that doesn&amp;rsquo;t seem very elegant. After reading the &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;official documentation&lt;/a&gt;, I found that Giscus actually sends an event to the parent window after it finishes loading, so as long as we listen for this event, we can set the color preference for Giscus after it has loaded. You can refer to &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;this commit&lt;/a&gt; for the related implementation.&lt;/p&gt;
+&lt;p&gt;Perhaps there will be more comments after the switch? Hopefully.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Implementing a Simple Dark Mode with CSS Filter</title>
+      <link>/en/share/css-filter-dark-mode/</link>
+      <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
+      
+      <guid>/en/share/css-filter-dark-mode/</guid>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis theme&lt;/a&gt; used on this blog does not provide native support for dark mode, so I decided to add it myself. Initially, I thought about customizing the CSS with media queries, but it seemed like a bigger change. I did a quick search and found that someone had already proposed the idea of using CSS Filter to implement a simple dark mode, and there was even &lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;code&lt;/a&gt; that could be directly applied to a Hugo blog. Compared to media queries, using CSS Filter not only simplifies the implementation, but also allows users to switch between light and dark mode without adjusting the system/browser&amp;rsquo;s global settings.&lt;/p&gt;
+&lt;p&gt;In the specific CSS implementation, I first used &lt;code&gt;invert(1)&lt;/code&gt; to invert the colors of the entire webpage, but this also caused a reversal of color tones. Therefore, I used &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; to bring the tones back. However, while this operation is suitable for text, it affects the display of images, videos, and other elements, making them appear as if they were being X-rayed. So, I had to apply &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; again to these elements that needed to be excluded from the dark mode, in order to revert them back to normal.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;background-color&lt;/span&gt;: &lt;span style=&#34;color:#ae81ff&#34;&gt;#ebebeb&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;!important&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;);
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;/* using not to exclude certain elements */&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;img&lt;/span&gt;:&lt;span style=&#34;color:#a6e22e&#34;&gt;not&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-text&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt; .&lt;span style=&#34;color:#a6e22e&#34;&gt;icon-social&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;),&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;video&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;,&lt;/span&gt;
+&lt;span style=&#34;color:#f92672&#34;&gt;code&lt;/span&gt; {
+&lt;span style=&#34;color:#66d9ef&#34;&gt;filter&lt;/span&gt;: invert(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;) hue-rotate(&lt;span style=&#34;color:#ae81ff&#34;&gt;180&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;deg&lt;/span&gt;) contrast(&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;%&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To allow users to switch between light and dark mode, an additional toggle icon needs to be introduced. When clicked, it will insert/remove the CSS tag for dark mode and save the user&amp;rsquo;s preference to &lt;code&gt;localStorage&lt;/code&gt;. If the user has not explicitly set a preference, the system/browser&amp;rsquo;s global dark mode setting should be followed. Therefore, I used &lt;code&gt;window.matchMedia&lt;/code&gt; to detect it.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-toggle&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; document.&lt;span style=&#34;color:#a6e22e&#34;&gt;getElementById&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-theme&amp;#34;&lt;/span&gt;);
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// probe system default dark mode setting
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;matchMedia&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;(prefers-color-scheme: dark)&amp;#39;&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;matches&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;;
+} &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// use user preference if possible
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;systemDefault&lt;/span&gt;;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;savedTheme&lt;/span&gt;);
+
+&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;addEventListener&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;click&amp;#34;&lt;/span&gt;, () =&amp;gt; {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;);
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;endsWith&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;) ) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;);
+    }
+
+});
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;setTheme&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;) {
+    &lt;span style=&#34;color:#a6e22e&#34;&gt;localStorage&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;setItem&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark-mode-storage&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt;);
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;dark&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;false&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/sun.svg&amp;#34;&lt;/span&gt;;
+    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;mode&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;light&amp;#34;&lt;/span&gt;) {
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;darkTheme&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;disabled&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;;
+        &lt;span style=&#34;color:#a6e22e&#34;&gt;toggle&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;src&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/img/moon.svg&amp;#34;&lt;/span&gt;;
+    }
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The complete modifications can be seen in my &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt; for implementing dark mode in this theme. A simple example can be found in this &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;. The final result is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update on 12/27&lt;/strong&gt;: The PR has been accepted and merged.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Connecting to Physical Screen with VNC</title>
+      <link>/en/share/vnc-to-physical-display/</link>
+      <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
+      
+      <guid>/en/share/vnc-to-physical-display/</guid>
+      <description>&lt;p&gt;When searching for &amp;ldquo;Linux remote desktop,&amp;rdquo; most tutorials suggest using the combination of &amp;ldquo;xrdp + xfce4.&amp;rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &amp;ldquo;screen&amp;rdquo; or &amp;ldquo;tmux&amp;rdquo; would be more than sufficient. However, I am using a GUI program. So, I searched for a solution and found that it is possible to connect to an ongoing X session using VNC, similar to tools like TeamViewer. Here are the specific steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the TigerVNC server.&lt;/li&gt;
+&lt;li&gt;Run &amp;ldquo;vncpasswd&amp;rdquo; to create a VNC password.&lt;/li&gt;
+&lt;li&gt;Start the TigerVNC service.&lt;/li&gt;
+&lt;li&gt;Use &amp;ldquo;x0vncserver&amp;rdquo; to open a VNC session connected to Display 0.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; x0vncserver -display :0 -PasswordFile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/home/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;username&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/.vnc/passwd 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Connect using a VNC client on another device.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In my own experience on Windows, it seems that RealVNC Viewer provides a better user experience compared to TigerVNC Viewer.&lt;/p&gt;
+&lt;p&gt;Another issue that may affect the user experience is scaling and screen resolution. The lab workstation has a 4K screen with 200% scaling, and when connecting from a 1080p laptop, the text may appear too small. TigerVNC seems to have an auto-scaling feature, but it doesn&amp;rsquo;t seem to work when connecting the VNC session to a physical screen. My workaround is to first connect and then manually adjust the resolution settings on the remote system (usually setting it to 2560x1440 is sufficient), then restart x0vncserver and reconnect. Although it&amp;rsquo;s a bit cumbersome, at least it solves the problem of usability.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Constructing a RegEx that matches all emojis</title>
+      <link>/en/share/build-emoji-regex/</link>
+      <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
+      
+      <guid>/en/share/build-emoji-regex/</guid>
+      <description>&lt;p&gt;While researching a CSS custom emoji font issue, I came across a RegEx that can match all emojis (up to the 2018 version) and it also provides corresponding test examples. You can find it here: &lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After reading it, I was skeptical because the RegEx seemed too simple. So, I manually converted it to check the corresponding Unicode codepoint range, and I found that there is indeed a problem. The matching range of this RegEx is too broad, excluding the Copyright and Registered symbols (u+00a9, u+00ae), the remaining ranges are [u+2000, u+3300] and [u+1f000, u+1fbff]. The latter range seems reasonable, as it corresponds to the newly added emoji codepoints according to the Unicode plane mapping on Wikipedia. However, the former range is too extensive, even including Japanese Hiragana and Katakana characters. (Although it does cover almost all emoji codepoints, it misses some corner cases like selectors.)&lt;/p&gt;
+&lt;p&gt;So, how can we create a RegEx that accurately matches emojis? The idea is simple. First, we need to obtain the Full Emoji List from the Unicode official website, parse all the codepoints that belong to emojis, sort them, and finally merge adjacent codepoints into ranges. However, this is easier said than done. From the perspective of RegEx, characters are in UTF-16 (if using the form \uabcd), so codepoints higher than u+ffff need to be represented using surrogate pairs.&lt;/p&gt;
+&lt;p&gt;The final result is as follows: (Test link: &lt;a href=&#34;https://regex101.com/r/uGUM1M/1&#34;&gt;regex101&lt;/a&gt;)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|\u203c|\u2049|\u20e3|\u2122|\u2139|[\u2194-\u2199]|[\u21a9-\u21aa]|[\u231a-\u231b]|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\u24c2|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|[\u2600-\u2604]|\u260e|\u2611|[\u2614-\u2615]|\u2618|\u261d|\u2620|[\u2622-\u2623]|\u2626|\u262a|[\u262e-\u262f]|[\u2638-\u263a]|\u2640|\u2642|[\u2648-\u2653]|[\u265f-\u2660]|\u2663|[\u2665-\u2666]|\u2668|\u267b|[\u267e-\u267f]|[\u2692-\u2697]|\u2699|[\u269b-\u269c]|[\u26a0-\u26a1]|\u26a7|[\u26aa-\u26ab]|[\u26b0-\u26b1]|[\u26bd-\u26be]|[\u26c4-\u26c5]|\u26c8|[\u26ce-\u26cf]|\u26d1|[\u26d3-\u26d4]|[\u26e9-\u26ea]|[\u26f0-\u26f5]|[\u26f7-\u26fa]|\u26fd|\u2702|\u2705|[\u2708-\u270d]|\u270f|\u2712|\u2714|\u2716|\u271d|\u2721|\u2728|[\u2733-\u2734]|\u2744|\u2747|\u274c|\u274e|[\u2753-\u2755]|\u2757|[\u2763-\u2764]|[\u2795-\u2797]|\u27a1|\u27b0|\u27bf|[\u2934-\u2935]|[\u2b05-\u2b07]|[\u2b1b-\u2b1c]|\u2b50|\u2b55|\u3030|\u303d|\u3297|\u3299)|(\ud83c(\udc04|\udccf|[\udd70-\udd71]|[\udd7e-\udd7f]|\udd8e|[\udd91-\udd9a]|[\udde6-\uddff]|[\ude01-\ude02]|\ude1a|\ude2f|[\ude32-\ude3a]|[\ude50-\ude51]|[\udf00-\udf21]|[\udf24-\udf93]|[\udf96-\udf97]|[\udf99-\udf9b]|[\udf9e-\udff0]|[\udff3-\udff5]))|(\ud83d([\udc00-\udcfd]|[\udcff-\udd3d]|[\udd49-\udd4e]|[\udd50-\udd67]|[\udd6f-\udd70]|[\udd73-\udd7a]|\udd87|[\udd8a-\udd8d]|\udd90|[\udd95-\udd96]|[\udda4-\udda5]|\udda8|[\uddb1-\uddb2]|\uddbc|[\uddc2-\uddc4]|[\uddd1-\uddd3]|[\udddc-\uddde]|\udde1|\udde3|\udde8|\uddef|\uddf3|[\uddfa-\ude4f]|[\ude80-\udec5]|[\udecb-\uded2]|[\uded5-\uded7]|[\udedd-\udee5]|\udee9|[\udeeb-\udeec]|\udef0|[\udef3-\udefc]|[\udfe0-\udfeb]))|(\ud83e([\udd0c-\udd3a]|[\udd3c-\udd45]|[\udd47-\uddff]|[\ude70-\ude74]|[\ude78-\ude7c]|[\ude80-\ude86]|[\ude90-\udeac]|[\udeb0-\udeba]|[\udec0-\udec5]|[\uded0-\uded9]|[\udee0-\udee7]))|(\udb40([\udc62-\udc63]|\udc65|\udc67|\udc6c|\udc6e|[\udc73-\udc74]))
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The ultimate question: Should you really use regex to handle emojis?&lt;/p&gt;
+&lt;p&gt;Postscript: After reinventing the wheel, I discovered that someone has already done this work in the &lt;a href=&#34;https://github.com/mathiasbynens/emoji-test-regex-pattern&#34;&gt;emoji-test-regex-pattern&lt;/a&gt; repository. Moreover, compared to my single character matching approach, the regex in this repo can match sequences of characters that represent emojis (such as the Chinese flag = flag + China), which is more in line with the specification.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Monitor the number of goroutines</title>
+      <link>/en/share/go-monitor-goroutine-count/</link>
+      <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
+      
+      <guid>/en/share/go-monitor-goroutine-count/</guid>
+      <description>&lt;p&gt;Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using &lt;code&gt;--count 10&lt;/code&gt;), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals. Finally, it was indeed found that the number of goroutines kept increasing as the tests progressed. After fixing the leak issue (by adding various conditional checks), each time the test restarted, the number of goroutines would decrease to a level similar to the initial state, and the resource consumption during multiple tests also returned to normal.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint32&lt;/span&gt;
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Now&lt;/span&gt;()
+	&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NewTicker&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Second&lt;/span&gt;)
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Stop&lt;/span&gt;()
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;select&lt;/span&gt; {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;ticker&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;C&lt;/span&gt;:
+			&lt;span style=&#34;color:#a6e22e&#34;&gt;fmt&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Println&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;time:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;time&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;Since&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;beginTime&lt;/span&gt;), &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;goroutine count:&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;runtime&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;NumGoroutine&lt;/span&gt;())
+		}
+	}
+}
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;runShowGoroutineCount&lt;/span&gt;() {
+	&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;atomic&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;CompareAndSwapUint32&lt;/span&gt;(&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;DebugShowGoroutineCount&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+		&lt;span style=&#34;color:#66d9ef&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;showGoroutineCount&lt;/span&gt;()
+	}
+}
+
+&lt;span style=&#34;color:#75715e&#34;&gt;// to start, just invoke `runShowGoroutineCount` at anywhere you like, perhaps at `ServerStart` or something like that.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>Code blocks within Markdown tables</title>
+      <link>/en/share/markdown-code-in-table/</link>
+      <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
+      
+      <guid>/en/share/markdown-code-in-table/</guid>
+      <description>&lt;p&gt;Markdown provides support for tables, but only basic text formatting (such as bold, italics, inline code, etc.) is supported within table cells. More complex text formatting, such as code blocks and horizontal lines, is not supported. If you need to add support for complex formatting within tables and you are using Github Flavored Markdown, one approach is to use HTML to define the table structure and then include inline Markdown text within it. Here is an example:&lt;/p&gt;
+&lt;p&gt;Please note the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; tags for the corresponding table cells should be placed at the beginning of a new line (without any indentation).&lt;/li&gt;
+&lt;li&gt;There should be a blank line between the Markdown text inside the table cell and the &lt;code&gt;&amp;lt;td&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;/td&amp;gt;&lt;/code&gt; tags.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt; Column 1 &lt;/td&gt; &lt;td&gt; Column 2 &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Code Block &lt;/td&gt;
+&lt;td&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;hello world&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; Horizontal Line &lt;/td&gt;
+&lt;td&gt;
+&lt;p&gt;&lt;strong&gt;Markdown&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Some Text&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Code: &lt;strong&gt;Note that the code block should end with 3 tildes&lt;/strong&gt; (I&amp;rsquo;m using two here because three would cause rendering errors and prematurely end the code block).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 1 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; &amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Column 2 &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Code Block &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                           &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+```python
+print(&amp;#34;hello world&amp;#34;)
+``                             &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--Should be 3 tilt here!--&amp;gt;&lt;/span&gt;
+                               &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--empty line--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;                          &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;!--line start--&amp;gt;&lt;/span&gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt; Horizontal Line &amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+
+**Markdown** 
+
+---
+
+Some Text
+
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;td&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;tr&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;table&lt;/span&gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Reference link:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/60502719&#34;&gt;https://stackoverflow.com/a/60502719&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Integrating Disqus with Hugo</title>
+      <link>/en/share/hugo-disqus/</link>
+      <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
+      
+      <guid>/en/share/hugo-disqus/</guid>
+      <description>&lt;p&gt;Hugo has built-in support for Disqus. In theory, you only need to set the &lt;code&gt;disqusShortname&lt;/code&gt; attribute at the top level of your site&amp;rsquo;s &lt;code&gt;config.toml&lt;/code&gt; file. However, there are some pitfalls when actually using it. Here are the specific steps.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Register your own account on the Disqus website.&lt;/li&gt;
+&lt;li&gt;After logging in to the Disqus website, go to Settings in the upper right corner, then select Moderation on the left side. Here, create a new site, and the site name (&lt;code&gt;{site_name}.disqus.com&lt;/code&gt;) should be used as the value for &lt;code&gt;disqusShortname&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Once the site is created, choose the Free Plan on the Billing page.&lt;/li&gt;
+&lt;li&gt;Set the &lt;code&gt;disqusShortname&lt;/code&gt; in the &lt;code&gt;config.toml&lt;/code&gt; file of Hugo.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Other minor issues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No comments displayed locally: In the theme&amp;rsquo;s &lt;code&gt;disqus.html&lt;/code&gt; file (located at &lt;code&gt;{site_folder}\themes\{theme_name}\layouts\partials\disqus.html&lt;/code&gt;), the comment box will not load when the condition (&lt;code&gt;indow.location.hostname == &amp;quot;localhost&amp;quot;&lt;/code&gt;) is met. If you need to debug, you can add a comment to this condition, and it will display normally locally.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

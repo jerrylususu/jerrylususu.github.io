@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Implementing a Simple Dark Mode with CSS Filter - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="Easier than imagined">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/share/css-filter-dark-mode/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/css-filter-dark-mode/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Implementing a Simple Dark Mode with CSS Filter</h1>
+	<h5>
+		
+		<time datetime="2021-12-23 10:43:25 &#43;0300 &#43;0300">Dec 23, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/frontend">frontend</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>The <a href="https://github.com/yursan9/manis-hugo-theme">Manis theme</a> used on this blog does not provide native support for dark mode, so I decided to add it myself. Initially, I thought about customizing the CSS with media queries, but it seemed like a bigger change. I did a quick search and found that someone had already proposed the idea of using CSS Filter to implement a simple dark mode, and there was even <a href="https://radu-matei.com/blog/dark-mode/">code</a> that could be directly applied to a Hugo blog. Compared to media queries, using CSS Filter not only simplifies the implementation, but also allows users to switch between light and dark mode without adjusting the system/browser&rsquo;s global settings.</p>
+<p>In the specific CSS implementation, I first used <code>invert(1)</code> to invert the colors of the entire webpage, but this also caused a reversal of color tones. Therefore, I used <code>hue-rotate(180deg)</code> to bring the tones back. However, while this operation is suitable for text, it affects the display of images, videos, and other elements, making them appear as if they were being X-rayed. So, I had to apply <code>invert(1) hue-rotate(180deg)</code> again to these elements that needed to be excluded from the dark mode, in order to revert them back to normal.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css"><span style="color:#f92672">html</span> {
+    <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#ebebeb</span> <span style="color:#75715e">!important</span>;
+}
+
+<span style="color:#f92672">html</span> {
+<span style="color:#66d9ef">filter</span>: invert(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>) hue-rotate(<span style="color:#ae81ff">180</span><span style="color:#66d9ef">deg</span>);
+}
+
+<span style="color:#75715e">/* using not to exclude certain elements */</span>
+<span style="color:#f92672">img</span>:<span style="color:#a6e22e">not</span><span style="color:#f92672">(</span>.<span style="color:#a6e22e">icon-text</span><span style="color:#f92672">,</span> .<span style="color:#a6e22e">icon-social</span><span style="color:#f92672">),</span>
+<span style="color:#f92672">video</span><span style="color:#f92672">,</span>
+<span style="color:#f92672">code</span> {
+<span style="color:#66d9ef">filter</span>: invert(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>) hue-rotate(<span style="color:#ae81ff">180</span><span style="color:#66d9ef">deg</span>) contrast(<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>);
+}
+</code></pre></div><p>To allow users to switch between light and dark mode, an additional toggle icon needs to be introduced. When clicked, it will insert/remove the CSS tag for dark mode and save the user&rsquo;s preference to <code>localStorage</code>. If the user has not explicitly set a preference, the system/browser&rsquo;s global dark mode setting should be followed. Therefore, I used <code>window.matchMedia</code> to detect it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">toggle</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;dark-mode-toggle&#34;</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">darkTheme</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;dark-mode-theme&#34;</span>);
+
+<span style="color:#75715e">// probe system default dark mode setting
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>
+<span style="color:#66d9ef">if</span> (window.<span style="color:#a6e22e">matchMedia</span> <span style="color:#f92672">&amp;&amp;</span> window.<span style="color:#a6e22e">matchMedia</span>(<span style="color:#e6db74">&#39;(prefers-color-scheme: dark)&#39;</span>).<span style="color:#a6e22e">matches</span>) {
+    <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;dark&#34;</span>;
+} <span style="color:#66d9ef">else</span> {
+    <span style="color:#a6e22e">systemDefault</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;light&#34;</span>;
+}
+
+<span style="color:#75715e">// use user preference if possible
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">savedTheme</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">localStorage</span>.<span style="color:#a6e22e">getItem</span>(<span style="color:#e6db74">&#34;dark-mode-storage&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">systemDefault</span>;
+<span style="color:#a6e22e">setTheme</span>(<span style="color:#a6e22e">savedTheme</span>);
+
+<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;click&#34;</span>, () =&gt; {
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">endsWith</span>(<span style="color:#e6db74">&#34;/img/moon.svg&#34;</span>) ) {
+        <span style="color:#a6e22e">setTheme</span>(<span style="color:#e6db74">&#34;dark&#34;</span>);
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">endsWith</span>(<span style="color:#e6db74">&#34;/img/sun.svg&#34;</span>) ) {
+        <span style="color:#a6e22e">setTheme</span>(<span style="color:#e6db74">&#34;light&#34;</span>);
+    }
+
+});
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setTheme</span>(<span style="color:#a6e22e">mode</span>) {
+    <span style="color:#a6e22e">localStorage</span>.<span style="color:#a6e22e">setItem</span>(<span style="color:#e6db74">&#34;dark-mode-storage&#34;</span>, <span style="color:#a6e22e">mode</span>);
+
+    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mode</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;dark&#34;</span>) {
+        <span style="color:#a6e22e">darkTheme</span>.<span style="color:#a6e22e">disabled</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+        <span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/img/sun.svg&#34;</span>;
+    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">mode</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;light&#34;</span>) {
+        <span style="color:#a6e22e">darkTheme</span>.<span style="color:#a6e22e">disabled</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+        <span style="color:#a6e22e">toggle</span>.<span style="color:#a6e22e">src</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/img/moon.svg&#34;</span>;
+    }
+} 
+</code></pre></div><p>The complete modifications can be seen in my <a href="https://github.com/yursan9/manis-hugo-theme/pull/22">Pull Request</a> for implementing dark mode in this theme. A simple example can be found in this <a href="https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5">Gist</a>. The final result is as follows:</p>
+<p><img src="/img/css-filter-dark-mode-demo.png" alt="Demo"></p>
+<p><strong>Update on 12/27</strong>: The PR has been accepted and merged.</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/share/vnc-to-physical-display/">
+		<img class="icon-text" src="/img/prev.svg"/>Connecting to Physical Screen with VNC</a>
+
+
+	<a class="next-post" href="/en/share/migrate-to-giscus/">Migrating from Disqus to Giscus for the Comment System<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/share/build-emoji-regex/">Constructing a RegEx that matches all emojis</a></li>
+  	
+  	<li><a href="/en/share/vnc-to-physical-display/">Connecting to Physical Screen with VNC</a></li>
+  	
+  	<li><a href="/en/share/go-monitor-goroutine-count/">Monitor the number of goroutines</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

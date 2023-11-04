@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Nekonull&#39;s Garden</title>
+    <link>/en/posts/</link>
+    <description>Recent content in Posts on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Turning an Existing Vue App into a PWA</title>
+      <link>/en/posts/vue-app-pwa/</link>
+      <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
+      
+      <guid>/en/posts/vue-app-pwa/</guid>
+      <description>&lt;p&gt;I previously wrote a small app called &amp;ldquo;Gojuon Quiz&amp;rdquo; to assist in memorizing the Japanese phonetic alphabet. Recently, I decided to add Progressive Web App (PWA) functionality to it. This allows the app to be used even without an internet connection after the initial successful loading. Additionally, it provides a user experience that is similar to a native application, without displaying browser address bars or similar controls.&lt;/p&gt;
+&lt;p&gt;The specific steps to implement PWA are as follows:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install the Vue PWA plugin: &lt;code&gt;vue add pwa&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Generate icons of different sizes and place them in the &lt;code&gt;img/icons&lt;/code&gt; directory. You can use the &lt;a href=&#34;https://realfavicongenerator.net/&#34;&gt;Real Favicon Generator&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Adjust the PWA plugin configuration in &lt;code&gt;vue.config.js&lt;/code&gt;. You can refer to the &lt;a href=&#34;https://cli.vuejs.org/core-plugins/pwa.html#configuration&#34;&gt;@vue/cli-plugin-pwa documentation&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;(Optional) Add update prompts. Refer to &lt;a href=&#34;https://dev.to/drbragg/handling-service-worker-updates-in-your-vue-pwa-1pip&#34;&gt;Handling Service Worker updates in your Vue PWA&lt;/a&gt;.
+&lt;blockquote&gt;
+&lt;p&gt;Note: Skipping this step will not affect the automatic update feature. However, users will need to manually close and reopen the app after the update to apply the new version.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;After installation, you can see the following indicators to confirm that the PWA functionality has been successfully configured:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The plus icon appears on the right side of the address bar in Chrome/Edge.&lt;/li&gt;
+&lt;li&gt;Debugging information related to the service worker is output to the console.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When debugging, there are a few small issues to keep in mind:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;PWA is not enabled in development mode (e.g., &lt;code&gt;vue serve&lt;/code&gt;). You need to first run &lt;code&gt;vue build&lt;/code&gt; and manually open an HTTP server in the &lt;code&gt;dist&lt;/code&gt; directory (you can use &lt;code&gt;python -m http.server&lt;/code&gt;) to enable it.&lt;/li&gt;
+&lt;li&gt;If you are using a device on a local network to access the HTTP server on the development machine, PWA may not be triggered. This is because PWA requires HTTPS (or the server to be on localhost).&lt;/li&gt;
+&lt;li&gt;If you want to customize the name of the PWA, it should be written under &lt;code&gt;pwa.name&lt;/code&gt;, not in other nested structures. (I previously installed the &lt;code&gt;i18n&lt;/code&gt; plugin and habitually wrote it under &lt;code&gt;pluginOptions&lt;/code&gt;.)&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Notes on Distributed Systems Course</title>
+      <link>/en/posts/distributed-system-course-notes/</link>
+      <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
+      
+      <guid>/en/posts/distributed-system-course-notes/</guid>
+      <description>&lt;p&gt;This semester, I took a course on distributed systems, which is essentially a combination of MIT&amp;rsquo;s Distributed Systems (6.824) and Princeton&amp;rsquo;s Distributed Systems (COS 418) courses. It covers the following topics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fundamentals of distributed systems: RPC and message semantics, logical clocks, distributed snapshots, consistency models, CAP/FLP theory&lt;/li&gt;
+&lt;li&gt;Eventual consistency systems: Bayou, DHT, Dynamo&lt;/li&gt;
+&lt;li&gt;Consensus and state machine replication: Primary-backup, Viewstamped Replication, Paxos, Raft, P-BFT&lt;/li&gt;
+&lt;li&gt;Distributed transactions and strong consistency: 2PC, 2PL, Spanner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Looking back at the distributed-related courses I took intermittently in my freshman and sophomore years, it&amp;rsquo;s clear that some things require experience to gradually understand.&lt;/p&gt;
+&lt;p&gt;Apart from the course content, the assignments are mostly adapted from MIT&amp;rsquo;s assignments, and they involve implementing the following systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MapReduce (Sequential / Distributed)&lt;/li&gt;
+&lt;li&gt;Raft (Election, Log Replication, Fault Tolerance)&lt;/li&gt;
+&lt;li&gt;K-V Storage based on Raft (KV-Raft)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The last two assignments are worth mentioning because they belong to the type of tasks I would never voluntarily attempt. Just the thought of their potential complexity made me hesitant. However, in reality, due to the comprehensive set of tests provided, implementing them turned out to be a case-by-case process, and it wasn&amp;rsquo;t as difficult as I had imagined. (Although debugging logs can indeed be frustrating.) In the end, I managed to complete Raft and KVRaft within two days, but those were two days of intense focus.&lt;/p&gt;
+&lt;p&gt;I tried organizing my notes and provided a link below. However, the lecture slides still need to be obtained manually from the course website, as I do not have redistribution permissions. If there are any errors or omissions, please feel free to point them out.
+&lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;All distributed system lectures&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In conclusion, after completing this course and the assignments, I have gained a bit more confidence in my ability to implement complex systems.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Tensorflow Developer Certification Journey</title>
+      <link>/en/posts/tf-cert-blog/</link>
+      <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
+      
+      <guid>/en/posts/tf-cert-blog/</guid>
+      <description>&lt;!-- # Tensorflow Developer Certification Journey --&gt;
+&lt;p&gt;Also known as: How I Passed the Tensorflow Developer Certification in 7 Days, and Should You Do It Too?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The author took the exam on 7/4/2021. This article was written on 7/7/2021. The content may change in the future.&lt;/p&gt;
+&lt;p&gt;In the text, Tensorflow is referred to as TF, Machine Learning as ML, and Deep Learning as DL. Although DL is technically a subset of ML, given the advancements made in various fields, ML and DL are often used interchangeably.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;It is possible to pass the TF Developer Certification in 7 days (or even less).&lt;/li&gt;
+&lt;li&gt;In terms of practical skills, the certification is not highly regarded. Passing the certification only means that the person has the basic ability to perform tasks such as image classification, text classification, and time series prediction using TF.&lt;/li&gt;
+&lt;li&gt;The significance of this certification may lie more in forcing oneself to read and learn, as well as demonstrating to potential employers the ability and intention to work on ML/DL-related tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;background-knowledge&#34;&gt;Background Knowledge&lt;/h2&gt;
+&lt;h3 id=&#34;what-is-this-certification&#34;&gt;What is this certification?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Tensorflow is an open-source DL framework created by Google. It is widely used and supports many services within Google.&lt;/li&gt;
+&lt;li&gt;The Tensorflow Developer Certification is a certification program by Google that started in March 2020. It aims to demonstrate the ability of certified individuals to use Tensorflow to build DL models and complete specified tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-might-you-want-this-certification&#34;&gt;Why might you want this certification?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Learn ML/DL-related knowledge through the certification process.&lt;/li&gt;
+&lt;li&gt;Demonstrate to future employers the willingness and ability to work on ML/DL-related tasks.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;how-is-the-exam-conducted&#34;&gt;How is the exam conducted?&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Registration fee is $100, and the exam must be taken within 180 days of payment.&lt;/li&gt;
+&lt;li&gt;The exam has a time limit of 5 hours and consists of 5 tasks. Once all tasks are completed, the exam can be ended early.&lt;/li&gt;
+&lt;li&gt;Each task requires the submission of a model, which can be submitted at any time. Feedback in the form of a 5-point scale is provided almost immediately after submission.&lt;/li&gt;
+&lt;li&gt;The tasks have different weights, although the specific weights are not explicitly stated. In theory, a total score of over 90% is required to pass.&lt;/li&gt;
+&lt;li&gt;Each task includes a description and a code framework, similar to a fill-in-the-blank exercise.&lt;/li&gt;
+&lt;li&gt;Since the models are evaluated on a remote evaluation architecture, the model inputs and outputs are strictly defined. The main adjustments that can be made are the model architecture and training process.&lt;/li&gt;
+&lt;li&gt;Pycharm is required for the exam, but it is only used as the exam UI. The actual model building and training can be done on other devices/platforms (such as Colab, Jupyter Notebook), and only the final model file (.h5) needs to be placed back in the exam directory.&lt;/li&gt;
+&lt;li&gt;There are no restrictions on internet usage, and any resources can be used.&lt;/li&gt;
+&lt;li&gt;After failing the exam, there is a waiting period before being able to retake it (14 days for the first attempt, one month for the second attempt, one year for the third attempt).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;my-background&#34;&gt;My Background&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;I started taking some data science/deep learning courses intermittently since my junior year, but I didn&amp;rsquo;t have much practical experience beyond course assignments.&lt;/li&gt;
+&lt;li&gt;The DL framework I mainly used before was PyTorch, so I didn&amp;rsquo;t have much knowledge about TensorFlow.&lt;/li&gt;
+&lt;li&gt;It is currently summer vacation, so I have some free time.&lt;/li&gt;
+&lt;li&gt;I have always wanted to learn TF by reading &amp;ldquo;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition&amp;rdquo; (HOML), but I couldn&amp;rsquo;t find the motivation to study.&lt;/li&gt;
+&lt;li&gt;I was curious about how Google quantifies developers&#39; abilities through certification exams.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;my-goals-for-taking-this-exam&#34;&gt;My Goals for Taking this Exam&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Familiarize myself with the architecture and usage of TF.&lt;/li&gt;
+&lt;li&gt;Master the process of building DL models using TF, from data input to model deployment in a production environment.&lt;/li&gt;
+&lt;li&gt;Be able to complete common DL tasks (image/text/time series/structured data).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The following sections will review the progress of these goals.&lt;/p&gt;
+&lt;h2 id=&#34;preparations&#34;&gt;Preparations&lt;/h2&gt;
+&lt;p&gt;I first heard about this exam from Daniel Bourke&amp;rsquo;s &lt;a href=&#34;https://www.youtube.com/watch?v=ya5NwvKafDk&#34;&gt;video (YouTube)&lt;/a&gt; and mainly referred to his &lt;a href=&#34;https://www.mrdbourke.com/how-i-got-tensorflow-developer-certified/&#34;&gt;blog&lt;/a&gt; for related materials. In addition, the TFUG Suzhou &lt;a href=&#34;https://www.bilibili.com/video/BV1wf4y117qF/?p=2&#34;&gt;video explanation (Bilibili)&lt;/a&gt; and &lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzAwNTM2ODk3NA==&amp;amp;mid=2247483889&amp;amp;idx=1&amp;amp;sn=179ae82e14984af2b07f6d5363d60aaa&#34;&gt;WeChat article&lt;/a&gt; also provided some help.&lt;/p&gt;
+&lt;h3 id=&#34;resources&#34;&gt;Resources&lt;/h3&gt;
+&lt;p&gt;The following resources are listed in order of importance.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;TF Certificate Candidate Handbook (&lt;a href=&#34;https://www.tensorflow.org/site-assets/downloads/marketing/cert/TF_Certificate_Candidate_Handbook_zh-cn.pdf?hl=zh-cn&#34;&gt;Chinese version link&lt;/a&gt;, &lt;a href=&#34;https://www.tensorflow.org/extras/cert/TF_Certificate_Candidate_Handbook.pdf&#34;&gt;English version link&lt;/a&gt;)
+This handbook provides guidance for the TF Developer Certification exam and instructions for setting up the exam environment (can be downloaded from the exam platform before the exam).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Must-have.&lt;/strong&gt; The &amp;ldquo;Candidate Handbook&amp;rdquo; is the most important official document and should be read in detail. It includes a skill checklist, which basically covers the main content of the exam. The &amp;ldquo;Exam Guide&amp;rdquo; and &amp;ldquo;Environment Setup&amp;rdquo; documents are only visible on the exam platform after payment, so it is recommended to read them before the exam and try to set up the environment to avoid any configuration issues during the exam.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Online course &amp;ldquo;DeepLearning.AI TensorFlow Developer Professional Certificate&amp;rdquo; (&lt;a href=&#34;https://www.coursera.org/professional-certificates/tensorflow-in-practice&#34;&gt;Coursera&lt;/a&gt;, &lt;a href=&#34;https://github.com/lmoroney/dlaicourse&#34;&gt;Course Notebook Repo&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Must-have.&lt;/strong&gt; This is actually a collection of four courses covering the basics of deep learning, CNN, NLP, and time series. It aligns almost completely with the skill checklist (in fact, the instructor of the course is the same person who signs the certificate). The course includes videos and an online coding environment, and the exercises are &lt;strong&gt;similar&lt;/strong&gt; to the actual exam questions. If you can complete the course, you should have no major issues with the exam. The course itself is priced at $59, but it offers a one-week free trial (requires a credit card), so you can quickly finish it and cancel the payment method association.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Book &amp;ldquo;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition&amp;rdquo; (&lt;a href=&#34;https://learning.oreilly.com/library/view/hands-on-machine-learning/9781491962282/&#34;&gt;O&amp;rsquo;Reilly&lt;/a&gt;, &lt;a href=&#34;https://github.com/ageron/handson-ml/&#34;&gt;Book Notebook Repo&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Recommended.&lt;/strong&gt; This book is more like supplementary reading material and goes beyond the scope of the exam. However, it is helpful for building a knowledge base. Some topics that may not be clear in the online courses (such as the use of &lt;code&gt;tf.Dataset&lt;/code&gt;) are explained in more detail in the book. The parts related to the exam are from Chapter 10 to Chapter 16. My university has a subscription to O&amp;rsquo;Reilly, so I chose to read it on my iPad, but you can also purchase the print version.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TF Official Documentation (&lt;a href=&#34;https://www.tensorflow.org/tutorials&#34;&gt;Tutorials&lt;/a&gt;, &lt;a href=&#34;https://www.tensorflow.org/guide&#34;&gt;Guides&lt;/a&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Optional.&lt;/strong&gt; The tutorials are like cookbooks with examples of solving various tasks. The guides focus more on the underlying principles and fundamental knowledge. You can browse the table of contents and refer to them when encountering unfamiliar concepts. If you have time, you can read them thoroughly.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;learning-approach&#34;&gt;Learning Approach&lt;/h3&gt;
+&lt;p&gt;When faced with multiple resources covering the same topic, there are generally two learning approaches:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Depth-first: Study all resources related to the topic at once.&lt;/li&gt;
+&lt;li&gt;Repetition: Study one specific resource at a time and repeat between different topics.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Depth-first&lt;/th&gt;
+&lt;th&gt;Repetition&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;Depth-first&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;Repetition&#34;&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In Daniel Bourke&amp;rsquo;s blog, he used the depth-first approach (tribird approach), focusing on one topic each day. He would start with the corresponding online course, then read the book, spend time practicing coding, and finish with MIT&amp;rsquo;s videos. However, based on my own experience, I am more accustomed to the repetition approach, which allows the brain to process the knowledge in the background for a period of time before identifying areas that need further clarification. Readers can choose the appropriate approach based on their own preferences.&lt;/p&gt;
+&lt;h3 id=&#34;study-timeline&#34;&gt;Study Timeline&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Day 1: Read through the &amp;ldquo;Candidate Handbook&amp;rdquo; and print the skill checklist as a quick reference. Register for the exam and make the payment on the exam platform (must be completed in advance, as the identity verification process takes some time). Study the first two courses of the online course and complete the exercises. (Approximately 8 hours)&lt;/li&gt;
+&lt;li&gt;Day 2: Study the last two courses of the online course and complete the exercises. (Approximately 10 hours)&lt;/li&gt;
+&lt;li&gt;Day 3: Read Chapters 10 to 13 of the book and take notes. Review the code examples in the corresponding notebooks. (Approximately 8 hours)&lt;/li&gt;
+&lt;li&gt;Day 4: Read Chapters 14 to 16 of the book and take notes. Review the code examples in the corresponding notebooks. Read the &amp;ldquo;Keras&amp;rdquo; section of the TF official guide. (Approximately 10 hours)&lt;/li&gt;
+&lt;li&gt;Day 5: Read the &amp;ldquo;Keras Machine Learning Basics,&amp;rdquo; &amp;ldquo;Loading and Preprocessing Data,&amp;rdquo; &amp;ldquo;Images,&amp;rdquo; &amp;ldquo;Text,&amp;rdquo; and &amp;ldquo;Structured Data&amp;rdquo; sections of the TF official tutorials. Address any remaining questions from previous notes. Start implementing the exercises from Day 1 (reproduce and use different datasets). (Approximately 12 hours)&lt;/li&gt;
+&lt;li&gt;Day 6: Start implementing the exercises from Day 2. Reproduce some interesting examples from the TF official tutorials. Try using Keras-tuner. Prepare the exam environment according to the environment setup document. (Approximately 12 hours)&lt;/li&gt;
+&lt;li&gt;Day 7: Review notes. Reread the &amp;ldquo;Candidate Handbook&amp;rdquo; and &amp;ldquo;Exam Guide.&amp;rdquo; Reproduce one of the previous exercises in Pycharm. (Approximately 8 hours)&lt;/li&gt;
+&lt;li&gt;Day 8: Take the exam.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;study-tips&#34;&gt;Study Tips&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a collection of code snippets for quick reference (common network structures, preprocessing code, callbacks, etc.).&lt;/li&gt;
+&lt;li&gt;Create a checklist, such as:
+&lt;ul&gt;
+&lt;li&gt;Possible error points when the model accuracy does not meet expectations (based on personal experience with completing exercises).&lt;/li&gt;
+&lt;li&gt;Approaches to handle overfitting (based on personal experience and reading related materials).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Keep all the code written during the study period for future reference.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;devices-and-environment&#34;&gt;Devices and Environment&lt;/h3&gt;
+&lt;p&gt;I used a workstation in the lab, which had an older GPU (Quardo M2000, 4G VRAM). The system was Ubuntu 18.04, and the Pycharm version was 2021.1.3 Community. As a backup, I also applied for a GPU instance on the school&amp;rsquo;s supercomputer, which had an RTX2080 GPU.&lt;/p&gt;
+&lt;p&gt;The models required for the exam are not too large, according to the &amp;ldquo;Exam Guide.&amp;rdquo; If you can run the image classification and text classification examples &lt;a href=&#34;https://www.tensorflow.org/tutorials/images/classification&#34;&gt;here&lt;/a&gt; and &lt;a href=&#34;https://www.tensorflow.org/text/tutorials/text_classification_rnn&#34;&gt;here&lt;/a&gt; on your local machine, you should have no issues. Plus, with a five-hour time limit, there is generally no need to worry about insufficient local computing power causing training failures. If resources are limited, you can use Colab for training or purchase GPU-optimized instances from mainstream cloud providers.&lt;/p&gt;
+&lt;p&gt;The exam itself is conducted in a virtual environment using virtualenv. A Python 3.8 environment needs to be set up in advance, and the TF Certification Exam plugin should be installed in Pycharm.&lt;/p&gt;
+&lt;p&gt;It is worth noting that although Pycharm allows setting up a remote SSH Python interpreter, this configuration is not supported by the exam plugin. Therefore, it is best to install Pycharm and the exam plugin directly on a device with a GPU.&lt;/p&gt;
+&lt;p&gt;In terms of network environment, since the exam requires downloading datasets and uploading models from/to Google&amp;rsquo;s servers, it is recommended to ensure a stable connection to the international internet or take the exam during off-peak hours. The datasets are downloaded using the &lt;code&gt;request&lt;/code&gt; library in the code, but you can also manually download them using other tools and place them in the exam directory.&lt;/p&gt;
+&lt;h2 id=&#34;during-the-exam&#34;&gt;During the Exam&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Prepare a Python 3.8 environment in advance and install the TF Certification Exam plugin in Pycharm.&lt;/li&gt;
+&lt;li&gt;After running the plugin, log in to your Google account for authentication. The plugin will automatically create a virtual environment (venv) and install dependencies. Once completed, the &amp;ldquo;Start Exam&amp;rdquo; button will appear. Clicking on it will start the exam.&lt;/li&gt;
+&lt;li&gt;The plugin will create a Pycharm project with 5 folders named Category1 to Category5. Each folder contains a &lt;code&gt;starter.py&lt;/code&gt; file with a basic code framework, marked with &lt;code&gt;#TODO&lt;/code&gt; comments indicating the parts that need to be filled in. When editing &lt;code&gt;starter.py&lt;/code&gt;, the plugin will automatically display the description of the current question.&lt;/li&gt;
+&lt;li&gt;After completing the training, a &lt;code&gt;mymodel.h5&lt;/code&gt; file will be generated in the question folder. If you trained the model on a different device, you can manually place the model file (in h5 format) in the folder. Selecting &amp;ldquo;Submit and Test model&amp;rdquo; in the plugin will automatically submit the model for evaluation on the server. The progress bar in the lower right corner will show the upload progress, and the score (0/5 to 5/5) will be returned within 30 seconds after the upload is complete. If it takes too long to receive a score, it may be due to the model being too large/complex, and you can cancel the current evaluation.&lt;/li&gt;
+&lt;li&gt;You can submit the model multiple times. The evaluation is based on a hidden portion of the data on the backend, and according to feedback from some participants, the data may have some randomness. Even for multiple submissions of the same model, the scores may vary.&lt;/li&gt;
+&lt;li&gt;Once all questions have received a score of 5/5, click on the plugin and select &amp;ldquo;End Exam.&amp;rdquo; Confirming the selection will end the exam.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I was fortunate in my exam experience because I had previously verified the environment based on the &amp;ldquo;Environment Setup&amp;rdquo; document, so I didn&amp;rsquo;t encounter any environment-related issues. The five questions were not very difficult, and I completed four of them and received a score of 5/5 within 40 minutes of starting the exam. However, the NLP question was quite tricky. I tried various architectures but could only achieve a score of 4/5. In the end, I changed the optimizer, reduced the learning rate, and increased the number of epochs to train slowly, finally achieving a score of 5/5. When I finished the exam, there were still 3 hours and 10 minutes remaining.&lt;/p&gt;
+&lt;p&gt;The five questions I encountered were:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A simple regression task.&lt;/li&gt;
+&lt;li&gt;Classification on a dataset that you have definitely encountered multiple times.&lt;/li&gt;
+&lt;li&gt;Image classification.&lt;/li&gt;
+&lt;li&gt;Natural Language Processing (text classification).&lt;/li&gt;
+&lt;li&gt;Time series prediction.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;after-the-exam&#34;&gt;After the Exam&lt;/h2&gt;
+&lt;p&gt;If you pass, you will receive a pass notification via email within a few minutes, and you can provide your information to register on Google&amp;rsquo;s certification network. The digital certificate will be sent via email within a few working days.&lt;/p&gt;
+&lt;h2 id=&#34;review-and-summary&#34;&gt;Review and Summary&lt;/h2&gt;
+&lt;p&gt;Looking back on this week, I think it was an interesting experience. For me, spending money was an effective way to motivate myself to learn. At least during this week, I was able to thoroughly study some chapters of HOML. The exam itself was much easier than I imagined, which further emphasizes that passing this exam is just the beginning and only demonstrates the basic skills of completing simple tasks following tutorials. There is still a long way to go before truly mastering the subject.&lt;/p&gt;
+&lt;p&gt;The completion status of the goals I set for myself are as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Familiarize myself with the architecture and usage of TF.
+&lt;ul&gt;
+&lt;li&gt;Completed (went from having no experience to being able to quickly prototype).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Master the process of building DL models using TF, from data input to model deployment in a production environment.
+&lt;ul&gt;
+&lt;li&gt;Partially completed (focused mainly on data input to model building, but did not cover deployment to a production environment).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Be able to complete common DL tasks (image/text/time series/structured data).
+&lt;ul&gt;
+&lt;li&gt;Mostly completed (there are many subtasks within each major category, and this study only covered the most basic tasks, but it serves as a good introduction to foundational knowledge and getting started).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;so-should-you-take-this-certification&#34;&gt;So, Should You Take this Certification?&lt;/h3&gt;
+&lt;p&gt;In my opinion, for students in computer/data science majors, ML/DL skills are considered a &amp;ldquo;default requirement.&amp;rdquo; The TF Developer Certification is more like an additional skill level, similar to the &amp;ldquo;Computer Level 2&amp;rdquo; certification. It can be seen as an extra skill for students from non-related majors, but it may not have much significance for students within the major. However, currently, obtaining this certification may still have its value, especially in smaller companies where it might be easier to pass the HR screening.&lt;/p&gt;
+&lt;p&gt;Table: If you meet the following conditions, you&amp;hellip;should consider taking this certification&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;You might want to&amp;hellip;&lt;/th&gt;
+&lt;th&gt;You might not want to&amp;hellip;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;- Force yourself to learn something&lt;br /&gt;- Transition from a different major and need to demonstrate your skills and job-seeking intention&lt;br /&gt;- Don&amp;rsquo;t have much experience to write on your resume&lt;/td&gt;
+&lt;td&gt;- Already have mature and extensive ML/DL experience&lt;br /&gt;- Don&amp;rsquo;t have the spare money/time&lt;br /&gt;- Think TensorFlow is too difficult and prefer PyTorch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Reinstall Without Data Loss - Repair Install</title>
+      <link>/en/posts/repair-install/</link>
+      <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
+      
+      <guid>/en/posts/repair-install/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Recently, my main computer running Windows 10 encountered some strange issues, such as the Start menu not opening at times. My initial reaction was to try repairing using the &lt;code&gt;sfc&lt;/code&gt;/&lt;code&gt;dism&lt;/code&gt; commands, but it didn&amp;rsquo;t work. I also tried various other methods, but the problem persisted. At this point, reinstalling seemed like the only option, but the thought of backing up data and reinstalling all the software was daunting. However, I stumbled upon a little trick called &amp;ldquo;Repair Install&amp;rdquo; that actually solved the problem. I couldn&amp;rsquo;t find anyone else mentioning it on the forum, so I decided to share it here.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-repair-install&#34;&gt;What is &amp;ldquo;Repair Install&amp;rdquo;?&lt;/h2&gt;
+&lt;p&gt;You may not have heard of Repair Install as a Windows user, but you have probably experienced it before: major updates in Windows 10. After completing an update, if you go to &amp;ldquo;Settings - System - About,&amp;rdquo; you&amp;rsquo;ll notice that the &amp;ldquo;Installation date&amp;rdquo; has been changed to the date of the update. This is because a major update in Windows 10 is actually a reinstallation of the system that preserves user data (including files, applications, and settings). That&amp;rsquo;s why major updates usually take longer and show progress percentages similar to a fresh installation.&lt;/p&gt;
+&lt;p&gt;Looking at it from a different perspective, since the Windows update mechanism allows for this special type of reinstallation that preserves user data, can users perform it manually? That&amp;rsquo;s essentially what Repair Install is: a manual &amp;ldquo;major update.&amp;rdquo;
+(Note: &amp;ldquo;major update&amp;rdquo; is in quotes because it doesn&amp;rsquo;t necessarily require a higher version of the installation media compared to the currently installed system; it can be done with the same version.)&lt;/p&gt;
+&lt;h2 id=&#34;when-is-repair-install-suitable&#34;&gt;When is &amp;ldquo;Repair Install&amp;rdquo; suitable?&lt;/h2&gt;
+&lt;p&gt;&amp;ldquo;Repair Install&amp;rdquo; is suitable when Windows 10 has strange issues that cannot be fixed through other means, including but not limited to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Start menu not opening&lt;/li&gt;
+&lt;li&gt;UWP apps not opening&lt;/li&gt;
+&lt;li&gt;Missing fonts/icons&lt;/li&gt;
+&lt;li&gt;Registry corruption&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;prerequisites-for-repair-install&#34;&gt;Prerequisites for &amp;ldquo;Repair Install&amp;rdquo;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows can be started normally and accessed from the desktop (if the system cannot be started, there is no solution, even safe mode cannot use this method)&lt;/li&gt;
+&lt;li&gt;The installation ISO needs to match the current installed system: same SKU (Home/Pro), same architecture (x86/x64), same language, and the installation ISO version needs to be higher than or equal to the current installed system version&lt;/li&gt;
+&lt;li&gt;The current system partition has sufficient free space (according to tenforums, at least 8.87 GB, although the source of this number is unknown. It is recommended to reserve at least 15 GB to avoid a situation similar to &lt;a href=&#34;https://mrmacintosh.com/big-sur-upgrade-not-enough-hd-space-serious-issue-possible-data-loss/&#34;&gt;MacOS Big Sur&lt;/a&gt;.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;how-to-perform-repair-install&#34;&gt;How to perform &amp;ldquo;Repair Install&amp;rdquo;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Obtain the Windows 10 ISO (you can use Microsoft&amp;rsquo;s official &lt;a href=&#34;https://www.microsoft.com/en-gb/software-download/windows10&#34;&gt;Media Creation Tool&lt;/a&gt; or a third-party direct link like &lt;a href=&#34;https://tb.rg-adguard.net/public.php&#34;&gt;TechBench by WZT (v4.1.1) (rg-adguard.net)&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;Double-click to mount the ISO (you can also use other virtual drive tools)&lt;/li&gt;
+&lt;li&gt;Go to the mounted drive and run &lt;code&gt;setup.exe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Proceed with the installation, and on the &amp;ldquo;Choose what to keep&amp;rdquo; page, select &amp;ldquo;Keep personal files, apps, and Windows settings&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;Wait patiently for the installation to complete&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;reference-links&#34;&gt;Reference links&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://answers.microsoft.com/en-us/windows/forum/windows_10-windows_install-winpc/how-to-perform-a-repair-upgrade-using-the-windows/35160fbe-9352-4e70-9887-f40096ec3085&#34;&gt;How to: Perform a Repair Upgrade Using the Windows 10 ISO file - Microsoft Community&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tenforums.com/tutorials/16397-repair-install-windows-10-place-upgrade.html&#34;&gt;Repair Install Windows 10 with an In-place Upgrade | Tutorials (tenforums.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://neosmart.net/wiki/windows-10-repair-installation/#When_to_repair_install_Windows_10&#34;&gt;How To Reinstall Windows 10 (neosmart.net)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

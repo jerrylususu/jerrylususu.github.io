@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>Notes on Distributed Systems Course - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="Challenging yet interesting">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">About</a></li><li><a href="/archive">Archive</a></li><li><a href="/posts">Posts</a></li><li><a href="/project">Project</a></li><li><a href="/share">Share</a></li><li><a href="/tags">Tag</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+            
+            
+                <li><a href="/en/posts/distributed-system-course-notes/" class="active langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/posts/distributed-system-course-notes/" class="langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Notes on Distributed Systems Course</h1>
+	<h5>
+		
+		<time datetime="2021-12-12 20:47:32 &#43;0300 &#43;0300">Dec 12, 2021</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/Sharing">Sharing</a>
+				
+				<a href="/tags/Systems">Systems</a>
+				
+				<a href="/tags/Distributed">Distributed</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>This semester, I took a course on distributed systems, which is essentially a combination of MIT&rsquo;s Distributed Systems (6.824) and Princeton&rsquo;s Distributed Systems (COS 418) courses. It covers the following topics:</p>
+<ul>
+<li>Fundamentals of distributed systems: RPC and message semantics, logical clocks, distributed snapshots, consistency models, CAP/FLP theory</li>
+<li>Eventual consistency systems: Bayou, DHT, Dynamo</li>
+<li>Consensus and state machine replication: Primary-backup, Viewstamped Replication, Paxos, Raft, P-BFT</li>
+<li>Distributed transactions and strong consistency: 2PC, 2PL, Spanner</li>
+</ul>
+<p>Looking back at the distributed-related courses I took intermittently in my freshman and sophomore years, it&rsquo;s clear that some things require experience to gradually understand.</p>
+<p>Apart from the course content, the assignments are mostly adapted from MIT&rsquo;s assignments, and they involve implementing the following systems:</p>
+<ul>
+<li>MapReduce (Sequential / Distributed)</li>
+<li>Raft (Election, Log Replication, Fault Tolerance)</li>
+<li>K-V Storage based on Raft (KV-Raft)</li>
+</ul>
+<p>The last two assignments are worth mentioning because they belong to the type of tasks I would never voluntarily attempt. Just the thought of their potential complexity made me hesitant. However, in reality, due to the comprehensive set of tests provided, implementing them turned out to be a case-by-case process, and it wasn&rsquo;t as difficult as I had imagined. (Although debugging logs can indeed be frustrating.) In the end, I managed to complete Raft and KVRaft within two days, but those were two days of intense focus.</p>
+<p>I tried organizing my notes and provided a link below. However, the lecture slides still need to be obtained manually from the course website, as I do not have redistribution permissions. If there are any errors or omissions, please feel free to point them out.
+<a href="https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures">All distributed system lectures</a></p>
+<p>In conclusion, after completing this course and the assignments, I have gained a bit more confidence in my ability to implement complex systems.</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="/en/posts/tf-cert-blog/">
+		<img class="icon-text" src="/img/prev.svg"/>Tensorflow Developer Certification Journey</a>
+
+
+	<a class="next-post" href="/en/posts/vue-app-pwa/">Turning an Existing Vue App into a PWA<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>See Also</h4>
+  <ul>
+    
+  	<li><a href="/en/posts/tf-cert-blog/">Tensorflow Developer Certification Journey</a></li>
+  	
+  	<li><a href="/en/share/markdown-code-in-table/">Code blocks within Markdown tables</a></li>
+  	
+  	<li><a href="/en/share/hugo-disqus/">Integrating Disqus with Hugo</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					Theme used: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>Back to Up</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

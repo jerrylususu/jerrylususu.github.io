@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Distributed on Nekonull&#39;s Garden</title>
+    <link>/en/tags/distributed/</link>
+    <description>Recent content in Distributed on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="/en/tags/distributed/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes on Distributed Systems Course</title>
+      <link>/en/posts/distributed-system-course-notes/</link>
+      <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
+      
+      <guid>/en/posts/distributed-system-course-notes/</guid>
+      <description>&lt;p&gt;This semester, I took a course on distributed systems, which is essentially a combination of MIT&amp;rsquo;s Distributed Systems (6.824) and Princeton&amp;rsquo;s Distributed Systems (COS 418) courses. It covers the following topics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fundamentals of distributed systems: RPC and message semantics, logical clocks, distributed snapshots, consistency models, CAP/FLP theory&lt;/li&gt;
+&lt;li&gt;Eventual consistency systems: Bayou, DHT, Dynamo&lt;/li&gt;
+&lt;li&gt;Consensus and state machine replication: Primary-backup, Viewstamped Replication, Paxos, Raft, P-BFT&lt;/li&gt;
+&lt;li&gt;Distributed transactions and strong consistency: 2PC, 2PL, Spanner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Looking back at the distributed-related courses I took intermittently in my freshman and sophomore years, it&amp;rsquo;s clear that some things require experience to gradually understand.&lt;/p&gt;
+&lt;p&gt;Apart from the course content, the assignments are mostly adapted from MIT&amp;rsquo;s assignments, and they involve implementing the following systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MapReduce (Sequential / Distributed)&lt;/li&gt;
+&lt;li&gt;Raft (Election, Log Replication, Fault Tolerance)&lt;/li&gt;
+&lt;li&gt;K-V Storage based on Raft (KV-Raft)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The last two assignments are worth mentioning because they belong to the type of tasks I would never voluntarily attempt. Just the thought of their potential complexity made me hesitant. However, in reality, due to the comprehensive set of tests provided, implementing them turned out to be a case-by-case process, and it wasn&amp;rsquo;t as difficult as I had imagined. (Although debugging logs can indeed be frustrating.) In the end, I managed to complete Raft and KVRaft within two days, but those were two days of intense focus.&lt;/p&gt;
+&lt;p&gt;I tried organizing my notes and provided a link below. However, the lecture slides still need to be obtained manually from the course website, as I do not have redistribution permissions. If there are any errors or omissions, please feel free to point them out.
+&lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;All distributed system lectures&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In conclusion, after completing this course and the assignments, I have gained a bit more confidence in my ability to implement complex systems.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
