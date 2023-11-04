@@ -1,11 +1,11 @@
 [latestPost]
-other = "Latest Posts"
+other = "最近的长文"
 
 [latestWork]
-other = "Latest Shares"
+other = "最近的短文"
 
 [license]
-other = "License"
+other = "许可"
 
 [toUp]
 other = "回到顶部"

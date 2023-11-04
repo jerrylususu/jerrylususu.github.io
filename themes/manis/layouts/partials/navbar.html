@@ -11,6 +11,7 @@
 		{{- range .Site.Menus.main -}}
 		<li><a href="{{ .URL }}">{{ .Name | title }}</a></li>
 		{{- end -}}
+		{{ partial "language-switcher" . }}
 
 
 

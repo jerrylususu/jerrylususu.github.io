@@ -59,6 +59,7 @@ googleAnalytics = "G-R01JLDY2KE"
 
   [languages.zh]
     languageCode = "zh-cn"
+    languageName = "简体中文"
     title = "Nekonull's Garden"
     subtitle = "Always read. Mostly hack. Sometimes write."
     tagline = "Always read. Mostly hack. Sometimes write."
@@ -75,50 +76,68 @@ googleAnalytics = "G-R01JLDY2KE"
     [languages.zh.menu]
       [[languages.zh.menu.main]]
         identifier = "about"
-        name = "About"
+        name = "关于"
         url = "/about"
       [[languages.zh.menu.main]]
         identifier = "project"
-        name = "Project"
+        name = "项目"
         url = "/project"
       [[languages.zh.menu.main]]
         identifier = "posts"
-        name = "Posts"
+        name = "长文"
         url = "/posts"
       [[languages.zh.menu.main]]
         identifier = "archive"
-        name = "Archive"
+        name = "存档"
         url = "/archive"
       [[languages.zh.menu.main]]
         identifier = "share"
-        name = "Share"
+        name = "短文"
         url = "/share"
       [[languages.zh.menu.main]]
         identifier = "tag"
-        name = "Tag"
+        name = "标签"
         url = "/tags"
 
 
-#   [languages.en]
-#     languageCode = "en-us"
-#     title = "Terminal"
-#     subtitle = "A simple, retro theme for Hugo"
-#     keywords = ""
-#     copyright = ""
-#     menuMore = "Show more"
-#     readMore = "Read more"
-#     readOtherPosts = "Read other posts"
+  [languages.en]
+    languageCode = "en-us"
+    languageName = "English"
+    title = "Nekonull's Garden"
+    subtitle = "Always read. Mostly hack. Sometimes write."
+    tagline = "Always read. Mostly hack. Sometimes write."
+    keywords = ""
+    copyright = ""
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
 
-#     [languages.en.params.logo]
-#       logoText = "Terminal"
-#       logoHomeLink = "/"
+    [languages.en.params.logo]
+      logoText = "Nekonull's Garden"
+      logoHomeLink = "/"
 
-#     [languages.en.menu]
-#       [[languages.en.menu.main]]
-#         identifier = "about"
-#         name = "About"
-#         url = "/about"
-#       [[languages.en.menu.main]]
-#         identifier = "showcase"
-#         name = "Showcase"
-#         url = "/showcase"
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about"
+      [[languages.en.menu.main]]
+        identifier = "project"
+        name = "Project"
+        url = "/project"
+      [[languages.en.menu.main]]
+        identifier = "posts"
+        name = "Posts"
+        url = "/posts"
+      [[languages.en.menu.main]]
+        identifier = "archive"
+        name = "Archive"
+        url = "/archive"
+      [[languages.en.menu.main]]
+        identifier = "share"
+        name = "Share"
+        url = "/share"
+      [[languages.en.menu.main]]
+        identifier = "tag"
+        name = "Tag"
+        url = "/tags"

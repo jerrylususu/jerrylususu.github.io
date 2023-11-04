@@ -1,6 +1,6 @@
 
 ---
-title: Share
+title: 短文
 
 ---
 
