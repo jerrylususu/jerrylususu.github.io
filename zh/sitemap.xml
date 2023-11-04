@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/tags/llm/</loc>
-    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-  </url><url>
     <loc>/</loc>
-    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -17,6 +14,35 @@
                 hreflang="zh"
                 href="/"
                 />
+  </url><url>
+    <loc>/share/hugo-multilang/</loc>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/share/hugo-multilang/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/share/hugo-multilang/"
+                />
+  </url><url>
+    <loc>/share/</loc>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/share/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/share/"
+                />
+  </url><url>
+    <loc>/tags/llm/</loc>
+    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
   </url><url>
     <loc>/tags/</loc>
     <lastmod>2023-10-29T20:17:00+08:00</lastmod>
@@ -33,19 +59,6 @@
   </url><url>
     <loc>/share/my-ai-prompts/</loc>
     <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-  </url><url>
-    <loc>/share/</loc>
-    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="/en/share/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="/share/"
-                />
   </url><url>
     <loc>/share/try-chatglm/</loc>
     <lastmod>2023-10-29T19:41:00+08:00</lastmod>

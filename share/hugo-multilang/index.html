@@ -4,9 +4,9 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>我的 AI Prompt - Nekonull&#39;s Garden</title>
+		<title>多语言的 Hugo 博客 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="记录下自己自用的一些 Prompt。只是迭代下来感觉还不错，但不一定是最好的。如有推荐欢迎回复补充。 通用场景 （主要配合 GPT-3.5-Turbo 使用，回答代码类问题）">
+		<meta name="description" content="之前看到了某位同学的分享，提到他在将博客多语言化之后，访问量有了显著的上升，于是也想试试看。在 OpenAI 的加持下文章翻译并不是什么难事，但是想要给一">
 
 
 		
@@ -63,11 +63,23 @@ if (!doNotTrack) {
       
       
           
+            
+            
+                <li><a href="/en/share/hugo-multilang/" class="langselect">English</a></li>
+            
+          
+      
+          
+      
+  
+      
+      
+          
       
           
             
             
-                <li><a href="/share/my-ai-prompts/" class="active langselect">简体中文</a></li>
+                <li><a href="/share/hugo-multilang/" class="active langselect">简体中文</a></li>
             
           
       
@@ -88,56 +100,37 @@ if (!doNotTrack) {
 
 <article>
 	<header><hgroup id="brand">
-	<h1>我的 AI Prompt</h1>
+	<h1>多语言的 Hugo 博客</h1>
 	<h5>
 		
-		<time datetime="2023-10-29 20:17:00 &#43;0800 &#43;0800">Oct 29, 2023</time>
+		<time datetime="2023-11-04 20:27:43 &#43;0800 &#43;0800">Nov 04, 2023</time>
 		<span class="no-print">
-			-
-				
-				<a href="/tags/LLM">LLM</a>
-				<span>
+			<span>
 	</h5>
 	
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>记录下自己自用的一些 Prompt。只是迭代下来感觉还不错，但不一定是最好的。如有推荐欢迎回复补充。</p>
-<h2 id="通用场景">通用场景</h2>
-<p>（主要配合 GPT-3.5-Turbo 使用，回答代码类问题）</p>
-<pre><code>You are a helpful assistant and also a professional &amp; experienced developer. You can help me by answering my questions. You can also ask me questions. If you are given code related questions, please answer in a consise manner, give code examples with less explaination.
-</code></pre><h2 id="摘要总结英文">摘要总结（英文）</h2>
-<p>（主要配合 claude-instant-v1 使用，用于文章摘要、结构化总结）</p>
-<pre><code>You are a professional reader and analyst. Please summarize the following article in a organized manner. Use markdown list format with indentation indicating the layering of ideas. Ignore any text that is unrelated to the main article. Also include a short tl;dr summary (no more than 50 words and 3 sentences). Refer to the following example when summarizing.
+	<p>之前看到了某位同学的分享，提到他在将博客多语言化之后，访问量有了显著的上升，于是也想试试看。在 OpenAI 的加持下文章翻译并不是什么难事，但是想要给一个现存的 Hugo 站点增加多语言支持依然不轻松。虽然 Hugo 本身自带了多语言支持的基本特性（<a href="https://gohugo.io/content-management/multilingual/">文档：Hugo Multilingual</a>），但是倘若选用的主题不支持，则还需要对主题进行改造。</p>
+<p>目前对本博客，我选择了&quot;按文件名翻译&quot;的做法，从文档来看这似乎是对现有文件结构侵入最小的方案。简单来说，如果你的博客 Markdown 文件位于 <code>/content/blog.md</code>，在同层级下新建一个 <code>blog.en.md</code> 即可补充英文翻译。完成后可以通过在域名后补充 <code>/en/</code> 路径的方式来访问。（主语言，在我这里是&quot;简体中文&quot;的路径不受影响，即无需补充语言后缀。）然而让用户手动补充语言路由显然是不可接受的，于是得在页面某处加一个语言选择器。这里我暂时加到了顶部。然后你的多语言博客就可以上线了。</p>
+<p>目前已知还存在的一些问题，待之后有空再来慢慢解决吧：</p>
+<ol>
+<li>各种导航（例如左上角的后退）会回到站点根目录（也就是简体中文主页）；合理的做法是回到当前语言的对应主页</li>
+<li>RSS feed 链接有问题，默认提供的仍然是主语言的 RSS 链接，英文的链接在 <code>/en/</code> 路径下；这里可能要考虑一个整合的 RSS？</li>
+</ol>
+<p>大部分的核心多语言代码可以从这个 commit 看到：<a href="https://github.com/jerrylususu/jerrylususu.github.io/pull/27/commits/ca7a83d6750f1f3d940a92b95b2179f793d26dd4">ca7a83d</a></p>
+<p>更多参考链接：</p>
+<ul>
+<li><a href="https://discourse.gohugo.io/t/language-switcher-in-menu/11570">Language switcher in menu</a></li>
+<li><a href="https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/">Hugo Multilingual Part 1: Content translation</a></li>
+</ul>
 
----
-[Example Output]
-
-TL;DR summary: Summary in no more than 50 words.
-
-# Title
-## Heading 1
-- Idea 1
-    - Reason 1
-
-## Heading 2
-1. Numbered Item 1
-2. Numbered Item 2
-
-## Conclusion
-</code></pre><h2 id="摘要总结中文">摘要总结（中文）</h2>
-<p>（主要配合 ChatGLM-Turbo 使用，用于文章摘要）</p>
-<pre><code>您是一名专业的读者和分析者，现在请对下面的文章进行整理总结。使用Markdown列表格式输出总结，每个列表项是一个想法，并用缩进表示思想的层次，更深层的列表项代表论据或想法的演进，忽略任何与主文无关的文字。
-</code></pre>
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="/share/try-chatglm/">
-		<img class="icon-text" src="/img/prev.svg"/>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</a>
+	<a class="prev-post" href="/share/my-ai-prompts/">
+		<img class="icon-text" src="/img/prev.svg"/>我的 AI Prompt</a>
 
-
-	<a class="next-post" href="/share/hugo-multilang/">多语言的 Hugo 博客<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
@@ -146,11 +139,11 @@ TL;DR summary: Summary in no more than 50 words.
   <h4>另请参阅</h4>
   <ul>
     
+  	<li><a href="/share/my-ai-prompts/">我的 AI Prompt</a></li>
+  	
   	<li><a href="/share/try-chatglm/">用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</a></li>
   	
   	<li><a href="/share/openrouter-mitmproxy/">用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</a></li>
-  	
-  	<li><a href="/archive/2310-jp-travel/">日本游记</a></li>
   	
   </ul>
 </section>

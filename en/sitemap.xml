@@ -2,8 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/en/share/hugo-multilang/</loc>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="/share/hugo-multilang/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/share/hugo-multilang/"
+                />
+  </url><url>
     <loc>/en/</loc>
-    <lastmod>2023-09-29T15:34:23+08:00</lastmod>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
@@ -16,7 +29,7 @@
                 />
   </url><url>
     <loc>/en/share/</loc>
-    <lastmod>2023-09-29T15:34:23+08:00</lastmod>
+    <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"

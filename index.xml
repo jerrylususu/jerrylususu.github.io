@@ -6,7 +6,29 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 29 Oct 2023 20:17:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多语言的 Hugo 博客</title>
+      <link>/share/hugo-multilang/</link>
+      <pubDate>Sat, 04 Nov 2023 20:27:43 +0800</pubDate>
+      
+      <guid>/share/hugo-multilang/</guid>
+      <description>&lt;p&gt;之前看到了某位同学的分享，提到他在将博客多语言化之后，访问量有了显著的上升，于是也想试试看。在 OpenAI 的加持下文章翻译并不是什么难事，但是想要给一个现存的 Hugo 站点增加多语言支持依然不轻松。虽然 Hugo 本身自带了多语言支持的基本特性（&lt;a href=&#34;https://gohugo.io/content-management/multilingual/&#34;&gt;文档：Hugo Multilingual&lt;/a&gt;），但是倘若选用的主题不支持，则还需要对主题进行改造。&lt;/p&gt;
+&lt;p&gt;目前对本博客，我选择了&amp;quot;按文件名翻译&amp;quot;的做法，从文档来看这似乎是对现有文件结构侵入最小的方案。简单来说，如果你的博客 Markdown 文件位于 &lt;code&gt;/content/blog.md&lt;/code&gt;，在同层级下新建一个 &lt;code&gt;blog.en.md&lt;/code&gt; 即可补充英文翻译。完成后可以通过在域名后补充 &lt;code&gt;/en/&lt;/code&gt; 路径的方式来访问。（主语言，在我这里是&amp;quot;简体中文&amp;quot;的路径不受影响，即无需补充语言后缀。）然而让用户手动补充语言路由显然是不可接受的，于是得在页面某处加一个语言选择器。这里我暂时加到了顶部。然后你的多语言博客就可以上线了。&lt;/p&gt;
+&lt;p&gt;目前已知还存在的一些问题，待之后有空再来慢慢解决吧：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;各种导航（例如左上角的后退）会回到站点根目录（也就是简体中文主页）；合理的做法是回到当前语言的对应主页&lt;/li&gt;
+&lt;li&gt;RSS feed 链接有问题，默认提供的仍然是主语言的 RSS 链接，英文的链接在 &lt;code&gt;/en/&lt;/code&gt; 路径下；这里可能要考虑一个整合的 RSS？&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;大部分的核心多语言代码可以从这个 commit 看到：&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/pull/27/commits/ca7a83d6750f1f3d940a92b95b2179f793d26dd4&#34;&gt;ca7a83d&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;更多参考链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://discourse.gohugo.io/t/language-switcher-in-menu/11570&#34;&gt;Language switcher in menu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/&#34;&gt;Hugo Multilingual Part 1: Content translation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>我的 AI Prompt</title>
       <link>/share/my-ai-prompts/</link>
@@ -1739,35 +1761,6 @@ TypeError: &#39;NoneType&#39; object is not callable
 &lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;&lt;code&gt;Python Doc - object.__hash__&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>mdBook 代码折行（wrap）</title>
-      <link>/share/mdbook-code-wrap/</link>
-      <pubDate>Sat, 03 Apr 2021 23:54:00 +0300</pubDate>
-      
-      <guid>/share/mdbook-code-wrap/</guid>
-      <description>&lt;p&gt;&lt;a href=&#34;https://rust-lang.github.io/mdBook/&#34;&gt;mdBook&lt;/a&gt; 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需要手动左右移动，体验不佳。&lt;/p&gt;
-&lt;p&gt;查阅&lt;a href=&#34;https://rust-lang.github.io/mdBook/format/theme/editor.html?highlight=editor#customizing-the-editor&#34;&gt;文档&lt;/a&gt;可知，mdBook 使用的是 Ace Editor。再查询 Ace Editor 的&lt;a href=&#34;https://github.com/ajaxorg/ace/wiki/Embedding-API&#34;&gt;文档&lt;/a&gt;，可以发现通过 &lt;code&gt;editor.getSession().setUseWrapMode(true);&lt;/code&gt; 启用折行。&lt;/p&gt;
-&lt;p&gt;在 mdBook 生成的 book 文件夹中，可以找到 &lt;code&gt;book.js&lt;/code&gt; 文件，在 line 6 开始进行如下修改，手动设定 editor 属性即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// Global variable, shared between modules
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;function&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playground_text&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;playground&lt;/span&gt;) {
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;playground&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;querySelector&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;code&amp;#34;&lt;/span&gt;);
-
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (window.&lt;span style=&#34;color:#a6e22e&#34;&gt;ace&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;classList&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;contains&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;editable&amp;#34;&lt;/span&gt;)) {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; window.&lt;span style=&#34;color:#a6e22e&#34;&gt;ace&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;edit&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;);
-
-        &lt;span style=&#34;color:#75715e&#34;&gt;// CODE ADDED BEGIN
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getSession&lt;/span&gt;().&lt;span style=&#34;color:#a6e22e&#34;&gt;setUseWrapMode&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;);
-        &lt;span style=&#34;color:#75715e&#34;&gt;// CODE ADDED END
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;editor&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;getValue&lt;/span&gt;();
-    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;code_block&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;textContent&lt;/span&gt;;
-    }
-}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>
