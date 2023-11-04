@@ -1,6 +1,6 @@
 
 ---
-title: Posts
+title: 长文
 
 ---
 
