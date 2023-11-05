@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://nekonull.me/"
 languageCode = "zh-cn"
 theme = "manis"
 paginate = 20
