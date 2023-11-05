@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>长文 on Nekonull&#39;s Garden</title>
-    <link>/posts/</link>
+    <link>https://nekonull.me/posts/</link>
     <description>Recent content in 长文 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 27 Aug 2023 19:30:45 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Aug 2023 19:30:45 +0800</lastBuildDate><atom:link href="https://nekonull.me/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>再次复活（2023）&amp; 换用 Github Action 部署</title>
-      <link>/posts/back-again-2023/</link>
+      <link>https://nekonull.me/posts/back-again-2023/</link>
       <pubDate>Sun, 27 Aug 2023 19:30:45 +0800</pubDate>
       
-      <guid>/posts/back-again-2023/</guid>
+      <guid>https://nekonull.me/posts/back-again-2023/</guid>
       <description>&lt;p&gt;又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和&lt;a href=&#34;posts/back-again/&#34;&gt;上次&lt;/a&gt;一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&amp;hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。&lt;/p&gt;
 &lt;p&gt;本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 &lt;code&gt;publish&lt;/code&gt;），修改 Github Pages 的来源分支，然后写点 &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml&#34;&gt;Github Action&lt;/a&gt; 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&amp;hellip;）&lt;/p&gt;
 &lt;p&gt;顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（&lt;code&gt;v0.117.0&lt;/code&gt;），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&amp;hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。&lt;/p&gt;
@@ -21,10 +21,10 @@
     
     <item>
       <title>将已有的 Vue App 变为 PWA</title>
-      <link>/posts/vue-app-pwa/</link>
+      <link>https://nekonull.me/posts/vue-app-pwa/</link>
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
-      <guid>/posts/vue-app-pwa/</guid>
+      <guid>https://nekonull.me/posts/vue-app-pwa/</guid>
       <description>&lt;p&gt;之前写过一个用来辅助五十音记忆的小 App: &lt;a href=&#34;https://nekonull.me/gojuon-quiz/&#34;&gt;Gojuon Quiz&lt;/a&gt; (&lt;a href=&#34;https://github.com/jerrylususu/gojuon-quiz&#34;&gt;源代码&lt;/a&gt;)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然可用，二来打开的时候不会显示浏览器地址栏之类的控件，体验上基本和一个原生应用接近了。&lt;/p&gt;
 &lt;p&gt;具体操作起来其实很简单，基本上就是以下几步：&lt;/p&gt;
 &lt;ol&gt;
@@ -53,10 +53,10 @@
     
     <item>
       <title>Python `itertools.permutations` 使用的排列算法</title>
-      <link>/posts/py-itertools-permutation-algo/</link>
+      <link>https://nekonull.me/posts/py-itertools-permutation-algo/</link>
       <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
       
-      <guid>/posts/py-itertools-permutation-algo/</guid>
+      <guid>https://nekonull.me/posts/py-itertools-permutation-algo/</guid>
       <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
 &lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
 &lt;p&gt;最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 &lt;code&gt;itertools&lt;/code&gt;，其中有一个 &lt;code&gt;permutations(iterable, r)&lt;/code&gt; 方法，可以对一个给定的 iterable 生成所有大小为 &lt;code&gt;r&lt;/code&gt; 的排列，且输出按照字典序排列。&lt;/p&gt;
@@ -152,7 +152,7 @@
 &lt;p&gt;其实 &lt;code&gt;cycles&lt;/code&gt; 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 &lt;code&gt;indices&lt;/code&gt; 的理解就大部分是我自己的了。&lt;/p&gt;
 &lt;h3 id=&#34;indices&#34;&gt;&lt;code&gt;indices&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;现在我们来看看 &lt;code&gt;indices&lt;/code&gt; 是如何变化的。和之前对 &lt;code&gt;cycles&lt;/code&gt; 的探索一样，我们也先从一个具体的例子开始：&lt;code&gt;iterable=&amp;quot;ABCDE&amp;quot;,r=3&lt;/code&gt;，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 &lt;code&gt;print&lt;/code&gt; 后，我们可以得到如下的变化过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;图的阅读顺序是从上至下，按照时间顺序展示了&lt;code&gt;indices&lt;/code&gt; 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。&lt;/li&gt;
@@ -278,10 +278,10 @@
     
     <item>
       <title>(译) 复杂系统如何失效</title>
-      <link>/posts/how-complex-system-fail-cn/</link>
+      <link>https://nekonull.me/posts/how-complex-system-fail-cn/</link>
       <pubDate>Tue, 10 May 2022 17:04:00 +0300</pubDate>
       
-      <guid>/posts/how-complex-system-fail-cn/</guid>
+      <guid>https://nekonull.me/posts/how-complex-system-fail-cn/</guid>
       <description>&lt;h1 id=&#34;复杂系统如何失效&#34;&gt;复杂系统如何失效&lt;/h1&gt;
 &lt;p&gt;原文链接：&lt;a href=&#34;https://how.complexsystems.fail/&#34;&gt;How Complex Systems Fail&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -334,10 +334,10 @@
     
     <item>
       <title>分布式系统课程笔记</title>
-      <link>/posts/distributed-system-course-notes/</link>
+      <link>https://nekonull.me/posts/distributed-system-course-notes/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/posts/distributed-system-course-notes/</guid>
+      <guid>https://nekonull.me/posts/distributed-system-course-notes/</guid>
       <description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;分布式系统基础：RPC 和消息语义，逻辑时钟，分布式快照，一致性模型, CAP/FLP 理论&lt;/li&gt;
@@ -361,10 +361,10 @@
     
     <item>
       <title>调用栈也是栈</title>
-      <link>/posts/call-stack-is-also-a-stack/</link>
+      <link>https://nekonull.me/posts/call-stack-is-also-a-stack/</link>
       <pubDate>Sun, 22 Aug 2021 22:02:00 +0300</pubDate>
       
-      <guid>/posts/call-stack-is-also-a-stack/</guid>
+      <guid>https://nekonull.me/posts/call-stack-is-also-a-stack/</guid>
       <description>&lt;p&gt;又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -472,10 +472,10 @@ s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;
     
     <item>
       <title>Tensorflow 开发者认证记录</title>
-      <link>/posts/tf-cert-blog/</link>
+      <link>https://nekonull.me/posts/tf-cert-blog/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/posts/tf-cert-blog/</guid>
+      <guid>https://nekonull.me/posts/tf-cert-blog/</guid>
       <description>&lt;!-- # Tensorflow 开发者认证记录 --&gt;
 &lt;p&gt;又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？&lt;/p&gt;
 &lt;blockquote&gt;
@@ -588,8 +588,8 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -700,10 +700,10 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
     
     <item>
       <title>再次复活</title>
-      <link>/posts/back-again/</link>
+      <link>https://nekonull.me/posts/back-again/</link>
       <pubDate>Sat, 03 Apr 2021 01:47:01 +0300</pubDate>
       
-      <guid>/posts/back-again/</guid>
+      <guid>https://nekonull.me/posts/back-again/</guid>
       <description>&lt;p&gt;2020 年发生了很多事，一直没有时间更新博客，然而突然意识到，很多有趣的事情、实用的技巧，并没有得到足够的分享，于是打算重新拾起这个博客。&lt;/p&gt;
 &lt;h2 id=&#34;把文件重新找回来&#34;&gt;把文件重新找回来&lt;/h2&gt;
 &lt;p&gt;复活的第一步显然是把原始的部署文件找到。但是因为换的设备太多，加之保存文件习惯不加，找起来还是花了一些时间的。Onedrive 里虽然有一个版本，但是是之前用 Hexo 的版本，Hugo 版本的博客则是翻了全盘备份才找到的。（再一次凸显了全盘备份的重要性，不过根源大概还是因为 2020 年换了太多设备了）这次复活后，也会把用于生成静态网页的原始文件，使用 Github Private Repo 的方式加以备份，避免再难寻找。&lt;/p&gt;
@@ -718,10 +718,10 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
     
     <item>
       <title>不丢失数据的重装 - Repair Install</title>
-      <link>/posts/repair-install/</link>
+      <link>https://nekonull.me/posts/repair-install/</link>
       <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
       
-      <guid>/posts/repair-install/</guid>
+      <guid>https://nekonull.me/posts/repair-install/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;本文原载于「小众软件论坛」&lt;a href=&#34;https://meta.appinn.net/t/topic/21923&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -764,10 +764,10 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
     
     <item>
       <title>给 WSL 安装桌面环境</title>
-      <link>/posts/install-de-in-wsl/</link>
+      <link>https://nekonull.me/posts/install-de-in-wsl/</link>
       <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
       
-      <guid>/posts/install-de-in-wsl/</guid>
+      <guid>https://nekonull.me/posts/install-de-in-wsl/</guid>
       <description>&lt;h1 id=&#34;给-wsl-安装桌面环境&#34;&gt;给 WSL 安装桌面环境&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文是旧文补完计划的一部分。&lt;/p&gt;
@@ -891,10 +891,10 @@ sudo dpkg -i sogoupinyin.deb
     
     <item>
       <title>Utils.ahk</title>
-      <link>/posts/utils-ahk/</link>
+      <link>https://nekonull.me/posts/utils-ahk/</link>
       <pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate>
       
-      <guid>/posts/utils-ahk/</guid>
+      <guid>https://nekonull.me/posts/utils-ahk/</guid>
       <description>&lt;p&gt;各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://gist.github.com/jerrylususu/ca434b7c34c77968ceecd4b735af1fcf&#34;&gt;GitHub Gist&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;快速启动&#34;&gt;快速启动&lt;/h2&gt;
@@ -941,10 +941,10 @@ sudo dpkg -i sogoupinyin.deb
     
     <item>
       <title>博客迁移记录</title>
-      <link>/posts/migrate-note/</link>
+      <link>https://nekonull.me/posts/migrate-note/</link>
       <pubDate>Mon, 12 Aug 2019 23:48:00 +0800</pubDate>
       
-      <guid>/posts/migrate-note/</guid>
+      <guid>https://nekonull.me/posts/migrate-note/</guid>
       <description>&lt;p&gt;在之前的文章中有提及，因为各种原因，已经很久没有打理这个博客了，一直荒废到了几周前。本文主要记录从 Hexo 迁移到 Hugo，并配置 Terminal 主题的过程。&lt;/p&gt;
 &lt;h2 id=&#34;文章头&#34;&gt;文章头&lt;/h2&gt;
 &lt;p&gt;大部分静态博客解决方案都通过文章头记录文章元数据，例如标题、创建日期、分类、tag 等。在迁移前，我知道 Hugo 的文章头和 Hexo 略有不同，主要体现在时间格式、数组形式上。但是没想到，Hugo 对 Hexo 下的文章头依然能正常解析，Archive 中有几篇文章就是直接从旧博客中复制过来的。&lt;/p&gt;
@@ -959,10 +959,10 @@ sudo dpkg -i sogoupinyin.deb
     
     <item>
       <title>我最近在用什么软件？</title>
-      <link>/posts/what-software-i-am-using/</link>
+      <link>https://nekonull.me/posts/what-software-i-am-using/</link>
       <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
       
-      <guid>/posts/what-software-i-am-using/</guid>
+      <guid>https://nekonull.me/posts/what-software-i-am-using/</guid>
       <description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
 &lt;h2 id=&#34;featured-&#34;&gt;Featured ✨&lt;/h2&gt;
 &lt;h3 id=&#34;stickies&#34;&gt;Stickies&lt;/h3&gt;
@@ -1009,17 +1009,17 @@ sudo dpkg -i sogoupinyin.deb
     
     <item>
       <title>耶[ ]复活啦！</title>
-      <link>/posts/back/</link>
+      <link>https://nekonull.me/posts/back/</link>
       <pubDate>Sun, 04 Aug 2019 02:25:00 +0800</pubDate>
       
-      <guid>/posts/back/</guid>
+      <guid>https://nekonull.me/posts/back/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;标题用了一个梗，你能看出来吗？&lt;br&gt;
 （尽管我尝试以乐观的方式开场，但这对本篇文章的基调并无改善。）&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;转眼间大二已经结束了，大学生涯也已经过去一半了。之前一直拖着，现在也总算是趁着放假重新把博客捡起来了。趁此机会，顺便也尝试着做做自省吧。&lt;/p&gt;
 &lt;h2 id=&#34;关于博客&#34;&gt;关于博客&lt;/h2&gt;
-&lt;p&gt;从 Hexo 切换到了 Hugo，在 &lt;a href=&#34;https://hugo-terminal.now.sh/&#34;&gt;Terminal&lt;/a&gt; 主题的加持下看起来似乎美观了很多，但转换和部署过程倒是有不少坑，之后可能单独开一篇文章来描述。趁着这次转换，也对旧的文章进行了一些处理，一小部分扔在了 &lt;a href=&#34;/archive/&#34;&gt;Archive&lt;/a&gt; 里头，剩下的本地归档不再放出了。CSDN 上的部分文章估计会择日迁移过来，例如吐槽和 Leetcode 系列，不过 ETA 依然未知。&lt;/p&gt;
+&lt;p&gt;从 Hexo 切换到了 Hugo，在 &lt;a href=&#34;https://hugo-terminal.now.sh/&#34;&gt;Terminal&lt;/a&gt; 主题的加持下看起来似乎美观了很多，但转换和部署过程倒是有不少坑，之后可能单独开一篇文章来描述。趁着这次转换，也对旧的文章进行了一些处理，一小部分扔在了 &lt;a href=&#34;https://nekonull.me/archive/&#34;&gt;Archive&lt;/a&gt; 里头，剩下的本地归档不再放出了。CSDN 上的部分文章估计会择日迁移过来，例如吐槽和 Leetcode 系列，不过 ETA 依然未知。&lt;/p&gt;
 &lt;h2 id=&#34;关于自己&#34;&gt;关于自己&lt;/h2&gt;
 &lt;p&gt;迁移的时候回顾了下大一上结束时的自己写的&lt;code&gt;近况报告&lt;/code&gt;，当年的自己看起来似乎乐观的多。然而现在的我似乎已经没有过去的那种勇气和魄力了。可能是受了早些时候的某件事的影响？但我也不知道。从大一下到大二下结束，上了不少课，写了不少作业，也尝试着做了不少事，但是却依然感觉自己相比大一上而言，并没有多少进步，反倒越来越迷茫了。&lt;/p&gt;
 &lt;p&gt;或许在这里，堆积文字并不是好的表述方法，如果用列表写出来反倒可能会好一点。那就试试看吧。&lt;/p&gt;

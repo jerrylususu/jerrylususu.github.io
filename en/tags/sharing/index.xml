@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sharing on Nekonull&#39;s Garden</title>
-    <link>/en/tags/sharing/</link>
+    <link>https://nekonull.me/en/tags/sharing/</link>
     <description>Recent content in Sharing on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="/en/tags/sharing/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/sharing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Notes on Distributed Systems Course</title>
-      <link>/en/posts/distributed-system-course-notes/</link>
+      <link>https://nekonull.me/en/posts/distributed-system-course-notes/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/en/posts/distributed-system-course-notes/</guid>
+      <guid>https://nekonull.me/en/posts/distributed-system-course-notes/</guid>
       <description>&lt;p&gt;This semester, I took a course on distributed systems, which is essentially a combination of MIT&amp;rsquo;s Distributed Systems (6.824) and Princeton&amp;rsquo;s Distributed Systems (COS 418) courses. It covers the following topics:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Fundamentals of distributed systems: RPC and message semantics, logical clocks, distributed snapshots, consistency models, CAP/FLP theory&lt;/li&gt;

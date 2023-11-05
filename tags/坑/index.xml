@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>坑 on Nekonull&#39;s Garden</title>
-    <link>/tags/%E5%9D%91/</link>
+    <link>https://nekonull.me/tags/%E5%9D%91/</link>
     <description>Recent content in 坑 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/tags/%E5%9D%91/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%9D%91/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>VNC 连接到物理屏幕</title>
-      <link>/share/vnc-to-physical-display/</link>
+      <link>https://nekonull.me/share/vnc-to-physical-display/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/share/vnc-to-physical-display/</guid>
+      <guid>https://nekonull.me/share/vnc-to-physical-display/</guid>
       <description>&lt;p&gt;如果搜索 &lt;code&gt;Linux 远程桌面&lt;/code&gt;，大部分教程基本上都是 &lt;code&gt;xrdp + xfce4&lt;/code&gt; 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用场景中，有的时候在实验室的 Linux 工作站上开启了一个比较长时间的任务，回到宿舍后可能需要检查下运行过程是否正常。如果是一般的 CLI 程序，用 &lt;code&gt;screen&lt;/code&gt; 或者 &lt;code&gt;tmux&lt;/code&gt; 之类的 terminal multiplexer （终端多路复用器）就绰绰有余了，可惜我用的是一个 GUI 程序。因此试着搜索了一番，发现是可以实现 VNC 连接到一个进行中的 X session 的，效果和 teamviewer 之类的工具差不多，具体操作如下。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;安装 TigerVNC 服务端&lt;/li&gt;
@@ -30,10 +30,10 @@
     
     <item>
       <title>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</title>
-      <link>/share/ms-rdp-8021x-bug/</link>
+      <link>https://nekonull.me/share/ms-rdp-8021x-bug/</link>
       <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
       
-      <guid>/share/ms-rdp-8021x-bug/</guid>
+      <guid>https://nekonull.me/share/ms-rdp-8021x-bug/</guid>
       <description>&lt;p&gt;昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。&lt;/p&gt;
 &lt;p&gt;以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network&#34;&gt;Remote laptop disconnects from wireless network | Microsoft Docs&lt;/a&gt;，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。&lt;/p&gt;
 &lt;p&gt;找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：&lt;/p&gt;
@@ -43,7 +43,7 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在「查看活动网络」下找到自己连接到的 WiFi，点击蓝色文字&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;点击「无线属性」，选择「安全」选项卡，点击「高级设置」&lt;/p&gt;
@@ -61,10 +61,10 @@
     
     <item>
       <title>Markdown 表格内的代码块</title>
-      <link>/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
 &lt;p&gt;需要注意之处：&lt;/p&gt;
 &lt;ul&gt;
@@ -128,10 +128,10 @@ Some Text
     
     <item>
       <title>Python __hash__ 继承</title>
-      <link>/share/python-hash-inherit/</link>
+      <link>https://nekonull.me/share/python-hash-inherit/</link>
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
-      <guid>/share/python-hash-inherit/</guid>
+      <guid>https://nekonull.me/share/python-hash-inherit/</guid>
       <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
 &lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
 &lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;
@@ -227,10 +227,10 @@ TypeError: &#39;NoneType&#39; object is not callable
     
     <item>
       <title>Hugo 的 Disqus 整合</title>
-      <link>/share/hugo-disqus/</link>
+      <link>https://nekonull.me/share/hugo-disqus/</link>
       <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
       
-      <guid>/share/hugo-disqus/</guid>
+      <guid>https://nekonull.me/share/hugo-disqus/</guid>
       <description>&lt;p&gt;Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 &lt;code&gt;config.toml&lt;/code&gt; 的顶层设定 &lt;code&gt;disqusShortname&lt;/code&gt; 属性即可，不过实际用起来稍微有些坑。具体步骤如下。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;在 Disqus 官网注册自己的账户&lt;/li&gt;
@@ -247,10 +247,10 @@ TypeError: &#39;NoneType&#39; object is not callable
     
     <item>
       <title>Python, Flask, Jinja, SQLite 里的坑</title>
-      <link>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
+      <link>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
+      <guid>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
       <description>&lt;p&gt;上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。&lt;/p&gt;
 &lt;!-- more --&gt;
 &lt;h2 id=&#34;400-bad-request&#34;&gt;400 Bad Request&lt;/h2&gt;

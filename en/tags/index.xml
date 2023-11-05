@@ -2,98 +2,98 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Nekonull&#39;s Garden</title>
-    <link>/en/tags/</link>
+    <link>https://nekonull.me/en/tags/</link>
     <description>Recent content in Tags on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/en/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/en/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>frontend</title>
-      <link>/en/tags/frontend/</link>
+      <link>https://nekonull.me/en/tags/frontend/</link>
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
-      <guid>/en/tags/frontend/</guid>
+      <guid>https://nekonull.me/en/tags/frontend/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hack</title>
-      <link>/en/tags/hack/</link>
+      <link>https://nekonull.me/en/tags/hack/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/tags/hack/</guid>
+      <guid>https://nekonull.me/en/tags/hack/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pitfalls</title>
-      <link>/en/tags/pitfalls/</link>
+      <link>https://nekonull.me/en/tags/pitfalls/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/tags/pitfalls/</guid>
+      <guid>https://nekonull.me/en/tags/pitfalls/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Go</title>
-      <link>/en/tags/go/</link>
+      <link>https://nekonull.me/en/tags/go/</link>
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
-      <guid>/en/tags/go/</guid>
+      <guid>https://nekonull.me/en/tags/go/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Distributed</title>
-      <link>/en/tags/distributed/</link>
+      <link>https://nekonull.me/en/tags/distributed/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/en/tags/distributed/</guid>
+      <guid>https://nekonull.me/en/tags/distributed/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sharing</title>
-      <link>/en/tags/sharing/</link>
+      <link>https://nekonull.me/en/tags/sharing/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/en/tags/sharing/</guid>
+      <guid>https://nekonull.me/en/tags/sharing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Systems</title>
-      <link>/en/tags/systems/</link>
+      <link>https://nekonull.me/en/tags/systems/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/en/tags/systems/</guid>
+      <guid>https://nekonull.me/en/tags/systems/</guid>
       <description></description>
     </item>
     
     <item>
       <title>journey</title>
-      <link>/en/tags/journey/</link>
+      <link>https://nekonull.me/en/tags/journey/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/en/tags/journey/</guid>
+      <guid>https://nekonull.me/en/tags/journey/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pitfall</title>
-      <link>/en/tags/pitfall/</link>
+      <link>https://nekonull.me/en/tags/pitfall/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/en/tags/pitfall/</guid>
+      <guid>https://nekonull.me/en/tags/pitfall/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>/en/tags/python/</link>
+      <link>https://nekonull.me/en/tags/python/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/en/tags/python/</guid>
+      <guid>https://nekonull.me/en/tags/python/</guid>
       <description></description>
     </item>
     

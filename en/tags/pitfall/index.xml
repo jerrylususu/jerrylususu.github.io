@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pitfall on Nekonull&#39;s Garden</title>
-    <link>/en/tags/pitfall/</link>
+    <link>https://nekonull.me/en/tags/pitfall/</link>
     <description>Recent content in Pitfall on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/en/tags/pitfall/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/pitfall/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Code blocks within Markdown tables</title>
-      <link>/en/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/en/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/en/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/en/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown provides support for tables, but only basic text formatting (such as bold, italics, inline code, etc.) is supported within table cells. More complex text formatting, such as code blocks and horizontal lines, is not supported. If you need to add support for complex formatting within tables and you are using Github Flavored Markdown, one approach is to use HTML to define the table structure and then include inline Markdown text within it. Here is an example:&lt;/p&gt;
 &lt;p&gt;Please note the following:&lt;/p&gt;
 &lt;ul&gt;
@@ -76,10 +76,10 @@ Some Text
     
     <item>
       <title>Integrating Disqus with Hugo</title>
-      <link>/en/share/hugo-disqus/</link>
+      <link>https://nekonull.me/en/share/hugo-disqus/</link>
       <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
       
-      <guid>/en/share/hugo-disqus/</guid>
+      <guid>https://nekonull.me/en/share/hugo-disqus/</guid>
       <description>&lt;p&gt;Hugo has built-in support for Disqus. In theory, you only need to set the &lt;code&gt;disqusShortname&lt;/code&gt; attribute at the top level of your site&amp;rsquo;s &lt;code&gt;config.toml&lt;/code&gt; file. However, there are some pitfalls when actually using it. Here are the specific steps.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Register your own account on the Disqus website.&lt;/li&gt;

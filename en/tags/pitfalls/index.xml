@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pitfalls on Nekonull&#39;s Garden</title>
-    <link>/en/tags/pitfalls/</link>
+    <link>https://nekonull.me/en/tags/pitfalls/</link>
     <description>Recent content in Pitfalls on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/en/tags/pitfalls/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/pitfalls/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Connecting to Physical Screen with VNC</title>
-      <link>/en/share/vnc-to-physical-display/</link>
+      <link>https://nekonull.me/en/share/vnc-to-physical-display/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/share/vnc-to-physical-display/</guid>
+      <guid>https://nekonull.me/en/share/vnc-to-physical-display/</guid>
       <description>&lt;p&gt;When searching for &amp;ldquo;Linux remote desktop,&amp;rdquo; most tutorials suggest using the combination of &amp;ldquo;xrdp + xfce4.&amp;rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &amp;ldquo;screen&amp;rdquo; or &amp;ldquo;tmux&amp;rdquo; would be more than sufficient. However, I am using a GUI program. So, I searched for a solution and found that it is possible to connect to an ongoing X session using VNC, similar to tools like TeamViewer. Here are the specific steps:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Install the TigerVNC server.&lt;/li&gt;

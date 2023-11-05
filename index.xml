@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nekonull&#39;s Garden</title>
-    <link>/</link>
+    <link>https://nekonull.me/</link>
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>多语言的 Hugo 博客</title>
-      <link>/share/hugo-multilang/</link>
+      <link>https://nekonull.me/share/hugo-multilang/</link>
       <pubDate>Sat, 04 Nov 2023 20:27:43 +0800</pubDate>
       
-      <guid>/share/hugo-multilang/</guid>
+      <guid>https://nekonull.me/share/hugo-multilang/</guid>
       <description>&lt;p&gt;之前看到了某位同学的分享，提到他在将博客多语言化之后，访问量有了显著的上升，于是也想试试看。在 OpenAI 的加持下文章翻译并不是什么难事，但是想要给一个现存的 Hugo 站点增加多语言支持依然不轻松。虽然 Hugo 本身自带了多语言支持的基本特性（&lt;a href=&#34;https://gohugo.io/content-management/multilingual/&#34;&gt;文档：Hugo Multilingual&lt;/a&gt;），但是倘若选用的主题不支持，则还需要对主题进行改造。&lt;/p&gt;
 &lt;p&gt;目前对本博客，我选择了&amp;quot;按文件名翻译&amp;quot;的做法，从文档来看这似乎是对现有文件结构侵入最小的方案。简单来说，如果你的博客 Markdown 文件位于 &lt;code&gt;/content/blog.md&lt;/code&gt;，在同层级下新建一个 &lt;code&gt;blog.en.md&lt;/code&gt; 即可补充英文翻译。完成后可以通过在域名后补充 &lt;code&gt;/en/&lt;/code&gt; 路径的方式来访问。（主语言，在我这里是&amp;quot;简体中文&amp;quot;的路径不受影响，即无需补充语言后缀。）然而让用户手动补充语言路由显然是不可接受的，于是得在页面某处加一个语言选择器。这里我暂时加到了顶部。然后你的多语言博客就可以上线了。&lt;/p&gt;
 &lt;p&gt;目前已知还存在的一些问题，待之后有空再来慢慢解决吧：&lt;/p&gt;
@@ -31,10 +31,10 @@
     
     <item>
       <title>我的 AI Prompt</title>
-      <link>/share/my-ai-prompts/</link>
+      <link>https://nekonull.me/share/my-ai-prompts/</link>
       <pubDate>Sun, 29 Oct 2023 20:17:00 +0800</pubDate>
       
-      <guid>/share/my-ai-prompts/</guid>
+      <guid>https://nekonull.me/share/my-ai-prompts/</guid>
       <description>&lt;p&gt;记录下自己自用的一些 Prompt。只是迭代下来感觉还不错，但不一定是最好的。如有推荐欢迎回复补充。&lt;/p&gt;
 &lt;h2 id=&#34;通用场景&#34;&gt;通用场景&lt;/h2&gt;
 &lt;p&gt;（主要配合 GPT-3.5-Turbo 使用，回答代码类问题）&lt;/p&gt;
@@ -66,10 +66,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</title>
-      <link>/share/try-chatglm/</link>
+      <link>https://nekonull.me/share/try-chatglm/</link>
       <pubDate>Sun, 29 Oct 2023 19:41:00 +0800</pubDate>
       
-      <guid>/share/try-chatglm/</guid>
+      <guid>https://nekonull.me/share/try-chatglm/</guid>
       <description>&lt;p&gt;最近看到了几篇关于智谱 AI 的推送文章，才想起来他们的大模型（ChatGLM 系）已经上线好久了。回想 6B 模型刚公布的那会还在 AutoDL 上自己跑过，不过因为模型本身太小，所以其实能做的并不算多。注册了个开发者账户看了看文档，目前可以广泛使用的是 &lt;a href=&#34;https://open.bigmodel.cn/pricing&#34;&gt;ChatGLM-Turbo&lt;/a&gt;，上下文窗口 32k token，定价 0.005 元/千token，还是很便宜的。更不用说因为 GLM 系模型以中文语料为主，所以同等长度的中文文本，用 GLM 的 token 消耗比用 GPT 系列的 token 消耗会小很多（测试下来大概在 4x 左右）。&lt;/p&gt;
 &lt;p&gt;官网的 Playground 玩了一会感觉还不错，生成的中文明显感觉更自然，没有 GPT 系那么浓烈的翻译腔，于是想着怎么接入到我自己用的客户端 &lt;a href=&#34;https://github.com/Bin-Huang/chatbox&#34;&gt;Chatbox&lt;/a&gt; 中日常使用。Chatbox 有内置的 ChatGLM 支持，一般直接设置下 token 就可以了。但是因为我主要用的还是 GPT 系模型，而 Chatbox 又只能全局设置一个 API 服务器字段，所以如果要同时使用 GPT 和 ChatGLM 的话，还是得用之前提到的 mitmproxy，手动完成请求的中转（没有什么是加一个抽象层不能解决的）。这里用 mitm 方式让 GLM 适配 GPT 接口还有个额外的好处，那就是只支持 OpenAI 的第三方应用也可以自动支持 GLM 了（虽然我还没这么用过）。&lt;/p&gt;
 &lt;p&gt;和之前适配 OpenRouter 不一样，这次除了修改请求头，还要修改 SSE 响应体。不知道出于什么考虑，GLM 系列模型的响应事件和 GPT 系列的完全不同，修改起来还是有些复杂的。但总之调试了几个小时之后总算是改完了，代码在此：(不建议在生产环境使用，后果自负)&lt;/p&gt;
@@ -100,10 +100,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</title>
-      <link>/share/openrouter-mitmproxy/</link>
+      <link>https://nekonull.me/share/openrouter-mitmproxy/</link>
       <pubDate>Sun, 22 Oct 2023 20:55:00 +0800</pubDate>
       
-      <guid>/share/openrouter-mitmproxy/</guid>
+      <guid>https://nekonull.me/share/openrouter-mitmproxy/</guid>
       <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;最近在尝试使用一些基于 GPT 开发的工具，但遇到了一些网络相关的小问题。因为支付方式的限制，我自己并没有 OpenAI 的账户，实际使用的 API 是其他中间商（aka 二道贩子）转卖而来的， &lt;a href=&#34;https://openrouter.ai/docs#models&#34;&gt;OpenRouter&lt;/a&gt; 就是其中一家。（实际上 OpenRouter 做的还更多一些，更像是 LLM 的聚合提供商，除了 OpenAI 也有其他家的 LLM，如 Claude 或是 LLama。）但是很多开源工具并未考虑到这种情况，基本上都是假定用户使用的就是 OpenAI 的官方 API 端点，所以很多时候并不能直接使用各类预先构建好的产物（例如 docker 镜像），而是得把源码 clone 下来，找到 &lt;code&gt;import openai&lt;/code&gt; 或者是类似的调用发起位置，再在附近补充一些参数才能正常使用。手动改代码固然不是不行，但是总归还是有些繁琐，出问题的时候还额外增加了一个需要排查的环节。&lt;/p&gt;
 &lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;
@@ -142,10 +142,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>日本游记</title>
-      <link>/archive/2310-jp-travel/</link>
+      <link>https://nekonull.me/archive/2310-jp-travel/</link>
       <pubDate>Sat, 07 Oct 2023 03:10:00 +0800</pubDate>
       
-      <guid>/archive/2310-jp-travel/</guid>
+      <guid>https://nekonull.me/archive/2310-jp-travel/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;为什么要写下来？因为不写就真的忘记了。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -321,10 +321,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>健身房等待时间模拟</title>
-      <link>/share/gym-wait-sim/</link>
+      <link>https://nekonull.me/share/gym-wait-sim/</link>
       <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
       
-      <guid>/share/gym-wait-sim/</guid>
+      <guid>https://nekonull.me/share/gym-wait-sim/</guid>
       <description>&lt;p&gt;七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动就是中午去健身房踩20多分钟的椭圆机（顺带看一集番），消耗热量约320卡。然而虽然健身房里的椭圆机数量并不少，足足有10台，但是偶尔还是会发生去了没有位置，需要等人结束的情况，但是因为不知道到底要等多久，还是略微有些焦虑。于是在想，有没有办法量化等待时间，例如模拟计算下概率分布函数，所以有了这篇文章。&lt;/p&gt;
 &lt;p&gt;代码（基本是 GPT3.5 写的，有手动调整）：https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&lt;/p&gt;
 &lt;p&gt;假设：有 10 个椭圆机，每个椭圆机上的运动者的运动时间 &lt;code&gt;t_n&lt;/code&gt; 遵循均值为 &lt;code&gt;μ&lt;/code&gt;，标准差为 &lt;code&gt;σ&lt;/code&gt; 的正态分布。到达健身房时，所有 10 台椭圆机都已被占用，且每个运动者的剩余时间在 &lt;code&gt;[0, t_n]&lt;/code&gt; 中均匀分布。等待时间为所有运动者剩余时间的最小值。&lt;/p&gt;
@@ -425,29 +425,29 @@ TL;DR summary: Summary in no more than 50 words.
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;img src=&#34;/img/gym_wait_sim_result.png&#34; alt=&#34;模拟结果可视化&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/gym_wait_sim_result.png&#34; alt=&#34;模拟结果可视化&#34;&gt;&lt;/p&gt;
 &lt;p&gt;结论：考虑所有情况，一般等 2 分钟就有 50% 概率可以等到位置，最坏情况下等 6 分钟也有 90% 的概率等到位置。&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>评论系统从 Disqus 迁移到 Giscus</title>
-      <link>/share/migrate-to-giscus/</link>
+      <link>https://nekonull.me/share/migrate-to-giscus/</link>
       <pubDate>Sun, 10 Sep 2023 22:08:00 +0800</pubDate>
       
-      <guid>/share/migrate-to-giscus/</guid>
+      <guid>https://nekonull.me/share/migrate-to-giscus/</guid>
       <description>&lt;p&gt;之前一直用的是 disqus，但是一来国内访问有时会有问题，二来新用户需要重新注册。考虑到大部分阅读本站的读者应该也是 Github 用户，迁移到 Giscus（一个基于 Github Dicsussion）的评论系统看起来更合适一些。切换评论系统本身并不难，参考&lt;a href=&#34;https://blog.arkey.fr/2022/10/16/moving-from-disqus-to-giscus/#_preparing_the_migration&#34;&gt;这篇教程&lt;/a&gt;修改 hugo 的模板和配置即可。迁移数据也不算麻烦，毕竟没什么人评论，所以其实只有两条评论，手动迁移也就花不了多少时间（虽然也尝试了&lt;a href=&#34;https://github.com/estruyf/disqus-to-github-discussions&#34;&gt;自动的方案&lt;/a&gt;但似乎有些问题，迁移过去的评论不显示&amp;hellip;）。稍微有些烦人的反倒是 Giscus 明亮/暗黑模式的切换问题。&lt;/p&gt;
-&lt;p&gt;因为本博客有自己的切换按钮（见&lt;a href=&#34;/share/css-filter-dark-mode/&#34;&gt;前文&lt;/a&gt;），用户访问的时候可能从 &lt;code&gt;localstorage&lt;/code&gt; 中取颜色模式偏好，但是目前加载 giscus 是 hugo 在站点生成的时候就将颜色偏好参数写入 html 源码了，因此需要在用户点击按钮切换时，一并切换 giscus 的颜色偏好。参考官方的&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;这个 issue&lt;/a&gt; 这一功能并不难实现。然而这样依然有问题，因为 giscus 加载后，用户点击按钮切换颜色模式偏好前，giscus 的颜色偏好是基于我的 hugo 配置文件，而非用户 localstorage 里存储的，结果就是可能用户手动选择了明亮模式，但浏览器设置里有 &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;，所以 giscus 显示黑色背景+白色文字。之前的 issue 里对这个问题没有太好的解法，看到有人 &lt;code&gt;setTimeout&lt;/code&gt; 不断循环，但感觉这不太优雅。读了一下&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;官方文档&lt;/a&gt;，发现其实 giscus 会在加载完成后向父窗口发送事件，所以其实只要监听这个事件，在 giscus 加载完后再设置 giscus 的颜色偏好即可。相关实现可参考&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;这个 commit&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;因为本博客有自己的切换按钮（见&lt;a href=&#34;https://nekonull.me/share/css-filter-dark-mode/&#34;&gt;前文&lt;/a&gt;），用户访问的时候可能从 &lt;code&gt;localstorage&lt;/code&gt; 中取颜色模式偏好，但是目前加载 giscus 是 hugo 在站点生成的时候就将颜色偏好参数写入 html 源码了，因此需要在用户点击按钮切换时，一并切换 giscus 的颜色偏好。参考官方的&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;这个 issue&lt;/a&gt; 这一功能并不难实现。然而这样依然有问题，因为 giscus 加载后，用户点击按钮切换颜色模式偏好前，giscus 的颜色偏好是基于我的 hugo 配置文件，而非用户 localstorage 里存储的，结果就是可能用户手动选择了明亮模式，但浏览器设置里有 &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;，所以 giscus 显示黑色背景+白色文字。之前的 issue 里对这个问题没有太好的解法，看到有人 &lt;code&gt;setTimeout&lt;/code&gt; 不断循环，但感觉这不太优雅。读了一下&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;官方文档&lt;/a&gt;，发现其实 giscus 会在加载完成后向父窗口发送事件，所以其实只要监听这个事件，在 giscus 加载完后再设置 giscus 的颜色偏好即可。相关实现可参考&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;这个 commit&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;可能切换了之后会有更多评论？但愿吧。&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
-      <link>/share/random-20230910/</link>
+      <link>https://nekonull.me/share/random-20230910/</link>
       <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
       
-      <guid>/share/random-20230910/</guid>
+      <guid>https://nekonull.me/share/random-20230910/</guid>
       <description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
 &lt;h2 id=&#34;本周遇到的-bug&#34;&gt;本周遇到的 Bug&lt;/h2&gt;
 &lt;p&gt;遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人的问题而非代码的问题&amp;hellip;&lt;/p&gt;
@@ -553,10 +553,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>再次复活（2023）&amp; 换用 Github Action 部署</title>
-      <link>/posts/back-again-2023/</link>
+      <link>https://nekonull.me/posts/back-again-2023/</link>
       <pubDate>Sun, 27 Aug 2023 19:30:45 +0800</pubDate>
       
-      <guid>/posts/back-again-2023/</guid>
+      <guid>https://nekonull.me/posts/back-again-2023/</guid>
       <description>&lt;p&gt;又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和&lt;a href=&#34;posts/back-again/&#34;&gt;上次&lt;/a&gt;一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&amp;hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。&lt;/p&gt;
 &lt;p&gt;本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 &lt;code&gt;publish&lt;/code&gt;），修改 Github Pages 的来源分支，然后写点 &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml&#34;&gt;Github Action&lt;/a&gt; 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&amp;hellip;）&lt;/p&gt;
 &lt;p&gt;顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（&lt;code&gt;v0.117.0&lt;/code&gt;），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&amp;hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。&lt;/p&gt;
@@ -565,10 +565,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>播放 Lofi Girl 的小脚本</title>
-      <link>/share/lofi-bat/</link>
+      <link>https://nekonull.me/share/lofi-bat/</link>
       <pubDate>Sun, 27 Aug 2023 19:18:26 +0800</pubDate>
       
-      <guid>/share/lofi-bat/</guid>
+      <guid>https://nekonull.me/share/lofi-bat/</guid>
       <description>&lt;p&gt;自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 &lt;a href=&#34;https://github.com/yt-dlp/yt-dlp&#34;&gt;yt-dlp&lt;/a&gt; 和 &lt;a href=&#34;https://sourceforge.net/projects/mpv-player-windows/files/&#34;&gt;mpv&lt;/a&gt;。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;:&lt;span style=&#34;color:#75715e&#34;&gt;:set HTTP_PROXY=http://localhost:[some_port]&lt;/span&gt;
 &lt;span style=&#34;color:#66d9ef&#34;&gt;cd&lt;/span&gt; C:\Apps\mpv-x86_64-20230723-git-ca4192e
@@ -583,10 +583,10 @@ M：静音
     
     <item>
       <title>在 devtool 控制台里爬网站</title>
-      <link>/share/console-save/</link>
+      <link>https://nekonull.me/share/console-save/</link>
       <pubDate>Sun, 20 Aug 2023 19:18:26 +0800</pubDate>
       
-      <guid>/share/console-save/</guid>
+      <guid>https://nekonull.me/share/console-save/</guid>
       <description>&lt;p&gt;最近需要从某个不提供 API 接口的网站爬数据。F12 切换到网络标签页，然后重载页面，可以轻松的观察到其实其实后台是有提供给前端的 API 的。（形如 &lt;code&gt;POST /api/entity/:id&lt;/code&gt;）。用 Edge 浏览器自带的 “编辑并重新发送” 功能测试，手动也可以调通。（这是 Edge 浏览器一个超棒的功能，对于偶尔的小调试可以替代 Postman）。理论上到了这一步就可以写点 Python 把数据遍历 ID 把数据爬下来了，不过可能还要处理一些 cookie 之类的麻烦事。与其再写个外部脚本，为什么不在浏览器的控制台里直接写脚本爬呢？&lt;/p&gt;
 &lt;p&gt;大概框架如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;idList&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;]; 
@@ -638,10 +638,10 @@ M：静音
     
     <item>
       <title>将已有的 Vue App 变为 PWA</title>
-      <link>/posts/vue-app-pwa/</link>
+      <link>https://nekonull.me/posts/vue-app-pwa/</link>
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
-      <guid>/posts/vue-app-pwa/</guid>
+      <guid>https://nekonull.me/posts/vue-app-pwa/</guid>
       <description>&lt;p&gt;之前写过一个用来辅助五十音记忆的小 App: &lt;a href=&#34;https://nekonull.me/gojuon-quiz/&#34;&gt;Gojuon Quiz&lt;/a&gt; (&lt;a href=&#34;https://github.com/jerrylususu/gojuon-quiz&#34;&gt;源代码&lt;/a&gt;)，最近心血来潮决定给它加上 PWA (Progressive Web App) 功能，这样一来用户首次加载成功后，后续就算没有网络也依然可用，二来打开的时候不会显示浏览器地址栏之类的控件，体验上基本和一个原生应用接近了。&lt;/p&gt;
 &lt;p&gt;具体操作起来其实很简单，基本上就是以下几步：&lt;/p&gt;
 &lt;ol&gt;
@@ -670,10 +670,10 @@ M：静音
     
     <item>
       <title>Python `itertools.permutations` 使用的排列算法</title>
-      <link>/posts/py-itertools-permutation-algo/</link>
+      <link>https://nekonull.me/posts/py-itertools-permutation-algo/</link>
       <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
       
-      <guid>/posts/py-itertools-permutation-algo/</guid>
+      <guid>https://nekonull.me/posts/py-itertools-permutation-algo/</guid>
       <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
 &lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
 &lt;p&gt;最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 &lt;code&gt;itertools&lt;/code&gt;，其中有一个 &lt;code&gt;permutations(iterable, r)&lt;/code&gt; 方法，可以对一个给定的 iterable 生成所有大小为 &lt;code&gt;r&lt;/code&gt; 的排列，且输出按照字典序排列。&lt;/p&gt;
@@ -769,7 +769,7 @@ M：静音
 &lt;p&gt;其实 &lt;code&gt;cycles&lt;/code&gt; 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 &lt;code&gt;indices&lt;/code&gt; 的理解就大部分是我自己的了。&lt;/p&gt;
 &lt;h3 id=&#34;indices&#34;&gt;&lt;code&gt;indices&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;现在我们来看看 &lt;code&gt;indices&lt;/code&gt; 是如何变化的。和之前对 &lt;code&gt;cycles&lt;/code&gt; 的探索一样，我们也先从一个具体的例子开始：&lt;code&gt;iterable=&amp;quot;ABCDE&amp;quot;,r=3&lt;/code&gt;，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 &lt;code&gt;print&lt;/code&gt; 后，我们可以得到如下的变化过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;图的阅读顺序是从上至下，按照时间顺序展示了&lt;code&gt;indices&lt;/code&gt; 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。&lt;/li&gt;
@@ -895,10 +895,10 @@ M：静音
     
     <item>
       <title>(译) 复杂系统如何失效</title>
-      <link>/posts/how-complex-system-fail-cn/</link>
+      <link>https://nekonull.me/posts/how-complex-system-fail-cn/</link>
       <pubDate>Tue, 10 May 2022 17:04:00 +0300</pubDate>
       
-      <guid>/posts/how-complex-system-fail-cn/</guid>
+      <guid>https://nekonull.me/posts/how-complex-system-fail-cn/</guid>
       <description>&lt;h1 id=&#34;复杂系统如何失效&#34;&gt;复杂系统如何失效&lt;/h1&gt;
 &lt;p&gt;原文链接：&lt;a href=&#34;https://how.complexsystems.fail/&#34;&gt;How Complex Systems Fail&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -951,10 +951,10 @@ M：静音
     
     <item>
       <title>用 CSS Filter 反色实现简易黑暗模式</title>
-      <link>/share/css-filter-dark-mode/</link>
+      <link>https://nekonull.me/share/css-filter-dark-mode/</link>
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
       
-      <guid>/share/css-filter-dark-mode/</guid>
+      <guid>https://nekonull.me/share/css-filter-dark-mode/</guid>
       <description>&lt;p&gt;本博客使用的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis 主题&lt;/a&gt; 并没有提供原生的黑暗模式支持，于是考虑着自己加一个。一开始的想法是定制 CSS 加上 media query，然而这样改动面似乎会比较大。随手搜索了一下，发现已经有&lt;a href=&#34;https://www.zhangxinxu.com/wordpress/2020/11/css-mix-blend-mode-filter-dark-theme/&#34;&gt;前人&lt;/a&gt;提出了使用 CSS Filter 实现简易黑暗模式的想法，甚至有&lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;代码&lt;/a&gt;可以直接应用于 Hugo 博客。相较于 media query，直接使用 CSS Filter 不仅操作上更简单，也允许用户直接切换明亮/黑暗模式，而不需要调整系统/浏览器的全局设定。&lt;/p&gt;
 &lt;p&gt;具体 CSS 实现中，先使用 &lt;code&gt;invert(1)&lt;/code&gt; 对整个网页的颜色反相，但这一操作也会引起颜色的色调反转，因此需要再用 &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; 将色调转回来。然而这样的操作对文字而言很合适，但是会影响图片、视频等元素的显示，如同被 X 射线照射一般，最后还需要对这些需要被黑暗模式排除的元素再用一次 &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; 负负得正转回来。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
@@ -1008,17 +1008,17 @@ M：静音
     }
 } 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;完整修改可见于我给这一主题实现黑暗模式的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt;，一个简单的示例可见于 &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;。最后的效果如下。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;12/27 更新&lt;/strong&gt;：PR 已被接收并合并。&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>VNC 连接到物理屏幕</title>
-      <link>/share/vnc-to-physical-display/</link>
+      <link>https://nekonull.me/share/vnc-to-physical-display/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/share/vnc-to-physical-display/</guid>
+      <guid>https://nekonull.me/share/vnc-to-physical-display/</guid>
       <description>&lt;p&gt;如果搜索 &lt;code&gt;Linux 远程桌面&lt;/code&gt;，大部分教程基本上都是 &lt;code&gt;xrdp + xfce4&lt;/code&gt; 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用场景中，有的时候在实验室的 Linux 工作站上开启了一个比较长时间的任务，回到宿舍后可能需要检查下运行过程是否正常。如果是一般的 CLI 程序，用 &lt;code&gt;screen&lt;/code&gt; 或者 &lt;code&gt;tmux&lt;/code&gt; 之类的 terminal multiplexer （终端多路复用器）就绰绰有余了，可惜我用的是一个 GUI 程序。因此试着搜索了一番，发现是可以实现 VNC 连接到一个进行中的 X session 的，效果和 teamviewer 之类的工具差不多，具体操作如下。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;安装 TigerVNC 服务端&lt;/li&gt;
@@ -1036,10 +1036,10 @@ M：静音
     
     <item>
       <title>构造能匹配所有 emoji 的正则表达式</title>
-      <link>/share/build-emoji-regex/</link>
+      <link>https://nekonull.me/share/build-emoji-regex/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/share/build-emoji-regex/</guid>
+      <guid>https://nekonull.me/share/build-emoji-regex/</guid>
       <description>&lt;p&gt;在研究一个 CSS 定制 Emoji 字体问题的时候，看到了一个 RegEx，可以匹配所有的 Emoji（至 2018 年版本），也给出了相应的测试例子，见此：&lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看完之后我半信半疑，因为这个 RegEx 太简单了，于是手动转换成了对应的 Unicode codepoint 范围检查了一下，结果发现的确有问题：这个 RegEx 的匹配范围太大了，忽略 Copyright 和 Registered 符号（u+00a9, u+00ae），剩下的区间分别是 [u+2000, u+3300] 和 [u+1f000, u+1fbff]。后者还算合理，查 Wikipedia 上 Unicode 平面映射，基本上也就是新增 Emoji 的对应 codepoint；然而前一个区间就太过广泛了，甚至连日文平假名、片假名都会被匹配上。（不过的确覆盖了几乎完全的 Emoji codepoint，虽然有些类似于 Selector 之类的边角没覆盖到）&lt;/p&gt;
@@ -1053,10 +1053,10 @@ M：静音
     
     <item>
       <title>Go 监控协程数量</title>
-      <link>/share/go-monitor-goroutine-count/</link>
+      <link>https://nekonull.me/share/go-monitor-goroutine-count/</link>
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
-      <guid>/share/go-monitor-goroutine-count/</guid>
+      <guid>https://nekonull.me/share/go-monitor-goroutine-count/</guid>
       <description>&lt;p&gt;继续补全之前写 Raft 的 debug 过程。在解决了 Timer 问题之后，发现如果多次重复测试（用 &lt;code&gt;--count 10&lt;/code&gt;），依然会存在 CPU 占用率不断上升的情况，虽然上升幅度有所减小，但多次循环之后依然很严重。初步怀疑是角色转换的时候，可能协程没处理好导致出现了 goroutine 泄露，于是找了找 Stack Overflow，魔改了一个能间隔一定时间打印出当前 Go Runtime 中协程数量的代码。最后发现的确是随着测试进行，协程数不断上升；修复泄露问题后（加了各种判断 flag），每次测试重新开始的时候，协程数会降低到和一开始差不多的水平，多次测试的资源占用也正常多了。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 
@@ -1086,10 +1086,10 @@ M：静音
     
     <item>
       <title>Go Timer 的使用姿势</title>
-      <link>/share/go-timer-correct-usage/</link>
+      <link>https://nekonull.me/share/go-timer-correct-usage/</link>
       <pubDate>Mon, 13 Dec 2021 16:32:43 +0300</pubDate>
       
-      <guid>/share/go-timer-correct-usage/</guid>
+      <guid>https://nekonull.me/share/go-timer-correct-usage/</guid>
       <description>&lt;p&gt;之前写 Raft 的时候，用 Timer 来处理定时事件，但是之后在测试的时候遇到了一些诡异的问题，具体表现是随着测试重复进行，CPU 占用率越来越高。上 pprof 检查了一下，发现存在 Timer 泄露，根源是自己 Timer 的使用有些问题。下文记录正确的 Go 中 Timer 的使用姿势。&lt;/p&gt;
 &lt;p&gt;使用场景：&lt;/p&gt;
 &lt;ul&gt;
@@ -1196,16 +1196,16 @@ M：静音
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# run pprof&lt;/span&gt;
 go tool pprof -http&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.0.0.0:8090  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:6060/debug/pprof/profile?seconds=10&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果使用上文代码中标记 faulty 的版本，在 pprof 的输出中可以发现 &lt;code&gt;epollwait&lt;/code&gt; 和 &lt;code&gt;sendTime&lt;/code&gt; 占用了大量的 CPU 时间。在 Raft 作业的测试中，每个测试样例都会开启一个新的 Raft Run，但是不会重启 Runtime，导致之前样例中泄露的 Timer 在整个测试过程中会一直存活，CPU 占用率不断上升。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/raft_timer_leak.png&#34; alt=&#34;Leak&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/raft_timer_leak.png&#34; alt=&#34;Leak&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>分布式系统课程笔记</title>
-      <link>/posts/distributed-system-course-notes/</link>
+      <link>https://nekonull.me/posts/distributed-system-course-notes/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/posts/distributed-system-course-notes/</guid>
+      <guid>https://nekonull.me/posts/distributed-system-course-notes/</guid>
       <description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;分布式系统基础：RPC 和消息语义，逻辑时钟，分布式快照，一致性模型, CAP/FLP 理论&lt;/li&gt;
@@ -1229,10 +1229,10 @@ go tool pprof -http&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.0.0
     
     <item>
       <title>调用栈也是栈</title>
-      <link>/posts/call-stack-is-also-a-stack/</link>
+      <link>https://nekonull.me/posts/call-stack-is-also-a-stack/</link>
       <pubDate>Sun, 22 Aug 2021 22:02:00 +0300</pubDate>
       
-      <guid>/posts/call-stack-is-also-a-stack/</guid>
+      <guid>https://nekonull.me/posts/call-stack-is-also-a-stack/</guid>
       <description>&lt;p&gt;又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1340,10 +1340,10 @@ s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;
     
     <item>
       <title>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</title>
-      <link>/share/ms-rdp-8021x-bug/</link>
+      <link>https://nekonull.me/share/ms-rdp-8021x-bug/</link>
       <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
       
-      <guid>/share/ms-rdp-8021x-bug/</guid>
+      <guid>https://nekonull.me/share/ms-rdp-8021x-bug/</guid>
       <description>&lt;p&gt;昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。&lt;/p&gt;
 &lt;p&gt;以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network&#34;&gt;Remote laptop disconnects from wireless network | Microsoft Docs&lt;/a&gt;，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。&lt;/p&gt;
 &lt;p&gt;找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：&lt;/p&gt;
@@ -1353,7 +1353,7 @@ s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;在「查看活动网络」下找到自己连接到的 WiFi，点击蓝色文字&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;点击「无线属性」，选择「安全」选项卡，点击「高级设置」&lt;/p&gt;
@@ -1371,10 +1371,10 @@ s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;
     
     <item>
       <title>Tensorflow 开发者认证记录</title>
-      <link>/posts/tf-cert-blog/</link>
+      <link>https://nekonull.me/posts/tf-cert-blog/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/posts/tf-cert-blog/</guid>
+      <guid>https://nekonull.me/posts/tf-cert-blog/</guid>
       <description>&lt;!-- # Tensorflow 开发者认证记录 --&gt;
 &lt;p&gt;又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1487,8 +1487,8 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1599,10 +1599,10 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
     
     <item>
       <title>Markdown 表格内的代码块</title>
-      <link>/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
 &lt;p&gt;需要注意之处：&lt;/p&gt;
 &lt;ul&gt;
@@ -1666,10 +1666,10 @@ Some Text
     
     <item>
       <title>Python __hash__ 继承</title>
-      <link>/share/python-hash-inherit/</link>
+      <link>https://nekonull.me/share/python-hash-inherit/</link>
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
-      <guid>/share/python-hash-inherit/</guid>
+      <guid>https://nekonull.me/share/python-hash-inherit/</guid>
       <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
 &lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
 &lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;

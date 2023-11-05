@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>分享 on Nekonull&#39;s Garden</title>
-    <link>/tags/%E5%88%86%E4%BA%AB/</link>
+    <link>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</link>
     <description>Recent content in 分享 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="/tags/%E5%88%86%E4%BA%AB/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 12 Dec 2021 20:47:32 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%88%86%E4%BA%AB/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>分布式系统课程笔记</title>
-      <link>/posts/distributed-system-course-notes/</link>
+      <link>https://nekonull.me/posts/distributed-system-course-notes/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/posts/distributed-system-course-notes/</guid>
+      <guid>https://nekonull.me/posts/distributed-system-course-notes/</guid>
       <description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;分布式系统基础：RPC 和消息语义，逻辑时钟，分布式快照，一致性模型, CAP/FLP 理论&lt;/li&gt;
@@ -36,10 +36,10 @@
     
     <item>
       <title>Utils.ahk</title>
-      <link>/posts/utils-ahk/</link>
+      <link>https://nekonull.me/posts/utils-ahk/</link>
       <pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate>
       
-      <guid>/posts/utils-ahk/</guid>
+      <guid>https://nekonull.me/posts/utils-ahk/</guid>
       <description>&lt;p&gt;各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://gist.github.com/jerrylususu/ca434b7c34c77968ceecd4b735af1fcf&#34;&gt;GitHub Gist&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;快速启动&#34;&gt;快速启动&lt;/h2&gt;
@@ -86,10 +86,10 @@
     
     <item>
       <title>我最近在用什么软件？</title>
-      <link>/posts/what-software-i-am-using/</link>
+      <link>https://nekonull.me/posts/what-software-i-am-using/</link>
       <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
       
-      <guid>/posts/what-software-i-am-using/</guid>
+      <guid>https://nekonull.me/posts/what-software-i-am-using/</guid>
       <description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
 &lt;h2 id=&#34;featured-&#34;&gt;Featured ✨&lt;/h2&gt;
 &lt;h3 id=&#34;stickies&#34;&gt;Stickies&lt;/h3&gt;
@@ -136,10 +136,10 @@
     
     <item>
       <title>Python, Flask, Jinja, SQLite 里的坑</title>
-      <link>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
+      <link>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
+      <guid>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
       <description>&lt;p&gt;上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。&lt;/p&gt;
 &lt;!-- more --&gt;
 &lt;h2 id=&#34;400-bad-request&#34;&gt;400 Bad Request&lt;/h2&gt;

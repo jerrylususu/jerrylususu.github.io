@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hack on Nekonull&#39;s Garden</title>
-    <link>/tags/hack/</link>
+    <link>https://nekonull.me/tags/hack/</link>
     <description>Recent content in hack on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/tags/hack/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/hack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>构造能匹配所有 emoji 的正则表达式</title>
-      <link>/share/build-emoji-regex/</link>
+      <link>https://nekonull.me/share/build-emoji-regex/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/share/build-emoji-regex/</guid>
+      <guid>https://nekonull.me/share/build-emoji-regex/</guid>
       <description>&lt;p&gt;在研究一个 CSS 定制 Emoji 字体问题的时候，看到了一个 RegEx，可以匹配所有的 Emoji（至 2018 年版本），也给出了相应的测试例子，见此：&lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看完之后我半信半疑，因为这个 RegEx 太简单了，于是手动转换成了对应的 Unicode codepoint 范围检查了一下，结果发现的确有问题：这个 RegEx 的匹配范围太大了，忽略 Copyright 和 Registered 符号（u+00a9, u+00ae），剩下的区间分别是 [u+2000, u+3300] 和 [u+1f000, u+1fbff]。后者还算合理，查 Wikipedia 上 Unicode 平面映射，基本上也就是新增 Emoji 的对应 codepoint；然而前一个区间就太过广泛了，甚至连日文平假名、片假名都会被匹配上。（不过的确覆盖了几乎完全的 Emoji codepoint，虽然有些类似于 Selector 之类的边角没覆盖到）&lt;/p&gt;
@@ -26,10 +26,10 @@
     
     <item>
       <title>调用栈也是栈</title>
-      <link>/posts/call-stack-is-also-a-stack/</link>
+      <link>https://nekonull.me/posts/call-stack-is-also-a-stack/</link>
       <pubDate>Sun, 22 Aug 2021 22:02:00 +0300</pubDate>
       
-      <guid>/posts/call-stack-is-also-a-stack/</guid>
+      <guid>https://nekonull.me/posts/call-stack-is-also-a-stack/</guid>
       <description>&lt;p&gt;又到了秋招的季节，刷题的时候遇到了一道有趣的题，简化如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;

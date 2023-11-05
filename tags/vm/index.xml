@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VM on Nekonull&#39;s Garden</title>
-    <link>/tags/vm/</link>
+    <link>https://nekonull.me/tags/vm/</link>
     <description>Recent content in VM on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="/tags/vm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/vm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL2, Docker, Virtualbox</title>
-      <link>/share/wsl2-docker-virtualbox/</link>
+      <link>https://nekonull.me/share/wsl2-docker-virtualbox/</link>
       <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
       
-      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <guid>https://nekonull.me/share/wsl2-docker-virtualbox/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;2021/4/9 更新:
 VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。&lt;/p&gt;

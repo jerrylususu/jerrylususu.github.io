@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>frontend on Nekonull&#39;s Garden</title>
-    <link>/tags/frontend/</link>
+    <link>https://nekonull.me/tags/frontend/</link>
     <description>Recent content in frontend on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
-      <link>/share/random-20230910/</link>
+      <link>https://nekonull.me/share/random-20230910/</link>
       <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
       
-      <guid>/share/random-20230910/</guid>
+      <guid>https://nekonull.me/share/random-20230910/</guid>
       <description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
 &lt;h2 id=&#34;本周遇到的-bug&#34;&gt;本周遇到的 Bug&lt;/h2&gt;
 &lt;p&gt;遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人的问题而非代码的问题&amp;hellip;&lt;/p&gt;

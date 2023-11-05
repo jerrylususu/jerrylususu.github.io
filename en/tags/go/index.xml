@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Nekonull&#39;s Garden</title>
-    <link>/en/tags/go/</link>
+    <link>https://nekonull.me/en/tags/go/</link>
     <description>Recent content in Go on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="/en/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Monitor the number of goroutines</title>
-      <link>/en/share/go-monitor-goroutine-count/</link>
+      <link>https://nekonull.me/en/share/go-monitor-goroutine-count/</link>
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
-      <guid>/en/share/go-monitor-goroutine-count/</guid>
+      <guid>https://nekonull.me/en/share/go-monitor-goroutine-count/</guid>
       <description>&lt;p&gt;Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using &lt;code&gt;--count 10&lt;/code&gt;), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals. Finally, it was indeed found that the number of goroutines kept increasing as the tests progressed. After fixing the leak issue (by adding various conditional checks), each time the test restarted, the number of goroutines would decrease to a level similar to the initial state, and the resource consumption during multiple tests also returned to normal.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 

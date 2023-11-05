@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Nekonull&#39;s Garden</title>
-    <link>/en/tags/python/</link>
+    <link>https://nekonull.me/en/tags/python/</link>
     <description>Recent content in Python on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/en/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Code blocks within Markdown tables</title>
-      <link>/en/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/en/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/en/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/en/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown provides support for tables, but only basic text formatting (such as bold, italics, inline code, etc.) is supported within table cells. More complex text formatting, such as code blocks and horizontal lines, is not supported. If you need to add support for complex formatting within tables and you are using Github Flavored Markdown, one approach is to use HTML to define the table structure and then include inline Markdown text within it. Here is an example:&lt;/p&gt;
 &lt;p&gt;Please note the following:&lt;/p&gt;
 &lt;ul&gt;

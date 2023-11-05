@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>journey on Nekonull&#39;s Garden</title>
-    <link>/en/tags/journey/</link>
+    <link>https://nekonull.me/en/tags/journey/</link>
     <description>Recent content in journey on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="/en/tags/journey/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/journey/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tensorflow Developer Certification Journey</title>
-      <link>/en/posts/tf-cert-blog/</link>
+      <link>https://nekonull.me/en/posts/tf-cert-blog/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/en/posts/tf-cert-blog/</guid>
+      <guid>https://nekonull.me/en/posts/tf-cert-blog/</guid>
       <description>&lt;!-- # Tensorflow Developer Certification Journey --&gt;
 &lt;p&gt;Also known as: How I Passed the Tensorflow Developer Certification in 7 Days, and Should You Do It Too?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -101,8 +101,8 @@ This handbook provides guidance for the TF Developer Certification exam and inst
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;Depth-first&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;Repetition&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;Depth-first&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;Repetition&#34;&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Nekonull&#39;s Garden</title>
-    <link>/tags/go/</link>
+    <link>https://nekonull.me/tags/go/</link>
     <description>Recent content in Go on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:44:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go 监控协程数量</title>
-      <link>/share/go-monitor-goroutine-count/</link>
+      <link>https://nekonull.me/share/go-monitor-goroutine-count/</link>
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
-      <guid>/share/go-monitor-goroutine-count/</guid>
+      <guid>https://nekonull.me/share/go-monitor-goroutine-count/</guid>
       <description>&lt;p&gt;继续补全之前写 Raft 的 debug 过程。在解决了 Timer 问题之后，发现如果多次重复测试（用 &lt;code&gt;--count 10&lt;/code&gt;），依然会存在 CPU 占用率不断上升的情况，虽然上升幅度有所减小，但多次循环之后依然很严重。初步怀疑是角色转换的时候，可能协程没处理好导致出现了 goroutine 泄露，于是找了找 Stack Overflow，魔改了一个能间隔一定时间打印出当前 Go Runtime 中协程数量的代码。最后发现的确是随着测试进行，协程数不断上升；修复泄露问题后（加了各种判断 flag），每次测试重新开始的时候，协程数会降低到和一开始差不多的水平，多次测试的资源占用也正常多了。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 
@@ -42,10 +42,10 @@
     
     <item>
       <title>Go Timer 的使用姿势</title>
-      <link>/share/go-timer-correct-usage/</link>
+      <link>https://nekonull.me/share/go-timer-correct-usage/</link>
       <pubDate>Mon, 13 Dec 2021 16:32:43 +0300</pubDate>
       
-      <guid>/share/go-timer-correct-usage/</guid>
+      <guid>https://nekonull.me/share/go-timer-correct-usage/</guid>
       <description>&lt;p&gt;之前写 Raft 的时候，用 Timer 来处理定时事件，但是之后在测试的时候遇到了一些诡异的问题，具体表现是随着测试重复进行，CPU 占用率越来越高。上 pprof 检查了一下，发现存在 Timer 泄露，根源是自己 Timer 的使用有些问题。下文记录正确的 Go 中 Timer 的使用姿势。&lt;/p&gt;
 &lt;p&gt;使用场景：&lt;/p&gt;
 &lt;ul&gt;
@@ -152,7 +152,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# run pprof&lt;/span&gt;
 go tool pprof -http&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.0.0.0:8090  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://localhost:6060/debug/pprof/profile?seconds=10&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果使用上文代码中标记 faulty 的版本，在 pprof 的输出中可以发现 &lt;code&gt;epollwait&lt;/code&gt; 和 &lt;code&gt;sendTime&lt;/code&gt; 占用了大量的 CPU 时间。在 Raft 作业的测试中，每个测试样例都会开启一个新的 Raft Run，但是不会重启 Runtime，导致之前样例中泄露的 Timer 在整个测试过程中会一直存活，CPU 占用率不断上升。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/raft_timer_leak.png&#34; alt=&#34;Leak&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/raft_timer_leak.png&#34; alt=&#34;Leak&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     

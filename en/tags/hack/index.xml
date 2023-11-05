@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>hack on Nekonull&#39;s Garden</title>
-    <link>/en/tags/hack/</link>
+    <link>https://nekonull.me/en/tags/hack/</link>
     <description>Recent content in hack on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="/en/tags/hack/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 13 Dec 2021 16:50:43 +0300</lastBuildDate><atom:link href="https://nekonull.me/en/tags/hack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Constructing a RegEx that matches all emojis</title>
-      <link>/en/share/build-emoji-regex/</link>
+      <link>https://nekonull.me/en/share/build-emoji-regex/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/share/build-emoji-regex/</guid>
+      <guid>https://nekonull.me/en/share/build-emoji-regex/</guid>
       <description>&lt;p&gt;While researching a CSS custom emoji font issue, I came across a RegEx that can match all emojis (up to the 2018 version) and it also provides corresponding test examples. You can find it here: &lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After reading it, I was skeptical because the RegEx seemed too simple. So, I manually converted it to check the corresponding Unicode codepoint range, and I found that there is indeed a problem. The matching range of this RegEx is too broad, excluding the Copyright and Registered symbols (u+00a9, u+00ae), the remaining ranges are [u+2000, u+3300] and [u+1f000, u+1fbff]. The latter range seems reasonable, as it corresponds to the newly added emoji codepoints according to the Unicode plane mapping on Wikipedia. However, the former range is too extensive, even including Japanese Hiragana and Katakana characters. (Although it does cover almost all emoji codepoints, it misses some corner cases like selectors.)&lt;/p&gt;

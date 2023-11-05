@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LLM on Nekonull&#39;s Garden</title>
-    <link>/tags/llm/</link>
+    <link>https://nekonull.me/tags/llm/</link>
     <description>Recent content in LLM on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 29 Oct 2023 20:17:00 +0800</lastBuildDate><atom:link href="/tags/llm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Oct 2023 20:17:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/llm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的 AI Prompt</title>
-      <link>/share/my-ai-prompts/</link>
+      <link>https://nekonull.me/share/my-ai-prompts/</link>
       <pubDate>Sun, 29 Oct 2023 20:17:00 +0800</pubDate>
       
-      <guid>/share/my-ai-prompts/</guid>
+      <guid>https://nekonull.me/share/my-ai-prompts/</guid>
       <description>&lt;p&gt;记录下自己自用的一些 Prompt。只是迭代下来感觉还不错，但不一定是最好的。如有推荐欢迎回复补充。&lt;/p&gt;
 &lt;h2 id=&#34;通用场景&#34;&gt;通用场景&lt;/h2&gt;
 &lt;p&gt;（主要配合 GPT-3.5-Turbo 使用，回答代码类问题）&lt;/p&gt;
@@ -44,10 +44,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</title>
-      <link>/share/try-chatglm/</link>
+      <link>https://nekonull.me/share/try-chatglm/</link>
       <pubDate>Sun, 29 Oct 2023 19:41:00 +0800</pubDate>
       
-      <guid>/share/try-chatglm/</guid>
+      <guid>https://nekonull.me/share/try-chatglm/</guid>
       <description>&lt;p&gt;最近看到了几篇关于智谱 AI 的推送文章，才想起来他们的大模型（ChatGLM 系）已经上线好久了。回想 6B 模型刚公布的那会还在 AutoDL 上自己跑过，不过因为模型本身太小，所以其实能做的并不算多。注册了个开发者账户看了看文档，目前可以广泛使用的是 &lt;a href=&#34;https://open.bigmodel.cn/pricing&#34;&gt;ChatGLM-Turbo&lt;/a&gt;，上下文窗口 32k token，定价 0.005 元/千token，还是很便宜的。更不用说因为 GLM 系模型以中文语料为主，所以同等长度的中文文本，用 GLM 的 token 消耗比用 GPT 系列的 token 消耗会小很多（测试下来大概在 4x 左右）。&lt;/p&gt;
 &lt;p&gt;官网的 Playground 玩了一会感觉还不错，生成的中文明显感觉更自然，没有 GPT 系那么浓烈的翻译腔，于是想着怎么接入到我自己用的客户端 &lt;a href=&#34;https://github.com/Bin-Huang/chatbox&#34;&gt;Chatbox&lt;/a&gt; 中日常使用。Chatbox 有内置的 ChatGLM 支持，一般直接设置下 token 就可以了。但是因为我主要用的还是 GPT 系模型，而 Chatbox 又只能全局设置一个 API 服务器字段，所以如果要同时使用 GPT 和 ChatGLM 的话，还是得用之前提到的 mitmproxy，手动完成请求的中转（没有什么是加一个抽象层不能解决的）。这里用 mitm 方式让 GLM 适配 GPT 接口还有个额外的好处，那就是只支持 OpenAI 的第三方应用也可以自动支持 GLM 了（虽然我还没这么用过）。&lt;/p&gt;
 &lt;p&gt;和之前适配 OpenRouter 不一样，这次除了修改请求头，还要修改 SSE 响应体。不知道出于什么考虑，GLM 系列模型的响应事件和 GPT 系列的完全不同，修改起来还是有些复杂的。但总之调试了几个小时之后总算是改完了，代码在此：(不建议在生产环境使用，后果自负)&lt;/p&gt;
@@ -78,10 +78,10 @@ TL;DR summary: Summary in no more than 50 words.
     
     <item>
       <title>用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</title>
-      <link>/share/openrouter-mitmproxy/</link>
+      <link>https://nekonull.me/share/openrouter-mitmproxy/</link>
       <pubDate>Sun, 22 Oct 2023 20:55:00 +0800</pubDate>
       
-      <guid>/share/openrouter-mitmproxy/</guid>
+      <guid>https://nekonull.me/share/openrouter-mitmproxy/</guid>
       <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
 &lt;p&gt;最近在尝试使用一些基于 GPT 开发的工具，但遇到了一些网络相关的小问题。因为支付方式的限制，我自己并没有 OpenAI 的账户，实际使用的 API 是其他中间商（aka 二道贩子）转卖而来的， &lt;a href=&#34;https://openrouter.ai/docs#models&#34;&gt;OpenRouter&lt;/a&gt; 就是其中一家。（实际上 OpenRouter 做的还更多一些，更像是 LLM 的聚合提供商，除了 OpenAI 也有其他家的 LLM，如 Claude 或是 LLama。）但是很多开源工具并未考虑到这种情况，基本上都是假定用户使用的就是 OpenAI 的官方 API 端点，所以很多时候并不能直接使用各类预先构建好的产物（例如 docker 镜像），而是得把源码 clone 下来，找到 &lt;code&gt;import openai&lt;/code&gt; 或者是类似的调用发起位置，再在附近补充一些参数才能正常使用。手动改代码固然不是不行，但是总归还是有些繁琐，出问题的时候还额外增加了一个需要排查的环节。&lt;/p&gt;
 &lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>算法 on Nekonull&#39;s Garden</title>
-    <link>/tags/%E7%AE%97%E6%B3%95/</link>
+    <link>https://nekonull.me/tags/%E7%AE%97%E6%B3%95/</link>
     <description>Recent content in 算法 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 10 May 2022 22:54:00 +0800</lastBuildDate><atom:link href="/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 May 2022 22:54:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python `itertools.permutations` 使用的排列算法</title>
-      <link>/posts/py-itertools-permutation-algo/</link>
+      <link>https://nekonull.me/posts/py-itertools-permutation-algo/</link>
       <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
       
-      <guid>/posts/py-itertools-permutation-algo/</guid>
+      <guid>https://nekonull.me/posts/py-itertools-permutation-algo/</guid>
       <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
 &lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
 &lt;p&gt;最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 &lt;code&gt;itertools&lt;/code&gt;，其中有一个 &lt;code&gt;permutations(iterable, r)&lt;/code&gt; 方法，可以对一个给定的 iterable 生成所有大小为 &lt;code&gt;r&lt;/code&gt; 的排列，且输出按照字典序排列。&lt;/p&gt;
@@ -108,7 +108,7 @@
 &lt;p&gt;其实 &lt;code&gt;cycles&lt;/code&gt; 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 &lt;code&gt;indices&lt;/code&gt; 的理解就大部分是我自己的了。&lt;/p&gt;
 &lt;h3 id=&#34;indices&#34;&gt;&lt;code&gt;indices&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;现在我们来看看 &lt;code&gt;indices&lt;/code&gt; 是如何变化的。和之前对 &lt;code&gt;cycles&lt;/code&gt; 的探索一样，我们也先从一个具体的例子开始：&lt;code&gt;iterable=&amp;quot;ABCDE&amp;quot;,r=3&lt;/code&gt;，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 &lt;code&gt;print&lt;/code&gt; 后，我们可以得到如下的变化过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
 &lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;图的阅读顺序是从上至下，按照时间顺序展示了&lt;code&gt;indices&lt;/code&gt; 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。&lt;/li&gt;

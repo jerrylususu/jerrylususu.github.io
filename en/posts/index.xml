@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Nekonull&#39;s Garden</title>
-    <link>/en/posts/</link>
+    <link>https://nekonull.me/en/posts/</link>
     <description>Recent content in Posts on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/en/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/en/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turning an Existing Vue App into a PWA</title>
-      <link>/en/posts/vue-app-pwa/</link>
+      <link>https://nekonull.me/en/posts/vue-app-pwa/</link>
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
-      <guid>/en/posts/vue-app-pwa/</guid>
+      <guid>https://nekonull.me/en/posts/vue-app-pwa/</guid>
       <description>&lt;p&gt;I previously wrote a small app called &amp;ldquo;Gojuon Quiz&amp;rdquo; to assist in memorizing the Japanese phonetic alphabet. Recently, I decided to add Progressive Web App (PWA) functionality to it. This allows the app to be used even without an internet connection after the initial successful loading. Additionally, it provides a user experience that is similar to a native application, without displaying browser address bars or similar controls.&lt;/p&gt;
 &lt;p&gt;The specific steps to implement PWA are as follows:&lt;/p&gt;
 &lt;ol&gt;
@@ -41,10 +41,10 @@
     
     <item>
       <title>Notes on Distributed Systems Course</title>
-      <link>/en/posts/distributed-system-course-notes/</link>
+      <link>https://nekonull.me/en/posts/distributed-system-course-notes/</link>
       <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
       
-      <guid>/en/posts/distributed-system-course-notes/</guid>
+      <guid>https://nekonull.me/en/posts/distributed-system-course-notes/</guid>
       <description>&lt;p&gt;This semester, I took a course on distributed systems, which is essentially a combination of MIT&amp;rsquo;s Distributed Systems (6.824) and Princeton&amp;rsquo;s Distributed Systems (COS 418) courses. It covers the following topics:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Fundamentals of distributed systems: RPC and message semantics, logical clocks, distributed snapshots, consistency models, CAP/FLP theory&lt;/li&gt;
@@ -68,10 +68,10 @@
     
     <item>
       <title>Tensorflow Developer Certification Journey</title>
-      <link>/en/posts/tf-cert-blog/</link>
+      <link>https://nekonull.me/en/posts/tf-cert-blog/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/en/posts/tf-cert-blog/</guid>
+      <guid>https://nekonull.me/en/posts/tf-cert-blog/</guid>
       <description>&lt;!-- # Tensorflow Developer Certification Journey --&gt;
 &lt;p&gt;Also known as: How I Passed the Tensorflow Developer Certification in 7 Days, and Should You Do It Too?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -160,8 +160,8 @@ This handbook provides guidance for the TF Developer Certification exam and inst
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;Depth-first&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;Repetition&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;Depth-first&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;Repetition&#34;&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -256,10 +256,10 @@ This handbook provides guidance for the TF Developer Certification exam and inst
     
     <item>
       <title>Reinstall Without Data Loss - Repair Install</title>
-      <link>/en/posts/repair-install/</link>
+      <link>https://nekonull.me/en/posts/repair-install/</link>
       <pubDate>Thu, 18 Feb 2021 01:47:01 +0300</pubDate>
       
-      <guid>/en/posts/repair-install/</guid>
+      <guid>https://nekonull.me/en/posts/repair-install/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Recently, my main computer running Windows 10 encountered some strange issues, such as the Start menu not opening at times. My initial reaction was to try repairing using the &lt;code&gt;sfc&lt;/code&gt;/&lt;code&gt;dism&lt;/code&gt; commands, but it didn&amp;rsquo;t work. I also tried various other methods, but the problem persisted. At this point, reinstalling seemed like the only option, but the thought of backing up data and reinstalling all the software was daunting. However, I stumbled upon a little trick called &amp;ldquo;Repair Install&amp;rdquo; that actually solved the problem. I couldn&amp;rsquo;t find anyone else mentioning it on the forum, so I decided to share it here.&lt;/p&gt;
 &lt;h2 id=&#34;what-is-repair-install&#34;&gt;What is &amp;ldquo;Repair Install&amp;rdquo;?&lt;/h2&gt;

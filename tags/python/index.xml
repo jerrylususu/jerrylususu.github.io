@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Nekonull&#39;s Garden</title>
-    <link>/tags/python/</link>
+    <link>https://nekonull.me/tags/python/</link>
     <description>Recent content in Python on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Apr 2021 17:10:00 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Markdown 表格内的代码块</title>
-      <link>/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。&lt;/p&gt;
 &lt;p&gt;需要注意之处：&lt;/p&gt;
 &lt;ul&gt;
@@ -76,10 +76,10 @@ Some Text
     
     <item>
       <title>Python __hash__ 继承</title>
-      <link>/share/python-hash-inherit/</link>
+      <link>https://nekonull.me/share/python-hash-inherit/</link>
       <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
       
-      <guid>/share/python-hash-inherit/</guid>
+      <guid>https://nekonull.me/share/python-hash-inherit/</guid>
       <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
 &lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
 &lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;

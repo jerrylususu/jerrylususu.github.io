@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Share on Nekonull&#39;s Garden</title>
-    <link>/en/share/</link>
+    <link>https://nekonull.me/en/share/</link>
     <description>Recent content in Share on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="/en/share/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="https://nekonull.me/en/share/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Multilingual Hugo Blog</title>
-      <link>/en/share/hugo-multilang/</link>
+      <link>https://nekonull.me/en/share/hugo-multilang/</link>
       <pubDate>Sat, 04 Nov 2023 20:27:43 +0800</pubDate>
       
-      <guid>/en/share/hugo-multilang/</guid>
+      <guid>https://nekonull.me/en/share/hugo-multilang/</guid>
       <description>&lt;p&gt;I recently came across a classmate&amp;rsquo;s sharing, mentioning that after making their blog multilingual, they saw a significant increase in traffic. So, I decided to give it a try as well. With the help of OpenAI, translating articles is not a difficult task. However, adding multilingual support to an existing Hugo site is still not a walk in the park. Although Hugo itself has the basic features for multilingual support (&lt;a href=&#34;https://gohugo.io/content-management/multilingual/&#34;&gt;Documentation: Hugo Multilingual&lt;/a&gt;), if the chosen theme does not support it, modifications to the theme are necessary.&lt;/p&gt;
 &lt;p&gt;For my blog, I have chosen the &amp;ldquo;translation by filename&amp;rdquo; approach, which seems to be the least intrusive solution based on the documentation. In simple terms, if your blog&amp;rsquo;s Markdown file is located at &lt;code&gt;/content/blog.md&lt;/code&gt;, you can add an &lt;code&gt;blog.en.md&lt;/code&gt; file at the same level to provide the English translation. After completion, you can access the translated version by appending &lt;code&gt;/en/&lt;/code&gt; to the domain name. (The default language, in my case, is &amp;ldquo;Simplified Chinese,&amp;rdquo; so no language suffix is needed for the path.) However, it is unacceptable to expect users to manually add the language route, so a language selector needs to be added to the page. For now, I have added it to the top of the page. And voila, your multilingual blog is ready to go live!&lt;/p&gt;
 &lt;p&gt;There are still some known issues that I will address when I have the time:&lt;/p&gt;
@@ -31,10 +31,10 @@
     
     <item>
       <title>Simulating Wait Times at the Gym</title>
-      <link>/en/share/gym-wait-sim/</link>
+      <link>https://nekonull.me/en/share/gym-wait-sim/</link>
       <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
       
-      <guid>/en/share/gym-wait-sim/</guid>
+      <guid>https://nekonull.me/en/share/gym-wait-sim/</guid>
       <description>&lt;p&gt;In mid-July, I visited the hospital and started exercising regularly upon the doctor&amp;rsquo;s advice. After considering my work schedule and my physical condition, I decided to go to the gym for a workout during lunchtime. Currently, my daily exercise routine consists of spending about 20 minutes on the elliptical machine at the gym (while watching an episode of a TV show), burning approximately 320 calories. However, even though there are plenty of elliptical machines in the gym, a situation occasionally arises where there are no available machines and I have to wait for someone to finish. Not knowing how long the wait will be can be slightly anxiety-inducing. So, I started thinking about whether there is a way to quantify the wait time, such as simulating and calculating the probability distribution function. And that&amp;rsquo;s how this article came about.&lt;/p&gt;
 &lt;p&gt;Code (mostly written using GPT3.5, with some manual adjustments): &lt;a href=&#34;https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&#34;&gt;link to code&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Assumption: There are 10 elliptical machines, and the exercise time of each user on a machine, denoted as &lt;code&gt;t_n&lt;/code&gt;, follows a normal distribution with a mean of &lt;code&gt;μ&lt;/code&gt; and a standard deviation of &lt;code&gt;σ&lt;/code&gt;. When I arrive at the gym, all 10 machines are already occupied, and the remaining exercise time for each user is uniformly distributed between 0 and &lt;code&gt;t_n&lt;/code&gt;. The wait time is defined as the minimum of the remaining exercise times for all users.&lt;/p&gt;
@@ -135,29 +135,29 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;img src=&#34;/img/gym_wait_sim_result.png&#34; alt=&#34;Visualization of Simulation Results&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/gym_wait_sim_result.png&#34; alt=&#34;Visualization of Simulation Results&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Conclusion: Taking all scenarios into account, there is a 50% probability of waiting for about 2 minutes to secure a spot, and in the worst-case scenario, there is a 90% probability of waiting for up to 6 minutes to secure a spot.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Migrating from Disqus to Giscus for the Comment System</title>
-      <link>/en/share/migrate-to-giscus/</link>
+      <link>https://nekonull.me/en/share/migrate-to-giscus/</link>
       <pubDate>Sun, 10 Sep 2023 22:08:00 +0800</pubDate>
       
-      <guid>/en/share/migrate-to-giscus/</guid>
+      <guid>https://nekonull.me/en/share/migrate-to-giscus/</guid>
       <description>&lt;p&gt;I used to use Disqus for the comment system, but there were occasional issues with accessing it from within China, and new users had to register again. Considering that most of the readers of this site are likely GitHub users, migrating to Giscus (a comment system based on GitHub Discussions) seems more suitable. Switching the comment system itself is not difficult, you can refer to &lt;a href=&#34;https://blog.arkey.fr/2022/10/16/moving-from-disqus-to-giscus/#_preparing_the_migration&#34;&gt;this tutorial&lt;/a&gt; to modify the Hugo templates and configurations. Migrating the data is not troublesome either, as there weren&amp;rsquo;t many comments to begin with, so there are only two comments to manually migrate, which shouldn&amp;rsquo;t take much time (although I also tried an &lt;a href=&#34;https://github.com/estruyf/disqus-to-github-discussions&#34;&gt;automated solution&lt;/a&gt;, but it seems to have some issues and the migrated comments don&amp;rsquo;t show up&amp;hellip;). The slightly annoying part is actually the switching between light/dark mode in Giscus.&lt;/p&gt;
-&lt;p&gt;Because this blog has its own toggle button (see &lt;a href=&#34;/share/css-filter-dark-mode/&#34;&gt;previous post&lt;/a&gt;), when users visit, they may retrieve the color mode preference from &lt;code&gt;localstorage&lt;/code&gt;. However, currently, when Giscus is loaded, Hugo writes the color preference parameters into the HTML source code during site generation. Therefore, when the user clicks the button to switch, the color preference in Giscus needs to be switched as well. Referring to &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;this issue&lt;/a&gt; in the official documentation, this feature is not difficult to implement. However, there is still a problem because after Giscus is loaded, if the user clicks the button to switch color mode preference, Giscus will use the color preference based on my Hugo configuration file, rather than what is stored in the user&amp;rsquo;s localstorage. As a result, the user may manually choose the light mode, but if the browser settings have &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;, Giscus will display a black background with white text. There wasn&amp;rsquo;t a good solution to this problem in the previous issue discussions, although I saw someone using &lt;code&gt;setTimeout&lt;/code&gt; to continuously loop, but that doesn&amp;rsquo;t seem very elegant. After reading the &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;official documentation&lt;/a&gt;, I found that Giscus actually sends an event to the parent window after it finishes loading, so as long as we listen for this event, we can set the color preference for Giscus after it has loaded. You can refer to &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;this commit&lt;/a&gt; for the related implementation.&lt;/p&gt;
+&lt;p&gt;Because this blog has its own toggle button (see &lt;a href=&#34;https://nekonull.me/share/css-filter-dark-mode/&#34;&gt;previous post&lt;/a&gt;), when users visit, they may retrieve the color mode preference from &lt;code&gt;localstorage&lt;/code&gt;. However, currently, when Giscus is loaded, Hugo writes the color preference parameters into the HTML source code during site generation. Therefore, when the user clicks the button to switch, the color preference in Giscus needs to be switched as well. Referring to &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;this issue&lt;/a&gt; in the official documentation, this feature is not difficult to implement. However, there is still a problem because after Giscus is loaded, if the user clicks the button to switch color mode preference, Giscus will use the color preference based on my Hugo configuration file, rather than what is stored in the user&amp;rsquo;s localstorage. As a result, the user may manually choose the light mode, but if the browser settings have &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;, Giscus will display a black background with white text. There wasn&amp;rsquo;t a good solution to this problem in the previous issue discussions, although I saw someone using &lt;code&gt;setTimeout&lt;/code&gt; to continuously loop, but that doesn&amp;rsquo;t seem very elegant. After reading the &lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;official documentation&lt;/a&gt;, I found that Giscus actually sends an event to the parent window after it finishes loading, so as long as we listen for this event, we can set the color preference for Giscus after it has loaded. You can refer to &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;this commit&lt;/a&gt; for the related implementation.&lt;/p&gt;
 &lt;p&gt;Perhaps there will be more comments after the switch? Hopefully.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Implementing a Simple Dark Mode with CSS Filter</title>
-      <link>/en/share/css-filter-dark-mode/</link>
+      <link>https://nekonull.me/en/share/css-filter-dark-mode/</link>
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
       
-      <guid>/en/share/css-filter-dark-mode/</guid>
+      <guid>https://nekonull.me/en/share/css-filter-dark-mode/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis theme&lt;/a&gt; used on this blog does not provide native support for dark mode, so I decided to add it myself. Initially, I thought about customizing the CSS with media queries, but it seemed like a bigger change. I did a quick search and found that someone had already proposed the idea of using CSS Filter to implement a simple dark mode, and there was even &lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;code&lt;/a&gt; that could be directly applied to a Hugo blog. Compared to media queries, using CSS Filter not only simplifies the implementation, but also allows users to switch between light and dark mode without adjusting the system/browser&amp;rsquo;s global settings.&lt;/p&gt;
 &lt;p&gt;In the specific CSS implementation, I first used &lt;code&gt;invert(1)&lt;/code&gt; to invert the colors of the entire webpage, but this also caused a reversal of color tones. Therefore, I used &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; to bring the tones back. However, while this operation is suitable for text, it affects the display of images, videos, and other elements, making them appear as if they were being X-rayed. So, I had to apply &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; again to these elements that needed to be excluded from the dark mode, in order to revert them back to normal.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
@@ -211,17 +211,17 @@
     }
 } 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The complete modifications can be seen in my &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt; for implementing dark mode in this theme. A simple example can be found in this &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;. The final result is as follows:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update on 12/27&lt;/strong&gt;: The PR has been accepted and merged.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Connecting to Physical Screen with VNC</title>
-      <link>/en/share/vnc-to-physical-display/</link>
+      <link>https://nekonull.me/en/share/vnc-to-physical-display/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/share/vnc-to-physical-display/</guid>
+      <guid>https://nekonull.me/en/share/vnc-to-physical-display/</guid>
       <description>&lt;p&gt;When searching for &amp;ldquo;Linux remote desktop,&amp;rdquo; most tutorials suggest using the combination of &amp;ldquo;xrdp + xfce4.&amp;rdquo; In general, this combination works well, but it may not be as effective for certain special requirements. In my use case, there are times when I have a long-running task on a Linux workstation in the lab, and I need to check if the process is running smoothly when I return to my dormitory. If it were a regular CLI program, using terminal multiplexers like &amp;ldquo;screen&amp;rdquo; or &amp;ldquo;tmux&amp;rdquo; would be more than sufficient. However, I am using a GUI program. So, I searched for a solution and found that it is possible to connect to an ongoing X session using VNC, similar to tools like TeamViewer. Here are the specific steps:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Install the TigerVNC server.&lt;/li&gt;
@@ -239,10 +239,10 @@
     
     <item>
       <title>Constructing a RegEx that matches all emojis</title>
-      <link>/en/share/build-emoji-regex/</link>
+      <link>https://nekonull.me/en/share/build-emoji-regex/</link>
       <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
       
-      <guid>/en/share/build-emoji-regex/</guid>
+      <guid>https://nekonull.me/en/share/build-emoji-regex/</guid>
       <description>&lt;p&gt;While researching a CSS custom emoji font issue, I came across a RegEx that can match all emojis (up to the 2018 version) and it also provides corresponding test examples. You can find it here: &lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After reading it, I was skeptical because the RegEx seemed too simple. So, I manually converted it to check the corresponding Unicode codepoint range, and I found that there is indeed a problem. The matching range of this RegEx is too broad, excluding the Copyright and Registered symbols (u+00a9, u+00ae), the remaining ranges are [u+2000, u+3300] and [u+1f000, u+1fbff]. The latter range seems reasonable, as it corresponds to the newly added emoji codepoints according to the Unicode plane mapping on Wikipedia. However, the former range is too extensive, even including Japanese Hiragana and Katakana characters. (Although it does cover almost all emoji codepoints, it misses some corner cases like selectors.)&lt;/p&gt;
@@ -256,10 +256,10 @@
     
     <item>
       <title>Monitor the number of goroutines</title>
-      <link>/en/share/go-monitor-goroutine-count/</link>
+      <link>https://nekonull.me/en/share/go-monitor-goroutine-count/</link>
       <pubDate>Mon, 13 Dec 2021 16:44:43 +0300</pubDate>
       
-      <guid>/en/share/go-monitor-goroutine-count/</guid>
+      <guid>https://nekonull.me/en/share/go-monitor-goroutine-count/</guid>
       <description>&lt;p&gt;Continuing to complete the previous debug process of writing Raft. After solving the Timer issue, it was discovered that even with repeated testing (using &lt;code&gt;--count 10&lt;/code&gt;), the CPU usage continued to increase, although the rate of increase was reduced, it was still quite severe after multiple iterations. There was a preliminary suspicion that when transitioning roles, there might be a mishandling of goroutines leading to goroutine leaks. So, I searched on Stack Overflow and made some modifications to a code snippet that could print the current number of goroutines in the Go Runtime at regular intervals. Finally, it was indeed found that the number of goroutines kept increasing as the tests progressed. After fixing the leak issue (by adding various conditional checks), each time the test restarted, the number of goroutines would decrease to a level similar to the initial state, and the resource consumption during multiple tests also returned to normal.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Debug&lt;/span&gt; = &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;
 
@@ -289,10 +289,10 @@
     
     <item>
       <title>Code blocks within Markdown tables</title>
-      <link>/en/share/markdown-code-in-table/</link>
+      <link>https://nekonull.me/en/share/markdown-code-in-table/</link>
       <pubDate>Fri, 09 Apr 2021 17:10:00 +0300</pubDate>
       
-      <guid>/en/share/markdown-code-in-table/</guid>
+      <guid>https://nekonull.me/en/share/markdown-code-in-table/</guid>
       <description>&lt;p&gt;Markdown provides support for tables, but only basic text formatting (such as bold, italics, inline code, etc.) is supported within table cells. More complex text formatting, such as code blocks and horizontal lines, is not supported. If you need to add support for complex formatting within tables and you are using Github Flavored Markdown, one approach is to use HTML to define the table structure and then include inline Markdown text within it. Here is an example:&lt;/p&gt;
 &lt;p&gt;Please note the following:&lt;/p&gt;
 &lt;ul&gt;
@@ -356,10 +356,10 @@ Some Text
     
     <item>
       <title>Integrating Disqus with Hugo</title>
-      <link>/en/share/hugo-disqus/</link>
+      <link>https://nekonull.me/en/share/hugo-disqus/</link>
       <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
       
-      <guid>/en/share/hugo-disqus/</guid>
+      <guid>https://nekonull.me/en/share/hugo-disqus/</guid>
       <description>&lt;p&gt;Hugo has built-in support for Disqus. In theory, you only need to set the &lt;code&gt;disqusShortname&lt;/code&gt; attribute at the top level of your site&amp;rsquo;s &lt;code&gt;config.toml&lt;/code&gt; file. However, there are some pitfalls when actually using it. Here are the specific steps.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Register your own account on the Disqus website.&lt;/li&gt;

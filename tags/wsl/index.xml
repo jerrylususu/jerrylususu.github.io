@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>WSL on Nekonull&#39;s Garden</title>
-    <link>/tags/wsl/</link>
+    <link>https://nekonull.me/tags/wsl/</link>
     <description>Recent content in WSL on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="/tags/wsl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/wsl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL2, Docker, Virtualbox</title>
-      <link>/share/wsl2-docker-virtualbox/</link>
+      <link>https://nekonull.me/share/wsl2-docker-virtualbox/</link>
       <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
       
-      <guid>/share/wsl2-docker-virtualbox/</guid>
+      <guid>https://nekonull.me/share/wsl2-docker-virtualbox/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;2021/4/9 更新:
 VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。&lt;/p&gt;
@@ -41,10 +41,10 @@ VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hype
     
     <item>
       <title>给 WSL 安装桌面环境</title>
-      <link>/posts/install-de-in-wsl/</link>
+      <link>https://nekonull.me/posts/install-de-in-wsl/</link>
       <pubDate>Thu, 30 Jan 2020 02:25:00 +0800</pubDate>
       
-      <guid>/posts/install-de-in-wsl/</guid>
+      <guid>https://nekonull.me/posts/install-de-in-wsl/</guid>
       <description>&lt;h1 id=&#34;给-wsl-安装桌面环境&#34;&gt;给 WSL 安装桌面环境&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;本文是旧文补完计划的一部分。&lt;/p&gt;

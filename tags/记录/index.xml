@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>记录 on Nekonull&#39;s Garden</title>
-    <link>/tags/%E8%AE%B0%E5%BD%95/</link>
+    <link>https://nekonull.me/tags/%E8%AE%B0%E5%BD%95/</link>
     <description>Recent content in 记录 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="/tags/%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jul 2021 15:43:00 +0300</lastBuildDate><atom:link href="https://nekonull.me/tags/%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tensorflow 开发者认证记录</title>
-      <link>/posts/tf-cert-blog/</link>
+      <link>https://nekonull.me/posts/tf-cert-blog/</link>
       <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
       
-      <guid>/posts/tf-cert-blog/</guid>
+      <guid>https://nekonull.me/posts/tf-cert-blog/</guid>
       <description>&lt;!-- # Tensorflow 开发者认证记录 --&gt;
 &lt;p&gt;又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？&lt;/p&gt;
 &lt;blockquote&gt;
@@ -125,8 +125,8 @@ TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前�
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

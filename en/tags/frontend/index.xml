@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>frontend on Nekonull&#39;s Garden</title>
-    <link>/en/tags/frontend/</link>
+    <link>https://nekonull.me/en/tags/frontend/</link>
     <description>Recent content in frontend on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="/en/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 03 Sep 2022 17:21:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/en/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Turning an Existing Vue App into a PWA</title>
-      <link>/en/posts/vue-app-pwa/</link>
+      <link>https://nekonull.me/en/posts/vue-app-pwa/</link>
       <pubDate>Sat, 03 Sep 2022 17:21:00 +0800</pubDate>
       
-      <guid>/en/posts/vue-app-pwa/</guid>
+      <guid>https://nekonull.me/en/posts/vue-app-pwa/</guid>
       <description>&lt;p&gt;I previously wrote a small app called &amp;ldquo;Gojuon Quiz&amp;rdquo; to assist in memorizing the Japanese phonetic alphabet. Recently, I decided to add Progressive Web App (PWA) functionality to it. This allows the app to be used even without an internet connection after the initial successful loading. Additionally, it provides a user experience that is similar to a native application, without displaying browser address bars or similar controls.&lt;/p&gt;
 &lt;p&gt;The specific steps to implement PWA are as follows:&lt;/p&gt;
 &lt;ol&gt;
@@ -41,10 +41,10 @@
     
     <item>
       <title>Implementing a Simple Dark Mode with CSS Filter</title>
-      <link>/en/share/css-filter-dark-mode/</link>
+      <link>https://nekonull.me/en/share/css-filter-dark-mode/</link>
       <pubDate>Thu, 23 Dec 2021 10:43:25 +0300</pubDate>
       
-      <guid>/en/share/css-filter-dark-mode/</guid>
+      <guid>https://nekonull.me/en/share/css-filter-dark-mode/</guid>
       <description>&lt;p&gt;The &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme&#34;&gt;Manis theme&lt;/a&gt; used on this blog does not provide native support for dark mode, so I decided to add it myself. Initially, I thought about customizing the CSS with media queries, but it seemed like a bigger change. I did a quick search and found that someone had already proposed the idea of using CSS Filter to implement a simple dark mode, and there was even &lt;a href=&#34;https://radu-matei.com/blog/dark-mode/&#34;&gt;code&lt;/a&gt; that could be directly applied to a Hugo blog. Compared to media queries, using CSS Filter not only simplifies the implementation, but also allows users to switch between light and dark mode without adjusting the system/browser&amp;rsquo;s global settings.&lt;/p&gt;
 &lt;p&gt;In the specific CSS implementation, I first used &lt;code&gt;invert(1)&lt;/code&gt; to invert the colors of the entire webpage, but this also caused a reversal of color tones. Therefore, I used &lt;code&gt;hue-rotate(180deg)&lt;/code&gt; to bring the tones back. However, while this operation is suitable for text, it affects the display of images, videos, and other elements, making them appear as if they were being X-rayed. So, I had to apply &lt;code&gt;invert(1) hue-rotate(180deg)&lt;/code&gt; again to these elements that needed to be excluded from the dark mode, in order to revert them back to normal.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-css&#34; data-lang=&#34;css&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;html&lt;/span&gt; {
@@ -98,7 +98,7 @@
     }
 } 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The complete modifications can be seen in my &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt; for implementing dark mode in this theme. A simple example can be found in this &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;. The final result is as follows:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update on 12/27&lt;/strong&gt;: The PR has been accepted and merged.&lt;/p&gt;
 </description>
     </item>

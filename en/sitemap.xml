@@ -2,319 +2,319 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/en/share/hugo-multilang/</loc>
+    <loc>https://nekonull.me/en/share/hugo-multilang/</loc>
     <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/hugo-multilang/"
+                href="https://nekonull.me/share/hugo-multilang/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/hugo-multilang/"
+                href="https://nekonull.me/en/share/hugo-multilang/"
                 />
   </url><url>
-    <loc>/en/</loc>
+    <loc>https://nekonull.me/en/</loc>
     <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/"
+                href="https://nekonull.me/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/"
+                href="https://nekonull.me/en/"
                 />
   </url><url>
-    <loc>/en/share/</loc>
+    <loc>https://nekonull.me/en/share/</loc>
     <lastmod>2023-11-04T20:27:43+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/"
+                href="https://nekonull.me/share/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/"
+                href="https://nekonull.me/en/share/"
                 />
   </url><url>
-    <loc>/en/share/gym-wait-sim/</loc>
+    <loc>https://nekonull.me/en/share/gym-wait-sim/</loc>
     <lastmod>2023-09-29T15:34:23+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/gym-wait-sim/"
+                href="https://nekonull.me/share/gym-wait-sim/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/gym-wait-sim/"
+                href="https://nekonull.me/en/share/gym-wait-sim/"
                 />
   </url><url>
-    <loc>/en/share/migrate-to-giscus/</loc>
+    <loc>https://nekonull.me/en/share/migrate-to-giscus/</loc>
     <lastmod>2023-09-10T22:08:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/migrate-to-giscus/"
+                href="https://nekonull.me/share/migrate-to-giscus/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/migrate-to-giscus/"
+                href="https://nekonull.me/en/share/migrate-to-giscus/"
                 />
   </url><url>
-    <loc>/en/tags/frontend/</loc>
+    <loc>https://nekonull.me/en/tags/frontend/</loc>
     <lastmod>2022-09-03T17:21:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/frontend/"
+                href="https://nekonull.me/tags/frontend/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/frontend/"
+                href="https://nekonull.me/en/tags/frontend/"
                 />
   </url><url>
-    <loc>/en/posts/</loc>
+    <loc>https://nekonull.me/en/posts/</loc>
     <lastmod>2022-09-03T17:21:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/posts/"
+                href="https://nekonull.me/posts/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/posts/"
+                href="https://nekonull.me/en/posts/"
                 />
   </url><url>
-    <loc>/en/tags/</loc>
+    <loc>https://nekonull.me/en/tags/</loc>
     <lastmod>2022-09-03T17:21:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/"
+                href="https://nekonull.me/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/"
+                href="https://nekonull.me/en/tags/"
                 />
   </url><url>
-    <loc>/en/posts/vue-app-pwa/</loc>
+    <loc>https://nekonull.me/en/posts/vue-app-pwa/</loc>
     <lastmod>2022-09-03T17:21:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/posts/vue-app-pwa/"
+                href="https://nekonull.me/posts/vue-app-pwa/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/posts/vue-app-pwa/"
+                href="https://nekonull.me/en/posts/vue-app-pwa/"
                 />
   </url><url>
-    <loc>/en/share/css-filter-dark-mode/</loc>
+    <loc>https://nekonull.me/en/share/css-filter-dark-mode/</loc>
     <lastmod>2021-12-23T10:43:25+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/css-filter-dark-mode/"
+                href="https://nekonull.me/share/css-filter-dark-mode/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/css-filter-dark-mode/"
+                href="https://nekonull.me/en/share/css-filter-dark-mode/"
                 />
   </url><url>
-    <loc>/en/share/vnc-to-physical-display/</loc>
+    <loc>https://nekonull.me/en/share/vnc-to-physical-display/</loc>
     <lastmod>2021-12-13T16:50:43+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/vnc-to-physical-display/"
+                href="https://nekonull.me/share/vnc-to-physical-display/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/vnc-to-physical-display/"
+                href="https://nekonull.me/en/share/vnc-to-physical-display/"
                 />
   </url><url>
-    <loc>/en/share/build-emoji-regex/</loc>
+    <loc>https://nekonull.me/en/share/build-emoji-regex/</loc>
     <lastmod>2021-12-13T16:50:43+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/build-emoji-regex/"
+                href="https://nekonull.me/share/build-emoji-regex/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/build-emoji-regex/"
+                href="https://nekonull.me/en/share/build-emoji-regex/"
                 />
   </url><url>
-    <loc>/en/tags/hack/</loc>
+    <loc>https://nekonull.me/en/tags/hack/</loc>
     <lastmod>2021-12-13T16:50:43+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/hack/"
+                href="https://nekonull.me/tags/hack/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/hack/"
+                href="https://nekonull.me/en/tags/hack/"
                 />
   </url><url>
-    <loc>/en/tags/pitfalls/</loc>
+    <loc>https://nekonull.me/en/tags/pitfalls/</loc>
     <lastmod>2021-12-13T16:50:43+03:00</lastmod>
   </url><url>
-    <loc>/en/tags/go/</loc>
+    <loc>https://nekonull.me/en/tags/go/</loc>
     <lastmod>2021-12-13T16:44:43+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/go/"
+                href="https://nekonull.me/tags/go/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/go/"
+                href="https://nekonull.me/en/tags/go/"
                 />
   </url><url>
-    <loc>/en/share/go-monitor-goroutine-count/</loc>
+    <loc>https://nekonull.me/en/share/go-monitor-goroutine-count/</loc>
     <lastmod>2021-12-13T16:44:43+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/go-monitor-goroutine-count/"
+                href="https://nekonull.me/share/go-monitor-goroutine-count/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/go-monitor-goroutine-count/"
+                href="https://nekonull.me/en/share/go-monitor-goroutine-count/"
                 />
   </url><url>
-    <loc>/en/tags/distributed/</loc>
+    <loc>https://nekonull.me/en/tags/distributed/</loc>
     <lastmod>2021-12-12T20:47:32+03:00</lastmod>
   </url><url>
-    <loc>/en/posts/distributed-system-course-notes/</loc>
+    <loc>https://nekonull.me/en/posts/distributed-system-course-notes/</loc>
     <lastmod>2021-12-12T20:47:32+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/posts/distributed-system-course-notes/"
+                href="https://nekonull.me/posts/distributed-system-course-notes/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/posts/distributed-system-course-notes/"
+                href="https://nekonull.me/en/posts/distributed-system-course-notes/"
                 />
   </url><url>
-    <loc>/en/tags/sharing/</loc>
+    <loc>https://nekonull.me/en/tags/sharing/</loc>
     <lastmod>2021-12-12T20:47:32+03:00</lastmod>
   </url><url>
-    <loc>/en/tags/systems/</loc>
+    <loc>https://nekonull.me/en/tags/systems/</loc>
     <lastmod>2021-12-12T20:47:32+03:00</lastmod>
   </url><url>
-    <loc>/en/tags/journey/</loc>
+    <loc>https://nekonull.me/en/tags/journey/</loc>
     <lastmod>2021-07-07T15:43:00+03:00</lastmod>
   </url><url>
-    <loc>/en/posts/tf-cert-blog/</loc>
+    <loc>https://nekonull.me/en/posts/tf-cert-blog/</loc>
     <lastmod>2021-07-07T15:43:00+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/posts/tf-cert-blog/"
+                href="https://nekonull.me/posts/tf-cert-blog/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/posts/tf-cert-blog/"
+                href="https://nekonull.me/en/posts/tf-cert-blog/"
                 />
   </url><url>
-    <loc>/en/share/markdown-code-in-table/</loc>
+    <loc>https://nekonull.me/en/share/markdown-code-in-table/</loc>
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/markdown-code-in-table/"
+                href="https://nekonull.me/share/markdown-code-in-table/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/markdown-code-in-table/"
+                href="https://nekonull.me/en/share/markdown-code-in-table/"
                 />
   </url><url>
-    <loc>/en/tags/pitfall/</loc>
+    <loc>https://nekonull.me/en/tags/pitfall/</loc>
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
   </url><url>
-    <loc>/en/tags/python/</loc>
+    <loc>https://nekonull.me/en/tags/python/</loc>
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/python/"
+                href="https://nekonull.me/tags/python/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/python/"
+                href="https://nekonull.me/en/tags/python/"
                 />
   </url><url>
-    <loc>/en/share/hugo-disqus/</loc>
+    <loc>https://nekonull.me/en/share/hugo-disqus/</loc>
     <lastmod>2021-04-03T22:30:00+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/share/hugo-disqus/"
+                href="https://nekonull.me/share/hugo-disqus/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/share/hugo-disqus/"
+                href="https://nekonull.me/en/share/hugo-disqus/"
                 />
   </url><url>
-    <loc>/en/posts/repair-install/</loc>
+    <loc>https://nekonull.me/en/posts/repair-install/</loc>
     <lastmod>2021-02-18T01:47:01+03:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/posts/repair-install/"
+                href="https://nekonull.me/posts/repair-install/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/posts/repair-install/"
+                href="https://nekonull.me/en/posts/repair-install/"
                 />
   </url><url>
-    <loc>/en/archive/</loc>
+    <loc>https://nekonull.me/en/archive/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/archive/"
+                href="https://nekonull.me/archive/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/archive/"
+                href="https://nekonull.me/en/archive/"
                 />
   </url><url>
-    <loc>/en/categories/</loc>
+    <loc>https://nekonull.me/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/categories/"
+                href="https://nekonull.me/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/"
+                href="https://nekonull.me/en/categories/"
                 />
   </url>
 </urlset>

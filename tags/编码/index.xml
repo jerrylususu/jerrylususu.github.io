@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>编码 on Nekonull&#39;s Garden</title>
-    <link>/tags/%E7%BC%96%E7%A0%81/</link>
+    <link>https://nekonull.me/tags/%E7%BC%96%E7%A0%81/</link>
     <description>Recent content in 编码 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 02 Apr 2021 02:25:00 +0800</lastBuildDate><atom:link href="/tags/%E7%BC%96%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Apr 2021 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%BC%96%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JavaFX 打包并设定 UTF-8</title>
-      <link>/share/use-utf8-for-javafx-packaging/</link>
+      <link>https://nekonull.me/share/use-utf8-for-javafx-packaging/</link>
       <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
       
-      <guid>/share/use-utf8-for-javafx-packaging/</guid>
+      <guid>https://nekonull.me/share/use-utf8-for-javafx-packaging/</guid>
       <description>&lt;p&gt;IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见&lt;a href=&#34;https://www.youtube.com/watch?v=_KHCHiH2RZ0&#34;&gt;视频&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下即使用 GBK，代码中若含有中文会造成乱码。&lt;/p&gt;
 &lt;p&gt;解决此问题的方法也很简单，只需要在打包后找到 &lt;code&gt;{artifact_name}/app/{artifact_name}.cfg&lt;/code&gt; 文件，找到 &lt;code&gt;[JVMOptions]&lt;/code&gt; 一行，在其后追加 &lt;code&gt;-Dfile.encoding=utf-8&lt;/code&gt; 即可。然而需要每次打包后手动修改，并非最佳方法。&lt;/p&gt;
