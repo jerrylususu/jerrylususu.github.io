@@ -6,7 +6,86 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 04 Nov 2023 20:27:43 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Dec 2023 22:46:01 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>End of 2023</title>
+      <link>https://nekonull.me/posts/end-of-2023/</link>
+      <pubDate>Sun, 31 Dec 2023 22:46:01 +0800</pubDate>
+      
+      <guid>https://nekonull.me/posts/end-of-2023/</guid>
+      <description>&lt;h1 id=&#34;end-of-2023&#34;&gt;End of 2023&lt;/h1&gt;
+&lt;p&gt;一转眼又到年底了，关注的博主和身边的好友纷纷亮出了自己的年终总结；在这个离跨年还有2个小时不到的时刻，决定还是随手写点，就当给未来的自己留下些印象了。&lt;/p&gt;
+&lt;h2 id=&#34;回顾-2023&#34;&gt;回顾 2023&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;工作
+&lt;ul&gt;
+&lt;li&gt;正常升了一级，工资涨了点；但相应的工作量也增加了很多&lt;/li&gt;
+&lt;li&gt;可以明显感觉到自己不再被视为新人，而是已经成为了部门战力的一部分&lt;/li&gt;
+&lt;li&gt;对负责的业务的复杂性有些感觉，但是了解的依然不够深入；简单的问题可以处理，复杂的问题还是得拉人一起看，没法自己独立解决&lt;/li&gt;
+&lt;li&gt;全年负责的部分没有出大事故，但是总感觉有些不安&lt;/li&gt;
+&lt;li&gt;开始有完全自己设计的内部系统了，运营也是自己负责&lt;/li&gt;
+&lt;li&gt;作为新人参与的第一个项目（参加1年+被交出去），有些不舍&lt;/li&gt;
+&lt;li&gt;接近年底的时候接了个很重要很紧急的活，被迫打破自己内向的一面到处找人推进进度，算是体会了一把成为项目owner的感觉&lt;/li&gt;
+&lt;li&gt;部门内年中、年末各出现一次大范围组织架构调整，自己所在的小组目前还尚存；同届进来的新人被优化，后续又找到了更好的新工作；自己也应该考虑这方面的可能性了&lt;/li&gt;
+&lt;li&gt;干起来还行，虽然不算特别好，但是也不坏；至少可能会先一直干下去，直到哪里突然出现重大变化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;生活
+&lt;ul&gt;
+&lt;li&gt;依然住在家里，通勤时间是个比较困扰的问题，但是自己出去租房外短时间内应该无解&lt;/li&gt;
+&lt;li&gt;3月眼睛不舒服检查发现左右眼近视远视度数差距过大，开始戴眼镜，估计很长一段时间内都会持续了&lt;/li&gt;
+&lt;li&gt;7月检查发现胰岛素抵抗（糖尿病前期），开始定期运动，后来选到了每天中午，边运动边看一集番，从7月开始到12月初天气寒冷结束，中间因为11月生病停了两周，总体运动天数应该在100+&lt;/li&gt;
+&lt;li&gt;中午开始不吃公司食堂，成为附近kfc常客，备注不加酱多加菜（这样算下来午餐的热量摄入其实还更低）&lt;/li&gt;
+&lt;li&gt;10月去日本旅游了，算是满足了一个自己长久以来的愿望&lt;/li&gt;
+&lt;li&gt;开始固定时间去公园散步（以深圳湾公园为主），以及定期的群友聚餐；对维持精神状态有很大帮助&lt;/li&gt;
+&lt;li&gt;年初的时候用微信读书读了几本书，但是后续没有坚持下去；年末的时候买了《计算》，抽空读了一小部分，感觉还是跳着读自己感兴趣的部分比较合适&lt;/li&gt;
+&lt;li&gt;重新开始学习日语（虽然之前硬背的五十音基本已经完全忘光了）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;技术 &amp;amp; 开源活动 &amp;amp; 探索
+&lt;ul&gt;
+&lt;li&gt;工作中实际使用的技术（后端 C++ / Node.js + TypeScript，前端 Vue，数据处理 Python / SQL）基本保持同等水平，C++ 可能是稍微了解的多了一些&lt;/li&gt;
+&lt;li&gt;手里的几个开源项目依然处于维护状态，没怎么写新的（除了年底的 &lt;a href=&#34;https://github.com/jerrylususu/mainonly/tree/main&#34;&gt;mainonly&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;参加了一次国内的 Linux 中国活动，感觉大家都还挺害羞的，主题还有点意思但是运气不好没抽到奖&lt;/li&gt;
+&lt;li&gt;探索各类 AIGC 工具，目前来看处于初步成熟阶段，可以做些事情但是能做的依然不太多
+&lt;ul&gt;
+&lt;li&gt;GPT：因为价格和付费渠道问题主要用 API，日常 3.5 基本够用，不行的话再上 4-turbo；如果只是问代码问题的话 Github Copliot 的体验更好，响应也更快（虽然 $10/月 也不算便宜就是了）；至少编写一些基本代码，或者处理某些特定疑难点已经很够用了&lt;/li&gt;
+&lt;li&gt;其他 LLM：通过 OpenRouter 试用了 Claude / Gemini / Mixtral 的 API；Claude 对于长文很好用但是最近启用了 geoblocking 没法用；Gemini 用字符数计费有些神奇但是用起来和 3.5 感觉差不多；但是 GPT 效果实在是太好，用其他模型的意义不大；还试用了一些国内的 LLM，如智浦的 GLM 系列，百川的 Baichuan 系列，对于中文来说体验更好，另外因为词库以中文为主收费也更低&lt;/li&gt;
+&lt;li&gt;SD/MD：MD 类用自然语言就可以出很惊人的效果；SD 自由度很好但是上手比较难，估计得熟读各种咒语 + 自己有足够多的时间体验&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;展望-2024&#34;&gt;展望 2024&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;工作
+&lt;ul&gt;
+&lt;li&gt;正常升级 + 不出事故，至少先活过入职两年的分界线&lt;/li&gt;
+&lt;li&gt;需要开始了解市场状态，重新开始面试准备了，至少万一被优化还有备选&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;生活
+&lt;ul&gt;
+&lt;li&gt;回暖之后可以坚持运动；体重降回正常范围&lt;/li&gt;
+&lt;li&gt;每个季度读一本工作无关的书&lt;/li&gt;
+&lt;li&gt;学习日语到N2水平&lt;/li&gt;
+&lt;li&gt;考过软考&lt;/li&gt;
+&lt;li&gt;投资学习 &amp;amp; 实践：阅读相关书籍，尝试用收入的 10% 进行一些多元的投资操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;技术 &amp;amp; 开源 &amp;amp; 探索
+&lt;ul&gt;
+&lt;li&gt;了解和学习之前没接触过的技术：React / Vue 3 / Next.js / SSR&lt;/li&gt;
+&lt;li&gt;用 Rust / Zig 写些小项目&lt;/li&gt;
+&lt;li&gt;把五十音工具改造成微信小程序&lt;/li&gt;
+&lt;li&gt;对图像生成类工具有更多了解（至少玩起来）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>多语言的 Hugo 博客</title>
       <link>https://nekonull.me/share/hugo-multilang/</link>
@@ -1660,105 +1739,6 @@ Some Text
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参考链接：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/a/60502719&#34;&gt;https://stackoverflow.com/a/60502719&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Python __hash__ 继承</title>
-      <link>https://nekonull.me/share/python-hash-inherit/</link>
-      <pubDate>Fri, 09 Apr 2021 17:06:00 +0300</pubDate>
-      
-      <guid>https://nekonull.me/share/python-hash-inherit/</guid>
-      <description>&lt;p&gt;最近写作业的时候踩上了一个 Python 的坑：&lt;/p&gt;
-&lt;p&gt;如果父类实现了 &lt;code&gt;__hash__&lt;/code&gt; 方法，而子类重写了 &lt;code&gt;__eq__&lt;/code&gt; 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法。如果需要子类的 &lt;code&gt;__hash__&lt;/code&gt; 方法调用父类的实现，则需要手动声明。&lt;/p&gt;
-&lt;p&gt;这个之所以是一个坑，因为在代码中的行为看起来很正常：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pycharm 的方法跳转可以定位到父类 &lt;code&gt;__hash__&lt;/code&gt; 方法&lt;/li&gt;
-&lt;li&gt;inspect.getmro 的父类列表正常&lt;/li&gt;
-&lt;li&gt;dir(object) 得到的方法列表中的确含有 &lt;code&gt;__hash__&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;文档&lt;/a&gt;原文：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;A class that overrides &lt;code&gt;__eq__()&lt;/code&gt; and does not define &lt;code&gt;__hash__()&lt;/code&gt; will have its &lt;code&gt;__hash__()&lt;/code&gt; implicitly set to None.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;If a class that overrides &lt;code&gt;__eq__()&lt;/code&gt; needs to retain the implementation of &lt;code&gt;__hash__()&lt;/code&gt; from a parent class, the interpreter must be told this explicitly by setting &lt;code&gt;__hash__ = &amp;lt;ParentClass&amp;gt;.__hash__&lt;/code&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;具体的&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;实现&lt;/a&gt;（基于 CPython）&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 函数负责继承 slots &lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;inherit_slots&lt;/code&gt; 在处理比较相关的函数（comparison-related）的时候（&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432&#34;&gt;Line 5432&lt;/a&gt;），会使用 &lt;code&gt;overrides_hash&lt;/code&gt; 方法检查子类是否有重写 &lt;code&gt;__eq__&lt;/code&gt;, &lt;code&gt;__hash__&lt;/code&gt; (&lt;a href=&#34;https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5274&#34;&gt;Line 5274&lt;/a&gt;)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;overrides_hash&lt;/code&gt; 中使用 &lt;code&gt;_PyDict_ContainsId&lt;/code&gt; 方法先检查 &lt;code&gt;__eq__&lt;/code&gt;，再检查 &lt;code&gt;__hash__&lt;/code&gt;，如果任一存在则返回 1，否则返回 0&lt;/li&gt;
-&lt;li&gt;如果 &lt;code&gt;overrides_hash&lt;/code&gt; 返回 1，则认为不能继承父类的 &lt;code&gt;__hash__&lt;/code&gt; 方法，&lt;code&gt;type-&amp;gt;tp_hash&lt;/code&gt; 不会被设定&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;以下为一个示例：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-  &lt;tr&gt;
-    &lt;th&gt;Original&lt;/th&gt;
-    &lt;th&gt;Modified &lt;/th&gt;
-  &lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-&lt;td width=&#34;50%&#34;&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
-
-    &lt;span style=&#34;color:#75715e&#34;&gt;# No __hash__ defined&lt;/span&gt;
-
-
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
-
-    &lt;span style=&#34;color:#75715e&#34;&gt;# gives error&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-&lt;td&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Parent&lt;/span&gt;:
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __hash__(self):
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Child&lt;/span&gt;(Parent):
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; __eq__(self, other):
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; True
-    
-    &lt;span style=&#34;color:#75715e&#34;&gt;# NOTE: Added hash&lt;/span&gt;
-    __hash__ &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Parent&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__
-
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    child &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Child()
-
-    &lt;span style=&#34;color:#75715e&#34;&gt;# now it works&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(child&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;__hash__())
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;
-&lt;/tr&gt;
-  &lt;tr&gt;
-&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;Traceback (most recent call last):
-  File &amp;quot;scratch.py&amp;quot;, line 17, in &amp;lt;module&amp;gt;
-    print(child.__hash__())
-TypeError: &#39;NoneType&#39; object is not callable
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td&gt;
-&lt;pre&gt;&lt;code&gt;1
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;相关链接：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/11716258/python-using-the-default-hash-method-in-hash-method-definition&#34;&gt;&lt;code&gt;Stack Overflow - Python - Using the default __hash__ method in __hash__ method definition&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://stackoverflow.com/questions/53518981/inheritance-hash-sets-to-none-in-a-subclass&#34;&gt;&lt;code&gt;Stack Overflow - Inheritance - __hash__ sets to None in a subclass&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://docs.python.org/3/reference/datamodel.html#object.__hash__&#34;&gt;&lt;code&gt;Python Doc - object.__hash__&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
