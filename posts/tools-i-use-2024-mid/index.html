@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>2024 年了，我最近在用什么工具 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="在 MacOS 下重建工作流；顺带还提及了各类工具中使用的插件">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/posts/tools-i-use-2024-mid/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>2024 年了，我最近在用什么工具</h1>
+	<h5>
+		
+		<time datetime="2024-07-21 21:53:00 &#43;0800 &#43;0800">Jul 21, 2024</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e5%88%86%e4%ba%ab">分享</a>
+				
+				<a href="/tags/%e5%a4%87%e5%bf%98">备忘</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<h2 id="2024-年了我最近在用什么工具">2024 年了，我最近在用什么工具</h2>
+<p>去年年中，公司的主力开发设备从 Windows 换成了 Mac，之前在 Windows 上用的各类工具需要重新在 Mac 上找对应的替代品。一年磨合下来现在已经差不多稳定了，特此记录（其实之前就应该记录的，但是太懒）。如果能帮助到各位读者就更好了。当然也欢迎评论推荐更多你认为好用的工具。</p>
+<h2 id="独立工具">独立工具</h2>
+<p>（此处的独立指的是软件本身可以独立运行，与之相对的是插件）</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">VS Code</a>：宇宙 IDE（装了足够多插件之后）</li>
+<li><a href="https://kate-editor.org/">Kate</a>：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了</li>
+<li><a href="https://cudatext.github.io/">CudaText</a>：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定</li>
+<li>Apple Notes：用来记录手头临时的待办事项，避免消息太多跟丢</li>
+<li><a href="https://obsidian.md/">Obsidian</a>：用来做<a href="https://news.ycombinator.com/item?id=40950584">工作笔记</a>，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能</li>
+<li><a href="https://www.u.tools/">Utools</a>：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space</li>
+<li><a href="https://www.raycast.com/">RayCast</a>：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space</li>
+<li><a href="https://www.snipaste.com/">Snipaste</a>：截图 &amp; 贴图是我工作流的重要部分，已经完全离不开了</li>
+<li><a href="https://karabiner-elements.pqrs.org/">Karabiner-Elements</a>：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&gt; 左 Cmd）；现在键位熟悉之后用的不多了</li>
+<li><a href="https://github.com/dwarvesf/hidden">Hidden Bar</a>：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）</li>
+<li><a href="https://github.com/p0deje/Maccy">Maccy</a>：剪贴板历史（救了我好几次）</li>
+<li><a href="https://github.com/exelban/stats">Stats</a>：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）</li>
+<li><a href="https://github.com/ther0n/UnnaturalScrollWheels">UnnaturalScrollWheels</a>：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）</li>
+<li><a href="https://draw.io/">Draw.io</a>：画各种图</li>
+<li><a href="https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great">EasyFind</a>：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强</li>
+<li><a href="https://github.com/michaelvillar/timer-app">Timer</a>：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了</li>
+<li><a href="https://ezip.awehunt.com/">MacZip</a>：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好</li>
+<li><a href="https://github.com/ArchGPT/insomnium">Insomnium</a>：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了</li>
+<li><a href="https://activitywatch.net/">ActivityWatch</a>：记录下今天上了多少班</li>
+<li><a href="https://chatboxai.app/">Chatbox</a>：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）</li>
+</ul>
+<h2 id="obsidian-插件">Obsidian 插件</h2>
+<ul>
+<li><a href="https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Plugins/obsidian-electron-window-tweaker">Electron Window Tweaker</a>：让 Obsidian 窗口也能够置顶</li>
+<li><a href="https://github.com/Vinzent03/obsidian-git">Git</a>：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）</li>
+<li><a href="https://publish.obsidian.md/tasks/Introduction">Tasks</a>：将所有文件里的任务收集起来，创建统一的任务视图</li>
+<li><a href="https://github.com/hdykokd/obsidian-vertical-tabs-view">Vertical Tabs View</a>：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）</li>
+<li>[New Tab +]：避免同一个文件被打开在多个 tab 中</li>
+<li><a href="https://github.com/tadashi-aikawa/obsidian-another-quick-switcher">Another Quick Switcher</a>：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题</li>
+<li>Unique Note Creator：官方插件，可以直接创建一个带有时间戳的笔记并应用模板；用来在出现新工作时创建对应的工作笔记</li>
+</ul>
+<p>（顺带一提，为了和 VS Code 使用习惯一致，Quick Swtich 绑定到 Cmd+R，command palette 绑定到 Cmd+Shift+P）</p>
+<h2 id="浏览器插件">浏览器插件</h2>
+<p>（目前用的是 Edge，纵向标签页没有其他浏览器支持）</p>
+<ul>
+<li><a href="https://immersivetranslate.com/?force=1">沉浸式翻译</a>：外文长文必备</li>
+<li><a href="https://modheader.com/">ModHeader</a>：调试用，主要拿来改 request header</li>
+<li><a href="https://www.inssman.com/">Inssman</a>：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）</li>
+<li><a href="https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN">Earth View From Google Earth</a>：在新标签页展示航拍景象，换换心情</li>
+<li><a href="https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla">Page Notes</a>：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找</li>
+<li><a href="https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg">Picture-in-Picture Extension (by Google)</a>：画中画插件，<code>&lt;video&gt;</code> tag 的视频都能用，摸鱼必备</li>
+<li><a href="https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko">Session Buddy</a>：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好</li>
+<li><a href="https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf">VerticalTabs</a>：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批</li>
+<li><a href="https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN">TamperMonkey</a>：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验</li>
+</ul>
+<p>还有些小工具网站：</p>
+<ul>
+<li><a href="https://jupyter.org/try-jupyter/lab/">JupyterLite</a>：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便</li>
+<li><a href="https://nekonull.me/day-tracker/">Day Tracker</a>：之前自己写的小工具，看今天还要上多久班</li>
+</ul>
+<h2 id="vs-code-插件">VS Code 插件</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks">Bookmarks</a>：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens">Error Lens</a>：行内显示报错信息，不需要手动在波浪线上 hover 也能看到</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight">Todo Highlight</a>：将所有 TODO 高亮出来</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens</a>：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a>：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph">Git Graph</a>：GitLens 的分支图是收费功能，可以用这个插件替代</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow">indent-rainbow</a>：缩进可视化</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar">Stats Bar</a>：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter">Template String Converter</a>：写 TypeScript 必备，输入<code>$</code>且时自动把当前字符串变量的 <code>&quot;</code> （一般字符串）换成 <code>`</code>（模板字符串）</li>
+</ul>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/posts/end-of-2023/">
+		<img class="icon-text" src="/img/prev.svg"/>End of 2023</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/posts/what-software-i-am-using/">我最近在用什么软件？</a></li>
+  	
+  	<li><a href="/posts/distributed-system-course-notes/">分布式系统课程笔记</a></li>
+  	
+  	<li><a href="/posts/utils-ahk/">Utils.ahk</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

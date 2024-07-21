@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/posts/end-of-2023/</loc>
-    <lastmod>2023-12-31T22:46:01+08:00</lastmod>
+    <loc>https://nekonull.me/posts/tools-i-use-2024-mid/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2023-12-31T22:46:01+08:00</lastmod>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,8 +18,27 @@
                 href="https://nekonull.me/"
                 />
   </url><url>
+    <loc>https://nekonull.me/tags/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://nekonull.me/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://nekonull.me/tags/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+  </url><url>
     <loc>https://nekonull.me/posts/</loc>
-    <lastmod>2023-12-31T22:46:01+08:00</lastmod>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -30,6 +49,9 @@
                 hreflang="zh"
                 href="https://nekonull.me/posts/"
                 />
+  </url><url>
+    <loc>https://nekonull.me/posts/end-of-2023/</loc>
+    <lastmod>2023-12-31T22:46:01+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/hugo-multilang/</loc>
     <lastmod>2023-11-04T20:27:43+08:00</lastmod>
@@ -59,19 +81,6 @@
   </url><url>
     <loc>https://nekonull.me/tags/llm/</loc>
     <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/</loc>
-    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://nekonull.me/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://nekonull.me/tags/"
-                />
   </url><url>
     <loc>https://nekonull.me/share/my-ai-prompts/</loc>
     <lastmod>2023-10-29T20:17:00+08:00</lastmod>
@@ -276,9 +285,6 @@
     <loc>https://nekonull.me/share/go-timer-correct-usage/</loc>
     <lastmod>2021-12-13T16:32:43+03:00</lastmod>
   </url><url>
-    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
-    <lastmod>2021-12-12T20:47:32+03:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/tags/%E5%88%86%E5%B8%83%E5%BC%8F/</loc>
     <lastmod>2021-12-12T20:47:32+03:00</lastmod>
   </url><url>
@@ -425,9 +431,6 @@
   </url><url>
     <loc>https://nekonull.me/posts/migrate-note/</loc>
     <lastmod>2019-08-12T23:48:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</loc>
-    <lastmod>2019-08-12T23:11:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/what-software-i-am-using/</loc>
     <lastmod>2019-08-12T23:11:00+08:00</lastmod>
