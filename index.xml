@@ -6,7 +6,176 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 21 Jul 2024 21:53:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Aug 2024 09:11:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>工作两年了</title>
+      <link>https://nekonull.me/posts/2-years-of-work/</link>
+      <pubDate>Sun, 04 Aug 2024 09:11:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/posts/2-years-of-work/</guid>
+      <description>&lt;p&gt;从我 22 年 8 月开始参加工作以来，已经过去了两年的时间。我自己也马上就要 25 岁了。决定还是写点什么东西记录一下。本文可能没有什么结构，只是想到什么写什么；另外出于众所周知的原因，无法详细描述具体细节；还请各位读者见谅。&lt;/p&gt;
+&lt;p&gt;总体感受：7/10&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;工作稳定性
+&lt;ul&gt;
+&lt;li&gt;虽然目前看还算稳定，但是因为个人强烈的风险厌恶偏好，自己依然以”明天可能就会失业“的态度进行财务规划；体现为对长期大额负债（如房贷）的拒绝，和对现金流、资金灵活性的强烈偏好（如货币基金占比较高）&lt;/li&gt;
+&lt;li&gt;任何时候离失业只差一次重大事故；至今的工作生涯中已经第一次出现了产生资金损失的事故，虽然不是自己直接造成的，但是也有一些自己的间接原因&lt;/li&gt;
+&lt;li&gt;自己对事故的态度比较悲观：事故总会（eventually）发生，只是或早或晚的问题；我所能做的，只是尽我的能力尽量推迟其发生，或是减少影响程度罢了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;工作内容
+&lt;ul&gt;
+&lt;li&gt;主要是 keep the lights on
+&lt;ul&gt;
+&lt;li&gt;日常处理一些杂活，参考和优化现有的 SOP&lt;/li&gt;
+&lt;li&gt;作为团队对外的 point of presence，接收其他团队的咨询，如果处理不了就拉更高级别的同事上升&lt;/li&gt;
+&lt;li&gt;减缓团队内其他更高级别工程师的压力，分担事务性或者紧急但是技术上不复杂的工作&lt;/li&gt;
+&lt;li&gt;也作为一些小项目的交付负责人，主要是一两个月内就能交付的短期项目（我认为自己当前的规划和沟通能力也不足以支撑更大的项目）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;全栈：cpp 内部服务、vue2/typescript 内部CRUD站点、python/sql 数据任务和数据分析
+&lt;ul&gt;
+&lt;li&gt;虽然说是cpp，但是其实基本不太会用高级特性，大部分事情rpc框架就处理了，更像是go/java写业务需求的感觉；对底层的了解不够深入&lt;/li&gt;
+&lt;li&gt;一个人完全负责某个特定模块，的确能极大降低沟通成本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;工作体验
+&lt;ul&gt;
+&lt;li&gt;目前进入一个比较顺利的状态，日常的工作大部分在舒适区内，小部分有挑战性
+&lt;ul&gt;
+&lt;li&gt;已经建立了对组内负责系统的心理模型 mental model，例如能大概说出请求从进入到返回，会经过哪些模块（类似于原来是RAG，现在是直接fine tune了）&lt;/li&gt;
+&lt;li&gt;对部门、公司的基础组件、框架有了一定了解和使用经验&lt;/li&gt;
+&lt;li&gt;被认可作为团队战力的一部分；但是有些事情目前只有自己在完全负责，虽然有理论上的备份负责人然而没有切换过，有些担忧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;团队关系正常
+&lt;ul&gt;
+&lt;li&gt;日常工作交流都很正常（虽然自己不会和同事一起吃饭）&lt;/li&gt;
+&lt;li&gt;ld人比较好，会批临时请假，但是感觉压迫感有些强，有的时候性急会上压力（不过可能能做到这里的管理者都是如此？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;基本做到工作生活平衡和分离
+&lt;ul&gt;
+&lt;li&gt;工作时间 10am - 8pm，除去午休和晚餐，纯工作时间基本有 8h；然而通勤比较远，实际出门和到家的时间是 8-9；但至少可以保证双休，已经比很多中小厂好了&lt;/li&gt;
+&lt;li&gt;周末基本不处理公司事务，紧急事情电话通知；目前还没有周末物理去公司加班过（虽然偶尔要从家里远程加班），期望可以继续保持不加班&lt;/li&gt;
+&lt;li&gt;天气适合时（not 冬季）的中午保持运动&lt;/li&gt;
+&lt;li&gt;之前有些架构变动，被调去支援其他数据系统，半夜 oncall 十分难受，人真的会崩溃，好在后面出来了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;开发者体验 devex 尚可，但还有改进空间
+&lt;ul&gt;
+&lt;li&gt;有基本的 CI；业务重要所以没法 CD，但是发布频率足够高&lt;/li&gt;
+&lt;li&gt;治理任务分配系统很有用（虽然作为处理人也很烦人）&lt;/li&gt;
+&lt;li&gt;单元测试应该更多（现在感觉不太够，至少有些重要的点的覆盖率我自认为肯定是不够的）&lt;/li&gt;
+&lt;li&gt;UAT测试有但是用处存疑&lt;/li&gt;
+&lt;li&gt;监控系统还不错而且一直在改进&lt;/li&gt;
+&lt;li&gt;LLM 用于开发和代码评审&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;职业发展
+&lt;ul&gt;
+&lt;li&gt;升职顺利
+&lt;ul&gt;
+&lt;li&gt;从入职到现在还算顺利，每个可以升级的节点都升级了&lt;/li&gt;
+&lt;li&gt;最近的一次升级感觉有些得不配位，另一位和我同期进来的同事，我认为做的比我更好（甚至周末还来加班）&lt;/li&gt;
+&lt;li&gt;感觉更高职级的更惨：压力大、开会很多、周末还要加班处理事情（还有晚餐后和家里的小孩视频电话，听起来就很&amp;hellip;）；现在的职级反而比较舒服，会也比较少，可以安心写代码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;绩效和薪资还算满意
+&lt;ul&gt;
+&lt;li&gt;去年拿了一次好绩效&lt;/li&gt;
+&lt;li&gt;入职的时候 base 比另一个 offer 低很多，且房补在跳槽时很多公司不认可；好在最近薪酬改革后房补融入了 base，且职级提升也对薪资有影响，总算是比 2 年前的另一个 offer 的 base 高了&lt;/li&gt;
+&lt;li&gt;年终奖不是在当年发放完，而是拆到多年发放，有些坑（算是把你拴在这里了）&lt;/li&gt;
+&lt;li&gt;既然现在还不错，能撑多久算多久吧（Enjoy it while it lasts）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;跳槽前景不佳
+&lt;ul&gt;
+&lt;li&gt;基本上都在写业务逻辑，疏忽了对框架底层和技术的投入&lt;/li&gt;
+&lt;li&gt;虽然考下了软考高级系统架构设计师证书，但是在私企的用处不大&lt;/li&gt;
+&lt;li&gt;目前的业务已经是国内头部了，未来要跳的话如果同一方向则可选非常少&lt;/li&gt;
+&lt;li&gt;希望能看看大模型相关的机会，但是知识缺失 gap 太多了，不知道从哪里补起来&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>软考高级架构师备考记录</title>
+      <link>https://nekonull.me/posts/ruankao-architect/</link>
+      <pubDate>Sun, 04 Aug 2024 09:07:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/posts/ruankao-architect/</guid>
+      <description>&lt;p&gt;我参加了 2024 年上半年（5 月）的软考（全称：全国计算机技术与软件专业技术资格（水平）考试），通过了高级资格「系统架构设计师」的考试。本文记录我的备考过程。&lt;/p&gt;
+&lt;h2 id=&#34;个人背景&#34;&gt;个人背景&lt;/h2&gt;
+&lt;p&gt;科班 CS 本科，参加工作 2 年，大厂底端程序员。&lt;/p&gt;
+&lt;h2 id=&#34;参加软考的原因&#34;&gt;参加软考的原因&lt;/h2&gt;
+&lt;p&gt;如果回看我的 &lt;a href=&#34;https://nekonull.me/posts/end-of-2023/&#34;&gt;23年总结&amp;amp;24年展望&lt;/a&gt; 的话，会发现当时我已经把通过软考作为 24 年的个人目标之一了。其实我接触软考是 23 年 9 月，但是了解信息有些延迟，当时已经过了报名窗口，所以只能再等半年。当时我并没有非常清晰的动机，以下列出的原因只是站在考完的时间节点上反向硬找出来的：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;学生时代的考试思想延续：作为中国学生，考试思维估计是我思想中比较难剥离干净的一部分了，核心是将各类难以量化的目标想方设法量化，并且制定明确的验收标准（例如通过考试）来催促自己达成目标&lt;/li&gt;
+&lt;li&gt;学习架构设计：虽然我接受了科班教学，也做过不少项目（无论是学生时代还是工作之后），但是大部分情况下，架构要么是直接给出（例如更高级的同事已经设计好了），要么是自己瞎整（例如各类课程项目），没有系统性学习过；既然刚好有”系统架构设计师“这个资格科目，作为考试也有系统性的知识梳理，不妨以考促学&lt;/li&gt;
+&lt;li&gt;为未来发展留点余地：虽然目前在私企工作用不上，但是未来无论是跳槽国企还是润其他国家，软考的证书认可度还是可以的（e.g. 软考在日本永居打分接受的证书列表中）&lt;/li&gt;
+&lt;li&gt;退税：考过了的话可以退税 3600 元（每个税收年度可以在继续教育类目下认证一个资格类证书）&lt;/li&gt;
+&lt;li&gt;听起来比较厉害：毕竟叫做高级，能满足下虚荣心
+当然每个人可能还有其他的原因（例如落户、国企内评职称、所在地域有优惠政策&amp;hellip;），不过我自己的原因大致就是以上这些了。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;但决定参加前，也必须要了解软考的局限性：软考本质上还是个八股文考试，有很大可能学了用不上（毕竟对于考生的工作年限是没有要求的）；而且软考是水平考试而不是资格考试，做开发也没有任何资格壁垒（不像建筑）。&lt;/p&gt;
+&lt;h2 id=&#34;软考的考试内容&#34;&gt;软考的考试内容&lt;/h2&gt;
+&lt;p&gt;既然是考试，最重要的当然是考什么。好在这个问题并不难回答，看教材就好了。架构师的教材名叫《系统架构设计师教程（第2版）》，大体上可以分为两个部分；第一部分是基础知识，其中一些章节接受过科班 CS 教育的人稍作复习即可（计算机系统、信息安全、数据库设计），另外一些章节则之前学的不够深入或者是首次接触，需要学习（软件工程、架构设计、质量属性、软件可靠性、架构演进）；第二部分是各类架构的详细介绍，总共划分了八大架构（信息系统、层次式、云原生、SOA、嵌入式、通信系统、安全、大数据），每个架构内会有概述、设计、优缺点、适用场景、示例等。&lt;/p&gt;
+&lt;p&gt;和考试内容同等重要的，还有考试形式。软考高级资格的考试是 3 个科目：基础知识（单选，75题）、案例分析（简答，1必选+4选2）、论文（4选1，2k字+）。（是不是有种高中语文的感觉了？）每个科目满分 75 分，及格线是 45 分。所有科目都及格才能通过。其中基础知识和案例分析上午连着考，论文则是下午单独考。每个科目的考试时间都是 2 个小时。这其中基础知识和案例分析，基本上靠刷题可以覆盖掉，然而论文就是一个大坑了，毕竟2个小时时间，要完成选题、构思、写作、检查，而且字数还要求2k以上，如果没有训练过实在是比较困难。（顺带一提，23年下半年之前，软考是纸质考试，论文当然也是要手写的；好在23年下半年开始改为了机考，论文也可以打字作答了；真不敢想象之前的考生是如何考过的）。&lt;/p&gt;
+&lt;h2 id=&#34;备考资料&#34;&gt;备考资料&lt;/h2&gt;
+&lt;p&gt;我认为比较有用的资料有：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;书《系统架构师设计师考试 32小时通关》（作者：薛大龙）：基本上是教材的精简版本，还带有简单的例题；初期可以先用这本书读一遍，建立下知识框架（软考官方教材不要买纸质书，又厚又重；找 PDF 就够了）&lt;/li&gt;
+&lt;li&gt;软考备考资料：&lt;a href=&#34;https://github.com/xxlllq/system_architect&#34;&gt;https://github.com/xxlllq/system_architect&lt;/a&gt;；虽然 repo 里有些东西，但是大部分资源还是要付费后从阿里云盘获取；虽然这些资料自己逐个找也可以找出来，但是相对于花的时间和精力来说，花点小钱（￥20）一次找全还是划算的&lt;/li&gt;
+&lt;li&gt;小程序《软考达人》：刷题用（基础知识和案例分析）；单纯刷题的话完全免费，不需要付费也不用加群&lt;/li&gt;
+&lt;li&gt;B站视频课程（up 主：文老师软考教育）：&lt;a href=&#34;https://www.bilibili.com/video/BV1Dy4y1a71j&#34;&gt;https://www.bilibili.com/video/BV1Dy4y1a71j&lt;/a&gt;；时间比较紧，就看了论文的两 P，对梳理论文结构很有帮助（十段式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;备考时间线&#34;&gt;备考时间线&lt;/h2&gt;
+&lt;p&gt;基本上备考时间只有 2 个月，核心的学习时间大概是 60 小时（18 小时读书建立框架、30 小时刷题、12 小时考前临时抱佛脚）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;报名：2024/3/25&lt;/li&gt;
+&lt;li&gt;建立框架：2024/4/4 ~ 2024/4/6，趁着清明假期，把 32 小时通关读了一边，顺带做了下书上的例题&lt;/li&gt;
+&lt;li&gt;基础知识刷题：2024/4，基本上是上班的地铁上刷题，一开始刷基础知识的选择题，到了4月底，基本上能保证在40分钟内完成且分数高于及格线了；这一阶段硬刷就是了，很多知识点都是边刷边熟悉的，错了也不用太担心，下次还会遇到的&lt;/li&gt;
+&lt;li&gt;案例分析刷题：2024/5，也是在上班地铁上，小程序的题库量比较少（120题左右），但是案例分析比选择复杂很多，所以可能一天只能刷个三四题；我自己的做法是先读题，自己想怎么回答，然后看参考答案，根据参考答案补全自己的答案（因为不方便用纸笔，基本上都是脑内过一下就完了）&lt;/li&gt;
+&lt;li&gt;考前抱佛脚：2024/5/23（考前一天）；因为一些工作上的调整，5月开始每周的工作量都很大，周中已经很累了，周末也完全提不起精神去学习；眼看着马上就要考试了，报名费还挺贵的，这次没过还不知道是否有自信再来一次，思来想去还是考前请了一天假，去图书馆专心复习，能复习多少算多少吧；最后这一天从早9点一直学到晚上10点图书馆关门，虽然不确定学进去多少，但是至少心态上自信多了
+&lt;ul&gt;
+&lt;li&gt;错题整理：过了下之前刷题阶段的错题，一些知识点回到教材重新梳理知识脉络，编一些自己能记住的记忆口诀（例如 六大质量属性 APTSUM：A可用性 P性能 T可测试性 S安全性 U易用性 M可修改性）&lt;/li&gt;
+&lt;li&gt;看论文网课：说来惭愧，之前一直都没写过论文，于是先B站找了个网课看下（就是上面备考资料写的），了解了十段式（项目概要+正文概要+项目背景+项目组成+子题目回应+正文论点3+总结+不足）&lt;/li&gt;
+&lt;li&gt;写一篇论文：学完了论文结构之后，就立刻写了一篇试试看（不然一篇没写过上考场准完蛋，写一篇可能还有点盼头）；题目是随便想的，考虑到 LLM 发展如火如荼，自己定了个《大语言模型和人工智能技术在软件系统开发中的应用》的题目；然后就努力花了 4 个小时憋出了第一篇论文，对照着论文网课还有其他资料中的论文范文又继续改了改；然后整理了所有押题的论文题目，想自己的项目怎么套上去&lt;/li&gt;
+&lt;li&gt;考前资料整理：把认为考前需要复习的内容（常错的知识点、案例分析套路、论文架构、自己瞎编的论文）拼成了一个文档打印出来，考前背诵用，也安心一些&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;考试：2024/5/24
+&lt;ul&gt;
+&lt;li&gt;基础知识：有些点忘了，有些完全没见过，但是好在之前刷的题够多，75 题中自己完全确定答案一定正确的就有 48 题，这部分应该是稳了&lt;/li&gt;
+&lt;li&gt;案例分析：必选题是质量效应树和微服务架构，开考前刚背过；4个自选题选了大数据（mongodb、nosql）和 UML 时序图，剩下的两个（嵌入式和分布式锁）感觉不太稳没敢选&lt;/li&gt;
+&lt;li&gt;论文：题目有模型驱动架构设计、单元测试、云上自动化运维、大数据lambda架构；刚好最近在做一些数据系统的工作，于是选了大数据lambda架构的题目；内容上虽然参杂了一些工作上的技术，但是主体大部分还是瞎编+课本知识的混合&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;查询成绩：2024/6/24，通过，基础知识 56，案例分析 52，论文 52；只能说运气很好，论文编的合判卷人口味了&lt;/li&gt;
+&lt;li&gt;领实体证书：2024/7/24&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;感受和建议&#34;&gt;感受和建议&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;对于科班 CS，有实际开发经验的同学来说，这个考试并不算非常困难（10分最难的话，大概是7~8分的水平），但是依然要花时间准备（主要是刷足够多的题）&lt;/li&gt;
+&lt;li&gt;论文真的很看运气，本次是运气好，可选的题目里有一个和我最近的工作相关的题目；如果没有这个题目可能我就跪了；最好要掌握如何把自己做过的项目套到论文题目上&lt;/li&gt;
+&lt;li&gt;写作速度很重要，论文的 2 小时我基本上前 5 分钟在选题和构思，后面就一直在写了，结束前 2 分钟才完稿，时间非常紧张&lt;/li&gt;
+&lt;li&gt;如果你是学生，有比较多的空闲时间，不妨去考下试试看，反正也不要求工作年限&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;和正文无关的一些碎碎念：上次写考试相关的文章，还是 2021 年 &lt;a href=&#34;https://nekonull.me/posts/tf-cert-blog/&#34;&gt;7 天 TensorFlow 开发者认证&lt;/a&gt;的那一篇。那篇文章意外上了阮老师的周刊，还给本博客增加了不少流量。现在回过头来看看 ML 领域 PyTorch 几乎已经一家独大，TF 如风中残烛，更别提 LLM 的突飞猛进，当年的认证回头来看其实除了满足虚荣心+能写在简历上之外，并没有起到实质性的作用。前几天收到 Google 的邮件，说当时考的认证已经过期了（有效期只有三年），问我还要不要再续（实际上就是再考一次），那当然就选择不考了。虽然软考没有有效期，不存在重考的问题，但在决定投入精力被考前，依然得好好想想是否真的「对我有用」。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
     <item>
       <title>2024 年了，我最近在用什么工具</title>
       <link>https://nekonull.me/posts/tools-i-use-2024-mid/</link>
@@ -1490,265 +1659,6 @@ s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;c
 s &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; s&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;(&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;f(&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;replace(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;)f(&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;)*f(&amp;#34;&lt;/span&gt;)
 &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(eval(s))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上文代码所做的，实际上就是把输入串，替换成了一系列函数调用，并添加了符合题目要求的函数体。最后只需要直接调用 Python 内置的 &lt;code&gt;eval&lt;/code&gt;，就可以得到正确的答案了。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>MS RDP 无法连接到在使用了 802.1x 认证的无线网络中的电脑</title>
-      <link>https://nekonull.me/share/ms-rdp-8021x-bug/</link>
-      <pubDate>Mon, 12 Jul 2021 13:00:00 +0300</pubDate>
-      
-      <guid>https://nekonull.me/share/ms-rdp-8021x-bug/</guid>
-      <description>&lt;p&gt;昨天遇到了一个诡异的 bug，笔记本电脑放在 lab，连上了学校的 WiFi，但是回宿舍后却无法用 RDP 连接上。具体表现是一开始可以 ping 通，使用 RDP 连接时卡几分钟，随后超时断开，最后远端（笔记本电脑）就再也 ping 不通了。&lt;/p&gt;
-&lt;p&gt;以「RDP wifi disconnect」为关键词进行搜索，找到了微软知识库里的一篇文章：&lt;a href=&#34;https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/troubleshoot/remote-laptop-disconnects-wireless-network&#34;&gt;Remote laptop disconnects from wireless network | Microsoft Docs&lt;/a&gt;，描述的症状和我体验的很相似。文章大意是说 RDP 在遇上 802.1x 认证的时候会有一些 bug，需要调整网络认证方式为「用户或计算机认证」或「计算机认证」。&lt;/p&gt;
-&lt;p&gt;找到了解决方案就很简单了，不过文中提到的设置界面并不是很好找，以下为正确的设置方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;打开「设置」应用，选择「网络和 Internet / WLAN」，在右侧相关设置选择「网络和共享中心」&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在「查看活动网络」下找到自己连接到的 WiFi，点击蓝色文字&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/ms-rdp-bug-1.png&#34; alt=&#34;网络设置&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;点击「无线属性」，选择「安全」选项卡，点击「高级设置」&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在「指定身份验证模式」中，选择「用户或计算机身份认证」&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;至此无线连接会中断。点击任务栏的 WiFi 图标，重新输入用户名密码连接到网络。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;设置完成后，建议使用手头的设备（平板 / 手机）尝试在同一网络下用 RDP 连接，如果能正常连接应该就没问题了。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Tensorflow 开发者认证记录</title>
-      <link>https://nekonull.me/posts/tf-cert-blog/</link>
-      <pubDate>Wed, 07 Jul 2021 15:43:00 +0300</pubDate>
-      
-      <guid>https://nekonull.me/posts/tf-cert-blog/</guid>
-      <description>&lt;!-- # Tensorflow 开发者认证记录 --&gt;
-&lt;p&gt;又名：我是如何在 7 天内通过 Tensorflow 开发者认证的，以及你应该这样做吗？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;作者在 2021/7/4 参加考试。本文写于 2021/7/7。文中内容可能在未来发生变化。&lt;/p&gt;
-&lt;p&gt;下文简称 Tensorflow 为 TF，机器学习（Machine Learning）为 ML，深度学习（Deep Learning）为 DL。虽然 DL 在分类上而言是 ML 的一部分，但鉴于 DL 在各大领域取得的进展，常常将 ML 和 DL 并列。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;7天（甚至更短时间内）通过 TF 开发者认证是可行的。&lt;/li&gt;
-&lt;li&gt;就实践水平而言，这一认证的含金量并不高（有点水），通过认证只意味着认证人具有基本的，使用 TF 进行图像分类/文本分类/时间序列预测任务的能力。&lt;/li&gt;
-&lt;li&gt;与其代表的实际水平相比，这一认证更大的意义可能在于强迫自己去阅读/学习，以及向潜在的雇主证明自己有能力/意向进行 ML/DL 的相关工作。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;预备知识&#34;&gt;预备知识&lt;/h2&gt;
-&lt;h3 id=&#34;这个证书是什么&#34;&gt;这个证书是什么？&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Tensorflow 是一个 Google 创建的开源的 DL 框架，使用广泛，也在 Google 内部支持着许多服务&lt;/li&gt;
-&lt;li&gt;Tensorflow Developer Certification 是 Google 的一个认证项目，在 2020 年 3 月开始，旨在证明认证人有能力使用 Tensorflow 建立 DL 模型，完成指定任务。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;为什么你可能会想要这个证书&#34;&gt;为什么你可能会想要这个证书？&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;通过考证的过程学习 ML/DL 的相关知识&lt;/li&gt;
-&lt;li&gt;向未来的雇主证明自己有意愿/有能力完成 ML/DL 相关的工作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;考试如何进行&#34;&gt;考试如何进行？&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;报名费 $100，缴费后 180 天内需参加考试&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;5 小时时限，5 个任务，全部完成后可以提前结束&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;每个任务需要提交一个模型，可以随时提交，提交后几乎立刻可以得到一个五分制的反馈&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;不同任务的分值不同，但是没有明确列出。理论上要求总分在 90% 以上通过&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;每个任务包含题目描述和代码框架，并不是从零开始，更接近填空&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;因为模型需要在远端测评架构上进行评分，模型输入和输出是被严格限定的，主要能调整的是模型架构和训练过程&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;考试要求 Pycharm，但 Pycharm 实际上只是考试 UI，实际的模型建立/训练可以在其他设备/平台上进行（如 Colab，Jupyter Notebook），只需要把最后得到的模型文件（.h5）放回考试目录下即可&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;不限制网络使用，可以使用任何资源答题&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;考试失败后，需要间隔一段时间才能再次参加（首次 14 日，第二次一个月，第三次一年）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;我的个人背景&#34;&gt;我的个人背景&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;我自己从大三开始，陆陆续续修了一些数据科学/深度学习相关的课程，但是除了课程作业之外没有多少实践。&lt;/li&gt;
-&lt;li&gt;自己之前主要使用的 DL 框架是 PyTorch，对于 TensorFlow 了解不多。&lt;/li&gt;
-&lt;li&gt;现在算是暑假期间，暂时有一些自己的空闲时间。&lt;/li&gt;
-&lt;li&gt;之前一直想通过读 HOML （&lt;em&gt;Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition&lt;/em&gt;）来学习使用 TF 的知识，但是静不下心去强迫自己学习。&lt;/li&gt;
-&lt;li&gt;好奇 Google 会如何通过证书考试的形式量化开发者的能力。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;我参加这一考试的目标&#34;&gt;我参加这一考试的目标&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;熟悉 TF 的架构和使用。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;掌握使用 TF 构建 DL 模型，完成数据科学任务的全流程（从数据输入到模型在生产环境上线）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;能够完成常见的 DL 任务（图像/文本/时间序列/结构化数据）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;后文将会回顾这些目标的完成度。&lt;/p&gt;
-&lt;h2 id=&#34;考前准备&#34;&gt;考前准备&lt;/h2&gt;
-&lt;p&gt;我首次听说这个考试是在 Daniel Bourke 的&lt;a href=&#34;https://www.youtube.com/watch?v=ya5NwvKafDk&#34;&gt;视频 (YouTube)&lt;/a&gt;，主要使用的相关资料也主要参考了他的&lt;a href=&#34;https://www.mrdbourke.com/how-i-got-tensorflow-developer-certified/&#34;&gt;博客&lt;/a&gt;。此外，TFUG 苏州的这一&lt;a href=&#34;https://www.bilibili.com/video/BV1wf4y117qF/?p=2&#34;&gt;视频讲解 (Bilibili)&lt;/a&gt; 及 &lt;a href=&#34;https://mp.weixin.qq.com/s?__biz=MzAwNTM2ODk3NA==&amp;amp;mid=2247483889&amp;amp;idx=1&amp;amp;sn=179ae82e14984af2b07f6d5363d60aaa&#34;&gt;微信公众号文章&lt;/a&gt; 也提供了一些帮助。&lt;/p&gt;
-&lt;h3 id=&#34;资源&#34;&gt;资源&lt;/h3&gt;
-&lt;p&gt;以下资源按重要程度排序。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;TF 开发者证书候选人手册（&lt;a href=&#34;https://www.tensorflow.org/site-assets/downloads/marketing/cert/TF_Certificate_Candidate_Handbook_zh-cn.pdf?hl=zh-cn&#34;&gt;中文版 link&lt;/a&gt;，&lt;a href=&#34;https://www.tensorflow.org/extras/cert/TF_Certificate_Candidate_Handbook.pdf&#34;&gt;英文版 link&lt;/a&gt;）
-TF 开发者证书考试指导，TF 开发者证书考试环境配置（考前可从考试平台下载）&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;必须。&lt;/strong&gt;《候选人手册》是最重要的官方文档，需要详细阅读。其中有一个技能清单（Skill Checklist），基本上也就是考试会覆盖的主要内容了。《考试指导》和《环境配置》两个文档在为考试缴费后才在考试平台上可见，建议在开考前先通读一遍，并试着自己建立环境，以避免开考后遇到环境配置问题。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;在线课程《DeepLearning.AI TensorFlow Developer 专业证书》（&lt;a href=&#34;https://www.coursera.org/professional-certificates/tensorflow-in-practice&#34;&gt;Coursera&lt;/a&gt;， &lt;a href=&#34;https://github.com/lmoroney/dlaicourse&#34;&gt;课程 Notebook Repo&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;必须。&lt;/strong&gt; 实际上是四门课程的集合，分别覆盖深度学习基础、CNN、NLP和时间序列。和技能清单几乎完全重合（实际上课程主讲和证书发放签名人是同一位）。课程内有视频和在线测评环境，习题也和真正的考试试题&lt;strong&gt;差不多&lt;/strong&gt;，基本上能跟着完成课程，考试也就不会有太大问题了。课程本身价格是 $59，但是有一周的免费试用（需要银行卡），可以快速刷完后取消付款方式关联。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;书籍 (HOML)《Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow, 2nd Edition》（中文版：《&lt;em&gt;Scikit&lt;/em&gt;-&lt;em&gt;Learn&lt;/em&gt;、&lt;em&gt;Keras&lt;/em&gt; 与&lt;em&gt;TensorFlow&lt;/em&gt; 机器学习实用指南(第二版)》）（&lt;a href=&#34;https://learning.oreilly.com/library/view/hands-on-machine-learning/9781491962282/&#34;&gt;O&amp;rsquo;Reilly&lt;/a&gt; ，&lt;a href=&#34;https://github.com/ageron/handson-ml/&#34;&gt;书 NoteBook Repo&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;推荐。&lt;/strong&gt; 这本书更接近延伸阅读材料，内容本身超出考试很多，但是对构建知识体系更有帮助。有些内容在线课程里说的不是很清楚（如 &lt;code&gt;tf.Dataset&lt;/code&gt; 的使用），书里会有更详细的讲解。和考试相关的部分是第 10 章至第 16 章。我所在的学校购买了 O&amp;rsquo;Reilly 的电子订阅，因此我选择在 iPad 上进行阅读，但是也可以购买纸质版本阅读。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;TF 官方文档（&lt;a href=&#34;https://www.tensorflow.org/tutorials?hl=zh-cn&#34;&gt;教程&lt;/a&gt;，&lt;a href=&#34;https://www.tensorflow.org/guide&#34;&gt;指南&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;可选。&lt;/strong&gt; 教程类似于 Cookbook，有解决各种任务的示例。指南则更注重底层原理和基础知识。可以先浏览一遍目录，在遇到不懂之处的时候进行查阅。如有时间也可通读。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&#34;学习思路&#34;&gt;学习思路&lt;/h3&gt;
-&lt;p&gt;面对这种多种资源覆盖同一主题的情况，一般有两种学习思路：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;纵深：一次学习所有和这个主题相关的资源&lt;/li&gt;
-&lt;li&gt;重复：一次学习一个特定资源，在不同主题间重复&lt;/li&gt;
-&lt;/ul&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;纵深&lt;/th&gt;
-&lt;th&gt;重复&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-1.png&#34; alt=&#34;纵深&#34;&gt;&lt;/td&gt;
-&lt;td&gt;&lt;img src=&#34;https://nekonull.me/img/tf-cert-blog-2.png&#34; alt=&#34;重复&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;在 Daniel Bourke 的博客分享中，他使用的是纵深的学习思路（&lt;em&gt;tribird approach&lt;/em&gt;，一石三鸟），每天选定一个主题，首先看对应的在线课程，然后阅读书籍，再花时间写代码练习，最后看 MIT 的视频收尾。但是根据我自己的经验，我更习惯于重复的学习思路，需要让大脑把知识在后台处理一段时间，才能找到一些没想清楚的地方，从而进一步学习。各位读者可以根据自己的习惯选择合适的路线。&lt;/p&gt;
-&lt;h3 id=&#34;学习时间线&#34;&gt;学习时间线&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Day 1：通读《候选人手册》，打印技能清单作为速查备忘。在考试平台上注册考试并缴费（需要提前完成，身份审核需要一段时间）。学习在线课程的前两个课程，完成课后习题。（学习时间约 8h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 2：学习在线课程的后两个课程，完成课后习题。（学习时间约 10h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 3：阅读书籍的 10 ~ 13 章并做笔记，同时查看相关笔记本的代码示例。（学习时间约 8h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 4：阅读书籍的 14 ~ 16 章并做笔记，同时查看相关笔记本的代码示例。阅读 TF 官方指南中的「Keras」部分。（学习时间约 10h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 5：阅读 TF 官方教程中的「Keras 机器学习基础知识」、「加载和预处理数据」、「图像」、「文本」、「结构化数据」部分。处理之前笔记中遗留的部分问题。开始尝试从零实现 Day 1 中的作业（首先复现，然后使用不同的数据集）。（学习时间约 12h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 6：开始尝试从零实现 Day 2 中的作业。复现 TF 官方教程中的几个自己认为有趣的示例。尝试使用 Keras-tuner。根据环境配置文档准备准备考试环境。（学习时间约 12h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 7：复习笔记。重新阅读《候选人手册》和《考试指导》。在 Pycharm 下复现一个之前的作业。（学习时间约 8h）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Day 8：参加考试。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;学习建议&#34;&gt;学习建议&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;建立自己的 code snippet （代码片段）集合，在需要的时候可以快速查阅（常用的网络结构、常用的预处理代码、常用的 Callback&amp;hellip;）&lt;/li&gt;
-&lt;li&gt;建立 checklist（检查清单），如
-&lt;ul&gt;
-&lt;li&gt;模型精度不符合预期的可能出错点（根据自己完成作业的经历建立）&lt;/li&gt;
-&lt;li&gt;过拟合的处理方式（根据自己的经验和阅读的相关资料）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;保留所有自己写过的代码，以备查阅&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;设备与环境&#34;&gt;设备与环境&lt;/h3&gt;
-&lt;p&gt;我自己使用的是实验室内的工作站，GPU (Quardo M2000, 4G VRAM) 比较老旧，系统是 Ubuntu 18.04，Pycharm 版本 2021.1.3 Community。为了保险，考前在学校的超算上申请了一个 GPU 示例备用，GPU 为 RTX2080。&lt;/p&gt;
-&lt;p&gt;考试本身需要训练的模型其实都不会太大，根据《考试指导》中的描述，如果能在本地跑通 &lt;a href=&#34;https://www.tensorflow.org/tutorials/images/classification&#34;&gt;图像分类&lt;/a&gt; 和 &lt;a href=&#34;https://www.tensorflow.org/text/tutorials/text_classification_rnn&#34;&gt;文本分类&lt;/a&gt; 这两个示例，基本就不会有问题了。再加上有五个小时的时间，一般情况下是不用担心本地算力过低导致训练失败的。如果条件是在比较有限，可以使用 Colab 进行训练，或者是在主流的云厂商平台上购买带有 GPU 或是为深度学习优化过的实例。&lt;/p&gt;
-&lt;p&gt;考试是在 virtualenv 的虚拟环境中建立的，需要提前在系统级别安装 Python 3.8 版本。官方的《考试指导》中特别注明了不可以使用 Anaconda，不太确定原因，但是最好遵守。&lt;/p&gt;
-&lt;p&gt;需要注意的是，Pycharm 本身虽然可以设定使用远程 SSH 连接下的 Python Interpreter，但是这一配置是不受到考试插件支持的，因此最好直接在具有 GPU 的设备上安装 Pycharm 和考试插件。&lt;/p&gt;
-&lt;p&gt;网络环境方面，因为考试本身需要从 Google 的服务器下载数据集和上传模型，建议自行确保到国际互联网的连接质量，或是在网络低峰期参加考试。数据集在代码中使用 &lt;code&gt;request&lt;/code&gt; 库进行下载，但是也可以手动使用其他工具下载后放置于考试目录内。&lt;/p&gt;
-&lt;h2 id=&#34;考试中&#34;&gt;考试中&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;需要提前准备系统的 Python 3.8 环境，并在 Pycharm 内安装一个 TF Certification Exam 插件。&lt;/li&gt;
-&lt;li&gt;插件运行后首先需要登录 Google 账户认证，然后会自动创建 venv 并安装依赖。完成后显示「Start Exam」按钮，点击后即考试开始。&lt;/li&gt;
-&lt;li&gt;插件会自动建立一个 Pycharm 工程，其中有 5 个文件夹，命名为 Category1 到 Category5。每个文件夹内有一个 &lt;code&gt;starter.py&lt;/code&gt; 为基本的代码框架，内部有 &lt;code&gt;#TODO&lt;/code&gt; 注释标注需要填写的部分。在编辑&lt;code&gt;starter.py&lt;/code&gt; 时，插件会自动显示本题的描述。&lt;/li&gt;
-&lt;li&gt;完成训练后，会在题目目录下生成 &lt;code&gt;mymodel.h5&lt;/code&gt; 文件。如果使用其他设备训练，也可以从其他设备下载模型文件后，手动放置到文件夹内（需要为 h5 格式）。在插件内选择 &lt;code&gt;Submit and Test model&lt;/code&gt; 就会自动提交到服务器进行测评，右下角进度条会显示上传进度，一般上传完成后 30s 内就会返回评分（0/5 到 5/5）。如果太久没有返回评分，可能是模型过大/过复杂，可以取消当前测评。&lt;/li&gt;
-&lt;li&gt;可以无限次提交模型。测评本身是基于后台的一部分隐藏数据的，根据部分参加者的反馈，数据存在一定随机性，即使是同一模型的多次提交，返回的分数也可能存在浮动。&lt;/li&gt;
-&lt;li&gt;所有题目都拿到 5/5 评分后，即可点击插件，选择「End Exam」，确认后结束考试。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我自己的这一次考试比较幸运，因为事前自己根据《环境配置》文档验证过环境，没有遇到环境导致的问题。5 个题目都不是很难，我在开考后的 40 分钟就完成了 4 个题目并拿到 5/5，但是 NLP 的题目十分诡异，尝试了各种架构都只能得到 4/5 评分。最后换了优化器，调小学习率，增大 epoch 数慢慢训练，总算 5/5 了。最后结束考试的时候，还剩余 3 小时 10 分钟。&lt;/p&gt;
-&lt;p&gt;本次我遇到的 5 个题目是：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;一个很简单的回归&lt;/li&gt;
-&lt;li&gt;一个你绝对已经遇到过多次的数据集的分类&lt;/li&gt;
-&lt;li&gt;图像分类&lt;/li&gt;
-&lt;li&gt;自然语言处理（文本分类）&lt;/li&gt;
-&lt;li&gt;时间序列预测&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;考试结束后&#34;&gt;考试结束后&lt;/h2&gt;
-&lt;p&gt;如果通过，几分钟内就会收到通过邮件，并可以填写信息注册到 Google 的认证网络。数字证书需要几个工作日才会通过电子邮件发送。&lt;/p&gt;
-&lt;h2 id=&#34;回顾与总结&#34;&gt;回顾与总结&lt;/h2&gt;
-&lt;p&gt;回顾这一周，我认为这是一次有趣的经历。可能对我而言，花钱是强迫自己学习的有效方式，至少这一周我是好好把 HOML 中的部分章节给啃下来了。考试本身比想象中容易很多，更说明通过这场考试只是一个开始，仅仅证明自己具备了基本的，跟随教程完成部分简单任务的技能，但是离真正掌握还有很远。&lt;/p&gt;
-&lt;p&gt;之前我自己定下的目标的完成情况如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;熟悉 TF 的架构和使用
-&lt;ul&gt;
-&lt;li&gt;完成（至少从完全没有经验到能快速上手构建原型了）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;掌握使用 TF 构建 DL 模型，完成数据科学任务的全流程（从数据输入到模型在生产环境上线）
-&lt;ul&gt;
-&lt;li&gt;部分完成（本次学习主要覆盖的是从数据输入到模型建立，但是后续部署到生产环境没有怎么覆盖）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;能够完成常见的 DL 任务（图像/文本/时间序列/结构化数据）
-&lt;ul&gt;
-&lt;li&gt;基本完成（每个大分类下都还有很多细分任务，本次学习只是覆盖了最基本的一些任务，但是作为基础知识与入门的介绍已经足够好了）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;所以你应该参加这个认证吗&#34;&gt;所以你应该参加这个认证吗？&lt;/h3&gt;
-&lt;p&gt;在我看来，对于未来的计算机/数据科学专业的学生，ML/DL 的技能会被认为是「默认掌握」的。TF 的这个开发者认证，会更接近当前「计算机二级」认证的认可层级：对专业外的学生是额外技能的体现，对于专业内的学生则没有太大的意义。但是就当前而言，获得这一认证可能还是有其意义的，至少在一些小公司可能更容易让你通过 HR 筛。&lt;/p&gt;
-&lt;p&gt;表格：如果满足以下条件，你&amp;hellip;参加这个认证&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;可能应该&lt;/th&gt;
-&lt;th&gt;可能不应该&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;- 想强迫自己学点东西&lt;br /&gt;- 从其他专业转行，需要证明自己的能力和求职意向&lt;br /&gt;- 简历上没有太多能写的经历&lt;/td&gt;
-&lt;td&gt;- 已经有了成熟、丰富的 ML/DL 经验&lt;br /&gt;- 手头没有闲钱/时间&lt;br /&gt;- 觉得 TensorFlow 太难用了，PyTorch 万岁&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
 </description>
     </item>
     

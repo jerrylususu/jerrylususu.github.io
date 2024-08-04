@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/posts/tools-i-use-2024-mid/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -19,7 +16,7 @@
                 />
   </url><url>
     <loc>https://nekonull.me/tags/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -31,14 +28,17 @@
                 href="https://nekonull.me/tags/"
                 />
   </url><url>
-    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <loc>https://nekonull.me/posts/2-years-of-work/</loc>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
   </url><url>
-    <loc>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <loc>https://nekonull.me/tags/%E6%9D%82%E7%89%A9/</loc>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -49,6 +49,18 @@
                 hreflang="zh"
                 href="https://nekonull.me/posts/"
                 />
+  </url><url>
+    <loc>https://nekonull.me/posts/ruankao-architect/</loc>
+    <lastmod>2024-08-04T09:07:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/posts/tools-i-use-2024-mid/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</loc>
+    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/end-of-2023/</loc>
     <lastmod>2023-12-31T22:46:01+08:00</lastmod>
@@ -108,9 +120,6 @@
                 />
   </url><url>
     <loc>https://nekonull.me/archive/2310-jp-travel/</loc>
-    <lastmod>2023-10-07T03:10:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/%E6%9D%82%E7%89%A9/</loc>
     <lastmod>2023-10-07T03:10:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/gym-wait-sim/</loc>
@@ -325,9 +334,6 @@
                 hreflang="zh"
                 href="https://nekonull.me/posts/tf-cert-blog/"
                 />
-  </url><url>
-    <loc>https://nekonull.me/tags/%E8%AE%B0%E5%BD%95/</loc>
-    <lastmod>2021-07-07T15:43:00+03:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/markdown-code-in-table/</loc>
     <lastmod>2021-04-09T17:10:00+03:00</lastmod>
