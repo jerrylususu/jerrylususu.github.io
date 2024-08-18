@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2024-08-12T21:36:00+08:00</lastmod>
+    <lastmod>2024-08-18T15:30:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -13,6 +13,22 @@
                 rel="alternate"
                 hreflang="zh"
                 href="https://nekonull.me/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/share/obsidian-work-journal/</loc>
+    <lastmod>2024-08-18T15:30:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/share/</loc>
+    <lastmod>2024-08-18T15:30:00+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://nekonull.me/en/share/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://nekonull.me/share/"
                 />
   </url><url>
     <loc>https://nekonull.me/tags/</loc>
@@ -26,19 +42,6 @@
                 rel="alternate"
                 hreflang="zh"
                 href="https://nekonull.me/tags/"
-                />
-  </url><url>
-    <loc>https://nekonull.me/share/</loc>
-    <lastmod>2024-08-12T21:36:00+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://nekonull.me/en/share/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://nekonull.me/share/"
                 />
   </url><url>
     <loc>https://nekonull.me/share/book-time-poverty/</loc>
