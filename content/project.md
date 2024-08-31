@@ -3,7 +3,7 @@ title: 项目
 date: 2024-08-31T23:45:30+08:00
 ---
 
-| 时间    | 类型 | 项目                                                         | 链接                                                         | 状态            |
+| 时间    | 类型| 项目                                                         | 链接                                                         | 状态            |
 | ------- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------- |
 | 2024    | 个人 | cococlock：模拟 Apple Watch 的 Gradient 表盘（JS）           | [WebApp](http://nekonull.me/cococlock/) [Github](https://github.com/jerrylususu/cococlock) | ✅在用           |
 | 2024    | 个人 | show-bit-flag：位掩码可视化工具（JS）                        | [WebApp](http://nekonull.me/showbitflag/) [Github](https://github.com/jerrylususu/showbitflag) | ✅在用           |
@@ -35,5 +35,6 @@ date: 2024-08-31T23:45:30+08:00
 | 2018/1  | 个人 | 超简单视频播放器 (Android)                                   | [Github](https://github.com/jerrylususu/supereasyvideoplayer) | ⛔不再维护       |
 | 2017/12 | 个人 | 某基金会捐款查询系统                                         | 非公开                                                       | ⛔已下线         |
 | 2017/9  | 课程 | Java 1: 答疑预约系统                                         | 非公开                                                       | 🚫不适用         |
-| 2017/6  | 个人 | Project SFLS 🎶                                               | [Github](https://github.com/jerrylususu/projectsflsmusic)    | ⛔不再维护       |
+| 2017/6  | 个人 &nbsp; &nbsp; | Project SFLS 🎶                                               | [Github](https://github.com/jerrylususu/projectsflsmusic)    | ⛔不再维护       |
+
 
