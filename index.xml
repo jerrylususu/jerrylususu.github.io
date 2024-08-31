@@ -6,7 +6,45 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 18 Aug 2024 15:30:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Aug 2024 22:54:10 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在 Devtools 里触发前端组件的内部状态更新</title>
+      <link>https://nekonull.me/share/trigger-elementui-from-devtools/</link>
+      <pubDate>Sat, 31 Aug 2024 22:54:10 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/trigger-elementui-from-devtools/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;这个标题大概不太好理解；以下是对我遇到的问题，及我的解决方案的描述，在获得了相关上下文后，这个标题可能会稍微好理解一些。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;背景：在我的工作中，时常需要使用一个内部的日志查询平台。在使用时，需要先指定日志的开始和结束时间，默认情况下开始时间会被设置为今日的0点，结束时间则被设置为今日的23:59:59。虽然大部分情况下默认值都足够了，但是有时我需要调整时间范围，例如，选择为昨天，或是选择为某个 unix timestamp / yyyy-MM-dd hh-mm-ss 的前后一分钟。但无论是从界面上选择日期，还是手动输入时间都有些麻烦。我想半自动化这一过程，例如写一些 userscript 来改善时间范围的选择体验。&lt;/p&gt;
+&lt;p&gt;问题：我需要在无法接触/修改前端源代码的情况下，用 js 修改这个日期选择器的值。&lt;/p&gt;
+&lt;p&gt;从类名中不难发现，这个日期时间选择器底层实际上就是 &lt;a href=&#34;https://element.eleme.io/#/zh-CN/component/datetime-picker&#34;&gt;Element UI 的 DateTimePicker&lt;/a&gt;。然而如果直接修改对应的 input 的 value，并不能满足要求，因为这只修改了表现层的输出，Vue 组件中的内部状态实际上没有更新（也可以从点击查询按钮后发出的网络请求中验证）。正确的做法是用 js 在对应的元素上触发合适的事件，让组件像处理用户输入那样处理我们的请求。那应该触发怎样的事件呢？&lt;/p&gt;
+&lt;p&gt;有几个思路可以找到对应的事件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用 Chrome Devtools 自带的 &lt;a href=&#34;https://developer.chrome.com/blog/quickly-monitor-events-from-the-console-panel-2?hl=zh-cn&#34;&gt;monitorEvents&lt;/a&gt; ：首先用右键-审查元素在 DOM 树中定位到 input，然后右键&amp;quot;存储为全局变量&amp;quot;，会保存到 &lt;code&gt;temp1&lt;/code&gt;，再在控制台输入 &lt;code&gt;monitorEvents(temp1)&lt;/code&gt; 就可以观察到该元素上的所有事件了。然后像正常使用一样操作下选择器，可以看到触发的事件和参数。（mouse 相关事件会有很多坐标更新，杂音比较大）&lt;/li&gt;
+&lt;li&gt;打开 Github 找到这个组件对应的&lt;a href=&#34;https://github.com/ElemeFE/element/blob/dev/packages/date-picker/src/picker.vue#L2&#34;&gt;源码&lt;/a&gt;，相关的 &lt;code&gt;@input&lt;/code&gt; / &lt;code&gt;@change&lt;/code&gt;  等方法也能说明该组件会处理的事件类型&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;但作为现代开发者，首先当然还是先问问 GPT 了；GPT 给了一个看起来很靠谱的 script，节选如下。其中基本把组件可能处理的事件都触发了一次。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;click&lt;/span&gt;();
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2024-08-31 12:34:56&amp;#39;&lt;/span&gt;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;inputEvent&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Event&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;input&amp;#39;&lt;/span&gt;, { &lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; });
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;inputEvent&lt;/span&gt;);
+&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;changeEvent&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Event&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;, { &lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; });
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;changeEvent&lt;/span&gt;);
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;blur&lt;/span&gt;();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 script 在官网的 demo 上的确可以用，但是很不幸在我的内部工具页面上并不行，会出现一个奇怪的 &lt;code&gt;Uncaught TypeError: Cannot read properties of undefined&lt;/code&gt; 错误，点击调用栈的话只有 minified 的代码，完全看不出来是什么问题。到这里似乎陷入了僵局。然而进一步的实验发现，似乎这个问题只会在页面首次使用的时候出现；如果我手动先选择过一次日期时间，再用这个脚本就可以设置了。看了下组件源码，注意到组件在更新内部状态时，还会同步去更新 picker（弹出的日期弹框）里的值，是否可能是这个问题？有了这个模糊的思路之后，我再次开着 devtools 开始验证我的猜想。页面首次加载之后，DOM 树中并没有 picker 对应的节点，此时用脚本设置会失败；然而手动操作时，picker 节点会被创建，设置完成后被隐藏（但依然在 DOM 树中）；再次运行脚本，设置日期时间值成功了。看来的确是 picker 在脚本运行时没有正确被初始化导致的。&lt;/p&gt;
+&lt;p&gt;下一步就清晰一些了，只需要想办法在脚本操作之前，保证 picker 已经被初始化就好了；继续尝试了源码里的各种事件，最终发现可以用 &lt;code&gt;focus&lt;/code&gt; 事件触发 picker 创建，用 &lt;code&gt;Esc&lt;/code&gt; 可以让 picker 消失。（这一步其实试了很久，而且中间有几次把 &lt;code&gt;bubbles&lt;/code&gt; 写成了 &lt;code&gt;bubble&lt;/code&gt; 导致一直触发不成功）&lt;/p&gt;
+&lt;p&gt;最后得到的可以正常工作的脚本如下。虽然很丑陋，但是至少能用了&amp;hellip;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Event&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;focus&amp;#34;&lt;/span&gt;, {&lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;}));
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;click&lt;/span&gt;();
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;2024-08-31 12:34:56&amp;#39;&lt;/span&gt;;
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Event&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;input&amp;#39;&lt;/span&gt;, { &lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; }));
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Event&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;change&amp;#39;&lt;/span&gt;, { &lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt; }));
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;blur&lt;/span&gt;();
+&lt;span style=&#34;color:#a6e22e&#34;&gt;inputElement&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;dispatchEvent&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;KeyboardEvent&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;keydown&amp;#34;&lt;/span&gt;, {&lt;span style=&#34;color:#a6e22e&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Esc&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;keyCode&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;27&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;bubbles&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;true&lt;/span&gt;}));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
     <item>
       <title>Obsidian 与工作日志</title>
       <link>https://nekonull.me/share/obsidian-work-journal/</link>
@@ -1731,23 +1769,6 @@ M：静音
 &lt;/ol&gt;
 &lt;p&gt;在 Windows 上，根据我自己的体验，似乎 RealVNC Viewer 的使用体验比 TigerVNC Viewer 更好。&lt;/p&gt;
 &lt;p&gt;另一个可能会影响使用体验的问题是缩放与屏幕分辨率。实验室的工作站是 4K 屏幕，使用 200% 缩放，在用 1080p 的笔记本连接的时候不免感觉字太小。TigerVNC 似乎有一个 auto-scaling 功能，然而因为我们是把 VNC 会话连接到物理屏幕上，这一功能似乎无法使用。我自己的解决方式是先连上去，再手动改远端系统内的分辨率设置（一般改到 2560x1440 就足够了），然后重启 x0vncserver 再重新连接。虽然稍微有些麻烦，但是至少解决能用的问题了。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>构造能匹配所有 emoji 的正则表达式</title>
-      <link>https://nekonull.me/share/build-emoji-regex/</link>
-      <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
-      
-      <guid>https://nekonull.me/share/build-emoji-regex/</guid>
-      <description>&lt;p&gt;在研究一个 CSS 定制 Emoji 字体问题的时候，看到了一个 RegEx，可以匹配所有的 Emoji（至 2018 年版本），也给出了相应的测试例子，见此：&lt;a href=&#34;https://www.regextester.com/106421&#34;&gt;Regex to match all emoji - Regex Tester/Debugger&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看完之后我半信半疑，因为这个 RegEx 太简单了，于是手动转换成了对应的 Unicode codepoint 范围检查了一下，结果发现的确有问题：这个 RegEx 的匹配范围太大了，忽略 Copyright 和 Registered 符号（u+00a9, u+00ae），剩下的区间分别是 [u+2000, u+3300] 和 [u+1f000, u+1fbff]。后者还算合理，查 Wikipedia 上 Unicode 平面映射，基本上也就是新增 Emoji 的对应 codepoint；然而前一个区间就太过广泛了，甚至连日文平假名、片假名都会被匹配上。（不过的确覆盖了几乎完全的 Emoji codepoint，虽然有些类似于 Selector 之类的边角没覆盖到）&lt;/p&gt;
-&lt;p&gt;那么怎么做一个能精确匹配 Emoji 的 RegEx 呢？思路很简单，首先从 Unicode 官网获取 Full Emoji List，解析其中所有属于 Emoji 的 codepoint，排序，最后把相邻的 codepoint 合并成一个 range。然而说起来容易做起来难，RegEx 的视角中，字符是 UTF-16 的（如果要用 \uabcd 的形式的话），因此需要把高于 u+ffff 的 codepoint 用代理对的方式表示。&lt;/p&gt;
-&lt;p&gt;最后结果如下：(测试地址：&lt;a href=&#34;https://regex101.com/r/uGUM1M/1&#34;&gt;regex101&lt;/a&gt; ）&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;(\u00a9|\u00ae|\u203c|\u2049|\u20e3|\u2122|\u2139|[\u2194-\u2199]|[\u21a9-\u21aa]|[\u231a-\u231b]|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\u24c2|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|[\u2600-\u2604]|\u260e|\u2611|[\u2614-\u2615]|\u2618|\u261d|\u2620|[\u2622-\u2623]|\u2626|\u262a|[\u262e-\u262f]|[\u2638-\u263a]|\u2640|\u2642|[\u2648-\u2653]|[\u265f-\u2660]|\u2663|[\u2665-\u2666]|\u2668|\u267b|[\u267e-\u267f]|[\u2692-\u2697]|\u2699|[\u269b-\u269c]|[\u26a0-\u26a1]|\u26a7|[\u26aa-\u26ab]|[\u26b0-\u26b1]|[\u26bd-\u26be]|[\u26c4-\u26c5]|\u26c8|[\u26ce-\u26cf]|\u26d1|[\u26d3-\u26d4]|[\u26e9-\u26ea]|[\u26f0-\u26f5]|[\u26f7-\u26fa]|\u26fd|\u2702|\u2705|[\u2708-\u270d]|\u270f|\u2712|\u2714|\u2716|\u271d|\u2721|\u2728|[\u2733-\u2734]|\u2744|\u2747|\u274c|\u274e|[\u2753-\u2755]|\u2757|[\u2763-\u2764]|[\u2795-\u2797]|\u27a1|\u27b0|\u27bf|[\u2934-\u2935]|[\u2b05-\u2b07]|[\u2b1b-\u2b1c]|\u2b50|\u2b55|\u3030|\u303d|\u3297|\u3299)|(\ud83c(\udc04|\udccf|[\udd70-\udd71]|[\udd7e-\udd7f]|\udd8e|[\udd91-\udd9a]|[\udde6-\uddff]|[\ude01-\ude02]|\ude1a|\ude2f|[\ude32-\ude3a]|[\ude50-\ude51]|[\udf00-\udf21]|[\udf24-\udf93]|[\udf96-\udf97]|[\udf99-\udf9b]|[\udf9e-\udff0]|[\udff3-\udff5]))|(\ud83d([\udc00-\udcfd]|[\udcff-\udd3d]|[\udd49-\udd4e]|[\udd50-\udd67]|[\udd6f-\udd70]|[\udd73-\udd7a]|\udd87|[\udd8a-\udd8d]|\udd90|[\udd95-\udd96]|[\udda4-\udda5]|\udda8|[\uddb1-\uddb2]|\uddbc|[\uddc2-\uddc4]|[\uddd1-\uddd3]|[\udddc-\uddde]|\udde1|\udde3|\udde8|\uddef|\uddf3|[\uddfa-\ude4f]|[\ude80-\udec5]|[\udecb-\uded2]|[\uded5-\uded7]|[\udedd-\udee5]|\udee9|[\udeeb-\udeec]|\udef0|[\udef3-\udefc]|[\udfe0-\udfeb]))|(\ud83e([\udd0c-\udd3a]|[\udd3c-\udd45]|[\udd47-\uddff]|[\ude70-\ude74]|[\ude78-\ude7c]|[\ude80-\ude86]|[\ude90-\udeac]|[\udeb0-\udeba]|[\udec0-\udec5]|[\uded0-\uded9]|[\udee0-\udee7]))|(\udb40([\udc62-\udc63]|\udc65|\udc67|\udc6c|\udc6e|[\udc73-\udc74]))
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最后的灵魂问题：你真的应该用正则处理 Emoji 吗？&lt;/p&gt;
-&lt;p&gt;后记：自己造完了轮子之后，才发现已经有人做过这样的工作了，&lt;a href=&#34;https://github.com/mathiasbynens/emoji-test-regex-pattern&#34;&gt;emoji-test-regex-pattern&lt;/a&gt;。而且相比我的单字符匹配方式，这个 repo 里的 Regex 可以匹配代表 Emoji 的字符序列（如中国国旗=国旗+中国），更加符合 spec。&lt;/p&gt;
 </description>
     </item>
     

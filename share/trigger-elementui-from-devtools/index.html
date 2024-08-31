@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>在 Devtools 里触发前端组件的内部状态更新 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="这个标题大概不太好理解；以下是对我遇到的问题，及我的解决方案的描述，在获得了相关上下文后，这个标题可能会稍微好理解一些。 背景：在我的工作中，">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/trigger-elementui-from-devtools/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>在 Devtools 里触发前端组件的内部状态更新</h1>
+	<h5>
+		
+		<time datetime="2024-08-31 22:54:10 &#43;0800 &#43;0800">Aug 31, 2024</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e5%89%8d%e7%ab%af">前端</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<blockquote>
+<p>这个标题大概不太好理解；以下是对我遇到的问题，及我的解决方案的描述，在获得了相关上下文后，这个标题可能会稍微好理解一些。</p>
+</blockquote>
+<p>背景：在我的工作中，时常需要使用一个内部的日志查询平台。在使用时，需要先指定日志的开始和结束时间，默认情况下开始时间会被设置为今日的0点，结束时间则被设置为今日的23:59:59。虽然大部分情况下默认值都足够了，但是有时我需要调整时间范围，例如，选择为昨天，或是选择为某个 unix timestamp / yyyy-MM-dd hh-mm-ss 的前后一分钟。但无论是从界面上选择日期，还是手动输入时间都有些麻烦。我想半自动化这一过程，例如写一些 userscript 来改善时间范围的选择体验。</p>
+<p>问题：我需要在无法接触/修改前端源代码的情况下，用 js 修改这个日期选择器的值。</p>
+<p>从类名中不难发现，这个日期时间选择器底层实际上就是 <a href="https://element.eleme.io/#/zh-CN/component/datetime-picker">Element UI 的 DateTimePicker</a>。然而如果直接修改对应的 input 的 value，并不能满足要求，因为这只修改了表现层的输出，Vue 组件中的内部状态实际上没有更新（也可以从点击查询按钮后发出的网络请求中验证）。正确的做法是用 js 在对应的元素上触发合适的事件，让组件像处理用户输入那样处理我们的请求。那应该触发怎样的事件呢？</p>
+<p>有几个思路可以找到对应的事件：</p>
+<ol>
+<li>使用 Chrome Devtools 自带的 <a href="https://developer.chrome.com/blog/quickly-monitor-events-from-the-console-panel-2?hl=zh-cn">monitorEvents</a> ：首先用右键-审查元素在 DOM 树中定位到 input，然后右键&quot;存储为全局变量&quot;，会保存到 <code>temp1</code>，再在控制台输入 <code>monitorEvents(temp1)</code> 就可以观察到该元素上的所有事件了。然后像正常使用一样操作下选择器，可以看到触发的事件和参数。（mouse 相关事件会有很多坐标更新，杂音比较大）</li>
+<li>打开 Github 找到这个组件对应的<a href="https://github.com/ElemeFE/element/blob/dev/packages/date-picker/src/picker.vue#L2">源码</a>，相关的 <code>@input</code> / <code>@change</code>  等方法也能说明该组件会处理的事件类型</li>
+</ol>
+<p>但作为现代开发者，首先当然还是先问问 GPT 了；GPT 给了一个看起来很靠谱的 script，节选如下。其中基本把组件可能处理的事件都触发了一次。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">click</span>();
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;2024-08-31 12:34:56&#39;</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">inputEvent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Event</span>(<span style="color:#e6db74">&#39;input&#39;</span>, { <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> });
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">inputEvent</span>);
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">changeEvent</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Event</span>(<span style="color:#e6db74">&#39;change&#39;</span>, { <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> });
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#a6e22e">changeEvent</span>);
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">blur</span>();
+</code></pre></div><p>这个 script 在官网的 demo 上的确可以用，但是很不幸在我的内部工具页面上并不行，会出现一个奇怪的 <code>Uncaught TypeError: Cannot read properties of undefined</code> 错误，点击调用栈的话只有 minified 的代码，完全看不出来是什么问题。到这里似乎陷入了僵局。然而进一步的实验发现，似乎这个问题只会在页面首次使用的时候出现；如果我手动先选择过一次日期时间，再用这个脚本就可以设置了。看了下组件源码，注意到组件在更新内部状态时，还会同步去更新 picker（弹出的日期弹框）里的值，是否可能是这个问题？有了这个模糊的思路之后，我再次开着 devtools 开始验证我的猜想。页面首次加载之后，DOM 树中并没有 picker 对应的节点，此时用脚本设置会失败；然而手动操作时，picker 节点会被创建，设置完成后被隐藏（但依然在 DOM 树中）；再次运行脚本，设置日期时间值成功了。看来的确是 picker 在脚本运行时没有正确被初始化导致的。</p>
+<p>下一步就清晰一些了，只需要想办法在脚本操作之前，保证 picker 已经被初始化就好了；继续尝试了源码里的各种事件，最终发现可以用 <code>focus</code> 事件触发 picker 创建，用 <code>Esc</code> 可以让 picker 消失。（这一步其实试了很久，而且中间有几次把 <code>bubbles</code> 写成了 <code>bubble</code> 导致一直触发不成功）</p>
+<p>最后得到的可以正常工作的脚本如下。虽然很丑陋，但是至少能用了&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Event</span>(<span style="color:#e6db74">&#34;focus&#34;</span>, {<span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>}));
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">click</span>();
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;2024-08-31 12:34:56&#39;</span>;
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Event</span>(<span style="color:#e6db74">&#39;input&#39;</span>, { <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> }));
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Event</span>(<span style="color:#e6db74">&#39;change&#39;</span>, { <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span> }));
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">blur</span>();
+<span style="color:#a6e22e">inputElement</span>.<span style="color:#a6e22e">dispatchEvent</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">KeyboardEvent</span>(<span style="color:#e6db74">&#34;keydown&#34;</span>, {<span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;Esc&#39;</span>, <span style="color:#a6e22e">keyCode</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">27</span>, <span style="color:#a6e22e">bubbles</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>}));
+</code></pre></div>
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/obsidian-work-journal/">
+		<img class="icon-text" src="/img/prev.svg"/>Obsidian 与工作日志</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/share/console-save/">在 devtool 控制台里爬网站</a></li>
+  	
+  	<li><a href="/posts/vue-app-pwa/">将已有的 Vue App 变为 PWA</a></li>
+  	
+  	<li><a href="/share/css-filter-dark-mode/">用 CSS Filter 反色实现简易黑暗模式</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
