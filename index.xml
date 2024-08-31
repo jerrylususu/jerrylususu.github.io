@@ -88,6 +88,13 @@
 &lt;td&gt;🚫不适用&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td&gt;2022&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;APIJSON 示例项目（Java）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/APIJSON/apijson_todo_demo&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🔄他人维护中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
 &lt;td&gt;2021/12&lt;/td&gt;
 &lt;td&gt;个人&lt;/td&gt;
 &lt;td&gt;joplin-vaccum：清理笔记 Joplin 软件中的孤立图片（Python）&lt;/td&gt;
@@ -236,7 +243,7 @@
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;2017/6&lt;/td&gt;
-&lt;td&gt;个人    &lt;/td&gt;
+&lt;td&gt;&lt;div style=&#34;width:4ch&#34;&gt;个人&lt;/div&gt;&lt;/td&gt;
 &lt;td&gt;Project SFLS 🎶&lt;/td&gt;
 &lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/projectsflsmusic&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
 &lt;td&gt;⛔不再维护&lt;/td&gt;
