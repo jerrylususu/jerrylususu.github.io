@@ -14,6 +14,7 @@ date: 2024-08-31T23:45:30+08:00
 | 2022    | 个人 | Bangumi Takeout：从 Bangumi 中导出自己的标注记录（Python）   | [Github](https://github.com/jerrylususu/bangumi-takeout-py) [Colab](https://colab.research.google.com/github/jerrylususu/bangumi-takeout-py/blob/master/bangumi_takeout_colab.ipynb) | 🛠️仅维护         |
 | 2022    | 个人 | Gojuon Quiz：日语五十音图记忆和测试小工具（Vue）             | [WebApp](http://nekonull.me/50) [Github](https://github.com/jerrylususu/gojuon-quiz) | ✅在用           |
 | 2022    | 个人 | Crafting Interpreter 实现和个人笔记（Java, C）               | [Github](https://github.com/jerrylususu/crafting-interpreter) | 🚫不适用         |
+| 2022    | 个人 | APIJSON 示例项目（Java）               | [Github](https://github.com/APIJSON/apijson_todo_demo) | 🔄他人维护中         |
 | 2021/12 | 个人 | joplin-vaccum：清理笔记 Joplin 软件中的孤立图片（Python）    | [Github](https://github.com/jerrylususu/joplin-vacuum)       | 🛠️仅维护         |
 | 2021/12 | 课程 | 队列论：事件驱动的队列模拟器（Python）                       | 非公开                                                       | 🚫不适用         |
 | 2021/12 | 课程 | 分布式系统：课程笔记，Raft/KVRaft 实现（Go）                 | [博客](https://nekonull.me/posts/distributed-system-course-notes/) [笔记](https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures) | 🚫不适用         |
@@ -35,6 +36,6 @@ date: 2024-08-31T23:45:30+08:00
 | 2018/1  | 个人 | 超简单视频播放器 (Android)                                   | [Github](https://github.com/jerrylususu/supereasyvideoplayer) | ⛔不再维护       |
 | 2017/12 | 个人 | 某基金会捐款查询系统                                         | 非公开                                                       | ⛔已下线         |
 | 2017/9  | 课程 | Java 1: 答疑预约系统                                         | 非公开                                                       | 🚫不适用         |
-| 2017/6  | 个人 &nbsp; &nbsp; | Project SFLS 🎶                                               | [Github](https://github.com/jerrylususu/projectsflsmusic)    | ⛔不再维护       |
+| 2017/6  | <div style="width:4ch">个人</div> | Project SFLS 🎶                                               | [Github](https://github.com/jerrylususu/projectsflsmusic)    | ⛔不再维护       |
 
 
