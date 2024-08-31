@@ -8,6 +8,245 @@
     <language>zh-cn</language>
     <lastBuildDate>Sat, 31 Aug 2024 22:54:10 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>项目</title>
+      <link>https://nekonull.me/project/</link>
+      <pubDate>Sat, 31 Aug 2024 23:45:30 +0800</pubDate>
+      
+      <guid>https://nekonull.me/project/</guid>
+      <description>&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;时间&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;链接&lt;/th&gt;
+&lt;th&gt;状态&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;2024&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;cococlock：模拟 Apple Watch 的 Gradient 表盘（JS）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://nekonull.me/cococlock/&#34;&gt;WebApp&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/cococlock&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2024&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;show-bit-flag：位掩码可视化工具（JS）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://nekonull.me/showbitflag/&#34;&gt;WebApp&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/showbitflag&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2024&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;day-tracker：看看今天还要工作多久（JS）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://nekonull.me/day-tracker/&#34;&gt;WebApp&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/day-tracker&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2023&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;MainOnly：在网页上隐藏无关元素，只显示主体内容的小 bookmarklet （JS）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://nekonull.me/mainonly/&#34;&gt;Intro&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/mainonly&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2023&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;PaddleOCR-json Java API：PaddleOCR-json 的 Java 封装（Java）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/PaddleOCR-json-java-api&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2022&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;航班熔断模拟器（Vue）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/rongduan_or_not&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;⛔已下线&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2022&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;Bangumi Takeout：从 Bangumi 中导出自己的标注记录（Python）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/bangumi-takeout-py&#34;&gt;Github&lt;/a&gt; &lt;a href=&#34;https://colab.research.google.com/github/jerrylususu/bangumi-takeout-py/blob/master/bangumi_takeout_colab.ipynb&#34;&gt;Colab&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🛠️仅维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2022&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;Gojuon Quiz：日语五十音图记忆和测试小工具（Vue）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;http://nekonull.me/50&#34;&gt;WebApp&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/gojuon-quiz&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2022&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;Crafting Interpreter 实现和个人笔记（Java, C）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/crafting-interpreter&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2021/12&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;joplin-vaccum：清理笔记 Joplin 软件中的孤立图片（Python）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/joplin-vacuum&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🛠️仅维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2021/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;队列论：事件驱动的队列模拟器（Python）&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2021/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;分布式系统：课程笔记，Raft/KVRaft 实现（Go）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://nekonull.me/posts/distributed-system-course-notes/&#34;&gt;博客&lt;/a&gt; &lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;笔记&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2021/10&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;描述逻辑模拟器 ALCQ（Python）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/alcq&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2021/4&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;毕业设计：用于多媒体教学的实时字幕识别和分发系统&lt;br /&gt;语音识别 + websocket + Spring Boot&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2020/5&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;软件工程：Github Fixit&lt;br /&gt;给 Java CLI 库 Picocli 和 Java 服务器框架 Spark 修了一些 bug。&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://www.bilibili.com/video/BV1zK4y1x7Xz&#34;&gt;B站&lt;/a&gt; &lt;a href=&#34;https://github.com/remkop/picocli/pulls?q=is%3Apr+is%3Aclosed+author%3Ajerrylususu&#34;&gt;Github PR&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2020/2&lt;/td&gt;
+&lt;td&gt;实习&lt;/td&gt;
+&lt;td&gt;Lustre File Stat Gather&lt;br /&gt;一个扫描 Lustre 文件集群元数据得到统计信息（大小分布、日期分布等）的工具。&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;面向对象程序设计：ArchOJ：一个面向教学的在线测评系统&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;计算机安全：联创打印系统安全性研究&lt;br /&gt;调查了校内联创打印系统的安全问题，如绕过计费、登入他人账号、恢复历史打印数据等&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;计算机网络：Spanning Tree Routing&lt;br /&gt;用 Python 实现生成树路由，并用 SDN 模拟&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/CS305SDN&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/12&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;生成式新媒体设计：Processing 动画&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/ProcessingHomeworks&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/7&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;NUS Summer School: EmojiCam&lt;br /&gt;Best Project In Cluster&lt;br /&gt;openCV + 情绪识别 + FaaS 修图&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://sws.comp.nus.edu.sg/2019/WEFiles/Image/Gallery/cd06b6bd-7acf-42a2-a018-bb36aad4c5de/3004%20Emojicam-2.png&#34;&gt;Poster&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/6&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;计算机组成原理: CPU in MIPS（Verilog）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/MIPS_Single_Cycle_CPU&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;⛔不再维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/1&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;数字逻辑: Digital Clock（Verilog）&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/CS207_Digital_Clock&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2019/1&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;阵营九宫格生成器 &amp;amp; 逐渐离谱生成器&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://nekonull.me/9/&#34;&gt;WebApp&lt;/a&gt; &lt;a href=&#34;https://github.com/jerrylususu/9square&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;✅在用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2018/9&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;MailStat：学校邮箱邮件分析&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/mailstat&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;⛔不再维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2018/6&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;宿舍舍友预约系统&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🔄他人接手运行中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2018/5&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;Java 2: 机上娱乐系统&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/CS209A-Flight-Entertainment-System&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2018/1&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;超简单视频播放器 (Android)&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/supereasyvideoplayer&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;⛔不再维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2017/12&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;某基金会捐款查询系统&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;⛔已下线&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2017/9&lt;/td&gt;
+&lt;td&gt;课程&lt;/td&gt;
+&lt;td&gt;Java 1: 答疑预约系统&lt;/td&gt;
+&lt;td&gt;非公开&lt;/td&gt;
+&lt;td&gt;🚫不适用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2017/6&lt;/td&gt;
+&lt;td&gt;个人&lt;/td&gt;
+&lt;td&gt;Project SFLS 🎶&lt;/td&gt;
+&lt;td&gt;&lt;a href=&#34;https://github.com/jerrylususu/projectsflsmusic&#34;&gt;Github&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;⛔不再维护&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
       <title>在 Devtools 里触发前端组件的内部状态更新</title>
       <link>https://nekonull.me/share/trigger-elementui-from-devtools/</link>
       <pubDate>Sat, 31 Aug 2024 22:54:10 +0800</pubDate>
@@ -1748,27 +1987,6 @@ M：静音
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;完整修改可见于我给这一主题实现黑暗模式的 &lt;a href=&#34;https://github.com/yursan9/manis-hugo-theme/pull/22&#34;&gt;Pull Request&lt;/a&gt;，一个简单的示例可见于 &lt;a href=&#34;https://gist.github.com/jerrylususu/c517f091f3d733cf28e29e55b77b50d5&#34;&gt;Gist&lt;/a&gt;。最后的效果如下。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/css-filter-dark-mode-demo.png&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;12/27 更新&lt;/strong&gt;：PR 已被接收并合并。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>VNC 连接到物理屏幕</title>
-      <link>https://nekonull.me/share/vnc-to-physical-display/</link>
-      <pubDate>Mon, 13 Dec 2021 16:50:43 +0300</pubDate>
-      
-      <guid>https://nekonull.me/share/vnc-to-physical-display/</guid>
-      <description>&lt;p&gt;如果搜索 &lt;code&gt;Linux 远程桌面&lt;/code&gt;，大部分教程基本上都是 &lt;code&gt;xrdp + xfce4&lt;/code&gt; 的组合。一般情况下这样的组合的确不错，不过有一些诡异的特殊需求的时候就没那么好用了。在我的使用场景中，有的时候在实验室的 Linux 工作站上开启了一个比较长时间的任务，回到宿舍后可能需要检查下运行过程是否正常。如果是一般的 CLI 程序，用 &lt;code&gt;screen&lt;/code&gt; 或者 &lt;code&gt;tmux&lt;/code&gt; 之类的 terminal multiplexer （终端多路复用器）就绰绰有余了，可惜我用的是一个 GUI 程序。因此试着搜索了一番，发现是可以实现 VNC 连接到一个进行中的 X session 的，效果和 teamviewer 之类的工具差不多，具体操作如下。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;安装 TigerVNC 服务端&lt;/li&gt;
-&lt;li&gt;运行 &lt;code&gt;vncpasswd&lt;/code&gt; 创建 VNC 密码&lt;/li&gt;
-&lt;li&gt;启动 TigerVNC 服务&lt;/li&gt;
-&lt;li&gt;使用 &lt;code&gt;x0vncserver&lt;/code&gt; 开启一个连接到 Display 0 的 VNC 会话
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt; x0vncserver -display :0 -PasswordFile&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/home/&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;username&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;/.vnc/passwd 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;在其他设备上使用 VNC 客户端连接&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在 Windows 上，根据我自己的体验，似乎 RealVNC Viewer 的使用体验比 TigerVNC Viewer 更好。&lt;/p&gt;
-&lt;p&gt;另一个可能会影响使用体验的问题是缩放与屏幕分辨率。实验室的工作站是 4K 屏幕，使用 200% 缩放，在用 1080p 的笔记本连接的时候不免感觉字太小。TigerVNC 似乎有一个 auto-scaling 功能，然而因为我们是把 VNC 会话连接到物理屏幕上，这一功能似乎无法使用。我自己的解决方式是先连上去，再手动改远端系统内的分辨率设置（一般改到 2560x1440 就足够了），然后重启 x0vncserver 再重新连接。虽然稍微有些麻烦，但是至少解决能用的问题了。&lt;/p&gt;
 </description>
     </item>
     
