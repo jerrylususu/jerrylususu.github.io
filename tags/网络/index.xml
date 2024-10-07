@@ -6,7 +6,206 @@
     <description>Recent content in 网络 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 29 Oct 2023 19:41:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Oct 2024 13:58:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于 WebRecorder 和 MitmProxy 的图片手动抓取探索</title>
+      <link>https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/</link>
+      <pubDate>Mon, 07 Oct 2024 13:58:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/</guid>
+      <description>&lt;p&gt;最近收到任务，需要从某个站点下载一系列图片。首先当然是 F12 看下网络请求。这是一个无限滚动的瀑布流，图片地址本身是随机的（看起来文件名像是 uuid），所以没法直接遍历图片地址；此外每次滚动到底，都会触发一个获取下一页图片地址的请求，参数传的还是游标而不是页数，这又断绝了直接构造分页请求（例如 &lt;code&gt;page=1&lt;/code&gt;）获取所有图片地址，再逐个拉取的念头。好在总图片数是有限的，大概在 2k 左右，每次下拉能拉回 50 条，所以手动抓取也不是不能接受。以下是两种手动抓取的思路。注：这里的手动抓取，指的是在浏览器前端通过模拟人类行为，无侵入且不对网站发起额外请求的抓取方式。&lt;/p&gt;
+&lt;h2 id=&#34;前置准备ahk-翻页器&#34;&gt;前置准备：AHK 翻页器&lt;/h2&gt;
+&lt;p&gt;一个简单的小工具，每隔一段时间自动按 page down 翻页（建议提前 zoom out 调小页面比例，这样滚动起来效率更高）&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;AHK 翻页器代码&lt;/summary&gt;
+&lt;pre&gt;&lt;code class=&#34;language-autohotkey&#34; data-lang=&#34;autohotkey&#34;&gt;#Requires AutoHotkey v2.0
+
+; 创建一个 GUI
+MyGui := Gui()
+MyGui.Add(&amp;quot;Text&amp;quot;, &amp;quot;x10 y10&amp;quot;, &amp;quot;Auto Page Down:&amp;quot;)
+toggle := MyGui.Add(&amp;quot;Checkbox&amp;quot;, &amp;quot;x10 y30 vToggleState&amp;quot;, &amp;quot;Enable&amp;quot;)
+MyGui.OnEvent(&amp;quot;Close&amp;quot;, (*) =&amp;gt; ExitApp())
+MyGui.Show()
+
+; 设置全局变量以跟踪定时器状态
+global keyHeld := false
+
+; 定时器：每0.1秒检查一次开关状态
+SetTimer(CheckToggleState, 100)
+
+; 主循环
+CheckToggleState()
+{
+    global keyHeld  ; 声明 keyHeld 为全局变量
+
+    if (toggle.Value) {
+        if (!keyHeld) {
+            ; 如果勾选了启用选项，并且哔哩哔哩窗口处于活动状态
+            RandomDelayAndSendPageDown()
+            keyHeld := true
+        }
+    } else {
+        if (keyHeld) {
+            ; 如果没有勾选启用选项，停止按键操作
+            keyHeld := false
+        }
+    }
+}
+
+; 生成随机延迟并发送 Page Down 键
+RandomDelayAndSendPageDown()
+{
+    ; 生成 500 到 1000 毫秒之间的随机延迟
+    RandomDelay := Random(500, 1000)
+    SetTimer(PressPageDown, RandomDelay)
+}
+
+; 按下 Page Down 键
+PressPageDown()
+{
+    global keyHeld  ; 声明 keyHeld 为全局变量
+    
+    if (toggle.Value) {
+        Send(&amp;quot;{PgDn}&amp;quot;)
+        RandomDelayAndSendPageDown()  ; 继续下一次按键
+    } else {
+        keyHeld := false
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;h2 id=&#34;思路1webrecorder&#34;&gt;思路1：WebRecorder&lt;/h2&gt;
+&lt;p&gt;概述：用 WebRecorder 插件，录制网络请求（WebRecorder 插件会 hook 浏览器的 XMLHttpRequest 机制），dump 出 &lt;a href=&#34;https://en.wikipedia.org/wiki/WARC_(file_format)&#34;&gt;warc&lt;/a&gt;  (Web Archive）文件，然后再解析文件，从中提取 mime 类型为图片的文件（或者知道 URL 格式的话也可以用 URL 格式匹配）。&lt;/p&gt;
+&lt;p&gt;限制：导出的时候存在文件大小限制（Chrome 下似乎是 2G，也取决于可用内存大小），总文件大小太大的话可能会有问题。&lt;/p&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Chrome 插件 &lt;a href=&#34;https://chromewebstore.google.com/detail/webrecorder-archivewebpag/fpeoodllldobpkbkabpblcfaogecpndd&#34;&gt;Webrecorder ArchiveWeb.page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;浏览器插件栏找到 Webrecorder，点击 Start Archiving&lt;/li&gt;
+&lt;li&gt;跳转到需要抓取的网页&lt;/li&gt;
+&lt;li&gt;打开翻页器，一直往下滚动&lt;/li&gt;
+&lt;li&gt;完成后打开插件，点击 Stop Archiving&lt;/li&gt;
+&lt;li&gt;点击插件界面内的 Home 按钮，找到刚才的 Archiving Session，点击 Download，下载一个 wacz 文件到本地&lt;/li&gt;
+&lt;li&gt;修改扩展名为 zip，将其中的 archive/data.warc.gz 文件解压出来，得到 data.warc 文件&lt;/li&gt;
+&lt;li&gt;运行如下 Python 脚本，解析 warc 文件，并从中提取图片内容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;summary&gt;Python 解析 WARC 代码&lt;/summary&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; warcio.archiveiterator &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; ArchiveIterator
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; re
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义一个函数过滤掉不支持的字符&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sanitize_filename&lt;/span&gt;(filename):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 定义不允许的字符&lt;/span&gt;
+    invalid_chars &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/:*?&amp;#34;&amp;lt;&amp;gt;|]&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 替换这些字符为空字符，或者可以替换为下划线 &amp;#34;_&amp;#34;&lt;/span&gt;
+    sanitized_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sub(invalid_chars, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_&amp;#39;&lt;/span&gt;, filename)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sanitized_filename
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 提取 WARC 文件中的图片、视频资源&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;extract_resources_from_warc&lt;/span&gt;(warc_file, output_dir):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(warc_file, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; stream:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; record &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; ArchiveIterator(stream):
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;http_headers:
+                content_type &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;http_headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;)
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; content_type &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;image&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type:
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取资源文件的 URL&lt;/span&gt;
+                    url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rec_headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;WARC-Target-URI&amp;#39;&lt;/span&gt;)
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(url)
+
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取资源文件内容&lt;/span&gt;
+                    content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;content_stream()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read()
+                    
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 确定文件扩展名&lt;/span&gt;
+                    ext &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;jpg&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;image&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mp4&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;video&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ext:
+                        &lt;span style=&#34;color:#75715e&#34;&gt;# 生成文件名&lt;/span&gt;
+                        sanitized_url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sanitize_filename(os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;basename(url))
+                        filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(output_dir, sanitized_url) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; ext
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;filename&amp;#34;&lt;/span&gt;, filename)
+                        &lt;span style=&#34;color:#75715e&#34;&gt;# 保存文件&lt;/span&gt;
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(filename, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wb&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; f:
+                            f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(content)
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Extracted: {filename}&amp;#34;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 示例用法&lt;/span&gt;
+warc_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;data.warc&amp;#39;&lt;/span&gt;
+output_dir &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;extracted_resources&amp;#39;&lt;/span&gt;
+os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;makedirs(output_dir, exist_ok&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True)
+extract_resources_from_warc(warc_file, output_dir)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;h2 id=&#34;思路2mitmproxy&#34;&gt;思路2：MitmProxy&lt;/h2&gt;
+&lt;p&gt;概述：安装 mitmproxy，设置浏览器代理指向 proxy，浏览时从响应中直接过滤出图片内容并保存到本地&lt;/p&gt;
+&lt;p&gt;限制：似乎没什么限制&lt;/p&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 &lt;a href=&#34;https://docs.mitmproxy.org/stable/overview-installation/&#34;&gt;mitmproxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;保存以下 Python 脚本为 &lt;code&gt;save.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;summary&gt;mitmproxy save.py&lt;/summary&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; re
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; mitmproxy &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; ctx, http
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义文件保存目录&lt;/span&gt;
+save_dir &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;saved_media&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 确保目录存在&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;exists(save_dir):
+    os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;makedirs(save_dir)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义一个正则表达式，匹配Windows非法的文件名字符&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sanitize_filename&lt;/span&gt;(filename: str) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; str:
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 替换非法字符为下划线&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sub(&lt;span style=&#34;color:#e6db74&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;[&amp;lt;&amp;gt;:&amp;#34;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;|?*]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_&amp;#39;&lt;/span&gt;, filename)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;(flow: http&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;HTTPFlow):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取响应的Content-Type&lt;/span&gt;
+    content_type &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 判断是否为图片或视频类型&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;image&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type:
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 获取文件扩展名&lt;/span&gt;
+        ext &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; content_type&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;)[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 从请求路径中尝试提取文件名，如果路径中没有文件名，则使用flow.id&lt;/span&gt;
+        url_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;request&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;)[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; url_path:  &lt;span style=&#34;color:#75715e&#34;&gt;# 判断路径中是否包含文件扩展名&lt;/span&gt;
+            raw_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; url_path
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+            raw_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{flow.request.host}_{flow.id}.{ext}&amp;#34;&lt;/span&gt;
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 对文件名进行清理，确保符合Windows的文件名要求&lt;/span&gt;
+        safe_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sanitize_filename(raw_filename)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 确定完整的保存路径&lt;/span&gt;
+        filepath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(save_dir, safe_filename)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 记录日志，打印保存的文件名和URL&lt;/span&gt;
+        ctx&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;info(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Saving file: {filepath} from URL: {flow.request.url}&amp;#34;&lt;/span&gt;)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 保存文件内容&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(filepath, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wb&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; f:
+            f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;content)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 打印成功保存的日志&lt;/span&gt;
+        ctx&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;info(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Saved {filepath}&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;运行 mitmproxy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 需要先 cd 到 save.py 所在的目录&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# 可以添加 --mode upstream:http://localhost:7890 来指定上游代理&lt;/span&gt;
+mitmweb -s save.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;设置浏览器，指向 mitmproxy 代理（可能你需要 &lt;a href=&#34;https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif&#34;&gt;proxy switchyomega&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;跳转到需要抓取的网页，打开翻页器&lt;/li&gt;
+&lt;li&gt;滚动到底部，且所有图片加载完成后，需要抓取的图片应该都已经保存到本地了&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
     <item>
       <title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</title>
       <link>https://nekonull.me/share/try-chatglm/</link>

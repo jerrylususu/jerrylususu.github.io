@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>LLM x 书签收藏：摘要 &amp; 全文索引 - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="LLM x 书签也很有用！">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/posts/llm_x_bookmark/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>LLM x 书签收藏：摘要 &amp; 全文索引</h1>
+	<h5>
+		
+		<time datetime="2024-10-07 13:52:00 &#43;0800 &#43;0800">Oct 07, 2024</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/%e5%88%86%e4%ba%ab">分享</a>
+				
+				<a href="/tags/LLM">LLM</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>网上冲浪的时候，经常会遇到一些有趣的文章或者网站，让我有收藏起来以备后用的冲动（虽然绝大部分情况下都没有再用过）。然而一个人收藏未免有些太孤单了，因此自从 2021 年 5 月以来，我一直在使用一个名为 <a href="https://github.com/osmoscraft/osmosmemo">osmos::memo</a> 的书签插件，将我的收藏直接记录到一个公开的 <a href="https://github.com/jerrylususu/bookmark-collection">Github 存储库</a>。这个插件的工作原理很简单，首先设置好 Github 的 token，然后每次点击收藏按钮都会在浏览器里临时 clone 一次，追加新收藏的条目到文件顶部，生成 commit 并提交，然后推送回 Github。但是这样简单的工作流程也十分有效，除了 token 过期的时候需要手动续期（过期前有 Github 自带的邮件提醒，所以基本上不会拖到最后），没有什么可以出错的空间，近三年半下来也已经帮我积累了 800+ 条目了。</p>
+<p>然而目前的书签收藏流程中，依然会存在一些问题。</p>
+<ol>
+<li>书签指向的 URL 可能不再存在（例如某个博客的主人决定不再续费域名，或者是做了链接格式的调整），导致成为悬空的死链接</li>
+<li>目前的记录项只有书签的 URL、标题和可选的标签（而且我打标签的习惯不太好，光靠标签基本上不太能找到），导致查找的时候如果对关键词记忆不清楚，很有可能找不到</li>
+<li>书签里一大部分是长文章，时间一久很有可能忘记内容，如果只是临时找些东西，通读一次又略微有些费时费事，导致查找&amp;引用效率下降。</li>
+</ol>
+<p>为了解决这些问题，我建立了一个新的存储库 <a href="https://github.com/jerrylususu/bookmark-summary">bookmark-summary</a>。这个存储库可以视为现有书签存储库的辅助数据，其中包含了新增书签的 Markdown 格式全文、列表摘要、一句话总结，和现有存储库之间通过 Github Actions 联动。其工作原理如下：</p>
+<ol>
+<li>我通过书签插件，在现有的书签存储库中新增了一个条目</li>
+<li>代码提交到主干，触发名为 <code>summarize</code> 的 Github Actions（<a href="https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml">yml 工作流文件</a>）</li>
+<li>Github Actions 执行，首先 checkout 书签存储库和摘要存储库，然后执行 <a href="https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py">process_changes.py</a>
+<ol>
+<li>首先解析书签 README.md 文件，找到最近新增的条目标题和 URL</li>
+<li>将 URL 保存到 Wayback Machine</li>
+<li>输入 URL，使用 <a href="https://jina.ai/reader/">jina reader</a> API 获取网址的 Markdown 全文，并保存到 <code>YYYYMM/{title}_raw.md</code></li>
+<li>输入 URL，使用 LLM 生成列表摘要（prompt 在 <code>summarize_text</code> 函数 <a href="https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py#L80">link</a>）</li>
+<li>输入列表摘要，使用 LLM 生成一句话总结</li>
+<li>将列表摘要和一句话总结保存到 <code>YYYYMM/{title}.md</code>（<a href="https://github.com/jerrylususu/bookmark-summary/blob/main/202410/2024-10-02-a-local-first-case-study-jakelazaroff.com.md">效果示例</a>）</li>
+<li>更新摘要存储库的 README.md，增加到摘要文件的链接</li>
+</ol>
+</li>
+<li>Github Actions 提交变更到摘要存储库</li>
+</ol>
+<p>这里的主要代码基本都是 Claude 和 GPT4o 写的，人肉做了一些小调整。后面随着使用又逐步发现了一些 bug，最近还用 o1-mini <a href="https://github.com/jerrylususu/bookmark-summary/issues/6">修复了一个</a>，算是真切感受到了 LLM 对生产力的巨大提升。目前摘要生成用的是深度求索的 deepseek-chat，便宜是真便宜（输入 1元/1M token，输出 2元/1M token，在这个场景下的成本基本上是每个月1元不到），效果也还算可以。</p>
+<p>最后是一些已知问题，以及未来可能的优化方向。当然和其他所有项目一样，欢迎 fork &amp; PR。</p>
+<ol>
+<li>列表摘要质量：可能是 prompt 的问题，列表摘要倾向于每个大点下面只列两个小点，且没有充分合并需要合并的论点；可能需要考虑进一步优化 prompt，或者换用其他模型（不过我拿便宜的模型都试了一轮，基本上都存在类似问题）</li>
+<li>数据结构化：目前摘要存储库下有个简单的 data.json，但是核心的摘要和全文内容依然是 Markdown 存储的，而不是 JSON 这类程序友好的结构化存储。可能需要考虑在 Markdown 之外另外维护一个 JSON，以备未来的查询。</li>
+<li>代码整理和重构：目前所有逻辑都混在一个大的 Python 文件里，修改和测试起来都很烦人（实际上没有特别好的办法手动测试，目前都得靠手动注释掉部分代码）。未来一个考虑是做重构（o1-mini也给出过比较好的重构结构）+补充测试；另一个是改进书签存储库和摘要存储库的交互方式，例如通过读 git log 或者是明确传递最近书签条目的方式来触发摘要生成，而不是靠目前读文件对比的方式</li>
+<li>向量搜索：目前虽然原文和摘要都存下来了，搜索却还是只能靠基本的文本匹配；可能可以考虑接个 embedding 模型自动生成下嵌入，存到一个 SQLite 数据库（或者用各种向量数据库 as a Service）；主要是查询的时候也得生成 embedding，英文还有小模型可以搞，中文的模型都太大了，没法直接在前端跑不依赖后端服务，这里还得再仔细想想。</li>
+<li>自动生成每周周报：既然现在书签有时间信息，可以考虑每周新增的书签+原文+摘要全部往 LLM 扔，自动生成一个每周摘要，放在 Github Release 里（不过不知道有没有人愿意看就是了）</li>
+</ol>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/posts/2-years-of-work/">
+		<img class="icon-text" src="/img/prev.svg"/>工作两年了</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/posts/tools-i-use-2024-mid/">2024 年了，我最近在用什么工具</a></li>
+  	
+  	<li><a href="/share/my-ai-prompts/">我的 AI Prompt</a></li>
+  	
+  	<li><a href="/share/try-chatglm/">用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/project/</loc>
-    <lastmod>2024-08-31T23:45:30+08:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2024-08-31T22:54:10+08:00</lastmod>
+    <lastmod>2024-10-07T14:03:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,8 +15,24 @@
                 href="https://nekonull.me/"
                 />
   </url><url>
+    <loc>https://nekonull.me/share/pages-repo/</loc>
+    <lastmod>2024-10-07T14:03:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/share/</loc>
+    <lastmod>2024-10-07T14:03:00+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://nekonull.me/en/share/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://nekonull.me/share/"
+                />
+  </url><url>
     <loc>https://nekonull.me/tags/</loc>
-    <lastmod>2024-08-31T22:54:10+08:00</lastmod>
+    <lastmod>2024-10-07T13:58:00+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -31,24 +44,48 @@
                 href="https://nekonull.me/tags/"
                 />
   </url><url>
+    <loc>https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/</loc>
+    <lastmod>2024-10-07T13:58:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2024-10-07T13:58:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/git/</loc>
+    <lastmod>2024-10-07T13:56:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/share/how-to-manual-squash/</loc>
+    <lastmod>2024-10-07T13:56:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/llm/</loc>
+    <lastmod>2024-10-07T13:52:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/posts/llm_x_bookmark/</loc>
+    <lastmod>2024-10-07T13:52:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2024-10-07T13:52:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/posts/</loc>
+    <lastmod>2024-10-07T13:52:00+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://nekonull.me/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh"
+                href="https://nekonull.me/posts/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/project/</loc>
+    <lastmod>2024-08-31T23:45:30+08:00</lastmod>
+  </url><url>
     <loc>https://nekonull.me/tags/%E5%89%8D%E7%AB%AF/</loc>
     <lastmod>2024-08-31T22:54:10+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/trigger-elementui-from-devtools/</loc>
     <lastmod>2024-08-31T22:54:10+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/share/</loc>
-    <lastmod>2024-08-31T22:54:10+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://nekonull.me/en/share/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://nekonull.me/share/"
-                />
   </url><url>
     <loc>https://nekonull.me/share/obsidian-work-journal/</loc>
     <lastmod>2024-08-18T15:30:00+08:00</lastmod>
@@ -84,19 +121,6 @@
     <loc>https://nekonull.me/tags/%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2024-08-04T09:11:00+08:00</lastmod>
   </url><url>
-    <loc>https://nekonull.me/posts/</loc>
-    <lastmod>2024-08-04T09:11:00+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://nekonull.me/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh"
-                href="https://nekonull.me/posts/"
-                />
-  </url><url>
     <loc>https://nekonull.me/posts/ruankao-architect/</loc>
     <lastmod>2024-08-04T09:07:00+08:00</lastmod>
   </url><url>
@@ -104,9 +128,6 @@
     <lastmod>2024-07-28T21:34:58+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/tools-i-use-2024-mid/</loc>
-    <lastmod>2024-07-21T21:53:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</loc>
     <lastmod>2024-07-21T21:53:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</loc>
@@ -128,16 +149,10 @@
                 href="https://nekonull.me/share/hugo-multilang/"
                 />
   </url><url>
-    <loc>https://nekonull.me/tags/llm/</loc>
-    <lastmod>2023-10-29T20:17:00+08:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/share/my-ai-prompts/</loc>
     <lastmod>2023-10-29T20:17:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/try-chatglm/</loc>
-    <lastmod>2023-10-29T19:41:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2023-10-29T19:41:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/openrouter-mitmproxy/</loc>

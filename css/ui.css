@@ -551,20 +551,22 @@ code {
   padding: .2rem .5rem;
   margin: 0 .2rem;
   font-size: 90%;
-  white-space: nowrap;
+  white-space: nowrap; /* 保持文本在一行 */
   background: #f1f1f1;
   border: 1px solid #e1e1e1;
   border-radius: 4px;
   font-family: 'Fira Mono', monospace;
+  overflow-x: auto; /* 添加水平滚动 */
 }
 pre > code {
   display: block;
   padding: 1rem 1.5rem;
-  white-space: pre-wrap;
+  white-space: pre;
   background: #2b303b;
   color: #c0c5ce;
   font-family: 'Fira Mono', monospace;
-  overflow-wrap: break-word;
+  word-wrap: normal; /* 不自动换行 */
+  overflow-x: auto; /* 添加水平滚动 */
 }
 
 /* #Tables

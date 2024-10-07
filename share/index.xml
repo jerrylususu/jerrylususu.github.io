@@ -6,7 +6,307 @@
     <description>Recent content in 短文 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 31 Aug 2024 22:54:10 +0800</lastBuildDate><atom:link href="https://nekonull.me/share/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Oct 2024 14:03:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/share/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>工具小站</title>
+      <link>https://nekonull.me/share/pages-repo/</link>
+      <pubDate>Mon, 07 Oct 2024 14:03:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/pages-repo/</guid>
+      <description>&lt;p&gt;参考 &lt;a href=&#34;https://tools.simonwillison.net/&#34;&gt;tools.simonwillison.net&lt;/a&gt;，决定把所有单页纯前端应用全部放到到一个 repo 里，并且分配一个子域名；这样不用每个小工具都申请独立 repo + 配置 Github Actions 了。&lt;/p&gt;
+&lt;p&gt;虽然目前还是没什么东西，但是还是欢迎来玩：&lt;a href=&#34;https://pages.nekonull.me/&#34;&gt;pages.nekonull.me&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>基于 WebRecorder 和 MitmProxy 的图片手动抓取探索</title>
+      <link>https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/</link>
+      <pubDate>Mon, 07 Oct 2024 13:58:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/</guid>
+      <description>&lt;p&gt;最近收到任务，需要从某个站点下载一系列图片。首先当然是 F12 看下网络请求。这是一个无限滚动的瀑布流，图片地址本身是随机的（看起来文件名像是 uuid），所以没法直接遍历图片地址；此外每次滚动到底，都会触发一个获取下一页图片地址的请求，参数传的还是游标而不是页数，这又断绝了直接构造分页请求（例如 &lt;code&gt;page=1&lt;/code&gt;）获取所有图片地址，再逐个拉取的念头。好在总图片数是有限的，大概在 2k 左右，每次下拉能拉回 50 条，所以手动抓取也不是不能接受。以下是两种手动抓取的思路。注：这里的手动抓取，指的是在浏览器前端通过模拟人类行为，无侵入且不对网站发起额外请求的抓取方式。&lt;/p&gt;
+&lt;h2 id=&#34;前置准备ahk-翻页器&#34;&gt;前置准备：AHK 翻页器&lt;/h2&gt;
+&lt;p&gt;一个简单的小工具，每隔一段时间自动按 page down 翻页（建议提前 zoom out 调小页面比例，这样滚动起来效率更高）&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;AHK 翻页器代码&lt;/summary&gt;
+&lt;pre&gt;&lt;code class=&#34;language-autohotkey&#34; data-lang=&#34;autohotkey&#34;&gt;#Requires AutoHotkey v2.0
+
+; 创建一个 GUI
+MyGui := Gui()
+MyGui.Add(&amp;quot;Text&amp;quot;, &amp;quot;x10 y10&amp;quot;, &amp;quot;Auto Page Down:&amp;quot;)
+toggle := MyGui.Add(&amp;quot;Checkbox&amp;quot;, &amp;quot;x10 y30 vToggleState&amp;quot;, &amp;quot;Enable&amp;quot;)
+MyGui.OnEvent(&amp;quot;Close&amp;quot;, (*) =&amp;gt; ExitApp())
+MyGui.Show()
+
+; 设置全局变量以跟踪定时器状态
+global keyHeld := false
+
+; 定时器：每0.1秒检查一次开关状态
+SetTimer(CheckToggleState, 100)
+
+; 主循环
+CheckToggleState()
+{
+    global keyHeld  ; 声明 keyHeld 为全局变量
+
+    if (toggle.Value) {
+        if (!keyHeld) {
+            ; 如果勾选了启用选项，并且哔哩哔哩窗口处于活动状态
+            RandomDelayAndSendPageDown()
+            keyHeld := true
+        }
+    } else {
+        if (keyHeld) {
+            ; 如果没有勾选启用选项，停止按键操作
+            keyHeld := false
+        }
+    }
+}
+
+; 生成随机延迟并发送 Page Down 键
+RandomDelayAndSendPageDown()
+{
+    ; 生成 500 到 1000 毫秒之间的随机延迟
+    RandomDelay := Random(500, 1000)
+    SetTimer(PressPageDown, RandomDelay)
+}
+
+; 按下 Page Down 键
+PressPageDown()
+{
+    global keyHeld  ; 声明 keyHeld 为全局变量
+    
+    if (toggle.Value) {
+        Send(&amp;quot;{PgDn}&amp;quot;)
+        RandomDelayAndSendPageDown()  ; 继续下一次按键
+    } else {
+        keyHeld := false
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;h2 id=&#34;思路1webrecorder&#34;&gt;思路1：WebRecorder&lt;/h2&gt;
+&lt;p&gt;概述：用 WebRecorder 插件，录制网络请求（WebRecorder 插件会 hook 浏览器的 XMLHttpRequest 机制），dump 出 &lt;a href=&#34;https://en.wikipedia.org/wiki/WARC_(file_format)&#34;&gt;warc&lt;/a&gt;  (Web Archive）文件，然后再解析文件，从中提取 mime 类型为图片的文件（或者知道 URL 格式的话也可以用 URL 格式匹配）。&lt;/p&gt;
+&lt;p&gt;限制：导出的时候存在文件大小限制（Chrome 下似乎是 2G，也取决于可用内存大小），总文件大小太大的话可能会有问题。&lt;/p&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Chrome 插件 &lt;a href=&#34;https://chromewebstore.google.com/detail/webrecorder-archivewebpag/fpeoodllldobpkbkabpblcfaogecpndd&#34;&gt;Webrecorder ArchiveWeb.page&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;浏览器插件栏找到 Webrecorder，点击 Start Archiving&lt;/li&gt;
+&lt;li&gt;跳转到需要抓取的网页&lt;/li&gt;
+&lt;li&gt;打开翻页器，一直往下滚动&lt;/li&gt;
+&lt;li&gt;完成后打开插件，点击 Stop Archiving&lt;/li&gt;
+&lt;li&gt;点击插件界面内的 Home 按钮，找到刚才的 Archiving Session，点击 Download，下载一个 wacz 文件到本地&lt;/li&gt;
+&lt;li&gt;修改扩展名为 zip，将其中的 archive/data.warc.gz 文件解压出来，得到 data.warc 文件&lt;/li&gt;
+&lt;li&gt;运行如下 Python 脚本，解析 warc 文件，并从中提取图片内容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;summary&gt;Python 解析 WARC 代码&lt;/summary&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; warcio.archiveiterator &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; ArchiveIterator
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; re
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义一个函数过滤掉不支持的字符&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sanitize_filename&lt;/span&gt;(filename):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 定义不允许的字符&lt;/span&gt;
+    invalid_chars &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;[&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;/:*?&amp;#34;&amp;lt;&amp;gt;|]&amp;#39;&lt;/span&gt;
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 替换这些字符为空字符，或者可以替换为下划线 &amp;#34;_&amp;#34;&lt;/span&gt;
+    sanitized_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sub(invalid_chars, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_&amp;#39;&lt;/span&gt;, filename)
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; sanitized_filename
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 提取 WARC 文件中的图片、视频资源&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;extract_resources_from_warc&lt;/span&gt;(warc_file, output_dir):
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(warc_file, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; stream:
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; record &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; ArchiveIterator(stream):
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;http_headers:
+                content_type &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;http_headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-Type&amp;#39;&lt;/span&gt;)
+                &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; content_type &lt;span style=&#34;color:#f92672&#34;&gt;and&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;image&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type:
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取资源文件的 URL&lt;/span&gt;
+                    url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;rec_headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_header(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;WARC-Target-URI&amp;#39;&lt;/span&gt;)
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(url)
+
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取资源文件内容&lt;/span&gt;
+                    content &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; record&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;content_stream()&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;read()
+                    
+                    &lt;span style=&#34;color:#75715e&#34;&gt;# 确定文件扩展名&lt;/span&gt;
+                    ext &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;jpg&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;image&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;mp4&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;video&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;
+                    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ext:
+                        &lt;span style=&#34;color:#75715e&#34;&gt;# 生成文件名&lt;/span&gt;
+                        sanitized_url &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sanitize_filename(os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;basename(url))
+                        filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(output_dir, sanitized_url) &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;.&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; ext
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;filename&amp;#34;&lt;/span&gt;, filename)
+                        &lt;span style=&#34;color:#75715e&#34;&gt;# 保存文件&lt;/span&gt;
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(filename, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;wb&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; f:
+                            f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(content)
+                        &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Extracted: {filename}&amp;#34;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 示例用法&lt;/span&gt;
+warc_file &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;data.warc&amp;#39;&lt;/span&gt;
+output_dir &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;extracted_resources&amp;#39;&lt;/span&gt;
+os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;makedirs(output_dir, exist_ok&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True)
+extract_resources_from_warc(warc_file, output_dir)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;h2 id=&#34;思路2mitmproxy&#34;&gt;思路2：MitmProxy&lt;/h2&gt;
+&lt;p&gt;概述：安装 mitmproxy，设置浏览器代理指向 proxy，浏览时从响应中直接过滤出图片内容并保存到本地&lt;/p&gt;
+&lt;p&gt;限制：似乎没什么限制&lt;/p&gt;
+&lt;p&gt;步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 &lt;a href=&#34;https://docs.mitmproxy.org/stable/overview-installation/&#34;&gt;mitmproxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;保存以下 Python 脚本为 &lt;code&gt;save.py&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;summary&gt;mitmproxy save.py&lt;/summary&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; os
+&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; re
+&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; mitmproxy &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; ctx, http
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义文件保存目录&lt;/span&gt;
+save_dir &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;saved_media&amp;#34;&lt;/span&gt;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 确保目录存在&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;not&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;exists(save_dir):
+    os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;makedirs(save_dir)
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# 定义一个正则表达式，匹配Windows非法的文件名字符&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;sanitize_filename&lt;/span&gt;(filename: str) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; str:
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 替换非法字符为下划线&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; re&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;sub(&lt;span style=&#34;color:#e6db74&#34;&gt;r&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;[&amp;lt;&amp;gt;:&amp;#34;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;|?*]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;_&amp;#39;&lt;/span&gt;, filename)
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;response&lt;/span&gt;(flow: http&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;HTTPFlow):
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 获取响应的Content-Type&lt;/span&gt;
+    content_type &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;headers&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Content-Type&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)
+
+    &lt;span style=&#34;color:#75715e&#34;&gt;# 判断是否为图片或视频类型&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;image&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; content_type:
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 获取文件扩展名&lt;/span&gt;
+        ext &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; content_type&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;)[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 从请求路径中尝试提取文件名，如果路径中没有文件名，则使用flow.id&lt;/span&gt;
+        url_path &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;request&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;split(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;)[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;.&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; url_path:  &lt;span style=&#34;color:#75715e&#34;&gt;# 判断路径中是否包含文件扩展名&lt;/span&gt;
+            raw_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; url_path
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
+            raw_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;{flow.request.host}_{flow.id}.{ext}&amp;#34;&lt;/span&gt;
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 对文件名进行清理，确保符合Windows的文件名要求&lt;/span&gt;
+        safe_filename &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sanitize_filename(raw_filename)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 确定完整的保存路径&lt;/span&gt;
+        filepath &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; os&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;path&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(save_dir, safe_filename)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 记录日志，打印保存的文件名和URL&lt;/span&gt;
+        ctx&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;info(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Saving file: {filepath} from URL: {flow.request.url}&amp;#34;&lt;/span&gt;)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 保存文件内容&lt;/span&gt;
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; open(filepath, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;wb&amp;#34;&lt;/span&gt;) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; f:
+            f&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;write(flow&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;response&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;content)
+
+        &lt;span style=&#34;color:#75715e&#34;&gt;# 打印成功保存的日志&lt;/span&gt;
+        ctx&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;log&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;info(f&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Saved {filepath}&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;运行 mitmproxy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 需要先 cd 到 save.py 所在的目录&lt;/span&gt;
+&lt;span style=&#34;color:#75715e&#34;&gt;# 可以添加 --mode upstream:http://localhost:7890 来指定上游代理&lt;/span&gt;
+mitmweb -s save.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;设置浏览器，指向 mitmproxy 代理（可能你需要 &lt;a href=&#34;https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif&#34;&gt;proxy switchyomega&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;跳转到需要抓取的网页，打开翻页器&lt;/li&gt;
+&lt;li&gt;滚动到底部，且所有图片加载完成后，需要抓取的图片应该都已经保存到本地了&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>如何手动 squash</title>
+      <link>https://nekonull.me/share/how-to-manual-squash/</link>
+      <pubDate>Mon, 07 Oct 2024 13:56:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/how-to-manual-squash/</guid>
+      <description>&lt;p&gt;最近帮解决了一个因为提交流程不规范导致的诡异 Git 分支问题，特此记录下，以备后用。&lt;/p&gt;
+&lt;p&gt;背景：主干分支 main，特性分支 feat，在特性分支上开发特性的时候，多次合入了主干分支（仅快进，没有合并冲突）；模拟的 Git 历史如下图所示，其中 &lt;code&gt;m*&lt;/code&gt; 是主干提交，&lt;code&gt;f*&lt;/code&gt; 是特性分支提交&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;* 5fb94b2 (HEAD -&amp;gt; main) m4
+| * 83c6299 (feat) f3
+| *   ff5c5af Merge branch &#39;main&#39; into feat
+| |\
+| |/
+|/|
+* | 1698c3c m3
+* | 05199a8 m2
+| * 68a7e1d f2
+| * eb5b169 f1
+|/
+* ae79b7c m1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;问题：如何把特性分支上的所有提交合并为一个提交？（类似于 squash 的 Merge 策略，但是手动做到这一点）&lt;/p&gt;
+&lt;p&gt;思路：找到主干和特性分支的第一个分叉点，以此为基准生成 patch，然后在一个新分支上 apply patch 得到一个纯净的 commit。&lt;/p&gt;
+&lt;p&gt;（非人工写作提示：以下是 LLM 根据我自己的笔记生成的内容。欢迎将反馈贴在评论区，这将决定我以后是否会更积极地使用 LLM 进行创作。）&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;在日常开发中，我们经常会遇到这样的问题：由于开发流程、代码审查或其他原因，特性分支（Feature Branch）和主干（Main Branch）上的提交记录混杂在一起，难以管理。为了让代码历史更为清晰、整洁，我们通常需要手动进行 &lt;code&gt;squash&lt;/code&gt; 操作，将特性分支上的多次提交合并成一个提交点。&lt;/p&gt;
+&lt;p&gt;这篇文章将带你一步步了解如何手动进行 &lt;code&gt;squash&lt;/code&gt; 操作，并确保不丢失任何数据。这种方法适用于已经有部分提交合并进主干，并且历史记录较为复杂的场景。&lt;/p&gt;
+&lt;h2 id=&#34;场景问题&#34;&gt;场景问题&lt;/h2&gt;
+&lt;p&gt;假设你正在开发一个新功能，但在开发过程中，特性分支 &lt;code&gt;feat&lt;/code&gt; 和主干分支 &lt;code&gt;main&lt;/code&gt; 上的提交混杂在一起。这样一来，不仅使代码历史难以追溯，还会影响代码审查和后续维护。因此，我们希望将 &lt;code&gt;feat&lt;/code&gt; 分支上的所有提交整合成一个提交点，并保持代码历史的清晰度。&lt;/p&gt;
+&lt;h2 id=&#34;前置准备工作&#34;&gt;前置准备工作&lt;/h2&gt;
+&lt;p&gt;在进行操作前，我们需要做一些准备工作，确保不会出现数据丢失的风险：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;创建备份分支并推送到远程：&lt;/strong&gt; 在特性分支 &lt;code&gt;feat&lt;/code&gt; 上创建一个备份分支，并推送到远程仓库，以确保操作过程中的数据安全。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git checkout feat
+git checkout -b feat-backup
+git push origin feat-backup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样，即使后续操作中出现意外，我们依然可以通过 &lt;code&gt;feat-backup&lt;/code&gt; 分支恢复数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;步骤详解&#34;&gt;步骤详解&lt;/h2&gt;
+&lt;h3 id=&#34;1-确定变更点&#34;&gt;1. 确定变更点&lt;/h3&gt;
+&lt;p&gt;首先，我们需要找到 &lt;code&gt;feat&lt;/code&gt; 分支和 &lt;code&gt;main&lt;/code&gt; 分支的&lt;strong&gt;最后一个重合点&lt;/strong&gt;（也就是 &lt;code&gt;main&lt;/code&gt; 分支中包含但 &lt;code&gt;feat&lt;/code&gt; 中不包含的最后一个提交）。这样我们就可以清晰地识别出哪些提交属于 &lt;code&gt;feat&lt;/code&gt;，而哪些提交是混杂进来的。&lt;/p&gt;
+&lt;h4 id=&#34;如何找到变更点&#34;&gt;如何找到变更点？&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使用以下命令，找出 &lt;code&gt;feat&lt;/code&gt; 分支中第一个与 &lt;code&gt;main&lt;/code&gt; 分支分叉的提交：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git log --oneline main...feat --reverse --pretty&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;format:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;%H&amp;#34;&lt;/span&gt; | head -n &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此命令将列出 &lt;code&gt;feat&lt;/code&gt; 分支中所有提交的哈希值（&lt;code&gt;commit hash&lt;/code&gt;），并按照时间顺序排列，其中 &lt;code&gt;head -n 1&lt;/code&gt; 取出第一个分叉点的哈希值，记为 &lt;code&gt;{first_diverge_commit}&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;然后使用以下命令查找 &lt;code&gt;main&lt;/code&gt; 与 &lt;code&gt;feat&lt;/code&gt; 最后一个重合点的哈希值：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git rev-list --parents -n &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;first_diverge_commit&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; --reverse | head -n &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;取命令结果的&lt;strong&gt;右边部分&lt;/strong&gt;，这就是 &lt;code&gt;main&lt;/code&gt; 和 &lt;code&gt;feat&lt;/code&gt; 的最后重合点，记为 &lt;code&gt;{last_share_commit}&lt;/code&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-计算差异patch&#34;&gt;2. 计算差异（Patch）&lt;/h3&gt;
+&lt;p&gt;现在我们已经知道了 &lt;code&gt;main&lt;/code&gt; 分支和 &lt;code&gt;feat&lt;/code&gt; 分支的分叉点和最后重合点，我们可以提取出 &lt;code&gt;feat&lt;/code&gt; 中相对于 &lt;code&gt;main&lt;/code&gt; 的所有变更。&lt;/p&gt;
+&lt;p&gt;使用 &lt;code&gt;git diff&lt;/code&gt; 生成差异文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git diff &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;last_share_commit&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; feat &amp;gt; ~/my_patch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 请将 &lt;code&gt;patch&lt;/code&gt; 文件存放在仓库目录外，例如 &lt;code&gt;~/my_patch&lt;/code&gt;，因为后续执行 &lt;code&gt;git reset&lt;/code&gt; 时会重置仓库目录内的所有文件，导致 &lt;code&gt;patch&lt;/code&gt; 文件丢失。&lt;/p&gt;
+&lt;h3 id=&#34;3-回溯到最后重合点&#34;&gt;3. 回溯到最后重合点&lt;/h3&gt;
+&lt;p&gt;接下来，我们要将当前 &lt;code&gt;feat&lt;/code&gt; 分支的状态回退到 &lt;code&gt;main&lt;/code&gt; 分支的最后重合点。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git reset --hard &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;last_share_commit&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该命令将 &lt;code&gt;feat&lt;/code&gt; 分支的状态重置到 &lt;code&gt;{last_share_commit}&lt;/code&gt; 提交。&lt;strong&gt;注意：&lt;/strong&gt; &lt;code&gt;reset --hard&lt;/code&gt; 会丢失所有当前分支的更改，因此确保之前的 &lt;code&gt;patch&lt;/code&gt; 文件已备份。&lt;/p&gt;
+&lt;h3 id=&#34;4-快进主干fast-forward-merge&#34;&gt;4. 快进主干（Fast-Forward Merge）&lt;/h3&gt;
+&lt;p&gt;现在，我们需要让 &lt;code&gt;feat&lt;/code&gt; 分支快进（fast-forward）到主干 &lt;code&gt;main&lt;/code&gt; 的最新状态。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git merge main --ff-only
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;--ff-only&lt;/code&gt; 参数表示如果不能进行快进合并，则不会合并。这一步确保 &lt;code&gt;feat&lt;/code&gt; 分支的历史记录与 &lt;code&gt;main&lt;/code&gt; 分支保持一致。&lt;/p&gt;
+&lt;h3 id=&#34;5-应用补丁apply-patch&#34;&gt;5. 应用补丁（Apply Patch）&lt;/h3&gt;
+&lt;p&gt;回退和快进操作完成后，我们将 &lt;code&gt;feat&lt;/code&gt; 分支上原本存在的所有提交变更（即 &lt;code&gt;patch&lt;/code&gt; 文件）重新应用到当前分支。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git apply ~/my_patch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;6-提交变更并推送&#34;&gt;6. 提交变更并推送&lt;/h3&gt;
+&lt;p&gt;现在，我们可以创建一个新的提交，将 &lt;code&gt;feat&lt;/code&gt; 分支的所有变更整合到一个提交中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git add .
+git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Squashed all feature changes into a single commit.&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着，将 &lt;code&gt;feat&lt;/code&gt; 分支强制推送到远端，以确保远程仓库与本地分支一致：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git push origin feat --force
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;
+&lt;p&gt;通过上述操作，我们成功地将 &lt;code&gt;feat&lt;/code&gt; 分支的所有提交整合成了一个提交点，并且与主干保持了清晰的历史记录。完整步骤如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;找出特性分支和主干的分叉点与重合点。&lt;/li&gt;
+&lt;li&gt;生成 &lt;code&gt;patch&lt;/code&gt; 文件保存变更。&lt;/li&gt;
+&lt;li&gt;回溯到重合点并进行快进合并。&lt;/li&gt;
+&lt;li&gt;应用 &lt;code&gt;patch&lt;/code&gt; 文件，合并所有更改。&lt;/li&gt;
+&lt;li&gt;提交合并后的变更，并推送到远端。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过这种手动 &lt;code&gt;squash&lt;/code&gt; 方法，你可以灵活地调整提交历史，确保代码库的整洁度和可读性。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>在 Devtools 里触发前端组件的内部状态更新</title>
       <link>https://nekonull.me/share/trigger-elementui-from-devtools/</link>
@@ -1271,56 +1571,6 @@ TypeError: &#39;NoneType&#39; object is not callable
 }
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
-    </item>
-    
-    <item>
-      <title>Hugo 的 Disqus 整合</title>
-      <link>https://nekonull.me/share/hugo-disqus/</link>
-      <pubDate>Sat, 03 Apr 2021 22:30:00 +0300</pubDate>
-      
-      <guid>https://nekonull.me/share/hugo-disqus/</guid>
-      <description>&lt;p&gt;Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 &lt;code&gt;config.toml&lt;/code&gt; 的顶层设定 &lt;code&gt;disqusShortname&lt;/code&gt; 属性即可，不过实际用起来稍微有些坑。具体步骤如下。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;在 Disqus 官网注册自己的账户&lt;/li&gt;
-&lt;li&gt;在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （&lt;code&gt;{site_name}.disqus.com&lt;/code&gt;）就是 &lt;code&gt;disqusShortname&lt;/code&gt; 应该用的值&lt;/li&gt;
-&lt;li&gt;站点创建完成后，Billing 页选择 Free Plan&lt;/li&gt;
-&lt;li&gt;在 Hugo 的 &lt;code&gt;config.toml&lt;/code&gt; 文件中设定 &lt;code&gt;disqusShortname&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;其他小问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;本地没有评论显示：主题的&lt;code&gt;disqus.html&lt;/code&gt;中（位于&lt;code&gt;{site_folder}\themes\{theme_name}\layouts\partials\disqus.html&lt;/code&gt;），在本地执行（&lt;code&gt;indow.location.hostname == &amp;quot;localhost&amp;quot;&lt;/code&gt;）的时候不会加载评论框。如果调试需要，可以给这个判断加上注释，即可在本地正常显示了。&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>JavaFX 打包并设定 UTF-8</title>
-      <link>https://nekonull.me/share/use-utf8-for-javafx-packaging/</link>
-      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/use-utf8-for-javafx-packaging/</guid>
-      <description>&lt;p&gt;IDEA 可以自动为 JavaFX 打包，会带上依赖 jar 和 Java Runtime，具体方法见&lt;a href=&#34;https://www.youtube.com/watch?v=_KHCHiH2RZ0&#34;&gt;视频&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;然而这样打包生成的文件，在没有加 VM 参数时默认使用系统编码，在中文 Windows 环境下即使用 GBK，代码中若含有中文会造成乱码。&lt;/p&gt;
-&lt;p&gt;解决此问题的方法也很简单，只需要在打包后找到 &lt;code&gt;{artifact_name}/app/{artifact_name}.cfg&lt;/code&gt; 文件，找到 &lt;code&gt;[JVMOptions]&lt;/code&gt; 一行，在其后追加 &lt;code&gt;-Dfile.encoding=utf-8&lt;/code&gt; 即可。然而需要每次打包后手动修改，并非最佳方法。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用 Slides 标题栏颜色区分重要性</title>
-      <link>https://nekonull.me/share/slide-title-color-importance/</link>
-      <pubDate>Fri, 02 Apr 2021 02:25:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/slide-title-color-importance/</guid>
-      <description>&lt;p&gt;Slides 标题栏除了展示标题之外，也可以用于表明本页的重要性。&lt;/p&gt;
-&lt;p&gt;例子：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;「红色/橙色」代表本页十分重要，就算忘记了其他内容也应该记得本页。&lt;/li&gt;
-&lt;li&gt;「蓝色/幻灯片主题色」代表本页一般重要，即一般的正文层级&lt;/li&gt;
-&lt;li&gt;「绿色」代表本页内容为延伸、扩展或详细说明&lt;/li&gt;
-&lt;li&gt;「灰色」代表本页内容为参考文献、资料总览&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;来源：&lt;a href=&#34;https://youtu.be/cTN1Qar4HSw?t=1854&#34;&gt;Google TechTalk - Haskell 101&lt;/a&gt;&lt;/p&gt;
-</description>
     </item>
     
   </channel>

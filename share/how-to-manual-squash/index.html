@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="generator" content="Hugo 0.82.0" />
+		<title>如何手动 squash - Nekonull&#39;s Garden</title>
+
+		<meta name="description" content="最近帮解决了一个因为提交流程不规范导致的诡异 Git 分支问题，特此记录下，以备后用。 背景：主干分支 main，特性分支 feat，在特性分支上开发特性">
+
+
+		
+	
+		
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+		
+
+		<script defer src="/js/dark-mode.js"></script>
+		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+		<link  rel="stylesheet" href="/css/dropdown.css">
+
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+		crossorigin="anonymous"></script>
+
+		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+		
+				
+		
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
+}
+</script>
+
+	</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="/share/how-to-manual-squash/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>如何手动 squash</h1>
+	<h5>
+		
+		<time datetime="2024-10-07 13:56:00 &#43;0800 &#43;0800">Oct 07, 2024</time>
+		<span class="no-print">
+			-
+				
+				<a href="/tags/Git">Git</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>最近帮解决了一个因为提交流程不规范导致的诡异 Git 分支问题，特此记录下，以备后用。</p>
+<p>背景：主干分支 main，特性分支 feat，在特性分支上开发特性的时候，多次合入了主干分支（仅快进，没有合并冲突）；模拟的 Git 历史如下图所示，其中 <code>m*</code> 是主干提交，<code>f*</code> 是特性分支提交</p>
+<pre><code>* 5fb94b2 (HEAD -&gt; main) m4
+| * 83c6299 (feat) f3
+| *   ff5c5af Merge branch 'main' into feat
+| |\
+| |/
+|/|
+* | 1698c3c m3
+* | 05199a8 m2
+| * 68a7e1d f2
+| * eb5b169 f1
+|/
+* ae79b7c m1
+</code></pre><p>问题：如何把特性分支上的所有提交合并为一个提交？（类似于 squash 的 Merge 策略，但是手动做到这一点）</p>
+<p>思路：找到主干和特性分支的第一个分叉点，以此为基准生成 patch，然后在一个新分支上 apply patch 得到一个纯净的 commit。</p>
+<p>（非人工写作提示：以下是 LLM 根据我自己的笔记生成的内容。欢迎将反馈贴在评论区，这将决定我以后是否会更积极地使用 LLM 进行创作。）</p>
+<hr>
+<p>在日常开发中，我们经常会遇到这样的问题：由于开发流程、代码审查或其他原因，特性分支（Feature Branch）和主干（Main Branch）上的提交记录混杂在一起，难以管理。为了让代码历史更为清晰、整洁，我们通常需要手动进行 <code>squash</code> 操作，将特性分支上的多次提交合并成一个提交点。</p>
+<p>这篇文章将带你一步步了解如何手动进行 <code>squash</code> 操作，并确保不丢失任何数据。这种方法适用于已经有部分提交合并进主干，并且历史记录较为复杂的场景。</p>
+<h2 id="场景问题">场景问题</h2>
+<p>假设你正在开发一个新功能，但在开发过程中，特性分支 <code>feat</code> 和主干分支 <code>main</code> 上的提交混杂在一起。这样一来，不仅使代码历史难以追溯，还会影响代码审查和后续维护。因此，我们希望将 <code>feat</code> 分支上的所有提交整合成一个提交点，并保持代码历史的清晰度。</p>
+<h2 id="前置准备工作">前置准备工作</h2>
+<p>在进行操作前，我们需要做一些准备工作，确保不会出现数据丢失的风险：</p>
+<ol>
+<li>
+<p><strong>创建备份分支并推送到远程：</strong> 在特性分支 <code>feat</code> 上创建一个备份分支，并推送到远程仓库，以确保操作过程中的数据安全。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout feat
+git checkout -b feat-backup
+git push origin feat-backup
+</code></pre></div><p>这样，即使后续操作中出现意外，我们依然可以通过 <code>feat-backup</code> 分支恢复数据。</p>
+</li>
+</ol>
+<h2 id="步骤详解">步骤详解</h2>
+<h3 id="1-确定变更点">1. 确定变更点</h3>
+<p>首先，我们需要找到 <code>feat</code> 分支和 <code>main</code> 分支的<strong>最后一个重合点</strong>（也就是 <code>main</code> 分支中包含但 <code>feat</code> 中不包含的最后一个提交）。这样我们就可以清晰地识别出哪些提交属于 <code>feat</code>，而哪些提交是混杂进来的。</p>
+<h4 id="如何找到变更点">如何找到变更点？</h4>
+<ol>
+<li>
+<p>使用以下命令，找出 <code>feat</code> 分支中第一个与 <code>main</code> 分支分叉的提交：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git log --oneline main...feat --reverse --pretty<span style="color:#f92672">=</span>format:<span style="color:#e6db74">&#34;%H&#34;</span> | head -n <span style="color:#ae81ff">1</span>
+</code></pre></div><p>此命令将列出 <code>feat</code> 分支中所有提交的哈希值（<code>commit hash</code>），并按照时间顺序排列，其中 <code>head -n 1</code> 取出第一个分叉点的哈希值，记为 <code>{first_diverge_commit}</code>。</p>
+</li>
+<li>
+<p>然后使用以下命令查找 <code>main</code> 与 <code>feat</code> 最后一个重合点的哈希值：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git rev-list --parents -n <span style="color:#ae81ff">1</span> <span style="color:#f92672">{</span>first_diverge_commit<span style="color:#f92672">}</span> --reverse | head -n <span style="color:#ae81ff">1</span>
+</code></pre></div><p>取命令结果的<strong>右边部分</strong>，这就是 <code>main</code> 和 <code>feat</code> 的最后重合点，记为 <code>{last_share_commit}</code>。</p>
+</li>
+</ol>
+<h3 id="2-计算差异patch">2. 计算差异（Patch）</h3>
+<p>现在我们已经知道了 <code>main</code> 分支和 <code>feat</code> 分支的分叉点和最后重合点，我们可以提取出 <code>feat</code> 中相对于 <code>main</code> 的所有变更。</p>
+<p>使用 <code>git diff</code> 生成差异文件：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git diff <span style="color:#f92672">{</span>last_share_commit<span style="color:#f92672">}</span> feat &gt; ~/my_patch
+</code></pre></div><p><strong>注意：</strong> 请将 <code>patch</code> 文件存放在仓库目录外，例如 <code>~/my_patch</code>，因为后续执行 <code>git reset</code> 时会重置仓库目录内的所有文件，导致 <code>patch</code> 文件丢失。</p>
+<h3 id="3-回溯到最后重合点">3. 回溯到最后重合点</h3>
+<p>接下来，我们要将当前 <code>feat</code> 分支的状态回退到 <code>main</code> 分支的最后重合点。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git reset --hard <span style="color:#f92672">{</span>last_share_commit<span style="color:#f92672">}</span>
+</code></pre></div><p>该命令将 <code>feat</code> 分支的状态重置到 <code>{last_share_commit}</code> 提交。<strong>注意：</strong> <code>reset --hard</code> 会丢失所有当前分支的更改，因此确保之前的 <code>patch</code> 文件已备份。</p>
+<h3 id="4-快进主干fast-forward-merge">4. 快进主干（Fast-Forward Merge）</h3>
+<p>现在，我们需要让 <code>feat</code> 分支快进（fast-forward）到主干 <code>main</code> 的最新状态。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git merge main --ff-only
+</code></pre></div><p><code>--ff-only</code> 参数表示如果不能进行快进合并，则不会合并。这一步确保 <code>feat</code> 分支的历史记录与 <code>main</code> 分支保持一致。</p>
+<h3 id="5-应用补丁apply-patch">5. 应用补丁（Apply Patch）</h3>
+<p>回退和快进操作完成后，我们将 <code>feat</code> 分支上原本存在的所有提交变更（即 <code>patch</code> 文件）重新应用到当前分支。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git apply ~/my_patch
+</code></pre></div><h3 id="6-提交变更并推送">6. 提交变更并推送</h3>
+<p>现在，我们可以创建一个新的提交，将 <code>feat</code> 分支的所有变更整合到一个提交中。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#e6db74">&#34;Squashed all feature changes into a single commit.&#34;</span>
+</code></pre></div><p>接着，将 <code>feat</code> 分支强制推送到远端，以确保远程仓库与本地分支一致：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git push origin feat --force
+</code></pre></div><h2 id="总结">总结</h2>
+<p>通过上述操作，我们成功地将 <code>feat</code> 分支的所有提交整合成了一个提交点，并且与主干保持了清晰的历史记录。完整步骤如下：</p>
+<ol>
+<li>找出特性分支和主干的分叉点与重合点。</li>
+<li>生成 <code>patch</code> 文件保存变更。</li>
+<li>回溯到重合点并进行快进合并。</li>
+<li>应用 <code>patch</code> 文件，合并所有更改。</li>
+<li>提交合并后的变更，并推送到远端。</li>
+</ol>
+<p>通过这种手动 <code>squash</code> 方法，你可以灵活地调整提交历史，确保代码库的整洁度和可读性。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/trigger-elementui-from-devtools/">
+		<img class="icon-text" src="/img/prev.svg"/>在 Devtools 里触发前端组件的内部状态更新</a>
+
+
+	<a class="next-post" href="https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/">基于 WebRecorder 和 MitmProxy 的图片手动抓取探索<img class="icon-text" src="/img/next.svg"/>
+	</a>
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/posts/llm_x_bookmark/">LLM x 书签收藏：摘要 &amp; 全文索引</a></li>
+  	
+  	<li><a href="/project/">项目</a></li>
+  	
+  	<li><a href="/share/trigger-elementui-from-devtools/">在 Devtools 里触发前端组件的内部状态更新</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
