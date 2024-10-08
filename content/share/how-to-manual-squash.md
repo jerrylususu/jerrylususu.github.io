@@ -85,7 +85,7 @@ tags:
 使用 `git diff` 生成差异文件：
 
 ```bash
-git diff {last_share_commit} feat > ~/my_patch
+git diff main feat > ~/my_patch
 ```
 
 **注意：** 请将 `patch` 文件存放在仓库目录外，例如 `~/my_patch`，因为后续执行 `git reset` 时会重置仓库目录内的所有文件，导致 `patch` 文件丢失。
@@ -144,3 +144,6 @@ git push origin feat --force
 5. 提交合并后的变更，并推送到远端。
 
 通过这种手动 `squash` 方法，你可以灵活地调整提交历史，确保代码库的整洁度和可读性。
+
+## 勘误
+- 感谢评论区 @Certseeds 的指正，第 2 步的 diff 计算指令错误地将 last_share_commit 作为了 diff 开始点，实际上应该为 main（主干分支）；原文已修复。
