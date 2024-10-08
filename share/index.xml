@@ -275,7 +275,7 @@ git push origin feat-backup
 &lt;h3 id=&#34;2-计算差异patch&#34;&gt;2. 计算差异（Patch）&lt;/h3&gt;
 &lt;p&gt;现在我们已经知道了 &lt;code&gt;main&lt;/code&gt; 分支和 &lt;code&gt;feat&lt;/code&gt; 分支的分叉点和最后重合点，我们可以提取出 &lt;code&gt;feat&lt;/code&gt; 中相对于 &lt;code&gt;main&lt;/code&gt; 的所有变更。&lt;/p&gt;
 &lt;p&gt;使用 &lt;code&gt;git diff&lt;/code&gt; 生成差异文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git diff &lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;last_share_commit&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt; feat &amp;gt; ~/my_patch
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git diff main feat &amp;gt; ~/my_patch
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 请将 &lt;code&gt;patch&lt;/code&gt; 文件存放在仓库目录外，例如 &lt;code&gt;~/my_patch&lt;/code&gt;，因为后续执行 &lt;code&gt;git reset&lt;/code&gt; 时会重置仓库目录内的所有文件，导致 &lt;code&gt;patch&lt;/code&gt; 文件丢失。&lt;/p&gt;
 &lt;h3 id=&#34;3-回溯到最后重合点&#34;&gt;3. 回溯到最后重合点&lt;/h3&gt;
 &lt;p&gt;接下来，我们要将当前 &lt;code&gt;feat&lt;/code&gt; 分支的状态回退到 &lt;code&gt;main&lt;/code&gt; 分支的最后重合点。&lt;/p&gt;
@@ -304,6 +304,10 @@ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Squashed all fe
 &lt;li&gt;提交合并后的变更，并推送到远端。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;通过这种手动 &lt;code&gt;squash&lt;/code&gt; 方法，你可以灵活地调整提交历史，确保代码库的整洁度和可读性。&lt;/p&gt;
+&lt;h2 id=&#34;勘误&#34;&gt;勘误&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;感谢评论区 @Certseeds 的指正，第 2 步的 diff 计算指令错误地将 last_share_commit 作为了 diff 开始点，实际上应该为 main（主干分支）；原文已修复。&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

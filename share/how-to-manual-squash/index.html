@@ -154,7 +154,7 @@ git push origin feat-backup
 <h3 id="2-计算差异patch">2. 计算差异（Patch）</h3>
 <p>现在我们已经知道了 <code>main</code> 分支和 <code>feat</code> 分支的分叉点和最后重合点，我们可以提取出 <code>feat</code> 中相对于 <code>main</code> 的所有变更。</p>
 <p>使用 <code>git diff</code> 生成差异文件：</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git diff <span style="color:#f92672">{</span>last_share_commit<span style="color:#f92672">}</span> feat &gt; ~/my_patch
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git diff main feat &gt; ~/my_patch
 </code></pre></div><p><strong>注意：</strong> 请将 <code>patch</code> 文件存放在仓库目录外，例如 <code>~/my_patch</code>，因为后续执行 <code>git reset</code> 时会重置仓库目录内的所有文件，导致 <code>patch</code> 文件丢失。</p>
 <h3 id="3-回溯到最后重合点">3. 回溯到最后重合点</h3>
 <p>接下来，我们要将当前 <code>feat</code> 分支的状态回退到 <code>main</code> 分支的最后重合点。</p>
@@ -183,6 +183,10 @@ git commit -m <span style="color:#e6db74">&#34;Squashed all feature changes into
 <li>提交合并后的变更，并推送到远端。</li>
 </ol>
 <p>通过这种手动 <code>squash</code> 方法，你可以灵活地调整提交历史，确保代码库的整洁度和可读性。</p>
+<h2 id="勘误">勘误</h2>
+<ul>
+<li>感谢评论区 @Certseeds 的指正，第 2 步的 diff 计算指令错误地将 last_share_commit 作为了 diff 开始点，实际上应该为 main（主干分支）；原文已修复。</li>
+</ul>
 
 </article>
 <nav class="no-print post-nav">
