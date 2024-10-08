@@ -135,7 +135,8 @@ if (!doNotTrack) {
 <li>数据结构化：目前摘要存储库下有个简单的 data.json，但是核心的摘要和全文内容依然是 Markdown 存储的，而不是 JSON 这类程序友好的结构化存储。可能需要考虑在 Markdown 之外另外维护一个 JSON，以备未来的查询。</li>
 <li>代码整理和重构：目前所有逻辑都混在一个大的 Python 文件里，修改和测试起来都很烦人（实际上没有特别好的办法手动测试，目前都得靠手动注释掉部分代码）。未来一个考虑是做重构（o1-mini也给出过比较好的重构结构）+补充测试；另一个是改进书签存储库和摘要存储库的交互方式，例如通过读 git log 或者是明确传递最近书签条目的方式来触发摘要生成，而不是靠目前读文件对比的方式</li>
 <li>向量搜索：目前虽然原文和摘要都存下来了，搜索却还是只能靠基本的文本匹配；可能可以考虑接个 embedding 模型自动生成下嵌入，存到一个 SQLite 数据库（或者用各种向量数据库 as a Service）；主要是查询的时候也得生成 embedding，英文还有小模型可以搞，中文的模型都太大了，没法直接在前端跑不依赖后端服务，这里还得再仔细想想。</li>
-<li>自动生成每周周报：既然现在书签有时间信息，可以考虑每周新增的书签+原文+摘要全部往 LLM 扔，自动生成一个每周摘要，放在 Github Release 里（不过不知道有没有人愿意看就是了）</li>
+<li>自动生成每周周报：<del>既然现在书签有时间信息，可以考虑每周新增的书签+原文+摘要全部往 LLM 扔，自动生成一个每周摘要，放在 Github Release 里（不过不知道有没有人愿意看就是了）</del> (已完成，参见 <a href="https://github.com/jerrylususu/bookmark-summary/releases">Releases</a>，实现见 <a href="https://github.com/jerrylususu/bookmark-summary">build_weekly_release.py</a>，代码主要由 o1-mini 实现)</li>
+<li>改用更现代的工具链：例如 uv，以及把依赖写在 Python 代码头部（PEP 723 <a href="https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata">Inline Script Metadata</a>）？</li>
 </ol>
 
 </article>
