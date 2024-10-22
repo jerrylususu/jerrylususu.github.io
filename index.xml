@@ -358,10 +358,10 @@ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Squashed all fe
 &lt;h2 id=&#34;我也想要&#34;&gt;我也想要&lt;/h2&gt;
 &lt;p&gt;可以参考以下步骤，在自己的 Github 账户下部署一套类似的系统。（根据回忆写的，所以可能不太详尽）&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;参考 &lt;a href=&#34;https://github.com/osmoscraft/osmosmemo&#34;&gt;osmos::memo&lt;/a&gt; 的指引，初始化书签存储库（我的叫做 bookmark-collections），安装浏览器插件，并连接到 Github&lt;/li&gt;
-&lt;li&gt;新建一个摘要存储库（我的叫做 bookmark-summary）&lt;/li&gt;
+&lt;li&gt;参考 &lt;a href=&#34;https://github.com/osmoscraft/osmosmemo&#34;&gt;osmos::memo&lt;/a&gt; 的指引，初始化书签存储库（我的叫做 bookmark-collection），安装浏览器插件，并连接到 Github&lt;/li&gt;
+&lt;li&gt;新建一个摘要存储库（我的叫做 bookmark-summary），并在其中添加一个空的 README.md 文件&lt;/li&gt;
 &lt;li&gt;将 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py&#34;&gt;process_changes.py&lt;/a&gt; 添加到摘要存储库，用实际的存储库名修改 &lt;code&gt;BOOKMARK_COLLECTION_REPO_NAME&lt;/code&gt; 和 &lt;code&gt;BOOKMARK_SUMMARY_REPO_NAME&lt;/code&gt;；如果需要的话，可以调整 &lt;code&gt;summarize_text&lt;/code&gt; 和 &lt;code&gt;one_sentence_summary&lt;/code&gt; 中的 prompt&lt;/li&gt;
-&lt;li&gt;回到书签存储库，将 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml&#34;&gt;bookmark_summary.yml&lt;/a&gt; 添加到 &lt;code&gt;.github/workflows/bookmark_summary.yml&lt;/code&gt;，用 &lt;code&gt;Github账号/摘要存储库名&lt;/code&gt; 替换 27 行 &lt;code&gt;jerrylususu/bookmark-summary&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;回到书签存储库，将 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml&#34;&gt;bookmark_summary.yml&lt;/a&gt; 添加到 &lt;code&gt;.github/workflows/bookmark_summary.yml&lt;/code&gt;，用 &lt;code&gt;Github账号/书签存储库名&lt;/code&gt; 替换 22 行 &lt;code&gt;jerrylususu/bookmark-collection&lt;/code&gt;，用 &lt;code&gt;Github账号/摘要存储库名&lt;/code&gt; 替换 27 行 &lt;code&gt;jerrylususu/bookmark-summary&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;新建一个 PAT（Personal Access Token）
 &lt;ul&gt;
 &lt;li&gt;入口：Github 主页 - 右上角 Settings - 左侧列表底部 Developer Settings - 左侧列表 Personal Access Token / Fine-grained Tokens - 右侧 Generate New Token - 验证密码&lt;/li&gt;
@@ -374,7 +374,7 @@ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Squashed all fe
 &lt;/li&gt;
 &lt;li&gt;回到书签存储库，添加密钥到环境变量
 &lt;ul&gt;
-&lt;li&gt;入口：摘要存储库 - 顶部 Settings - 左侧 Secrets &amp;amp; Variables / Actions - Repository secrets - New Repository Secret&lt;/li&gt;
+&lt;li&gt;入口：书签存储库 - 顶部 Settings - 左侧 Secrets &amp;amp; Variables / Actions - Repository secrets - New Repository Secret&lt;/li&gt;
 &lt;li&gt;需要添加 4 个（其实有的可以放在 Environments 里，不过这里我为了方便先全放到 Secrets 里了）；冒号前面的是名字，冒号后面的是内容&lt;/li&gt;
 &lt;/ul&gt;
 &lt;ol&gt;
@@ -386,6 +386,10 @@ git commit -m &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Squashed all fe
 &lt;/li&gt;
 &lt;li&gt;至此应该配置完成了。可以用 osmos::memo 扩展添加一个书签试试，观察书签存储库中工作流是否正常运行，摘要存储库中是否生成了对应的摘要。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h2 id=&#34;勘误&#34;&gt;勘误&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;感谢评论区 a1032077316 指出「我也想要一节」中的部分步骤错误，已经在文中修复&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
