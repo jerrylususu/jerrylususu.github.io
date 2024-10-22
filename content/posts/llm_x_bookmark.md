@@ -43,10 +43,10 @@ tags:
 
 ## 我也想要
 可以参考以下步骤，在自己的 Github 账户下部署一套类似的系统。（根据回忆写的，所以可能不太详尽）
-1. 参考 [osmos::memo](https://github.com/osmoscraft/osmosmemo) 的指引，初始化书签存储库（我的叫做 bookmark-collections），安装浏览器插件，并连接到 Github
-2. 新建一个摘要存储库（我的叫做 bookmark-summary）
+1. 参考 [osmos::memo](https://github.com/osmoscraft/osmosmemo) 的指引，初始化书签存储库（我的叫做 bookmark-collection），安装浏览器插件，并连接到 Github
+2. 新建一个摘要存储库（我的叫做 bookmark-summary），并在其中添加一个空的 README.md 文件
 3. 将 [process_changes.py](https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py) 添加到摘要存储库，用实际的存储库名修改 `BOOKMARK_COLLECTION_REPO_NAME` 和 `BOOKMARK_SUMMARY_REPO_NAME`；如果需要的话，可以调整 `summarize_text` 和 `one_sentence_summary` 中的 prompt
-4. 回到书签存储库，将 [bookmark_summary.yml](https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml) 添加到 `.github/workflows/bookmark_summary.yml`，用 `Github账号/摘要存储库名` 替换 27 行 `jerrylususu/bookmark-summary`
+4. 回到书签存储库，将 [bookmark_summary.yml](https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml) 添加到 `.github/workflows/bookmark_summary.yml`，用 `Github账号/书签存储库名` 替换 22 行 `jerrylususu/bookmark-collection`，用 `Github账号/摘要存储库名` 替换 27 行 `jerrylususu/bookmark-summary`
 5. 新建一个 PAT（Personal Access Token）
 	- 入口：Github 主页 - 右上角 Settings - 左侧列表底部 Developer Settings - 左侧列表 Personal Access Token / Fine-grained Tokens - 右侧 Generate New Token - 验证密码 
 	- Token Name: 随便写
@@ -55,10 +55,13 @@ tags:
 	- Permissions：点开 Repository Permissions，找到 Contents，选择 Read and write；其他不用动
 	- 点击底部 Generate Token；Token 只会显示一次，复制下来保存好
 6. 回到书签存储库，添加密钥到环境变量
-	- 入口：摘要存储库 - 顶部 Settings - 左侧 Secrets & Variables / Actions - Repository secrets - New Repository Secret
+	- 入口：书签存储库 - 顶部 Settings - 左侧 Secrets & Variables / Actions - Repository secrets - New Repository Secret
 	- 需要添加 4 个（其实有的可以放在 Environments 里，不过这里我为了方便先全放到 Secrets 里了）；冒号前面的是名字，冒号后面的是内容
 	1. PAT ：第 5 步生成的 token
 	2. OPENAI_API_MODEL ： 模型名，如 gpt-4o-mini；如果像我一样用 deepseek 则填写 deepseek-chat
 	3. OPENAI_API_KEY ： API key，通常以 sk- 开头
 	4. OPENAI_API_ENDPOINT ： 模型 API 地址，留空默认用 OpenAI 官方；可以填中转站；用 deepseek 则填写 `https://api.deepseek.com/chat/completions`
 7. 至此应该配置完成了。可以用 osmos::memo 扩展添加一个书签试试，观察书签存储库中工作流是否正常运行，摘要存储库中是否生成了对应的摘要。
+
+## 勘误
+- 感谢评论区 a1032077316 指出「我也想要一节」中的部分步骤错误，已经在文中修复
