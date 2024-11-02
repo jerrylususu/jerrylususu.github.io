@@ -1,5 +1,5 @@
 ---
-title: 第一次遇到 gcc unexpected behavior 的记录
+title: 不要在 gcc 7 里隐式捕获 constexpr 数组
 date: 2024-11-02T15:38:00+08:00
 tags:
     - cpp
