@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cpp on Nekonull&#39;s Garden</title>
+    <link>https://nekonull.me/tags/cpp/</link>
+    <description>Recent content in cpp on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 02 Nov 2024 15:38:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>第一次遇到 gcc unexpected behavior 的记录</title>
+      <link>https://nekonull.me/share/gcc-constexpr-lambda-bug/</link>
+      <pubDate>Sat, 02 Nov 2024 15:38:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/gcc-constexpr-lambda-bug/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;如果你还没有遇到过 compiler bug，说明你写的代码还不够多。 —— 一位本科同学&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;虽然经常能看到其他人遇到 compiler 导致的意外现象，自己遇到却还是第一次，因此还是写篇文章小小记录下。&lt;/p&gt;
+&lt;p&gt;因为一些原因，目前工作中使用的 gcc 版本是 7.4。接到一个业务需求，需要对某些特定的用户打开一个 feature flag，且需要在代码里硬编码。代码很快就写完了，自测的时候却发现不太对劲。相关代码简化脱敏后如下所示。逻辑很简单，就是把可以进入灰度的用户 id 放到了一个 allowlist 里，然后检查当前的请求涉及到的所有用户 id 是否都在这个 allowlist 中。奇怪之处在于，在 gcc 7.4 下，如果用了 &lt;code&gt;std::any_of&lt;/code&gt; 来找，即便用户不在灰度列表中，列表成员检查也会返回 true，导致意外的灰度进入；简单的 for 循环则没有这个问题。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;cstdint&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;algorithm&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;()
+{
+    &lt;span style=&#34;color:#75715e&#34;&gt;// we want to check if all users is in allowlist (something like a feature flag)
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint64_t&lt;/span&gt; allowlist[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;};
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;vector&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;uint64_t&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; users;
+    users.push_back(&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;);
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; basic_found &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;find(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;begin(allowlist), std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist), &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist);
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;outside: basic_found=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; basic_found &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// should be false, as expected
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; some_found_anyof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;any_of(users.begin(), users.end(), [&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;](&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;uint64_t&lt;/span&gt; uid) {
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; found &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;find(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;begin(allowlist), std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist), uid) &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist);
+     std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;inside: uid=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; uid &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;, found=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; found &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+     &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; found;
+    });
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some_found_anyof=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; some_found_anyof &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// should be false; however in gcc 7.4 this outputs true
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;bool&lt;/span&gt; some_found_manual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; false;
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt; u: users) {
+        &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;find(std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;begin(allowlist), std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist), u) &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;end(allowlist)) {
+            some_found_manual &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; true;
+            &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;;
+        }
+    }
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;some_found_manual=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; some_found_manual &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    &lt;span style=&#34;color:#75715e&#34;&gt;// should be false, as expected
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;因为需求要的比较着急，就先用 for 循环替换了。后面有空的时候尝试继续简化代码，可以得到如下的最小复现 POC：定义一个 constexpr 数组，创建一个 lambda 表达式，用&lt;code&gt;[&amp;amp;]&lt;/code&gt;隐式捕获这个数组，最后在闭包中多次获取其地址；会惊喜的发现，每次获取的地址是不一样的！（可以在 Compiler Explorer 自己试试：&lt;a href=&#34;https://godbolt.org/z/qdTfP81xn&#34;&gt;https://godbolt.org/z/qdTfP81xn&lt;/a&gt;）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;&amp;lt;iostream&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;()
+{
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; arr[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;};
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;outside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;outside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;outside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+
+    &lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; a &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&lt;/span&gt;]() {
+        std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;inside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+        std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;inside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+        std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;inside: addr=&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;reinterpret_cast&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&amp;gt;&lt;/span&gt;(arr) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;endl;
+    };
+
+    a();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;outside: addr=0x7ffc4b13dc24
+outside: addr=0x7ffc4b13dc24
+outside: addr=0x7ffc4b13dc24
+inside: addr=0x7ffc4b13dbec
+inside: addr=0x7ffc4b13dbf8
+inside: addr=0x7ffc4b13dc04
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从生成的汇编中可以发现，在闭包里每次访问 arr 时候，其实都在栈上临时创建了一个副本，因此每次获取到的 arr 地址都是不一致的。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;        mov     DWORD PTR [rbp-36], 1
+        mov     DWORD PTR [rbp-32], 2
+        mov     DWORD PTR [rbp-28], 3
+        lea     rax, [rbp-36]
+	    ...ignored...
+		mov     DWORD PTR [rbp-24], 1
+        mov     DWORD PTR [rbp-20], 2
+        mov     DWORD PTR [rbp-16], 3
+        lea     rax, [rbp-24]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这也就能解释为什么之前在 &lt;code&gt;std::any_of&lt;/code&gt; 闭包里用 &lt;code&gt;std::find&lt;/code&gt; 会有问题了：其中作为参数的 &lt;code&gt;std::begin(allowlist)&lt;/code&gt;, &lt;code&gt;std::end(allowlist)&lt;/code&gt; 和最后一个用于比较的 &lt;code&gt;std::end(allowlist)&lt;/code&gt;，三个 allowlist 的地址都不一样，因此这个 &lt;code&gt;!=&lt;/code&gt; 判定始终会成功，表现上就是会认为用户总是在灰度列表中了。&lt;/p&gt;
+&lt;p&gt;这是不是一个 compiler bug 呢？正如文章标题，我只是把这作为一个 unexpected behavior，因为编译器可以自行选择对 constexpr 的优化方式。我也尝试在 gcc bug report 数据库里进行了查找，但看起来没有人反馈过这个问题。&lt;/p&gt;
+&lt;p&gt;最后是可能的绕过方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;升级 gcc 版本（gcc 8 及以上版本无此问题，7.5 及以下版本才有此问题）&lt;/li&gt;
+&lt;li&gt;换用其他 compiler：clang, msvc 都无此问题&lt;/li&gt;
+&lt;li&gt;不要用 constexpr，改用一般的 const&lt;/li&gt;
+&lt;li&gt;用 &lt;code&gt;[&amp;amp;arr]&lt;/code&gt; 显式捕获 constexpr 数组&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;祝读到这里的各位以后都能少踩这类奇怪的坑吧。&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
