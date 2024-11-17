@@ -26,5 +26,17 @@
 		</ul>
 	</section>
 	{{ end }}
+
+	{{ $pages := where site.RegularPages "Type" "in" .Site.Params.TilSections }}
+	{{ if ne (len $pages) 0 }}
+	<section>
+		<h4>{{ T "latestTil" }}</h4>
+		<ul class="no-bullet">
+			{{- range (first $latestcount $pages) -}}
+			{{ partial "li" . }}
+			{{- end -}}
+		</ul>
+	</section>
+	{{ end }}
 </article>
 {{ partial "footer" . }}

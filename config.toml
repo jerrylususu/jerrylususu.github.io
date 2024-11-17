@@ -35,6 +35,7 @@ googleAnalytics = "G-R01JLDY2KE"
 
   mainSections = ["posts"]
   workSections = ["share"]
+  tilSections = ["til"]
   latestCount = 5
   utterancesTheme = "github-dark"
   github = "https://github.com/jerrylususu/"
@@ -64,10 +65,7 @@ googleAnalytics = "G-R01JLDY2KE"
     subtitle = "Always read. Mostly hack. Sometimes write."
     tagline = "Always read. Mostly hack. Sometimes write."
     keywords = ""
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
+    copyright = "CC-BY-SA-4.0"
 
     [languages.zh.params.logo]
       logoText = "Nekonull's Garden"
@@ -95,6 +93,10 @@ googleAnalytics = "G-R01JLDY2KE"
         name = "短文"
         url = "/share"
       [[languages.zh.menu.main]]
+        identifier = "til"
+        name = "TIL"
+        url = "/til"
+      [[languages.zh.menu.main]]
         identifier = "tag"
         name = "标签"
         url = "/tags"
@@ -107,10 +109,7 @@ googleAnalytics = "G-R01JLDY2KE"
     subtitle = "Always read. Mostly hack. Sometimes write."
     tagline = "Always read. Mostly hack. Sometimes write."
     keywords = ""
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
+    copyright = "CC-BY-SA-4.0"
 
     [languages.en.params.logo]
       logoText = "Nekonull's Garden"
@@ -137,6 +136,10 @@ googleAnalytics = "G-R01JLDY2KE"
         identifier = "share"
         name = "Share"
         url = "/share"
+      [[languages.en.menu.main]]
+        identifier = "til"
+        name = "TIL"
+        url = "/til"
       [[languages.en.menu.main]]
         identifier = "tag"
         name = "Tag"

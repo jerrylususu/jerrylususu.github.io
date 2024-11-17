@@ -4,6 +4,9 @@ other = "最近的长文"
 [latestWork]
 other = "最近的短文"
 
+[latestTil]
+other = "最近的 TIL"
+
 [license]
 other = "许可"
 

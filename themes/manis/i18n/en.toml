@@ -4,6 +4,9 @@ other = "Latest Posts"
 [latestWork]
 other = "Latest Works"
 
+[latestTil]
+other = "Latest TIL"
+
 [license]
 other = "License"
 
