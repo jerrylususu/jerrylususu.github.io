@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 17 Nov 2024 13:26:19 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Nov 2024 13:27:04 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>curl 有 LTS</title>
+      <title>curl 有 LTS 了</title>
       <link>https://nekonull.me/til/curl-has-5-year-lts/</link>
-      <pubDate>Sun, 17 Nov 2024 13:26:19 +0000</pubDate>
+      <pubDate>Sun, 17 Nov 2024 13:27:04 +0000</pubDate>
       
       <guid>https://nekonull.me/til/curl-has-5-year-lts/</guid>
       <description>&lt;p&gt;curl 有 5 年 LTS (Long Time Support) 版本了，不过只有签了商业协议的用户才能使用&lt;/p&gt;
