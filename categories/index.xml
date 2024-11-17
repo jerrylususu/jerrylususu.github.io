@@ -5,6 +5,7 @@
     <link>https://nekonull.me/categories/</link>
     <description>Recent content in Categories on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://nekonull.me/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <copyright>CC-BY-SA-4.0</copyright><atom:link href="https://nekonull.me/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -6,6 +6,7 @@
     <description>Recent content in 前端 on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
+    <copyright>CC-BY-SA-4.0</copyright>
     <lastBuildDate>Sat, 31 Aug 2024 22:54:10 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>在 Devtools 里触发前端组件的内部状态更新</title>

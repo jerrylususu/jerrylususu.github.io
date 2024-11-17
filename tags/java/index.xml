@@ -6,6 +6,7 @@
     <description>Recent content in Java on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
+    <copyright>CC-BY-SA-4.0</copyright>
     <lastBuildDate>Fri, 02 Apr 2021 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JavaFX 打包并设定 UTF-8</title>

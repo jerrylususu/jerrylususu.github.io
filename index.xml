@@ -6,7 +6,22 @@
     <description>Recent content on Nekonull&#39;s Garden</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 02 Nov 2024 15:38:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>CC-BY-SA-4.0</copyright>
+    <lastBuildDate>Sun, 17 Nov 2024 13:36:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Excel 的自动填充实际上是程序生成</title>
+      <link>https://nekonull.me/til/excel-auto-complete-as-program-systhenis/</link>
+      <pubDate>Sun, 17 Nov 2024 13:36:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/til/excel-auto-complete-as-program-systhenis/</guid>
+      <description>&lt;p&gt;原来 Excel 里自动填充是有论文的，底层是实现了程序生成；另外据说 Google Sheets 的自动填充之所以没有微软的好，是因为微软申请了专利，Google 绕不过去。&lt;/p&gt;
+&lt;p&gt;Automating String Processing in Spreadsheets Using Input-Output Examples
+&lt;a href=&#34;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/popl11-synthesis.pdf&#34;&gt;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/popl11-synthesis.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via
+&lt;a href=&#34;https://danluu.com/ballmer/&#34;&gt;https://danluu.com/ballmer/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>不要在 gcc 7 里隐式捕获 constexpr 数组</title>
       <link>https://nekonull.me/share/gcc-constexpr-lambda-bug/</link>
@@ -2024,24 +2039,6 @@ TL;DR summary: Summary in no more than 50 words.
 &lt;p&gt;本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 &lt;code&gt;publish&lt;/code&gt;），修改 Github Pages 的来源分支，然后写点 &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml&#34;&gt;Github Action&lt;/a&gt; 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&amp;hellip;）&lt;/p&gt;
 &lt;p&gt;顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（&lt;code&gt;v0.117.0&lt;/code&gt;），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&amp;hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。&lt;/p&gt;
 </description>
-    </item>
-    
-    <item>
-      <title>播放 Lofi Girl 的小脚本</title>
-      <link>https://nekonull.me/share/lofi-bat/</link>
-      <pubDate>Sun, 27 Aug 2023 19:18:26 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/lofi-bat/</guid>
-      <description>&lt;p&gt;自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 &lt;a href=&#34;https://github.com/yt-dlp/yt-dlp&#34;&gt;yt-dlp&lt;/a&gt; 和 &lt;a href=&#34;https://sourceforge.net/projects/mpv-player-windows/files/&#34;&gt;mpv&lt;/a&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bat&#34; data-lang=&#34;bat&#34;&gt;:&lt;span style=&#34;color:#75715e&#34;&gt;:set HTTP_PROXY=http://localhost:[some_port]&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;cd&lt;/span&gt; C:\Apps\mpv-x86_64-20230723-git-ca4192e
-mpv --no-video  &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;https://www.youtube.com/watch?v=jfKfPfyJRdk&amp;#34;&lt;/span&gt; --script-opts=ytdl_hook-ytdl_path=yt-dlp.exe
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外附上一些常见快捷键（&lt;a href=&#34;https://defkey.com/mpv-media-player-shortcuts&#34;&gt;完整见此&lt;/a&gt;）&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;9：减小音量
-0：增大音量
-空格：暂停播放（但是依然会在后台继续缓冲）
-M：静音
-&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
   </channel>
