@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 17 Nov 2024 13:36:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Nov 2024 13:26:19 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>curl 有 LTS</title>
+      <link>https://nekonull.me/til/curl-has-5-year-lts/</link>
+      <pubDate>Sun, 17 Nov 2024 13:26:19 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/curl-has-5-year-lts/</guid>
+      <description>&lt;p&gt;curl 有 5 年 LTS (Long Time Support) 版本了，不过只有签了商业协议的用户才能使用&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://rock-solid.curl.dev/&#34;&gt;https://rock-solid.curl.dev/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&#34;&gt;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Excel 的自动填充实际上是程序生成</title>
       <link>https://nekonull.me/til/excel-auto-complete-as-program-systhenis/</link>
@@ -2026,18 +2038,6 @@ TL;DR summary: Summary in no more than 50 words.
 &lt;p&gt;Via：&lt;a href=&#34;https://www.bilibili.com/video/BV11z4y1L7Xx&#34;&gt;B站视频：用什么指标来衡量我的程序占用了多少内存&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
 &lt;p&gt;最后顺带一提，本博客目前把 RSS 改为了全文输出模式（参考&lt;a href=&#34;https://www.godo.dev/tutorials/hugo-full-text-rss/&#34;&gt;这篇文章&lt;/a&gt;，&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/89e1c23d0b350baac0378ad735127cf17fb66c4b&#34;&gt;实际 commit&lt;/a&gt;），希望可以帮到在 RSS 阅读器中阅读本博客的读者。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>再次复活（2023）&amp; 换用 Github Action 部署</title>
-      <link>https://nekonull.me/posts/back-again-2023/</link>
-      <pubDate>Sun, 27 Aug 2023 19:30:45 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/back-again-2023/</guid>
-      <description>&lt;p&gt;又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和&lt;a href=&#34;posts/back-again/&#34;&gt;上次&lt;/a&gt;一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&amp;hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。&lt;/p&gt;
-&lt;p&gt;本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 &lt;code&gt;publish&lt;/code&gt;），修改 Github Pages 的来源分支，然后写点 &lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml&#34;&gt;Github Action&lt;/a&gt; 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&amp;hellip;）&lt;/p&gt;
-&lt;p&gt;顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（&lt;code&gt;v0.117.0&lt;/code&gt;），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&amp;hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。&lt;/p&gt;
 </description>
     </item>
     
