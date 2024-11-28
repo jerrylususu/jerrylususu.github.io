@@ -4,9 +4,9 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="generator" content="Hugo 0.82.0" />
-		<title>TIL - Nekonull&#39;s Garden</title>
+		<title>要求 LLM 在完成任务时留下笔记 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="">
+		<meta name="description" content="ref: https://addyosmani.com/blog/automated-decision-logs/ 在项目目录下放一个 fyi.md 或者 notes.md 在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动 这看起来是一个显而易见的有效做法，但是之前">
 
 
 		
@@ -67,7 +67,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/til/" class="active langselect">简体中文</a></li>
+                <li><a href="/til/make-llm-take-notes-when-finishing-task/" class="active langselect">简体中文</a></li>
             
           
       
@@ -87,45 +87,73 @@ if (!doNotTrack) {
 <main class="container">
 
 <article>
-	<header>
-		<hgroup id="brand">
-	<h1>TIL</h1>
+	<header><hgroup id="brand">
+	<h1>要求 LLM 在完成任务时留下笔记</h1>
+	<h5>
+		
+		<time datetime="2024-11-28 13:39:17.449 &#43;0000 UTC">2024/11/28</time>
+		<span class="no-print">
+			<span>
+	</h5>
 	
 </hgroup>
 <hr class="sep" />
-
-		<p>TIL 全称为 Today I Learned，旨在简短的分享自己获得的知识/经验，或者仅仅是自认为有趣的事物。受到 <a href="https://til.simonwillison.net/">Simon Willision</a> 和 <a href="https://jvns.ca/til/">Julia Evans</a> 的启发。形态上可能类似于微博（广义的 micro-blogging），但是不受平台限制。</p>
-<p>我曾经让 LLM 找对应 TIL 的两个字的中文翻译，但似乎都不太满意，因此暂时保留原始名字。未来如果找到合适的可能会换上。以下是一些可能的翻译：今学；今知；今悟；今得；今获；今识；今明；今晓；今解。</p>
-<p>另外如果你喜欢 TIL，可能也会对我的 <a href="https://github.com/jerrylususu/bookmark-collection">书签</a> 和 <a href="https://github.com/jerrylususu/bookmark-summary">书签摘要</a> 感兴趣。</p>
-
-	</header>
-	<ul class="no-bullet">
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-28 13:39:17.449 &#43;0000 UTC">2024/11/28</time></span>
-	<a href="/til/make-llm-take-notes-when-finishing-task/">要求 LLM 在完成任务时留下笔记</a>
-</li>
-
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-17 13:27:04.363 &#43;0000 UTC">2024/11/17</time></span>
-	<a href="/til/curl-has-5-year-lts/">curl 有 LTS 了</a>
-</li>
-
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-17 13:36:00 &#43;0800 &#43;0800">2024/11/17</time></span>
-	<a href="/til/excel-auto-complete-as-program-systhenis/">Excel 的自动填充实际上是程序生成</a>
-</li>
-
-	    
-	</ul>
-	
+</header>
+	<p>ref: <a href="https://addyosmani.com/blog/automated-decision-logs/">https://addyosmani.com/blog/automated-decision-logs/</a></p>
+<blockquote>
+<ol>
+<li>在项目目录下放一个 <code>fyi.md</code> 或者 <code>notes.md</code></li>
+<li>在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动</li>
+</ol>
+</blockquote>
+<p>这看起来是一个显而易见的有效做法，但是之前却没有人提出过！下次使用 cursor 或者其他 LLM 加持的编辑器时我肯定会试试这样做。</p>
 
 </article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/curl-has-5-year-lts/">
+		<img class="icon-text" src="/img/prev.svg"/>curl 有 LTS 了</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/til/curl-has-5-year-lts/">curl 有 LTS 了</a></li>
+  	
+  	<li><a href="/til/excel-auto-complete-as-program-systhenis/">Excel 的自动填充实际上是程序生成</a></li>
+  	
+  	<li><a href="/share/gcc-constexpr-lambda-bug/">不要在 gcc 7 里隐式捕获 constexpr 数组</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
 			<hr class="sep" />
 		</main>
 		<footer class="container no-print">

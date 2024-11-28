@@ -7,7 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 17 Nov 2024 13:27:04 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Nov 2024 13:39:17 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>要求 LLM 在完成任务时留下笔记</title>
+      <link>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</link>
+      <pubDate>Thu, 28 Nov 2024 13:39:17 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</guid>
+      <description>&lt;p&gt;ref: &lt;a href=&#34;https://addyosmani.com/blog/automated-decision-logs/&#34;&gt;https://addyosmani.com/blog/automated-decision-logs/&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;在项目目录下放一个 &lt;code&gt;fyi.md&lt;/code&gt; 或者 &lt;code&gt;notes.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这看起来是一个显而易见的有效做法，但是之前却没有人提出过！下次使用 cursor 或者其他 LLM 加持的编辑器时我肯定会试试这样做。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>curl 有 LTS 了</title>
       <link>https://nekonull.me/til/curl-has-5-year-lts/</link>
@@ -1929,115 +1946,6 @@ TL;DR summary: Summary in no more than 50 words.
       <description>&lt;p&gt;之前一直用的是 disqus，但是一来国内访问有时会有问题，二来新用户需要重新注册。考虑到大部分阅读本站的读者应该也是 Github 用户，迁移到 Giscus（一个基于 Github Dicsussion）的评论系统看起来更合适一些。切换评论系统本身并不难，参考&lt;a href=&#34;https://blog.arkey.fr/2022/10/16/moving-from-disqus-to-giscus/#_preparing_the_migration&#34;&gt;这篇教程&lt;/a&gt;修改 hugo 的模板和配置即可。迁移数据也不算麻烦，毕竟没什么人评论，所以其实只有两条评论，手动迁移也就花不了多少时间（虽然也尝试了&lt;a href=&#34;https://github.com/estruyf/disqus-to-github-discussions&#34;&gt;自动的方案&lt;/a&gt;但似乎有些问题，迁移过去的评论不显示&amp;hellip;）。稍微有些烦人的反倒是 Giscus 明亮/暗黑模式的切换问题。&lt;/p&gt;
 &lt;p&gt;因为本博客有自己的切换按钮（见&lt;a href=&#34;https://nekonull.me/share/css-filter-dark-mode/&#34;&gt;前文&lt;/a&gt;），用户访问的时候可能从 &lt;code&gt;localstorage&lt;/code&gt; 中取颜色模式偏好，但是目前加载 giscus 是 hugo 在站点生成的时候就将颜色偏好参数写入 html 源码了，因此需要在用户点击按钮切换时，一并切换 giscus 的颜色偏好。参考官方的&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;这个 issue&lt;/a&gt; 这一功能并不难实现。然而这样依然有问题，因为 giscus 加载后，用户点击按钮切换颜色模式偏好前，giscus 的颜色偏好是基于我的 hugo 配置文件，而非用户 localstorage 里存储的，结果就是可能用户手动选择了明亮模式，但浏览器设置里有 &lt;code&gt;prefer-color-scheme: dark&lt;/code&gt;，所以 giscus 显示黑色背景+白色文字。之前的 issue 里对这个问题没有太好的解法，看到有人 &lt;code&gt;setTimeout&lt;/code&gt; 不断循环，但感觉这不太优雅。读了一下&lt;a href=&#34;https://github.com/giscus/giscus/issues/336&#34;&gt;官方文档&lt;/a&gt;，发现其实 giscus 会在加载完成后向父窗口发送事件，所以其实只要监听这个事件，在 giscus 加载完后再设置 giscus 的颜色偏好即可。相关实现可参考&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/8e2c0f1734d645db8bb142f4f281133ecedece7b&#34;&gt;这个 commit&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;可能切换了之后会有更多评论？但愿吧。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
-      <link>https://nekonull.me/share/random-20230910/</link>
-      <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/random-20230910/</guid>
-      <description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
-&lt;h2 id=&#34;本周遇到的-bug&#34;&gt;本周遇到的 Bug&lt;/h2&gt;
-&lt;p&gt;遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人的问题而非代码的问题&amp;hellip;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;CI 坏了还能跑？
-&lt;ul&gt;
-&lt;li&gt;现象：某前端项目，其他人参加开发的时候发现 master 分支无法 &lt;code&gt;npm install&lt;/code&gt;，但之前这个 repo 一直在正常更新版本，看 CI 日志也一切正常&lt;/li&gt;
-&lt;li&gt;原因：发现问题是上游某依赖方对已发布的包重新发布，导致文件 hash 变化，&lt;code&gt;npm install&lt;/code&gt; 时实际文件 hash 和 lock 中 hash 不一致，所以失败；CI 之所以能跑是因为流水线里加了一层 cache，只要 &lt;code&gt;packages-lock.json&lt;/code&gt; 不变就会复用之前的 cache，而恰巧上游重发包之后这个文件一直没变过，所以每次跑 CI 都是拉的已有的 cache，没有实际在流水线里执行 &lt;code&gt;npm install&lt;/code&gt;，未能即使暴露故障&lt;/li&gt;
-&lt;li&gt;解决：重建 &lt;code&gt;packages-lock.json&lt;/code&gt;，让 CI 中的 cache 无效&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;本地坏了，线上是好的？
-&lt;ul&gt;
-&lt;li&gt;现象：某前端项目，例行更新依赖库版本，发布前自测发现某功能测试环境不可用；但相同功能在线上一切正常&lt;/li&gt;
-&lt;li&gt;原因：拉线上版本回本地排查，发现线上的版本和实际代码的主干版本不一致(!)；查阅发布记录，发现线上版本最近发布已经是一年多之前。和开发了解，原来现在的这个前端项目是原来的两个前端项目合并而来的，部署的时候其实要部署两次，但合并后的部署只部署了另一个模块，而没有部署当前模块，所以现在线上跑的实际上还是合并前的版本。&lt;/li&gt;
-&lt;li&gt;解决：修复代码问题，本地验证通过后发布线上；补充 readme 说明发布时需要两个模块都发布&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;typescript-中-any-关闭了类型检查&#34;&gt;Typescript 中 Any 关闭了类型检查&lt;/h2&gt;
-&lt;p&gt;某后端项目，因为历史原因代码中有较多 any。最近发现代码中某处接受用户输入的位置有问题，默认值的类型不正确但依然通过了编译。示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 不要这样用！
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-&lt;span style=&#34;color:#75715e&#34;&gt;//    ^string[]                           ^any     ^string
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意到这里 nullish coalescing （&lt;code&gt;??&lt;/code&gt;）的默认值是个 &lt;code&gt;string&lt;/code&gt; 而非 string[]。这段代码感觉上上不应该通过编译，但是因为 &lt;code&gt;(req.body as any)&lt;/code&gt; 的 &lt;code&gt;any&lt;/code&gt; 类型禁用了类型检查，因此编译时不会再检查缺省值，实际上可以编译通过。而如果不巧后续有函数需要使用 &lt;code&gt;string[]&lt;/code&gt; 才有的方法，而 &lt;code&gt;req.body&lt;/code&gt; 中的 &lt;code&gt;names&lt;/code&gt; 的确为 undefined，就会导致问题。&lt;/p&gt;
-&lt;p&gt;要解决这个问题，需要提供了更强的类型提示，让 Typescript 的检查可以正常执行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 直接标记可能的类型：string[] 或 undefined
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-
-&lt;span style=&#34;color:#75715e&#34;&gt;// 通过一个自定义 type 来实现
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;T&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;T&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[]&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC+WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB+ZzADk7uk3bgIIAWM+EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA&#34;&gt;Typescript Playground&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;linux-中的内存占用&#34;&gt;Linux 中的内存占用&lt;/h2&gt;
-&lt;p&gt;Linux 进程内存不同计算方法的区分：VSS, RSS, PSS, USS&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-  ┌────────┐
-  │        │
-  │        │        ┌────────┐
-  │ Unused │        │        │
-  │  (A)   │        │ ...    │◄───┐
-  │        │        │        │    │Other
-  │        │        ├────────┤    │Program&#39;s
-  │        │        │        │    │Share
-  ├────────┤        │ ...    │◄───┘ (D)
-  │        │        │        │
-  │ Used   │        ├────────┤
-  │  (B)   │        │        │
-  │        │        │My Share│
-  │        │        │   (C)  │
-  └────────┘        └────────┘
-
-   Exclusive         Shared
-
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以把进程的内存占用视作上图。首先程序有自己独占的虚拟内存空间（Exclusive），其中可以分为已经使用了的（B）和属于自己但还未使用的（A）。其次进程还会使用一些共享内存（Shared），例如 so 动态运行库和 mmap 映射。考虑到这些共享内存多个进程都会用到，将其完全计算在某个特定进程名下听起来就不太合理，因此这里可以考虑类似于现实中的&amp;quot;公摊面积&amp;quot;，根据实际使用的进程数把这部分内存占用平摊成 N 份，当前进程只计算其中一份（C），剩余的计算在其他进程下（D）。&lt;/p&gt;
-&lt;p&gt;由此我们可以得到四种不同的计算方法，见下表&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;指标&lt;/th&gt;
-&lt;th&gt;含义&lt;/th&gt;
-&lt;th&gt;组成&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;th&gt;图例&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;VSS&lt;/td&gt;
-&lt;td&gt;虚拟内存集合（Virtual Set Size）&lt;/td&gt;
-&lt;td&gt;所有进程地址空间中的所有内存&lt;/td&gt;
-&lt;td&gt;进程可以访问的虚拟内存空间大小&lt;/td&gt;
-&lt;td&gt;A+B+C+D&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;RSS&lt;/td&gt;
-&lt;td&gt;常驻内存集合（Resident Set Size）&lt;/td&gt;
-&lt;td&gt;进程当前实际使用的物理内存&lt;/td&gt;
-&lt;td&gt;实际分配的内存，不需要缺页中断就可以使用&lt;/td&gt;
-&lt;td&gt;B+C+D&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;PSS&lt;/td&gt;
-&lt;td&gt;共享内存集合（Proportional Set Size）&lt;/td&gt;
-&lt;td&gt;进程当前实际使用的物理内存，按比例分配共享内存&lt;/td&gt;
-&lt;td&gt;按比例分配共享内存，适用于多个进程共享同一块内存的情况&lt;/td&gt;
-&lt;td&gt;B+C&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;USS&lt;/td&gt;
-&lt;td&gt;独立内存集合（Unique Set Size）&lt;/td&gt;
-&lt;td&gt;进程独占使用的物理内存&lt;/td&gt;
-&lt;td&gt;只包含进程独占使用的物理内存，不包括共享库和映射的文件&lt;/td&gt;
-&lt;td&gt;B&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Via：&lt;a href=&#34;https://www.bilibili.com/video/BV11z4y1L7Xx&#34;&gt;B站视频：用什么指标来衡量我的程序占用了多少内存&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
-&lt;p&gt;最后顺带一提，本博客目前把 RSS 改为了全文输出模式（参考&lt;a href=&#34;https://www.godo.dev/tutorials/hugo-full-text-rss/&#34;&gt;这篇文章&lt;/a&gt;，&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/89e1c23d0b350baac0378ad735127cf17fb66c4b&#34;&gt;实际 commit&lt;/a&gt;），希望可以帮到在 RSS 阅读器中阅读本博客的读者。&lt;/p&gt;
 </description>
     </item>
     
