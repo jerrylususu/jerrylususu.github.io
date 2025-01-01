@@ -7,7 +7,96 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 07 Oct 2024 13:52:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Jan 2025 15:57:31 +0800</lastBuildDate><atom:link href="https://nekonull.me/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2024 年末杂谈</title>
+      <link>https://nekonull.me/posts/end-of-2024/</link>
+      <pubDate>Wed, 01 Jan 2025 15:57:31 +0800</pubDate>
+      
+      <guid>https://nekonull.me/posts/end-of-2024/</guid>
+      <description>&lt;p&gt;其实本来昨晚就想写了，但是因为工作安排需要线上值班，所以今天才动笔。2024 终于平安结束了，希望 2025 年也能一切顺利吧。&lt;/p&gt;
+&lt;h2 id=&#34;回顾-2024&#34;&gt;回顾 2024&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;工作
+&lt;ul&gt;
+&lt;li&gt;继续干着，职级正常升了一级；不过后续再往上升估计就比较慢了，得慢慢熬&lt;/li&gt;
+&lt;li&gt;做了一些更复杂的工作，还有几个大的跨部门项目&lt;/li&gt;
+&lt;li&gt;前半年被迫在一个不熟悉的领域干了很久，好在后半年回到了原来的业务&lt;/li&gt;
+&lt;li&gt;出了一个事故，好在影响不大；但是更提醒自己得谨慎再谨慎了&lt;/li&gt;
+&lt;li&gt;总体而言没有太大变化，不具体展开了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;学习 &amp;amp; 阅读
+&lt;ul&gt;
+&lt;li&gt;年中考过了&lt;a href=&#34;https://nekonull.me/posts/ruankao-architect/&#34;&gt;软考高级系统架构师&lt;/a&gt;；然而除了拿了一个实体证书，目前还没有起到什么作用&lt;/li&gt;
+&lt;li&gt;年底去考了 N2，不过实际上也没怎么学习，几乎是裸考了，应该是不可能过的&lt;/li&gt;
+&lt;li&gt;今年读了 7 本书，但是主要都是技术类的，非技术类的读的不多；印象深刻的是 《软件设计的哲学》（link），把一些工作上隐约能感受到但是想不明白的点给理清楚了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;开源 &amp;amp; 写作 &amp;amp; 探索
+&lt;ul&gt;
+&lt;li&gt;更新了 12 篇博客，入选了 2 次阮老师的周刊&lt;/li&gt;
+&lt;li&gt;开源项目 mainonly 在 Github 上有 172 个 star，也成为了自己日常不可或缺的工具&lt;/li&gt;
+&lt;li&gt;书签增加了 326 条；新增了&lt;a href=&#34;https://nekonull.me/posts/llm_x_bookmark/&#34;&gt;基于 LLM 的自动摘要 workflow&lt;/a&gt; ，未来找起来会方便一些&lt;/li&gt;
+&lt;li&gt;开了一个微信公众号，把部分内容同步了过去；甚至收到了一位读者的赞赏，虽然金额不大，但还是很开心&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu/advent-of-code-2024&#34;&gt;Advent Of Code 2024&lt;/a&gt;：49/50，24p2 放弃了；发现自己对这类项目容易上头，很容易把下班后的时间全放在解题上了，还是心态不太行&lt;/li&gt;
+&lt;li&gt;LLM 相关
+&lt;ul&gt;
+&lt;li&gt;尝试完全把 LLM 融入工作流，写了一些自用的小工具&lt;/li&gt;
+&lt;li&gt;Cursor 开发起来还是很爽的，模板类代码都可以代劳了，有足够好的注释/变量名生成的自动补全也非常靠谱，但是遇到一些复杂的逻辑问题时还是会卡住（可能是我用的模型能力问题？）&lt;/li&gt;
+&lt;li&gt;不同的模型用多了会感觉有不同的性格，GPT 就比较简洁直接，Claude 虽然想得多但是有的时候会把方案做的太复杂；deepseek 就比较平衡，而且最重要的是便宜大碗，用起来不心疼&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;生活
+&lt;ul&gt;
+&lt;li&gt;今年出去旅游了 2 次：4 月清明假期去上海见了高中和大学同学，8 月&lt;a href=&#34;https://nekonull.me/archive/2408-huizhou-layflat/&#34;&gt;去惠州海边试了下躺平生活&lt;/a&gt;；然而总体还是没有太多出门的动力&lt;/li&gt;
+&lt;li&gt;建立了工作日中午运动的习惯：一般就是在公司健身房，边踩椭圆机边补番，一次25min，约350kcal；运动完用 app 打下卡，还是挺有成就感的；看了下数据今年有 162 次运动记录，大概是工作日的 80%&lt;/li&gt;
+&lt;li&gt;从家里搬出来住：10 月底搬到了一个离公司比较近（一站地铁，可以步行）的位置，虽然新增了房租的开销，但是因为几乎没有通勤问题，生活质量极大提升，总体还是很值得的&lt;/li&gt;
+&lt;li&gt;更频繁的约饭：基本维持了一个月约一次饭的频率，不至于太频繁让人喘不过气，也不会太久以至于忘记之前聊了啥；对维持精神稳定很有帮助&lt;/li&gt;
+&lt;li&gt;更多文字记录：工作上&lt;a href=&#34;https://nekonull.me/share/obsidian-work-journal/&#34;&gt;用 Obsidien 写任务笔记&lt;/a&gt;，基本没有再遗漏过细节了，效率极大提升；尝到甜头之后开始在生活里也记录更多东西，无论是每次约饭聊了啥，还是每周有什么有趣/有意思的事情。如果不记录，很快就忘记发生过什么了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;投资
+&lt;ul&gt;
+&lt;li&gt;今年开了股票账户；9月底的大涨没敢投入太多，因此也没赚多少，但好在最后没亏；实际体验过之后发现这种快进快出的风格还是不太适合自己，更习惯于一次买入就长久放着&lt;/li&gt;
+&lt;li&gt;总体年化收益率 2.3%，按收益率排行：公司股票 &amp;gt; A股 &amp;gt; 美元存款 &amp;gt; 人民币货币基金&lt;/li&gt;
+&lt;li&gt;被动收入（低风险无需操作的投资收益）基本达成了目标，一年的收益足够在房租低的城市完全躺平一年，但是安全边际还是太低了，还得努力提高投资水平&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;展望-2025&#34;&gt;展望 2025&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;工作
+&lt;ul&gt;
+&lt;li&gt;希望能不出事故，继续干下去&lt;/li&gt;
+&lt;li&gt;探索其他的工作机会（私企 &amp;amp; 体制内），考虑后路&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;技术
+&lt;ul&gt;
+&lt;li&gt;用 LLM 学更多&lt;/li&gt;
+&lt;li&gt;用 LLM 构建更多&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;生活
+&lt;ul&gt;
+&lt;li&gt;继续保持运动习惯&lt;/li&gt;
+&lt;li&gt;每个季度读一本无关工作的书&lt;/li&gt;
+&lt;li&gt;学习日语到 N2 水平&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;投资
+&lt;ul&gt;
+&lt;li&gt;进一步分散投资&lt;/li&gt;
+&lt;li&gt;不亏钱&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>LLM x 书签收藏：摘要 &amp; 全文索引</title>
       <link>https://nekonull.me/posts/llm_x_bookmark/</link>
