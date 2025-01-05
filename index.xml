@@ -7,7 +7,500 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 01 Jan 2025 15:57:31 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Jan 2025 23:38:12 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>读书记录《悟道领域驱动设计》</title>
+      <link>https://nekonull.me/share/book-ddd/</link>
+      <pubDate>Sun, 05 Jan 2025 23:38:12 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/book-ddd/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;ch2 应用架构
+&lt;ul&gt;
+&lt;li&gt;贫血模型 vs 充血模型
+&lt;ul&gt;
+&lt;li&gt;贫血模型：类只是数据容器，没有行为（例如 pojo）&lt;/li&gt;
+&lt;li&gt;充血模型：类有属性（数据），也有方法（行为）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;项目结构
+&lt;ul&gt;
+&lt;li&gt;接口层：对外暴露api/消息consumer&lt;/li&gt;
+&lt;li&gt;应用服务层：协调领域模型完成业务逻辑&lt;/li&gt;
+&lt;li&gt;基础设施层：写db/缓存/调外部服务&lt;/li&gt;
+&lt;li&gt;领域层：领域内的具体逻辑&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;查询的两种实现
+&lt;ul&gt;
+&lt;li&gt;1 读数据后加载领域模型（聚合根），聚合根转换为查询结果 view&lt;/li&gt;
+&lt;li&gt;2 直接用实际存储的数据模型，跳过领域对象加载，直接用把数据模型转换为查询结果 view&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch3 实体和值对象
+&lt;ul&gt;
+&lt;li&gt;实体：有唯一标识的领域模型
+&lt;ul&gt;
+&lt;li&gt;e.g. 内容发布系统的文章&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;值对象：没有唯一标识，需要的时候随时构造，值一样就认为是相同的对象
+&lt;ul&gt;
+&lt;li&gt;e.g. 内容发布系统的文章标题&lt;/li&gt;
+&lt;li&gt;DP：Domain Primitive 领域内的基本数据类型，值对象的一种
+&lt;ul&gt;
+&lt;li&gt;e.g. 金融系统中的金额（money）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch4 聚合与聚合根
+&lt;ul&gt;
+&lt;li&gt;聚合：一组对象组成的对象树
+&lt;ul&gt;
+&lt;li&gt;单个实体也是聚合&lt;/li&gt;
+&lt;li&gt;聚合是一致性的边界；聚合内强一致，跨聚合最终一致
+&lt;ul&gt;
+&lt;li&gt;一个事务只更新单个聚合&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;聚合根：这个对象树的入口
+&lt;ul&gt;
+&lt;li&gt;单个实体也可以是聚合根&lt;/li&gt;
+&lt;li&gt;外部对象只能引用聚合根（通常通过持有一个id）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;拆分聚合
+&lt;ul&gt;
+&lt;li&gt;一个实体被多个聚合根引用，应该被提升为聚合根&lt;/li&gt;
+&lt;li&gt;1:N 的集合属性（Role-Resource Binding），因为存在双向查找的需要（Role找Resource，Resource找Role），通常也可能被提升为聚合根&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch5 Factory, Repo, 领域服务
+&lt;ul&gt;
+&lt;li&gt;Factory：从无到有创建领域对象
+&lt;ul&gt;
+&lt;li&gt;需要分配 id&lt;/li&gt;
+&lt;li&gt;通常用 builder 模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Repo：保存和加载聚合根，和实际的存储解耦
+&lt;ul&gt;
+&lt;li&gt;save：聚合根持久化到数据库
+&lt;ul&gt;
+&lt;li&gt;注意事务控制，所有实际的写操作应该在一个事务内执行（例如文章写一个表，文章内容写另一个表）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;load：从数据库查询数据对象，组装回聚合根&lt;/li&gt;
+&lt;li&gt;推荐实现行级 repo，一个聚合根对应数据库中一行数据
+&lt;ul&gt;
+&lt;li&gt;如果存在查多行的需求，如 queryList，应该用 CQRS 分离出去&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;领域服务：包含领域中不适合放在实体/值对象的业务操作，应该是无状态的
+&lt;ul&gt;
+&lt;li&gt;例子：导出数据为 excel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch6 设计模式
+&lt;ul&gt;
+&lt;li&gt;责任链：多个handler逐个执行&lt;/li&gt;
+&lt;li&gt;策略：从多种算法实现中选择一个（根据业务类型匹配到策略）&lt;/li&gt;
+&lt;li&gt;桥接&lt;/li&gt;
+&lt;li&gt;规约：验证复杂规则&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch7 防腐层 ACL
+&lt;ul&gt;
+&lt;li&gt;避免外部系统变更影响到当前系统（字段名变化、包名变化&amp;hellip;）&lt;/li&gt;
+&lt;li&gt;实现：适配器模式
+&lt;ul&gt;
+&lt;li&gt;出入参数应该是本地值对象，或者基本数据类型&lt;/li&gt;
+&lt;li&gt;外部异常/错误码应该转换为本地异常/错误码&lt;/li&gt;
+&lt;li&gt;只返回实际需要的字段&lt;/li&gt;
+&lt;li&gt;一般在应用服务/领域服务调用防腐层，不要在实体和值对象使用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch8 领域事件
+&lt;ul&gt;
+&lt;li&gt;幂等实现：数据库唯一索引 /  状态机&lt;/li&gt;
+&lt;li&gt;事件建模：用领域语言（例如账户被激活）；建模为值对象/贫血对象（不可变的）&lt;/li&gt;
+&lt;li&gt;应用
+&lt;ul&gt;
+&lt;li&gt;触发其他领域/聚合的行为&lt;/li&gt;
+&lt;li&gt;记录状态变化&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;事件消息体：实体id，事件id，事件类型，发生事件
+&lt;ul&gt;
+&lt;li&gt;也可选包含具体数据，减少查询需要，例如用户变更手机号事件带上新的手机号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;生成事件
+&lt;ul&gt;
+&lt;li&gt;应用层创建：推荐，直接在应用层生成，然后调用基础服务发布&lt;/li&gt;
+&lt;li&gt;聚合根创建：聚合根内生成事件，存储在聚合根内一个临时位置，应用层调用方法从聚合根取得，然后调用基础服务进行发布&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;发布事件
+&lt;ul&gt;
+&lt;li&gt;问题：保存聚合根和发布领域事件应该是一个事务，不能一个失败一个成功；但是引入分布式事务会造成复杂度上升&lt;/li&gt;
+&lt;li&gt;解决：用一个db里事件表，repo save的时候不仅写聚合根，还写事件表；然后用事件表变更触发mq
+&lt;ul&gt;
+&lt;li&gt;轮询补偿：一个外部定时任务，检查事件表中状态=未发布的事件，读出来发mq，然后更新状态为已发布&lt;/li&gt;
+&lt;li&gt;拖尾：用一个db拖尾组件监听db变更，自动发布到mq&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;订阅事件：事件 consumer 作为一个新的接口层，调用应用层服务
+&lt;ul&gt;
+&lt;li&gt;注意幂等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch9 CQRS
+&lt;ul&gt;
+&lt;li&gt;问题：查询的时候加载聚合根可能没必要（例如只读取一部分字段）；但是修改的时候必须要加载完整聚合根&lt;/li&gt;
+&lt;li&gt;CQRS 应用层分为 查询 query 和 修改 command 两部分，分别用不同的模型处理
+&lt;ul&gt;
+&lt;li&gt;command 依然加载完整聚合根&lt;/li&gt;
+&lt;li&gt;query 直接用数据模型（db数据）进行查询，转换为需要的返回 view&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现
+&lt;ul&gt;
+&lt;li&gt;同数据源：比较简单，query 不用 repo.load 而是直接读db&lt;/li&gt;
+&lt;li&gt;异数据源：复杂，可能导致不一致
+&lt;ul&gt;
+&lt;li&gt;需求：主数据存储 mysql，用 es 做文本搜索&lt;/li&gt;
+&lt;li&gt;实现：应用层发布领域事件，db日志拖尾&lt;/li&gt;
+&lt;li&gt;查询可以是一个贫血模型，因为没有复杂逻辑且只读数据不修改&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;缺点：复杂度高、可能导致数据一致性问题、增加学习成本&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch10 事件溯源
+&lt;ul&gt;
+&lt;li&gt;想法：存储领域事件，读取时通过重放领域事件得到最新聚合状态
+&lt;ul&gt;
+&lt;li&gt;优点：完整业务跟踪能力；可以回滚到任意时刻的聚合根&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现1：最原始的实现，直接存领域事件，读时回放
+&lt;ul&gt;
+&lt;li&gt;只有一个事件表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现2：事件多查起来慢，因此加快照，回放时用 上次快照 + 上次快照后的事件
+&lt;ul&gt;
+&lt;li&gt;事件表 + 快照表，save的时候可能需要生成快照&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实现3：快照表用拉链表实现，存储所有事件+聚合根所有版本（含有效期）
+&lt;ul&gt;
+&lt;li&gt;拉链表：含有开始时间和结束时间，表明这一行数据在此时间段内有效&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch11 一致性
+&lt;ul&gt;
+&lt;li&gt;聚合内一致性
+&lt;ul&gt;
+&lt;li&gt;事务应该在 repo 实现，不应该在应用层实现，否则会造成事务过大&lt;/li&gt;
+&lt;li&gt;用乐观锁避免并发更新问题&lt;/li&gt;
+&lt;li&gt;repo save 失败，需要在应用层重试，来确保聚合数据是最新状态（即重新 load）
+&lt;ul&gt;
+&lt;li&gt;因为会重新调用外部接口，依赖的外部接口应该幂等&lt;/li&gt;
+&lt;li&gt;不适合频繁更新的热点数据（可能导致频繁重试）&lt;/li&gt;
+&lt;li&gt;重试次数规划好，一般一次就够了，多次的话应该考虑其他架构&lt;/li&gt;
+&lt;li&gt;重试次数/触发原因可配置，一般只有乐观锁失败再重试，其他错误不应该重试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;读写性能问题
+&lt;ul&gt;
+&lt;li&gt;一般业务做不到那么大&lt;/li&gt;
+&lt;li&gt;读多写少：读写分离、缓存、复杂查询维护单独的读数据源、分库分表&lt;/li&gt;
+&lt;li&gt;写之前的确需要完整加载聚合，写慢点就忍吧&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;跨聚合一致性：实际上是分布式事务
+&lt;ul&gt;
+&lt;li&gt;二阶段提交：prepare, commit；commit 可能失败，此时rollback
+&lt;ul&gt;
+&lt;li&gt;代价比较大&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;本地消息表+发布领域事件：见 ch8&lt;/li&gt;
+&lt;li&gt;最大努力通知：上游不断发起通知调用给下游，直到下游确认
+&lt;ul&gt;
+&lt;li&gt;适用于对可靠性要求不高&lt;/li&gt;
+&lt;li&gt;发起者需要提供查单接口，供接收者主动查询状态&lt;/li&gt;
+&lt;li&gt;发起者需要实现重复通知，接收者自己保证幂等&lt;/li&gt;
+&lt;li&gt;发通知间隔应该指数退避，且限制最大次数，避免无限发送&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;TCC：try, confirm, cancel；try成功了confirm必须成功
+&lt;ul&gt;
+&lt;li&gt;注意点1 幂等：confirm/cancel幂等&lt;/li&gt;
+&lt;li&gt;注意点2 空回滚：没有调用try就调用了cancel；收到cancel查资源状态，没try过应该直接返回&lt;/li&gt;
+&lt;li&gt;注意点3 事务悬挂：先执行cancel再执行try；收到try查资源状态，被cancel过也直接返回&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;saga：正向perform，补偿compensate
+&lt;ul&gt;
+&lt;li&gt;注意点1 隔离性：正向操作完成后，其他事务已经能观察到了，负向回滚之后可能影响到其他事务（用户看到订单消失）
+&lt;ul&gt;
+&lt;li&gt;考虑引入一个中间状态例如 pending&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注意点2 幂等：perform/compensate 都应该幂等&lt;/li&gt;
+&lt;li&gt;注意点3 空回滚：没有perform就compensate；补偿前用业务主键查是否有perform，没有直接返回，并记录已回滚&lt;/li&gt;
+&lt;li&gt;注意点4 事务悬挂：先compensate再perform；perform前查询是否compensate过，有则报错&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;选型
+&lt;ul&gt;
+&lt;li&gt;不要求实时，只要求最终一致：本地消息表、最大努力通知&lt;/li&gt;
+&lt;li&gt;要求实时：TCC&lt;/li&gt;
+&lt;li&gt;长事务、涉及外部/遗留系统：saga&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch12 战略设计
+&lt;ul&gt;
+&lt;li&gt;概念
+&lt;ul&gt;
+&lt;li&gt;限界上下文：一个特定业务内的概念、规则、流程
+&lt;ul&gt;
+&lt;li&gt;如电商系统中的订单、商品、营销、物流&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;上下文映射：不同限界上下文之间的协作关系&lt;/li&gt;
+&lt;li&gt;子域：关联性强的限界上下文形成的大的业务概念
+&lt;ul&gt;
+&lt;li&gt;主播+直播 -&amp;gt; 视频直播子域&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;划分限界上下文：按照业务边界&lt;/li&gt;
+&lt;li&gt;上下文映射
+&lt;ul&gt;
+&lt;li&gt;共享内核：存在共享的代码、领域模型、基础设施等&lt;/li&gt;
+&lt;li&gt;客户 供应商：客户（下游）给供应商（上游）提要求，如加接口、加字段&lt;/li&gt;
+&lt;li&gt;跟随者：上游不响应下游要求，下游得自己做&lt;/li&gt;
+&lt;li&gt;各行其道：上下游完全不关联&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;子域类型
+&lt;ul&gt;
+&lt;li&gt;核心子域：业务系统最重要的部分，业务价值高&lt;/li&gt;
+&lt;li&gt;支撑子域：起到支撑作用，但是没有成熟/通用方案，需要自己构建&lt;/li&gt;
+&lt;li&gt;通用子域：有通用性，存在成熟/通用方案，可以通过采购/开源获得&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch13 领域建模
+&lt;ul&gt;
+&lt;li&gt;事件风暴法：收集所有领域事件，归纳领域模型&lt;/li&gt;
+&lt;li&gt;收集内容
+&lt;ul&gt;
+&lt;li&gt;领域事件&lt;/li&gt;
+&lt;li&gt;命令：触发领域事件&lt;/li&gt;
+&lt;li&gt;actor：命令的人为发起者&lt;/li&gt;
+&lt;li&gt;策略：命令的规则发起者，满足某种条件自动触发；定时任务也算&lt;/li&gt;
+&lt;li&gt;外部系统：也是命令的发起者&lt;/li&gt;
+&lt;li&gt;聚合&lt;/li&gt;
+&lt;li&gt;读模型：actor 发起命令前读的数据（例如审核员查看内容），需要这些数据辅助决策&lt;/li&gt;
+&lt;li&gt;热点：待定问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;建模流程
+&lt;ul&gt;
+&lt;li&gt;列举领域事件&lt;/li&gt;
+&lt;li&gt;按业务流程排序领域事件；无法连接的说明可能遗漏了&lt;/li&gt;
+&lt;li&gt;补充命令&lt;/li&gt;
+&lt;li&gt;补充发起者&lt;/li&gt;
+&lt;li&gt;提取聚合：同一个聚合的领域事件归类到一起&lt;/li&gt;
+&lt;li&gt;补充读模型&lt;/li&gt;
+&lt;li&gt;划分限界上下文，标注映射关系；注意需要标记上下游&lt;/li&gt;
+&lt;li&gt;划分子域&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch14 研发效能
+&lt;ul&gt;
+&lt;li&gt;maven 脚手架&lt;/li&gt;
+&lt;li&gt;响应封装 graceful response&lt;/li&gt;
+&lt;li&gt;对象转换 mapstruct&lt;/li&gt;
+&lt;li&gt;静态分析&lt;/li&gt;
+&lt;li&gt;低代码&lt;/li&gt;
+&lt;li&gt;持续集成/持续交付/持续部署&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch15 测试驱动开发 tdd
+&lt;ul&gt;
+&lt;li&gt;红绿循环：写测试、测试失败、写代码、测试通过、重构、测试通过&lt;/li&gt;
+&lt;li&gt;贫血模式的 tdd
+&lt;ul&gt;
+&lt;li&gt;dao：生成的，一般不用测&lt;/li&gt;
+&lt;li&gt;service：对基础设施的调用应该 mock&lt;/li&gt;
+&lt;li&gt;controller：mockmvc 直接测试 http 请求，验证响应（如返回码）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ddd 中的 tdd
+&lt;ul&gt;
+&lt;li&gt;实体：测全分支；不应该依赖启动容器和基础设施&lt;/li&gt;
+&lt;li&gt;值对象：覆盖业务规则&lt;/li&gt;
+&lt;li&gt;factory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch16 敏捷开发
+&lt;ul&gt;
+&lt;li&gt;scrum&lt;/li&gt;
+&lt;li&gt;看板&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch17 架构可视化
+&lt;ul&gt;
+&lt;li&gt;c4 模型
+&lt;ul&gt;
+&lt;li&gt;系统上下文图：只展示核心系统、支持元素（如外部依赖、用户）&lt;/li&gt;
+&lt;li&gt;容器图：展示主要数据选型和个容器的职责分工
+&lt;ul&gt;
+&lt;li&gt;容器：可独立运行/部署的单元（如后台单体、缓存、数据库）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;组件图：展示可执行容器内部分工，指导开发&lt;/li&gt;
+&lt;li&gt;代码图：UML/ER图，不推荐画（变更频繁）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他图
+&lt;ul&gt;
+&lt;li&gt;系统全景图：展示关联的所有系统&lt;/li&gt;
+&lt;li&gt;动态图：展示元素在运行时如何协作，用箭头和编号表示顺序&lt;/li&gt;
+&lt;li&gt;部署图：说明部署方案，含有实例数量、机房等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch18 重构
+&lt;ul&gt;
+&lt;li&gt;模式
+&lt;ul&gt;
+&lt;li&gt;修缮者：实现新方法，保留老方法，用开关切换，无问题后删除老方法&lt;/li&gt;
+&lt;li&gt;绞杀者：设计新系统，用一个门面承接流量，逐渐在新系统实现功能，并切老系统的流量到新系统，直到老系统完全无流量&lt;/li&gt;
+&lt;li&gt;推翻重建：彻底放弃老系统&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;流程
+&lt;ul&gt;
+&lt;li&gt;启动
+&lt;ul&gt;
+&lt;li&gt;必要性评估：考虑性能、可靠性、技术栈、业务支持、研发效率、运营效率&lt;/li&gt;
+&lt;li&gt;环境因素：企业战略、组织架构稳定性、文化氛围、管理风格&lt;/li&gt;
+&lt;li&gt;效益和风险分析&lt;/li&gt;
+&lt;li&gt;可行性分析：天时（和企业战略一致）、地利（已具备环境条件）、人和（团队愿意支持思想一致）&lt;/li&gt;
+&lt;li&gt;干系人识别：团队成员、管理者、职能部门负责人、最终用户&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;规划
+&lt;ul&gt;
+&lt;li&gt;确认重构范围&lt;/li&gt;
+&lt;li&gt;工作任务分解：任务分给唯一的某个人完成，可以向其他组员寻求帮助，但是负责人只有一个&lt;/li&gt;
+&lt;li&gt;工期估算和进度计划&lt;/li&gt;
+&lt;li&gt;沟通计划：管理层、项目成员、外部团队&lt;/li&gt;
+&lt;li&gt;人力资源计划：人力不足需要申请人力、提前培训&lt;/li&gt;
+&lt;li&gt;质量管理计划：业务流程梳理用力、数据一致性对比&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;执行
+&lt;ul&gt;
+&lt;li&gt;组建团队&lt;/li&gt;
+&lt;li&gt;梳理现有业务逻辑：读代码、读历史文档、头脑风暴&lt;/li&gt;
+&lt;li&gt;整理用例并评审&lt;/li&gt;
+&lt;li&gt;实施开发：DDD、敏捷、测试驱动、CICD&lt;/li&gt;
+&lt;li&gt;数据迁移&lt;/li&gt;
+&lt;li&gt;灰度切量&lt;/li&gt;
+&lt;li&gt;老系统下线：老系统可能还有调用者&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;监控
+&lt;ul&gt;
+&lt;li&gt;进度&lt;/li&gt;
+&lt;li&gt;质量&lt;/li&gt;
+&lt;li&gt;待办项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;收尾
+&lt;ul&gt;
+&lt;li&gt;沉淀过程资产：架构图、FAQ、接口文档&lt;/li&gt;
+&lt;li&gt;推动新系统普及：通知调用方&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;数据迁移的实现
+&lt;ul&gt;
+&lt;li&gt;方案1：双写
+&lt;ul&gt;
+&lt;li&gt;步骤1：老系统开始写入新数据源；新系统需要支持写老数据源&lt;/li&gt;
+&lt;li&gt;步骤2：历史数据从老数据源全量迁移到新数据源；检查新老数据一致性&lt;/li&gt;
+&lt;li&gt;步骤3：读验证，灰度部分读流量到新系统&lt;/li&gt;
+&lt;li&gt;步骤4：写验证，灰度部分写流量到新系统（新系统依然写老数据源，且定期校验）&lt;/li&gt;
+&lt;li&gt;步骤5：全部流量切换到新系统，新系统双写老数据源&lt;/li&gt;
+&lt;li&gt;步骤6：新系统稳定后，关闭新系统写老数据源开关，老系统下线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;方案2：双向数据同步
+&lt;ul&gt;
+&lt;li&gt;正向：老-&amp;gt;新：传输老系统的所有数据&lt;/li&gt;
+&lt;li&gt;反向：新-&amp;gt;老：只传输新系统生成的数据（对来自老系统的数据有特殊标记）&lt;/li&gt;
+&lt;li&gt;步骤：正向链路一直打开，全量数据从老系统迁移到新系统，且保证增量同步；写验证前打开反向链路，直到老系统下线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ch19 布道领域驱动设计
+&lt;ul&gt;
+&lt;li&gt;编码指南&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>2024 年末杂谈</title>
       <link>https://nekonull.me/posts/end-of-2024/</link>
@@ -1912,117 +2405,6 @@ TL;DR summary: Summary in no more than 50 words.
 &lt;li&gt;中性的决定5：提前换太多日元；为了保险起见一次换了[REDACTED]，不过实际上大部分地方都可以刷信用卡或者微信支付，所以现金其实不需要准备这么多，可能一天一万就差不多是极限了，实际上也并不会花到这个程度&lt;/li&gt;
 &lt;li&gt;中性的决定6：每天睡的太晚导致早上起不来；发现自己旅行一天的精力极限大概是12h，早上十点出门的话晚上十点就差不多已经力竭了（例如东京第一天），回了酒店还要洗澡+收拾+写日记（1h+），所以轻轻松松就过0点入睡了；起床再顺手多按掉几个闹钟就差不多十点了；不过旅行去新地点的话，这种探索欲可能也的确无从发泄；后来根据京都的体验，可能一天10h是比较合适的安排，这样回酒店还有足够的时间处理各种事情；10点起来的话，到各种景点的时候游客通常就已经很多了，不过这点对我来说倒不算什么大问题，毕竟不追求出片&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>健身房等待时间模拟</title>
-      <link>https://nekonull.me/share/gym-wait-sim/</link>
-      <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/gym-wait-sim/</guid>
-      <description>&lt;p&gt;七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动就是中午去健身房踩20多分钟的椭圆机（顺带看一集番），消耗热量约320卡。然而虽然健身房里的椭圆机数量并不少，足足有10台，但是偶尔还是会发生去了没有位置，需要等人结束的情况，但是因为不知道到底要等多久，还是略微有些焦虑。于是在想，有没有办法量化等待时间，例如模拟计算下概率分布函数，所以有了这篇文章。&lt;/p&gt;
-&lt;p&gt;代码（基本是 GPT3.5 写的，有手动调整）：https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&lt;/p&gt;
-&lt;p&gt;假设：有 10 个椭圆机，每个椭圆机上的运动者的运动时间 &lt;code&gt;t_n&lt;/code&gt; 遵循均值为 &lt;code&gt;μ&lt;/code&gt;，标准差为 &lt;code&gt;σ&lt;/code&gt; 的正态分布。到达健身房时，所有 10 台椭圆机都已被占用，且每个运动者的剩余时间在 &lt;code&gt;[0, t_n]&lt;/code&gt; 中均匀分布。等待时间为所有运动者剩余时间的最小值。&lt;/p&gt;
-&lt;p&gt;考虑到参数 &lt;code&gt;μ&lt;/code&gt; 和 &lt;code&gt;σ&lt;/code&gt; 都无法被准确估计，因此考虑 &lt;code&gt;μ&lt;/code&gt; = 5/10/15，&lt;code&gt;σ&lt;/code&gt; = 20/25/30，组合起来共 9 种情况；对每种情况运行一万次模拟，统计等待时间的 p50/p75/p90/p95，得到下表：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;μ&lt;/th&gt;
-&lt;th&gt;σ&lt;/th&gt;
-&lt;th&gt;mean&lt;/th&gt;
-&lt;th&gt;p50&lt;/th&gt;
-&lt;th&gt;p75&lt;/th&gt;
-&lt;th&gt;p90&lt;/th&gt;
-&lt;th&gt;p95&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;20&lt;/td&gt;
-&lt;td&gt;5&lt;/td&gt;
-&lt;td&gt;1.698&lt;/td&gt;
-&lt;td&gt;1.252&lt;/td&gt;
-&lt;td&gt;2.406&lt;/td&gt;
-&lt;td&gt;3.817&lt;/td&gt;
-&lt;td&gt;4.811&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;20&lt;/td&gt;
-&lt;td&gt;10&lt;/td&gt;
-&lt;td&gt;1.258&lt;/td&gt;
-&lt;td&gt;0.858&lt;/td&gt;
-&lt;td&gt;1.772&lt;/td&gt;
-&lt;td&gt;2.944&lt;/td&gt;
-&lt;td&gt;3.813&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;20&lt;/td&gt;
-&lt;td&gt;15&lt;/td&gt;
-&lt;td&gt;1.151&lt;/td&gt;
-&lt;td&gt;0.737&lt;/td&gt;
-&lt;td&gt;1.604&lt;/td&gt;
-&lt;td&gt;2.761&lt;/td&gt;
-&lt;td&gt;3.641&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;25&lt;/td&gt;
-&lt;td&gt;5&lt;/td&gt;
-&lt;td&gt;2.198&lt;/td&gt;
-&lt;td&gt;1.632&lt;/td&gt;
-&lt;td&gt;3.123&lt;/td&gt;
-&lt;td&gt;4.978&lt;/td&gt;
-&lt;td&gt;6.229&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;25&lt;/td&gt;
-&lt;td&gt;10&lt;/td&gt;
-&lt;td&gt;1.769&lt;/td&gt;
-&lt;td&gt;1.258&lt;/td&gt;
-&lt;td&gt;2.494&lt;/td&gt;
-&lt;td&gt;4.077&lt;/td&gt;
-&lt;td&gt;5.213&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;25&lt;/td&gt;
-&lt;td&gt;15&lt;/td&gt;
-&lt;td&gt;1.477&lt;/td&gt;
-&lt;td&gt;0.967&lt;/td&gt;
-&lt;td&gt;2.069&lt;/td&gt;
-&lt;td&gt;3.508&lt;/td&gt;
-&lt;td&gt;4.634&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;30&lt;/td&gt;
-&lt;td&gt;5&lt;/td&gt;
-&lt;td&gt;2.671&lt;/td&gt;
-&lt;td&gt;1.977&lt;/td&gt;
-&lt;td&gt;3.813&lt;/td&gt;
-&lt;td&gt;6.059&lt;/td&gt;
-&lt;td&gt;7.515&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;30&lt;/td&gt;
-&lt;td&gt;10&lt;/td&gt;
-&lt;td&gt;2.284&lt;/td&gt;
-&lt;td&gt;1.669&lt;/td&gt;
-&lt;td&gt;3.219&lt;/td&gt;
-&lt;td&gt;5.186&lt;/td&gt;
-&lt;td&gt;6.632&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;30&lt;/td&gt;
-&lt;td&gt;15&lt;/td&gt;
-&lt;td&gt;1.965&lt;/td&gt;
-&lt;td&gt;1.364&lt;/td&gt;
-&lt;td&gt;2.720&lt;/td&gt;
-&lt;td&gt;4.624&lt;/td&gt;
-&lt;td&gt;6.019&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/gym_wait_sim_result.png&#34; alt=&#34;模拟结果可视化&#34;&gt;&lt;/p&gt;
-&lt;p&gt;结论：考虑所有情况，一般等 2 分钟就有 50% 概率可以等到位置，最坏情况下等 6 分钟也有 90% 的概率等到位置。&lt;/p&gt;
 </description>
     </item>
     
