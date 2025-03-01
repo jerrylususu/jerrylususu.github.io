@@ -11,7 +11,10 @@
 <a href="{{.}}"><img class="icon-social" src="/img/twitter.svg" alt="Twitter"/></a>
 {{ end }}
 {{ with .OutputFormats.Get "RSS" }}
-<a href="{{ .RelPermalink }}" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+<a href="{{ .RelPermalink }}" target="_blank" title="Main RSS Feed"><img class="icon-social" src="/img/feed.svg" alt="Main Feed"></a>
+{{ end }}
+{{ with .OutputFormats.Get "TilRSS" }}
+<a href="{{ .RelPermalink }}" target="_blank" title="TIL RSS Feed"><img class="icon-social" src="/img/feed-til.svg" alt="TIL Feed"></a>
 {{ end }}
 {{ with .Site.Params.Twitch}}
 <a href="{{.}}"><img class="icon-social" src="/img/twitch.svg" alt="Twitch"/></a>

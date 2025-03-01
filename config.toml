@@ -21,6 +21,22 @@ googleAnalytics = "G-R01JLDY2KE"
     [markup.goldmark.renderer]
       unsafe = true
 
+# Define output formats
+[outputFormats]
+  [outputFormats.RSS]
+    mediatype = "application/rss+xml"
+    baseName = "index"
+  [outputFormats.TilRSS]
+    mediatype = "application/rss+xml"
+    baseName = "til"
+
+# Define where to apply output formats
+[outputs]
+  home = ["HTML", "RSS", "TilRSS"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML"]
+
 [params]
   # dir name of your blog content (default is `content/posts`)
   #contentTypeName = "posts"
