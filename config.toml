@@ -1,10 +1,12 @@
 baseurl = "https://nekonull.me/"
 languageCode = "zh-cn"
 theme = "manis"
-paginate = 20
 defaultContentLanguage = "zh"
 hasCJKLanguage = true
 rssLimit = 25
+
+[pagination]
+  pagerSize = 20
 
   # Code Highlighting (Chroma)
 # pygmentsCodeFences = true
