@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>(译) 复杂系统如何失效 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>(译) 复杂系统如何失效 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="How complex system fails">
+	<meta name="description" content="How complex system fails">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/posts/how-complex-system-fail-cn/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/posts/how-complex-system-fail-cn/" class="active langselect">简体中文</a></li>
             
           
       
@@ -107,8 +96,7 @@ if (!doNotTrack) {
 	<h1 id="复杂系统如何失效">复杂系统如何失效</h1>
 <p>原文链接：<a href="https://how.complexsystems.fail/">How Complex Systems Fail</a></p>
 <blockquote>
-<p>译者注：在阅读 Slack Engineering Team 发布的 <a href="https://slack.engineering/slacks-incident-on-2-22-22/">2022/2/22 事故报告</a>时，注意到了这篇文章。作者描述了系统的复杂性为维护人员带来的挑战，并澄清了一些常见误解。个人认为这篇文章很有价值，但可惜暂无中文翻译，于是便自己动手了。本译文在 DeepL 机翻的基础上润色调整而成，错误在所难免，如有发现还请指正。</p>
-</blockquote>
+<p>译者注：在阅读 Slack Engineering Team 发布的 <a href="https://slack.engineering/slacks-incident-on-2-22-22/">2022/2/22 事故报告</a>时，注意到了这篇文章。作者描述了系统的复杂性为维护人员带来的挑战，并澄清了一些常见误解。个人认为这篇文章很有价值，但可惜暂无中文翻译，于是便自己动手了。本译文在 DeepL 机翻的基础上润色调整而成，错误在所难免，如有发现还请指正。</p></blockquote>
 <h2 id="1-复杂系统本质上是危险的系统">1. 复杂系统本质上是危险的系统</h2>
 <p>所有有趣的系统（如交通、医疗、发电），因其本身的性质，都具有固有的、不可避免的危险性。危险暴露的频率有时可以改变，但系统涉及的流程，依然具有内在的、不可减少的危险性。正是这些危险的存在，推动了防御措施的产生。危险和防御的存在也成为了这些系统的特征。</p>
 <h2 id="2-对系统失效复杂系统有大量成功的防御措施">2. 对系统失效，复杂系统有大量成功的防御措施</h2>
@@ -124,13 +112,11 @@ if (!doNotTrack) {
 <h2 id="7-事后分析的根因根本上是错的">7. 事后分析的「根因」根本上是错的</h2>
 <p>因为显性的失效需要多重故障，所以并不存在一个独立的事故「原因」。多种因素导致了事故的发生，其中每个因素单独并不足以引发事故，只有它们联合起来才足以造成事故。正是这些因素联系在一起，才创造了事故所需的环境。因此，不可能将某个事故的「根因（root-cause）」分离出来。事故评估中对「根因」的论证，并非出于对失效本质的技术性理解，而是出于将结果归咎于特定的、局部的力量的社会文化需要。[1]</p>
 <blockquote>
-<p>[1] 人类学的田野调查为「原因」这一概念的社会构建提供了最清晰的证明。</p>
-</blockquote>
+<p>[1] 人类学的田野调查为「原因」这一概念的社会构建提供了最清晰的证明。</p></blockquote>
 <h2 id="8-事后回顾中对人为表现的评估存在偏见">8. 事后回顾中对人为表现的评估存在偏见</h2>
 <p>对结果的了解使人认为，对一线人员而言，导致失效的事件比实际情况显得更突出。这意味着对人为表现的事后分析是不准确的。对结果的了解阻碍了事后观察者重现事故前一线人员视角的能力，显得一线人员似乎「应该知道」这些因素「不可避免地」会引发事故。[2] 后见之明偏见仍然是事故调查的主要障碍，尤其是在涉及到人类专家的表现时。</p>
 <blockquote>
-<p>[2] 这不是医学判断或技术判断的特点，而是人类对过去事件及其原因认知上的特点。</p>
-</blockquote>
+<p>[2] 这不是医学判断或技术判断的特点，而是人类对过去事件及其原因认知上的特点。</p></blockquote>
 <h2 id="9-人类操作者有双重角色生产者和失效防御者">9. 人类操作者有双重角色：生产者和失效防御者</h2>
 <p>一线人员操作系统运转，不仅为了生产所需的产品，也为了防止事故发生。系统运行的动态性，即平衡为满足需求而生产和避免潜在故障，是不可避免的。外人很少承认这一角色的双重性。在没有事故发生时，生产的角色被强调。在事故发生后，失效防御者的角色被强调。无论在哪种情况下，外人的视角都误解了操作者对两种角色的同时参与。</p>
 <h2 id="10-所有一线人员的行为都是赌博">10. 所有一线人员的行为都是赌博</h2>
@@ -165,19 +151,6 @@ if (!doNotTrack) {
 </nav>
 
 
-<section id="related">
-  <h4>另请参阅</h4>
-  <ul>
-    
-  	<li><a href="/share/css-filter-dark-mode/">用 CSS Filter 反色实现简易黑暗模式</a></li>
-  	
-  	<li><a href="/share/build-emoji-regex/">构造能匹配所有 emoji 的正则表达式</a></li>
-  	
-  	<li><a href="/share/vnc-to-physical-display/">VNC 连接到物理屏幕</a></li>
-  	
-  </ul>
-</section>
-
 
 
 
@@ -211,7 +184,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

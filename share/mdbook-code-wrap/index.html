@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>mdBook 代码折行（wrap） - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>mdBook 代码折行（wrap） - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="mdBook 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需">
+	<meta name="description" content="mdBook 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需要手动左右移动，体验不佳。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/mdbook-code-wrap/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/mdbook-code-wrap/" class="active langselect">简体中文</a></li>
             
           
       
@@ -102,24 +91,23 @@ if (!doNotTrack) {
 	<p><a href="https://rust-lang.github.io/mdBook/">mdBook</a> 是一个基于 Rust 的文档网站生成工具。虽然 mdBook 中有代码高亮，可编辑代码等特性，但是默认情况下不支持代码折行的设定。在代码行或注释较长的时候，用户需要手动左右移动，体验不佳。</p>
 <p>查阅<a href="https://rust-lang.github.io/mdBook/format/theme/editor.html?highlight=editor#customizing-the-editor">文档</a>可知，mdBook 使用的是 Ace Editor。再查询 Ace Editor 的<a href="https://github.com/ajaxorg/ace/wiki/Embedding-API">文档</a>，可以发现通过 <code>editor.getSession().setUseWrapMode(true);</code> 启用折行。</p>
 <p>在 mdBook 生成的 book 文件夹中，可以找到 <code>book.js</code> 文件，在 line 6 开始进行如下修改，手动设定 editor 属性即可。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">// Global variable, shared between modules
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">playground_text</span>(<span style="color:#a6e22e">playground</span>) {
-    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">code_block</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">playground</span>.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;code&#34;</span>);
-
-    <span style="color:#66d9ef">if</span> (window.<span style="color:#a6e22e">ace</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;editable&#34;</span>)) {
-        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">ace</span>.<span style="color:#a6e22e">edit</span>(<span style="color:#a6e22e">code_block</span>);
-
-        <span style="color:#75715e">// CODE ADDED BEGIN
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getSession</span>().<span style="color:#a6e22e">setUseWrapMode</span>(<span style="color:#66d9ef">true</span>);
-        <span style="color:#75715e">// CODE ADDED END
-</span><span style="color:#75715e"></span>
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getValue</span>();
-    } <span style="color:#66d9ef">else</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">textContent</span>;
-    }
-}
-
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#75715e">// Global variable, shared between modules
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">playground_text</span>(<span style="color:#a6e22e">playground</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">code_block</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">playground</span>.<span style="color:#a6e22e">querySelector</span>(<span style="color:#e6db74">&#34;code&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (window.<span style="color:#a6e22e">ace</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">contains</span>(<span style="color:#e6db74">&#34;editable&#34;</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">editor</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">ace</span>.<span style="color:#a6e22e">edit</span>(<span style="color:#a6e22e">code_block</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// CODE ADDED BEGIN
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getSession</span>().<span style="color:#a6e22e">setUseWrapMode</span>(<span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// CODE ADDED END
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">editor</span>.<span style="color:#a6e22e">getValue</span>();
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">code_block</span>.<span style="color:#a6e22e">textContent</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
 </article>
 <nav class="no-print post-nav">
 
@@ -132,19 +120,6 @@ if (!doNotTrack) {
 
 </nav>
 
-
-<section id="related">
-  <h4>另请参阅</h4>
-  <ul>
-    
-  	<li><a href="/share/hugo-disqus/">Hugo 的 Disqus 整合</a></li>
-  	
-  	<li><a href="/posts/back-again/">再次复活</a></li>
-  	
-  	<li><a href="/about/">About</a></li>
-  	
-  </ul>
-</section>
 
 
 
@@ -179,7 +154,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

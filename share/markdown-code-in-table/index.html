@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>Markdown 表格内的代码块 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>Markdown 表格内的代码块 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格">
+	<meta name="description" content="Markdown 自带表格支持，不过表格内只支持基本的文本格式（加粗、斜体、inline code 等），而不支持更复杂的文本格式（如代码块、水平线）。如果需要在表格中加上复杂格式支持，如果使用的是 Github Flavored Markdown，一种做法是用 HTML 定义表格框架，再在内部 inline Markdown 文本，示例如下。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -65,7 +54,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/en/share/markdown-code-in-table/" class="langselect">English</a></li>
+                <li><a href="https://nekonull.me/en/share/markdown-code-in-table/" class="langselect">English</a></li>
             
           
       
@@ -79,7 +68,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/markdown-code-in-table/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/markdown-code-in-table/" class="active langselect">简体中文</a></li>
             
           
       
@@ -130,8 +119,8 @@ if (!doNotTrack) {
 <tr>
 <td> Code Block </td>
 <td>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>)
-</code></pre></div></td>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span></code></pre></div></td>
 </tr>
 <tr>
 <td> Horizontal Line </td>
@@ -143,34 +132,34 @@ if (!doNotTrack) {
 </tr>
 </table>
 <p>代码：<strong>注意代码块结束应该是 3 个 tilt</strong>（这里写两个是因为三个会导致渲染出错，提早结束代码块）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">table</span>&gt;
-&lt;<span style="color:#f92672">tr</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt; Column 1 &lt;/<span style="color:#f92672">td</span>&gt; &lt;<span style="color:#f92672">td</span>&gt; Column 2 &lt;/<span style="color:#f92672">td</span>&gt;
-&lt;/<span style="color:#f92672">tr</span>&gt;
-&lt;<span style="color:#f92672">tr</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt; Code Block &lt;/<span style="color:#f92672">td</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt;                           <span style="color:#75715e">&lt;!--line start--&gt;</span>
-                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
-```python
-print(&#34;hello world&#34;)
-``                             <span style="color:#75715e">&lt;!--Should be 3 tilt here!--&gt;</span>
-                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
-&lt;/<span style="color:#f92672">td</span>&gt;                          <span style="color:#75715e">&lt;!--line start--&gt;</span>
-&lt;/<span style="color:#f92672">tr</span>&gt;
-&lt;<span style="color:#f92672">tr</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt; Horizontal Line &lt;/<span style="color:#f92672">td</span>&gt;
-&lt;<span style="color:#f92672">td</span>&gt;
-
-**Markdown** 
-
----
-
-Some Text
-
-&lt;/<span style="color:#f92672">td</span>&gt;
-&lt;/<span style="color:#f92672">tr</span>&gt;
-&lt;/<span style="color:#f92672">table</span>&gt;
-</code></pre></div><p>参考链接：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">table</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">td</span>&gt; Column 1 &lt;/<span style="color:#f92672">td</span>&gt; &lt;<span style="color:#f92672">td</span>&gt; Column 2 &lt;/<span style="color:#f92672">td</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">td</span>&gt; Code Block &lt;/<span style="color:#f92672">td</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">td</span>&gt;                           <span style="color:#75715e">&lt;!--line start--&gt;</span>
+</span></span><span style="display:flex;"><span>                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
+</span></span><span style="display:flex;"><span>```python
+</span></span><span style="display:flex;"><span>print(&#34;hello world&#34;)
+</span></span><span style="display:flex;"><span>``                             <span style="color:#75715e">&lt;!--Should be 3 tilt here!--&gt;</span>
+</span></span><span style="display:flex;"><span>                               <span style="color:#75715e">&lt;!--empty line--&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">td</span>&gt;                          <span style="color:#75715e">&lt;!--line start--&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">td</span>&gt; Horizontal Line &lt;/<span style="color:#f92672">td</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">td</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>**Markdown** 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Some Text
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">td</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">tr</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">table</span>&gt;
+</span></span></code></pre></div><p>参考链接：</p>
 <ul>
 <li><a href="https://stackoverflow.com/a/60502719">https://stackoverflow.com/a/60502719</a></li>
 </ul>
@@ -234,7 +223,8 @@ Some Text
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

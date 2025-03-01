@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>基于 WebRecorder 和 MitmProxy 的图片手动抓取探索 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>基于 WebRecorder 和 MitmProxy 的图片手动抓取探索 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="最近收到任务，需要从某个站点下载一系列图片。首先当然是 F12 看下网络请求。这是一个无限滚动的瀑布流，图片地址本身是随机的（看起来文件名像是 uui">
+	<meta name="description" content="最近收到任务，需要从某个站点下载一系列图片。首先当然是 F12 看下网络请求。这是一个无限滚动的瀑布流，图片地址本身是随机的（看起来文件名像是 uuid），所以没法直接遍历图片地址；此外每次滚动到底，都会触发一个获取下一页图片地址的请求，参数传的还是游标而不是页数，这又断绝了直接构造分页请求（例如 page=1）获取所有图片地址，再逐个拉取的念头。好在总图片数是有限的，大概在 2k 左右，每次下拉能拉回 50 条，所以手动抓取也不是不能接受。以下是两种手动抓取的思路。注：这里的手动抓取，指的是在浏览器前端通过模拟人类行为，无侵入且不对网站发起额外请求的抓取方式。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/manual-scraping-with-webrecorder-mitmproxy/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/manual-scraping-with-webrecorder-mitmproxy/" class="active langselect">简体中文</a></li>
             
           
       
@@ -107,63 +96,63 @@ if (!doNotTrack) {
 <p>一个简单的小工具，每隔一段时间自动按 page down 翻页（建议提前 zoom out 调小页面比例，这样滚动起来效率更高）</p>
 <details>
 <summary>AHK 翻页器代码</summary>
-<pre><code class="language-autohotkey" data-lang="autohotkey">#Requires AutoHotkey v2.0
-
-; 创建一个 GUI
-MyGui := Gui()
-MyGui.Add(&quot;Text&quot;, &quot;x10 y10&quot;, &quot;Auto Page Down:&quot;)
-toggle := MyGui.Add(&quot;Checkbox&quot;, &quot;x10 y30 vToggleState&quot;, &quot;Enable&quot;)
-MyGui.OnEvent(&quot;Close&quot;, (*) =&gt; ExitApp())
-MyGui.Show()
-
-; 设置全局变量以跟踪定时器状态
-global keyHeld := false
-
-; 定时器：每0.1秒检查一次开关状态
-SetTimer(CheckToggleState, 100)
-
-; 主循环
-CheckToggleState()
-{
-    global keyHeld  ; 声明 keyHeld 为全局变量
-
-    if (toggle.Value) {
-        if (!keyHeld) {
-            ; 如果勾选了启用选项，并且哔哩哔哩窗口处于活动状态
-            RandomDelayAndSendPageDown()
-            keyHeld := true
-        }
-    } else {
-        if (keyHeld) {
-            ; 如果没有勾选启用选项，停止按键操作
-            keyHeld := false
-        }
-    }
-}
-
-; 生成随机延迟并发送 Page Down 键
-RandomDelayAndSendPageDown()
-{
-    ; 生成 500 到 1000 毫秒之间的随机延迟
-    RandomDelay := Random(500, 1000)
-    SetTimer(PressPageDown, RandomDelay)
-}
-
-; 按下 Page Down 键
-PressPageDown()
-{
-    global keyHeld  ; 声明 keyHeld 为全局变量
-    
-    if (toggle.Value) {
-        Send(&quot;{PgDn}&quot;)
-        RandomDelayAndSendPageDown()  ; 继续下一次按键
-    } else {
-        keyHeld := false
-    }
-}
-</code></pre></details>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-autohotkey" data-lang="autohotkey"><span style="display:flex;"><span>#Requires AutoHotkey v2<span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 创建一个 GUI</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>MyGui <span style="color:#f92672">:=</span> Gui()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>MyGui<span style="color:#f92672">.</span>Add(<span style="color:#e6db74">&#34;Text&#34;</span>, <span style="color:#e6db74">&#34;x10 y10&#34;</span>, <span style="color:#e6db74">&#34;Auto Page Down:&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>toggle <span style="color:#f92672">:=</span> MyGui<span style="color:#f92672">.</span>Add(<span style="color:#e6db74">&#34;Checkbox&#34;</span>, <span style="color:#e6db74">&#34;x10 y30 vToggleState&#34;</span>, <span style="color:#e6db74">&#34;Enable&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>MyGui<span style="color:#f92672">.</span>OnEvent(<span style="color:#e6db74">&#34;Close&#34;</span>, (<span style="color:#f92672">*</span>) <span style="color:#f92672">=&gt;</span> ExitApp())<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>MyGui<span style="color:#f92672">.</span>Show()<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 设置全局变量以跟踪定时器状态</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>global keyHeld <span style="color:#f92672">:=</span> false<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 定时器：每0.1秒检查一次开关状态</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>SetTimer(CheckToggleState, <span style="color:#ae81ff">100</span>)<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 主循环</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>CheckToggleState()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>{<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    global keyHeld<span style="color:#75715e">  ; 声明 keyHeld 为全局变量</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    if (toggle<span style="color:#f92672">.</span>Value) {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        if (<span style="color:#f92672">!</span>keyHeld) {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            ; 如果勾选了启用选项，并且哔哩哔哩窗口处于活动状态</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            RandomDelayAndSendPageDown()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            keyHeld <span style="color:#f92672">:=</span> true<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    } else {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        if (keyHeld) {<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">            ; 如果没有勾选启用选项，停止按键操作</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>            keyHeld <span style="color:#f92672">:=</span> false<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 生成随机延迟并发送 Page Down 键</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>RandomDelayAndSendPageDown()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>{<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    ; 生成 500 到 1000 毫秒之间的随机延迟</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    RandomDelay <span style="color:#f92672">:=</span> Random(<span style="color:#ae81ff">500</span>, <span style="color:#ae81ff">1000</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    SetTimer(PressPageDown, RandomDelay)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">; 按下 Page Down 键</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>PressPageDown()<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>{<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    global keyHeld<span style="color:#75715e">  ; 声明 keyHeld 为全局变量</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    if (toggle<span style="color:#f92672">.</span>Value) {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        Send(<span style="color:#e6db74">&#34;{PgDn}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        RandomDelayAndSendPageDown()<span style="color:#75715e">  ; 继续下一次按键</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    } else {<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>        keyHeld <span style="color:#f92672">:=</span> false<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    }<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>}<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div></details>
 <h2 id="思路1webrecorder">思路1：WebRecorder</h2>
-<p>概述：用 WebRecorder 插件，录制网络请求（WebRecorder 插件会 hook 浏览器的 XMLHttpRequest 机制），dump 出 <a href="https://en.wikipedia.org/wiki/WARC_(file_format)">warc</a>  (Web Archive）文件，然后再解析文件，从中提取 mime 类型为图片的文件（或者知道 URL 格式的话也可以用 URL 格式匹配）。</p>
+<p>概述：用 WebRecorder 插件，录制网络请求（WebRecorder 插件会 hook 浏览器的 XMLHttpRequest 机制），dump 出 <a href="https://en.wikipedia.org/wiki/WARC_%28file_format%29">warc</a>  (Web Archive）文件，然后再解析文件，从中提取 mime 类型为图片的文件（或者知道 URL 格式的话也可以用 URL 格式匹配）。</p>
 <p>限制：导出的时候存在文件大小限制（Chrome 下似乎是 2G，也取决于可用内存大小），总文件大小太大的话可能会有问题。</p>
 <p>步骤：</p>
 <ol>
@@ -178,51 +167,50 @@ PressPageDown()
 </ol>
 <details>
 <summary>Python 解析 WARC 代码</summary>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> warcio.archiveiterator <span style="color:#f92672">import</span> ArchiveIterator
-<span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> re
-
-<span style="color:#75715e"># 定义一个函数过滤掉不支持的字符</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sanitize_filename</span>(filename):
-    <span style="color:#75715e"># 定义不允许的字符</span>
-    invalid_chars <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">/:*?&#34;&lt;&gt;|]&#39;</span>
-    <span style="color:#75715e"># 替换这些字符为空字符，或者可以替换为下划线 &#34;_&#34;</span>
-    sanitized_filename <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(invalid_chars, <span style="color:#e6db74">&#39;_&#39;</span>, filename)
-    <span style="color:#66d9ef">return</span> sanitized_filename
-
-<span style="color:#75715e"># 提取 WARC 文件中的图片、视频资源</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract_resources_from_warc</span>(warc_file, output_dir):
-    <span style="color:#66d9ef">with</span> open(warc_file, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> stream:
-        <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> ArchiveIterator(stream):
-            <span style="color:#66d9ef">if</span> record<span style="color:#f92672">.</span>http_headers:
-                content_type <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>http_headers<span style="color:#f92672">.</span>get_header(<span style="color:#e6db74">&#39;Content-Type&#39;</span>)
-                <span style="color:#66d9ef">if</span> content_type <span style="color:#f92672">and</span> <span style="color:#e6db74">&#39;image&#39;</span> <span style="color:#f92672">in</span> content_type:
-                    <span style="color:#75715e"># 获取资源文件的 URL</span>
-                    url <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>rec_headers<span style="color:#f92672">.</span>get_header(<span style="color:#e6db74">&#39;WARC-Target-URI&#39;</span>)
-                    <span style="color:#66d9ef">print</span>(url)
-
-                    <span style="color:#75715e"># 获取资源文件内容</span>
-                    content <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>content_stream()<span style="color:#f92672">.</span>read()
-                    
-                    <span style="color:#75715e"># 确定文件扩展名</span>
-                    ext <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;jpg&#39;</span> <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;image&#39;</span> <span style="color:#f92672">in</span> content_type <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;mp4&#39;</span> <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;video&#39;</span> <span style="color:#f92672">in</span> content_type <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span>
-                    <span style="color:#66d9ef">if</span> ext:
-                        <span style="color:#75715e"># 生成文件名</span>
-                        sanitized_url <span style="color:#f92672">=</span> sanitize_filename(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>basename(url))
-                        filename <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(output_dir, sanitized_url) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#f92672">+</span> ext
-                        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;filename&#34;</span>, filename)
-                        <span style="color:#75715e"># 保存文件</span>
-                        <span style="color:#66d9ef">with</span> open(filename, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
-                            f<span style="color:#f92672">.</span>write(content)
-                        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Extracted: {filename}&#34;</span>)
-
-<span style="color:#75715e"># 示例用法</span>
-warc_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data.warc&#39;</span>
-output_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;extracted_resources&#39;</span>
-os<span style="color:#f92672">.</span>makedirs(output_dir, exist_ok<span style="color:#f92672">=</span>True)
-extract_resources_from_warc(warc_file, output_dir)
-
-</code></pre></div></details>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> warcio.archiveiterator <span style="color:#f92672">import</span> ArchiveIterator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义一个函数过滤掉不支持的字符</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sanitize_filename</span>(filename):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 定义不允许的字符</span>
+</span></span><span style="display:flex;"><span>    invalid_chars <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">/:*?&#34;&lt;&gt;|]&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 替换这些字符为空字符，或者可以替换为下划线 &#34;_&#34;</span>
+</span></span><span style="display:flex;"><span>    sanitized_filename <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(invalid_chars, <span style="color:#e6db74">&#39;_&#39;</span>, filename)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sanitized_filename
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 提取 WARC 文件中的图片、视频资源</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract_resources_from_warc</span>(warc_file, output_dir):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(warc_file, <span style="color:#e6db74">&#39;rb&#39;</span>) <span style="color:#66d9ef">as</span> stream:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> record <span style="color:#f92672">in</span> ArchiveIterator(stream):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> record<span style="color:#f92672">.</span>http_headers:
+</span></span><span style="display:flex;"><span>                content_type <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>http_headers<span style="color:#f92672">.</span>get_header(<span style="color:#e6db74">&#39;Content-Type&#39;</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> content_type <span style="color:#f92672">and</span> <span style="color:#e6db74">&#39;image&#39;</span> <span style="color:#f92672">in</span> content_type:
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># 获取资源文件的 URL</span>
+</span></span><span style="display:flex;"><span>                    url <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>rec_headers<span style="color:#f92672">.</span>get_header(<span style="color:#e6db74">&#39;WARC-Target-URI&#39;</span>)
+</span></span><span style="display:flex;"><span>                    print(url)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># 获取资源文件内容</span>
+</span></span><span style="display:flex;"><span>                    content <span style="color:#f92672">=</span> record<span style="color:#f92672">.</span>content_stream()<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>                    
+</span></span><span style="display:flex;"><span>                    <span style="color:#75715e"># 确定文件扩展名</span>
+</span></span><span style="display:flex;"><span>                    ext <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;jpg&#39;</span> <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;image&#39;</span> <span style="color:#f92672">in</span> content_type <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;mp4&#39;</span> <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;video&#39;</span> <span style="color:#f92672">in</span> content_type <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> ext:
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e"># 生成文件名</span>
+</span></span><span style="display:flex;"><span>                        sanitized_url <span style="color:#f92672">=</span> sanitize_filename(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>basename(url))
+</span></span><span style="display:flex;"><span>                        filename <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(output_dir, sanitized_url) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;.&#39;</span> <span style="color:#f92672">+</span> ext
+</span></span><span style="display:flex;"><span>                        print(<span style="color:#e6db74">&#34;filename&#34;</span>, filename)
+</span></span><span style="display:flex;"><span>                        <span style="color:#75715e"># 保存文件</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">with</span> open(filename, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>                            f<span style="color:#f92672">.</span>write(content)
+</span></span><span style="display:flex;"><span>                        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Extracted: </span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 示例用法</span>
+</span></span><span style="display:flex;"><span>warc_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;data.warc&#39;</span>
+</span></span><span style="display:flex;"><span>output_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;extracted_resources&#39;</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>makedirs(output_dir, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>extract_resources_from_warc(warc_file, output_dir)
+</span></span></code></pre></div></details>
 <h2 id="思路2mitmproxy">思路2：MitmProxy</h2>
 <p>概述：安装 mitmproxy，设置浏览器代理指向 proxy，浏览时从响应中直接过滤出图片内容并保存到本地</p>
 <p>限制：似乎没什么限制</p>
@@ -233,61 +221,61 @@ extract_resources_from_warc(warc_file, output_dir)
 </ol>
 <details>
 <summary>mitmproxy save.py</summary>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> re
-<span style="color:#f92672">from</span> mitmproxy <span style="color:#f92672">import</span> ctx, http
-
-<span style="color:#75715e"># 定义文件保存目录</span>
-save_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;saved_media&#34;</span>
-
-<span style="color:#75715e"># 确保目录存在</span>
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(save_dir):
-    os<span style="color:#f92672">.</span>makedirs(save_dir)
-
-<span style="color:#75715e"># 定义一个正则表达式，匹配Windows非法的文件名字符</span>
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sanitize_filename</span>(filename: str) <span style="color:#f92672">-&gt;</span> str:
-    <span style="color:#75715e"># 替换非法字符为下划线</span>
-    <span style="color:#66d9ef">return</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[&lt;&gt;:&#34;/</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">|?*]&#39;</span>, <span style="color:#e6db74">&#39;_&#39;</span>, filename)
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response</span>(flow: http<span style="color:#f92672">.</span>HTTPFlow):
-    <span style="color:#75715e"># 获取响应的Content-Type</span>
-    content_type <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-
-    <span style="color:#75715e"># 判断是否为图片或视频类型</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;image&#34;</span> <span style="color:#f92672">in</span> content_type:
-        <span style="color:#75715e"># 获取文件扩展名</span>
-        ext <span style="color:#f92672">=</span> content_type<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
-
-        <span style="color:#75715e"># 从请求路径中尝试提取文件名，如果路径中没有文件名，则使用flow.id</span>
-        url_path <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
-        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">in</span> url_path:  <span style="color:#75715e"># 判断路径中是否包含文件扩展名</span>
-            raw_filename <span style="color:#f92672">=</span> url_path
-        <span style="color:#66d9ef">else</span>:
-            raw_filename <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;{flow.request.host}_{flow.id}.{ext}&#34;</span>
-
-        <span style="color:#75715e"># 对文件名进行清理，确保符合Windows的文件名要求</span>
-        safe_filename <span style="color:#f92672">=</span> sanitize_filename(raw_filename)
-
-        <span style="color:#75715e"># 确定完整的保存路径</span>
-        filepath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(save_dir, safe_filename)
-
-        <span style="color:#75715e"># 记录日志，打印保存的文件名和URL</span>
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(f<span style="color:#e6db74">&#34;Saving file: {filepath} from URL: {flow.request.url}&#34;</span>)
-
-        <span style="color:#75715e"># 保存文件内容</span>
-        <span style="color:#66d9ef">with</span> open(filepath, <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> f:
-            f<span style="color:#f92672">.</span>write(flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>content)
-
-        <span style="color:#75715e"># 打印成功保存的日志</span>
-        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(f<span style="color:#e6db74">&#34;Saved {filepath}&#34;</span>)
-</code></pre></div></details>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> mitmproxy <span style="color:#f92672">import</span> ctx, http
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义文件保存目录</span>
+</span></span><span style="display:flex;"><span>save_dir <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;saved_media&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 确保目录存在</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(save_dir):
+</span></span><span style="display:flex;"><span>    os<span style="color:#f92672">.</span>makedirs(save_dir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 定义一个正则表达式，匹配Windows非法的文件名字符</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sanitize_filename</span>(filename: str) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 替换非法字符为下划线</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;[&lt;&gt;:&#34;/</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">|?*]&#39;</span>, <span style="color:#e6db74">&#39;_&#39;</span>, filename)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">response</span>(flow: http<span style="color:#f92672">.</span>HTTPFlow):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 获取响应的Content-Type</span>
+</span></span><span style="display:flex;"><span>    content_type <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>headers<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 判断是否为图片或视频类型</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;image&#34;</span> <span style="color:#f92672">in</span> content_type:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 获取文件扩展名</span>
+</span></span><span style="display:flex;"><span>        ext <span style="color:#f92672">=</span> content_type<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 从请求路径中尝试提取文件名，如果路径中没有文件名，则使用flow.id</span>
+</span></span><span style="display:flex;"><span>        url_path <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;/&#34;</span>)[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">in</span> url_path:  <span style="color:#75715e"># 判断路径中是否包含文件扩展名</span>
+</span></span><span style="display:flex;"><span>            raw_filename <span style="color:#f92672">=</span> url_path
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            raw_filename <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>host<span style="color:#e6db74">}</span><span style="color:#e6db74">_</span><span style="color:#e6db74">{</span>flow<span style="color:#f92672">.</span>id<span style="color:#e6db74">}</span><span style="color:#e6db74">.</span><span style="color:#e6db74">{</span>ext<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 对文件名进行清理，确保符合Windows的文件名要求</span>
+</span></span><span style="display:flex;"><span>        safe_filename <span style="color:#f92672">=</span> sanitize_filename(raw_filename)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 确定完整的保存路径</span>
+</span></span><span style="display:flex;"><span>        filepath <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>join(save_dir, safe_filename)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 记录日志，打印保存的文件名和URL</span>
+</span></span><span style="display:flex;"><span>        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Saving file: </span><span style="color:#e6db74">{</span>filepath<span style="color:#e6db74">}</span><span style="color:#e6db74"> from URL: </span><span style="color:#e6db74">{</span>flow<span style="color:#f92672">.</span>request<span style="color:#f92672">.</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 保存文件内容</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">with</span> open(filepath, <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>            f<span style="color:#f92672">.</span>write(flow<span style="color:#f92672">.</span>response<span style="color:#f92672">.</span>content)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 打印成功保存的日志</span>
+</span></span><span style="display:flex;"><span>        ctx<span style="color:#f92672">.</span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Saved </span><span style="color:#e6db74">{</span>filepath<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div></details>
 <ol start="3">
 <li>运行 mitmproxy</li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 需要先 cd 到 save.py 所在的目录</span>
-<span style="color:#75715e"># 可以添加 --mode upstream:http://localhost:7890 来指定上游代理</span>
-mitmweb -s save.py
-</code></pre></div><ol start="4">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 需要先 cd 到 save.py 所在的目录</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可以添加 --mode upstream:http://localhost:7890 来指定上游代理</span>
+</span></span><span style="display:flex;"><span>mitmweb -s save.py
+</span></span></code></pre></div><ol start="4">
 <li>设置浏览器，指向 mitmproxy 代理（可能你需要 <a href="https://chromewebstore.google.com/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif">proxy switchyomega</a>）</li>
 <li>跳转到需要抓取的网页，打开翻页器</li>
 <li>滚动到底部，且所有图片加载完成后，需要抓取的图片应该都已经保存到本地了</li>
@@ -313,8 +301,6 @@ mitmweb -s save.py
   	<li><a href="/share/try-chatglm/">用 mitmproxy 让 ChatGLM 适配 OpenAI 接口</a></li>
   	
   	<li><a href="/share/openrouter-mitmproxy/">用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</a></li>
-  	
-  	<li><a href="/share/how-to-manual-squash/">如何手动 squash</a></li>
   	
   </ul>
 </section>
@@ -352,7 +338,8 @@ mitmweb -s save.py
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

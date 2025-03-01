@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>Python __hash__ 继承 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>Python __hash__ 继承 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="最近写作业的时候踩上了一个 Python 的坑： 如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要">
+	<meta name="description" content="最近写作业的时候踩上了一个 Python 的坑：
+如果父类实现了 __hash__ 方法，而子类重写了 __eq__ 方法，为了保证 hash 和 eq 的语义一致，子类不会隐式继承父类的 __hash__ 方法。如果需要子类的 __hash__ 方法调用父类的实现，则需要手动声明。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +20,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +57,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/python-hash-inherit/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/python-hash-inherit/" class="active langselect">简体中文</a></li>
             
           
       
@@ -114,11 +104,9 @@ if (!doNotTrack) {
 </ul>
 <p><a href="https://docs.python.org/3/reference/datamodel.html#object.__hash__">文档</a>原文：</p>
 <blockquote>
-<p>A class that overrides <code>__eq__()</code> and does not define <code>__hash__()</code> will have its <code>__hash__()</code> implicitly set to None.</p>
-</blockquote>
+<p>A class that overrides <code>__eq__()</code> and does not define <code>__hash__()</code> will have its <code>__hash__()</code> implicitly set to None.</p></blockquote>
 <blockquote>
-<p>If a class that overrides <code>__eq__()</code> needs to retain the implementation of <code>__hash__()</code> from a parent class, the interpreter must be told this explicitly by setting <code>__hash__ = &lt;ParentClass&gt;.__hash__</code>.</p>
-</blockquote>
+<p>If a class that overrides <code>__eq__()</code> needs to retain the implementation of <code>__hash__()</code> from a parent class, the interpreter must be told this explicitly by setting <code>__hash__ = &lt;ParentClass&gt;.__hash__</code>.</p></blockquote>
 <p>具体的<a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432">实现</a>（基于 CPython）</p>
 <ol>
 <li><code>inherit_slots</code> 函数负责继承 slots <a href="https://github.com/python/cpython/blob/master/Objects/typeobject.c#L5432">Line 5432</a></li>
@@ -137,53 +125,53 @@ if (!doNotTrack) {
 <tbody>
   <tr>
 <td width="50%">
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parent</span>:
-    <span style="color:#66d9ef">def</span> __hash__(self):
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Child</span>(Parent):
-    <span style="color:#66d9ef">def</span> __eq__(self, other):
-        <span style="color:#66d9ef">return</span> True
-
-    <span style="color:#75715e"># No __hash__ defined</span>
-
-
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    child <span style="color:#f92672">=</span> Child()
-
-    <span style="color:#75715e"># gives error</span>
-    <span style="color:#66d9ef">print</span>(child<span style="color:#f92672">.</span>__hash__())
-</code></pre></div></td>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __hash__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Child</span>(Parent):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __eq__(self, other):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># No __hash__ defined</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    child <span style="color:#f92672">=</span> Child()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># gives error</span>
+</span></span><span style="display:flex;"><span>    print(child<span style="color:#f92672">.</span>__hash__())
+</span></span></code></pre></div></td>
 <td>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parent</span>:
-    <span style="color:#66d9ef">def</span> __hash__(self):
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Child</span>(Parent):
-    <span style="color:#66d9ef">def</span> __eq__(self, other):
-        <span style="color:#66d9ef">return</span> True
-    
-    <span style="color:#75715e"># NOTE: Added hash</span>
-    __hash__ <span style="color:#f92672">=</span> Parent<span style="color:#f92672">.</span>__hash__
-
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    child <span style="color:#f92672">=</span> Child()
-
-    <span style="color:#75715e"># now it works</span>
-    <span style="color:#66d9ef">print</span>(child<span style="color:#f92672">.</span>__hash__())
-</code></pre></div></td>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __hash__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Child</span>(Parent):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __eq__(self, other):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># NOTE: Added hash</span>
+</span></span><span style="display:flex;"><span>    __hash__ <span style="color:#f92672">=</span> Parent<span style="color:#f92672">.</span>__hash__
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    child <span style="color:#f92672">=</span> Child()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># now it works</span>
+</span></span><span style="display:flex;"><span>    print(child<span style="color:#f92672">.</span>__hash__())
+</span></span></code></pre></div></td>
 </tr>
   <tr>
 <td>
-<pre><code>Traceback (most recent call last):
-  File &quot;scratch.py&quot;, line 17, in &lt;module&gt;
+<pre tabindex="0"><code>Traceback (most recent call last):
+  File &#34;scratch.py&#34;, line 17, in &lt;module&gt;
     print(child.__hash__())
-TypeError: 'NoneType' object is not callable
+TypeError: &#39;NoneType&#39; object is not callable
 </code></pre></td>
 <td>
-<pre><code>1
+<pre tabindex="0"><code>1
 </code></pre></td>
   </tr>
 </tbody>
@@ -215,8 +203,6 @@ TypeError: 'NoneType' object is not callable
   	<li><a href="/share/hugo-disqus/">Hugo 的 Disqus 整合</a></li>
   	
   	<li><a href="/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/">Python, Flask, Jinja, SQLite 里的坑</a></li>
-  	
-  	<li><a href="/share/mdbook-code-wrap/">mdBook 代码折行（wrap）</a></li>
   	
   </ul>
 </section>
@@ -254,7 +240,8 @@ TypeError: 'NoneType' object is not callable
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

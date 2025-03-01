@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>不要在 gcc 7 里隐式捕获 constexpr 数组 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>不要在 gcc 7 里隐式捕获 constexpr 数组 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="如果你还没有遇到过 compiler bug，说明你写的代码还不够多。 —— 一位本科同学 虽然经常能看到其他人遇到 compiler 导致的意外现象，自己遇到却还是第一次，因此还是">
+	<meta name="description" content="
+如果你还没有遇到过 compiler bug，说明你写的代码还不够多。 —— 一位本科同学
+虽然经常能看到其他人遇到 compiler 导致的意外现象，自己遇到却还是第一次，因此还是写篇文章小小记录下。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +21,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +58,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/gcc-constexpr-lambda-bug/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/gcc-constexpr-lambda-bug/" class="active langselect">简体中文</a></li>
             
           
       
@@ -103,71 +94,70 @@ if (!doNotTrack) {
 <hr class="sep" />
 </header>
 	<blockquote>
-<p>如果你还没有遇到过 compiler bug，说明你写的代码还不够多。 —— 一位本科同学</p>
-</blockquote>
+<p>如果你还没有遇到过 compiler bug，说明你写的代码还不够多。 —— 一位本科同学</p></blockquote>
 <p>虽然经常能看到其他人遇到 compiler 导致的意外现象，自己遇到却还是第一次，因此还是写篇文章小小记录下。</p>
 <p>因为一些原因，目前工作中使用的 gcc 版本是 7.4。接到一个业务需求，需要对某些特定的用户打开一个 feature flag，且需要在代码里硬编码。代码很快就写完了，自测的时候却发现不太对劲。相关代码简化脱敏后如下所示。逻辑很简单，就是把可以进入灰度的用户 id 放到了一个 allowlist 里，然后检查当前的请求涉及到的所有用户 id 是否都在这个 allowlist 中。奇怪之处在于，在 gcc 7.4 下，如果用了 <code>std::any_of</code> 来找，即便用户不在灰度列表中，列表成员检查也会返回 true，导致意外的灰度进入；简单的 for 循环则没有这个问题。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdint&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
-{
-    <span style="color:#75715e">// we want to check if all users is in allowlist (something like a feature flag)
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> allowlist[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>};
-    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">uint64_t</span><span style="color:#f92672">&gt;</span> users;
-    users.push_back(<span style="color:#ae81ff">4</span>);
-
-    <span style="color:#66d9ef">bool</span> basic_found <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), <span style="color:#ae81ff">4</span>) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist);
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: basic_found=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> basic_found <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    <span style="color:#75715e">// should be false, as expected
-</span><span style="color:#75715e"></span>
-    <span style="color:#66d9ef">bool</span> some_found_anyof <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>any_of(users.begin(), users.end(), [<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint64_t</span> uid) {
-    <span style="color:#66d9ef">bool</span> found <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), uid) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist);
-     std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: uid=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> uid <span style="color:#f92672">&lt;&lt;</span>  <span style="color:#e6db74">&#34;, found=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> found <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-     <span style="color:#66d9ef">return</span> found;
-    });
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;some_found_anyof=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> some_found_anyof <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    <span style="color:#75715e">// should be false; however in gcc 7.4 this outputs true
-</span><span style="color:#75715e"></span>
-    <span style="color:#66d9ef">bool</span> some_found_manual <span style="color:#f92672">=</span> false;
-    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> u: users) {
-        <span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), u) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist)) {
-            some_found_manual <span style="color:#f92672">=</span> true;
-            <span style="color:#66d9ef">break</span>;
-        }
-    }
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;some_found_manual=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> some_found_manual <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    <span style="color:#75715e">// should be false, as expected
-</span><span style="color:#75715e"></span>}
-</code></pre></div><p>因为需求要的比较着急，就先用 for 循环替换了。后面有空的时候尝试继续简化代码，可以得到如下的最小复现 POC：定义一个 constexpr 数组，创建一个 lambda 表达式，用<code>[&amp;]</code>隐式捕获这个数组，最后在闭包中多次获取其地址；会惊喜的发现，每次获取的地址是不一样的！（可以在 Compiler Explorer 自己试试：<a href="https://godbolt.org/z/qdTfP81xn">https://godbolt.org/z/qdTfP81xn</a>）</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
-{
-    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> arr[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>};
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-
-    <span style="color:#66d9ef">auto</span> a <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>]() {
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-    };
-
-    a();
-}
-</code></pre></div><p>输出如下：</p>
-<pre><code>outside: addr=0x7ffc4b13dc24
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdint&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// we want to check if all users is in allowlist (something like a feature flag)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">uint64_t</span> allowlist[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>};
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">uint64_t</span><span style="color:#f92672">&gt;</span> users;
+</span></span><span style="display:flex;"><span>    users.push_back(<span style="color:#ae81ff">4</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> basic_found <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), <span style="color:#ae81ff">4</span>) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist);
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: basic_found=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> basic_found <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// should be false, as expected
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> some_found_anyof <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>any_of(users.begin(), users.end(), [<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint64_t</span> uid) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> found <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), uid) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist);
+</span></span><span style="display:flex;"><span>     std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: uid=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> uid <span style="color:#f92672">&lt;&lt;</span>  <span style="color:#e6db74">&#34;, found=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> found <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> found;
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;some_found_anyof=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> some_found_anyof <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// should be false; however in gcc 7.4 this outputs true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> some_found_manual <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span><span style="color:#f92672">&amp;</span> u: users) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>find(std<span style="color:#f92672">::</span>begin(allowlist), std<span style="color:#f92672">::</span>end(allowlist), u) <span style="color:#f92672">!=</span> std<span style="color:#f92672">::</span>end(allowlist)) {
+</span></span><span style="display:flex;"><span>            some_found_manual <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;some_found_manual=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> some_found_manual <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// should be false, as expected
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>因为需求要的比较着急，就先用 for 循环替换了。后面有空的时候尝试继续简化代码，可以得到如下的最小复现 POC：定义一个 constexpr 数组，创建一个 lambda 表达式，用<code>[&amp;]</code>隐式捕获这个数组，最后在闭包中多次获取其地址；会惊喜的发现，每次获取的地址是不一样的！（可以在 Compiler Explorer 自己试试：<a href="https://godbolt.org/z/qdTfP81xn">https://godbolt.org/z/qdTfP81xn</a>）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">int</span> arr[] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>};
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;outside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> a <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>]() {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;inside: addr=&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span><span style="color:#f92672">*&gt;</span>(arr) <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    a();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出如下：</p>
+<pre tabindex="0"><code>outside: addr=0x7ffc4b13dc24
 outside: addr=0x7ffc4b13dc24
 outside: addr=0x7ffc4b13dc24
 inside: addr=0x7ffc4b13dbec
 inside: addr=0x7ffc4b13dbf8
 inside: addr=0x7ffc4b13dc04
 </code></pre><p>从生成的汇编中可以发现，在闭包里每次访问 arr 时候，其实都在栈上临时创建了一个副本，因此每次获取到的 arr 地址都是不一致的。</p>
-<pre><code>        mov     DWORD PTR [rbp-36], 1
+<pre tabindex="0"><code>        mov     DWORD PTR [rbp-36], 1
         mov     DWORD PTR [rbp-32], 2
         mov     DWORD PTR [rbp-28], 3
         lea     rax, [rbp-36]
@@ -199,19 +189,6 @@ inside: addr=0x7ffc4b13dc04
 
 </nav>
 
-
-<section id="related">
-  <h4>另请参阅</h4>
-  <ul>
-    
-  	<li><a href="/share/pages-repo/">工具小站</a></li>
-  	
-  	<li><a href="/share/manual-scraping-with-webrecorder-mitmproxy/">基于 WebRecorder 和 MitmProxy 的图片手动抓取探索</a></li>
-  	
-  	<li><a href="/share/how-to-manual-squash/">如何手动 squash</a></li>
-  	
-  </ul>
-</section>
 
 
 
@@ -246,7 +223,8 @@ inside: addr=0x7ffc4b13dc04
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>评论系统从 Disqus 迁移到 Giscus - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>评论系统从 Disqus 迁移到 Giscus - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="之前一直用的是 disqus，但是一来国内访问有时会有问题，二来新用户需要重新注册。考虑到大部分阅读本站的读者应该也是 Github 用户，迁移到 Giscu">
+	<meta name="description" content="之前一直用的是 disqus，但是一来国内访问有时会有问题，二来新用户需要重新注册。考虑到大部分阅读本站的读者应该也是 Github 用户，迁移到 Giscus（一个基于 Github Dicsussion）的评论系统看起来更合适一些。切换评论系统本身并不难，参考这篇教程修改 hugo 的模板和配置即可。迁移数据也不算麻烦，毕竟没什么人评论，所以其实只有两条评论，手动迁移也就花不了多少时间（虽然也尝试了自动的方案但似乎有些问题，迁移过去的评论不显示&hellip;）。稍微有些烦人的反倒是 Giscus 明亮/暗黑模式的切换问题。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -65,7 +54,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/en/share/migrate-to-giscus/" class="langselect">English</a></li>
+                <li><a href="https://nekonull.me/en/share/migrate-to-giscus/" class="langselect">English</a></li>
             
           
       
@@ -79,7 +68,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/migrate-to-giscus/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/migrate-to-giscus/" class="active langselect">简体中文</a></li>
             
           
       
@@ -128,19 +117,6 @@ if (!doNotTrack) {
 </nav>
 
 
-<section id="related">
-  <h4>另请参阅</h4>
-  <ul>
-    
-  	<li><a href="/share/random-20230910/">随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</a></li>
-  	
-  	<li><a href="/posts/back-again-2023/">再次复活（2023）&amp; 换用 Github Action 部署</a></li>
-  	
-  	<li><a href="/share/lofi-bat/">播放 Lofi Girl 的小脚本</a></li>
-  	
-  </ul>
-</section>
-
 
 
 
@@ -174,7 +150,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

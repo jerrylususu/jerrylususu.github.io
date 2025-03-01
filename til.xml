@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TIL - Nekonull&#39;s Garden</title>
+    <link>https://nekonull.me/</link>
+    <description>Recent TIL (Today I Learned) content on Nekonull&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>CC-BY-SA-4.0</copyright>
+    <lastBuildDate>Tue, 04 Feb 2025 21:07:26 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>要求 LLM 在完成任务时留下笔记</title>
+      <link>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</link>
+      <pubDate>Thu, 28 Nov 2024 13:39:17 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</guid>
+      <description>&lt;p&gt;ref: &lt;a href=&#34;https://addyosmani.com/blog/automated-decision-logs/&#34;&gt;https://addyosmani.com/blog/automated-decision-logs/&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;在项目目录下放一个 &lt;code&gt;fyi.md&lt;/code&gt; 或者 &lt;code&gt;notes.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;p&gt;这看起来是一个显而易见的有效做法，但是之前却没有人提出过！下次使用 cursor 或者其他 LLM 加持的编辑器时我肯定会试试这样做。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>curl 有 LTS 了</title>
+      <link>https://nekonull.me/til/curl-has-5-year-lts/</link>
+      <pubDate>Sun, 17 Nov 2024 13:27:04 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/curl-has-5-year-lts/</guid>
+      <description>&lt;p&gt;curl 有 5 年 LTS (Long Time Support) 版本了，不过只有签了商业协议的用户才能使用&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://rock-solid.curl.dev/&#34;&gt;https://rock-solid.curl.dev/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&#34;&gt;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Excel 的自动填充实际上是程序生成</title>
+      <link>https://nekonull.me/til/excel-auto-complete-as-program-systhenis/</link>
+      <pubDate>Sun, 17 Nov 2024 13:36:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/til/excel-auto-complete-as-program-systhenis/</guid>
+      <description>&lt;p&gt;原来 Excel 里自动填充是有论文的，底层是实现了程序生成；另外据说 Google Sheets 的自动填充之所以没有微软的好，是因为微软申请了专利，Google 绕不过去。&lt;/p&gt;
+&lt;p&gt;Automating String Processing in Spreadsheets Using Input-Output Examples
+&lt;a href=&#34;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/popl11-synthesis.pdf&#34;&gt;https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/popl11-synthesis.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via
+&lt;a href=&#34;https://danluu.com/ballmer/&#34;&gt;https://danluu.com/ballmer/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>Hugo 的 Disqus 整合 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>Hugo 的 Disqus 整合 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。 在 Disqus 官网注册自己的账户 在 Disqus 官网登陆后">
+	<meta name="description" content="Hugo 是内置了 Disqus 支持的，理论上只需要在站点的 config.toml 的顶层设定 disqusShortname 属性即可，不过实际用起来稍微有些坑。具体步骤如下。
+
+在 Disqus 官网注册自己的账户
+在 Disqus 官网登陆后，选择右上角 Settings - 左侧 Moderation，然后在这里新建一个站点，站点名字 （{site_name}.disqus.com）就是 disqusShortname 应该用的值
+站点创建完成后，Billing 页选择 Free Plan
+在 Hugo 的 config.toml 文件中设定 disqusShortname
+
+其他小问题：">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +26,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +63,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/hugo-disqus/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/hugo-disqus/" class="active langselect">简体中文</a></li>
             
           
       
@@ -77,7 +73,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/en/share/hugo-disqus/" class="langselect">English</a></li>
+                <li><a href="https://nekonull.me/en/share/hugo-disqus/" class="langselect">English</a></li>
             
           
       
@@ -145,10 +141,6 @@ if (!doNotTrack) {
     
   	<li><a href="/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/">Python, Flask, Jinja, SQLite 里的坑</a></li>
   	
-  	<li><a href="/posts/back-again/">再次复活</a></li>
-  	
-  	<li><a href="/about/">About</a></li>
-  	
   </ul>
 </section>
 
@@ -185,7 +177,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

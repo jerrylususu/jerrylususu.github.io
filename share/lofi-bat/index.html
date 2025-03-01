@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>播放 Lofi Girl 的小脚本 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>播放 Lofi Girl 的小脚本 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV">
+	<meta name="description" content="自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 yt-dlp 和 mpv。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/lofi-bat/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/lofi-bat/" class="active langselect">简体中文</a></li>
             
           
       
@@ -100,11 +89,11 @@ if (!doNotTrack) {
 <hr class="sep" />
 </header>
 	<p>自测 Lofi 对集中注意力有些帮助，然而如果长时间用 Chrome / Firefox 来播放似乎会导致奇怪的内存溢出问题，原因可能和 Youtube 的播放器默认会缓存已播放的片段有关。换用 MPV 似乎可以解决此问题。于是顺手写了个小脚本，结合 yt-dlp 和 mpv，一键播放 Lofi Girls。使用前请先自行下载 <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> 和 <a href="https://sourceforge.net/projects/mpv-player-windows/files/">mpv</a>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bat" data-lang="bat">:<span style="color:#75715e">:set HTTP_PROXY=http://localhost:[some_port]</span>
-<span style="color:#66d9ef">cd</span> C:\Apps\mpv-x86_64-20230723-git-ca4192e
-mpv --no-video  <span style="color:#e6db74">&#34;https://www.youtube.com/watch?v=jfKfPfyJRdk&#34;</span> --script-opts=ytdl_hook-ytdl_path=yt-dlp.exe
-</code></pre></div><p>另外附上一些常见快捷键（<a href="https://defkey.com/mpv-media-player-shortcuts">完整见此</a>）</p>
-<pre><code>9：减小音量
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bat" data-lang="bat"><span style="display:flex;"><span>:<span style="color:#75715e">:set HTTP_PROXY=http://localhost:[some_port]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">cd</span> C:\Apps\mpv-x86_64-20230723-git-ca4192e
+</span></span><span style="display:flex;"><span>mpv --no-video  <span style="color:#e6db74">&#34;https://www.youtube.com/watch?v=jfKfPfyJRdk&#34;</span> --script-opts=ytdl_hook-ytdl_path=yt-dlp.exe
+</span></span></code></pre></div><p>另外附上一些常见快捷键（<a href="https://defkey.com/mpv-media-player-shortcuts">完整见此</a>）</p>
+<pre tabindex="0"><code>9：减小音量
 0：增大音量
 空格：暂停播放（但是依然会在后台继续缓冲）
 M：静音
@@ -121,19 +110,6 @@ M：静音
 
 </nav>
 
-
-<section id="related">
-  <h4>另请参阅</h4>
-  <ul>
-    
-  	<li><a href="/share/console-save/">在 devtool 控制台里爬网站</a></li>
-  	
-  	<li><a href="/posts/vue-app-pwa/">将已有的 Vue App 变为 PWA</a></li>
-  	
-  	<li><a href="/posts/py-itertools-permutation-algo/">Python `itertools.permutations` 使用的排列算法</a></li>
-  	
-  </ul>
-</section>
 
 
 
@@ -168,7 +144,8 @@ M：静音
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

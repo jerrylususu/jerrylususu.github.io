@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>再次复活（2023）&amp; 换用 Github Action 部署 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>再次复活（2023）&amp; 换用 Github Action 部署 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和上次一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入">
+	<meta name="description" content="又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和上次一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/posts/back-again-2023/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/posts/back-again-2023/" class="active langselect">简体中文</a></li>
             
           
       
@@ -102,7 +91,7 @@ if (!doNotTrack) {
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和<a href="posts/back-again/">上次</a>一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。</p>
+	<p>又是很久没更新博客了，看了看记录上次更新已经差不多是一年前了。和<a href="/posts/back-again/">上次</a>一样，这一年中依然发生了很多：完成了硕士学业，解封前跨过重重关卡回国，入职，打工一年&hellip; 真正开始工作的感觉和还是学生时的预期差不多，如果非要比较的话虽然没有大学这么轻松，但是比高中还是好多了的，况且还有钱拿？不过这是后话了，之后再慢慢展开吧，可能以后会有一篇更长的文章来总结这一年（又在挖大概不会填的坑了）。</p>
 <p>本次主要的变更是把原来的手动发布流程转换成了 Github Actions，之后直接在 master 分支下提交文件，就会自动触发部署流程，大大减少了阻碍。（对比之前的流程：写文章 - 本地构建 - 复制到部署文件夹 - Git 提交）实际实现起来也很简单，将所有的构建产物（实际发布的静态文件扔到另一个分支 <code>publish</code>），修改 Github Pages 的来源分支，然后写点 <a href="https://github.com/jerrylususu/jerrylususu.github.io/blob/master/.github/workflows/publish.yml">Github Action</a> 配置就好了。希望通过让发布的流程更简单，未来可能也会逐渐多写点东西吧。（美好的愿望&hellip;）</p>
 <p>顺带一提，本次迁移的时候其实尝试过用最新的 Hugo 版本来部署（<code>v0.117.0</code>），但是构建过程中出现了很多模板相关的错误，估计是目前用的 Manic 主题使用到的某些 Hugo 特性已经被 deprecated 了。看了看原始的 Manic repo，最后更新也已经停留在好几年前了。之后要是有空的话可能会试着解决（或者再换一个主题&hellip;），不过这次就先暂且继续用旧版本 Hugo 来构建吧。</p>
 
@@ -165,7 +154,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

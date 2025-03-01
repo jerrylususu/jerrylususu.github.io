@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口 - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>用 mitmproxy 让 ChatGLM 适配 OpenAI 接口 - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="最近看到了几篇关于智谱 AI 的推送文章，才想起来他们的大模型（ChatGLM 系）已经上线好久了。回想 6B 模型刚公布的那会还在 AutoDL 上自己跑过，不过因为">
+	<meta name="description" content="最近看到了几篇关于智谱 AI 的推送文章，才想起来他们的大模型（ChatGLM 系）已经上线好久了。回想 6B 模型刚公布的那会还在 AutoDL 上自己跑过，不过因为模型本身太小，所以其实能做的并不算多。注册了个开发者账户看了看文档，目前可以广泛使用的是 ChatGLM-Turbo，上下文窗口 32k token，定价 0.005 元/千token，还是很便宜的。更不用说因为 GLM 系模型以中文语料为主，所以同等长度的中文文本，用 GLM 的 token 消耗比用 GPT 系列的 token 消耗会小很多（测试下来大概在 4x 左右）。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +19,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +56,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/try-chatglm/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/try-chatglm/" class="active langselect">简体中文</a></li>
             
           
       
@@ -117,11 +106,11 @@ if (!doNotTrack) {
 <li>开启增量返回：默认似乎是全量返回，这里和 OpenAI 对齐，也改成增量</li>
 </ol>
 <p>比较烦人的是改响应体，如下所示分别是 GLM 系的返回和 GPT 系的返回。可以发现 GLM 系列比较简单，只有事件类型、流 ID 和增量数据；GPT 系列就更复杂一些，返回的是个 JSON，里面还有嵌套结构。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># GLM</span>
-<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;event:add</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">id:8065135252561182716</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">data:</span><span style="color:#ae81ff">\xef\xbc\x8c\n\n</span><span style="color:#e6db74">&#39;</span>
-<span style="color:#75715e"># GPT</span>
-<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;data: {&#34;id&#34;: &#34;chatcmpl-8EymH9k9DS9iQQvIH3BguHaZqmib9&#34;, &#34;object&#34;: &#34;chat.completion.chunk&#34;, &#34;created&#34;: 1698580913, &#34;model&#34;: &#34;gpt-3.5-turbo-0613&#34;, &#34;choices&#34;: [{&#34;index&#34;: 0, &#34;delta&#34;: {&#34;content&#34;: &#34;?&#34;}, &#34;finish_reason&#34;: null}]}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#39;</span>
-</code></pre></div><p>这里的改造思路其实很明确，先解析 GLM 的响应体，再据此拼装成 GPT 的相应格式，然后返回给应用就可以了，然而具体做起来还是有不少坑。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># GLM</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;event:add</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">id:8065135252561182716</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">data:</span><span style="color:#ae81ff">\xef\xbc\x8c\n\n</span><span style="color:#e6db74">&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># GPT</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;data: {&#34;id&#34;: &#34;chatcmpl-8EymH9k9DS9iQQvIH3BguHaZqmib9&#34;, &#34;object&#34;: &#34;chat.completion.chunk&#34;, &#34;created&#34;: 1698580913, &#34;model&#34;: &#34;gpt-3.5-turbo-0613&#34;, &#34;choices&#34;: [{&#34;index&#34;: 0, &#34;delta&#34;: {&#34;content&#34;: &#34;?&#34;}, &#34;finish_reason&#34;: null}]}</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#39;</span>
+</span></span></code></pre></div><p>这里的改造思路其实很明确，先解析 GLM 的响应体，再据此拼装成 GPT 的相应格式，然后返回给应用就可以了，然而具体做起来还是有不少坑。</p>
 <ul>
 <li>一开始想的是直接 decode 之后分行解析，后来发现不太确定是信道问题还是服务器问题，有的时候接收到的 SSE 事件只有一半（导致 utf-8 decode 失败），或者是两个事件被合并成了一个事件（一个 SSE data 里面有两个 add 事件）。用国内的术语来说这个算粘包？为了解决这个问题，先把行解析改成了正则解析，然后用补充了一个 buffer，如果发现这次的事件不完整就先扔 buffer 里，等下一个事件凑齐了再一起解析。</li>
 <li>改完发现可以正常显示回复了，但是一直不能结束。还需要参考 OpenAI 的响应，额外补充 <code>DONE</code> 事件。</li>
@@ -148,10 +137,6 @@ if (!doNotTrack) {
   <ul>
     
   	<li><a href="/share/openrouter-mitmproxy/">用 mitmproxy 重定向 OpenAI 请求到 OpenRouter</a></li>
-  	
-  	<li><a href="/archive/2310-jp-travel/">日本游记</a></li>
-  	
-  	<li><a href="/share/gym-wait-sim/">健身房等待时间模拟</a></li>
   	
   </ul>
 </section>
@@ -189,7 +174,8 @@ if (!doNotTrack) {
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>

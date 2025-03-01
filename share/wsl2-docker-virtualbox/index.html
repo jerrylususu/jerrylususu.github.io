@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh">
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="generator" content="Hugo 0.82.0" />
-		<title>WSL2, Docker, Virtualbox - Nekonull&#39;s Garden</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>WSL2, Docker, Virtualbox - Nekonull&#39;s Garden</title>
 
-		<meta name="description" content="2021/4/9 更新: VMWare Player 16&#43; 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。 Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是">
+	<meta name="description" content="
+2021/4/9 更新:
+VMWare Player 16&#43; 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。
+Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转而使用 Windows 内置的 Hyper-V 作为底层 VM。但是 Hyper-V 平台一旦启用，就会导致 Virtualbox / VMWare 等其他虚拟机工具不可用，这一问题直到 VirtualBox 6 之后才算解决，此时 VirtualBox / VMWare 都可以调用 Windows 内置的 Hypervisor API 作为 VM 的执行引擎。">
 
 
-		
 	
-		
+	
+	
 
 
 
@@ -19,31 +22,20 @@
 <link rel="stylesheet" href="/css/ui.css">
 
 	
-		
+	
 
-		<script defer src="/js/dark-mode.js"></script>
-		<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
-		<link  rel="stylesheet" href="/css/dropdown.css">
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
-		crossorigin="anonymous"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
 
-		<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
-		
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
 				
-		
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-R01JLDY2KE', { 'anonymize_ip': false });
-}
-</script>
-
-	</head>
+	
+</head>
 
 <body>
 <header class="container no-print">
@@ -67,7 +59,7 @@ if (!doNotTrack) {
           
             
             
-                <li><a href="/share/wsl2-docker-virtualbox/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/share/wsl2-docker-virtualbox/" class="active langselect">简体中文</a></li>
             
           
       
@@ -108,8 +100,7 @@ if (!doNotTrack) {
 </header>
 	<blockquote>
 <p>2021/4/9 更新:
-VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。</p>
-</blockquote>
+VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。</p></blockquote>
 <p>Docker 在 Windows 上运行，实际上都是靠一个 Linux 虚拟机。早期 Docker 官方出了一个叫做 Docker Toolbox 的工具，其实就是 VirtualBox 加上一个精简过的只能运行 Docker 的 VM。后来 Docker 放弃了 Virtualbox 路线，转而使用 Windows 内置的 Hyper-V 作为底层 VM。但是 Hyper-V 平台一旦启用，就会导致 Virtualbox / VMWare 等其他虚拟机工具不可用，这一问题直到 VirtualBox 6 之后才算解决，此时 VirtualBox / VMWare 都可以调用 Windows 内置的 Hypervisor API 作为 VM 的执行引擎。</p>
 <p>所以来到 2020 年，在 Windows 10 20H2 上同时运行 WSL 2, Docker 和 VirtualBox 已经几乎是 painless 的了，只需要记住</p>
 <ul>
@@ -145,10 +136,6 @@ VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hype
   <ul>
     
   	<li><a href="/posts/install-de-in-wsl/">给 WSL 安装桌面环境</a></li>
-  	
-  	<li><a href="/posts/utils-ahk/">Utils.ahk</a></li>
-  	
-  	<li><a href="/posts/migrate-note/">博客迁移记录</a></li>
   	
   </ul>
 </section>
@@ -186,7 +173,8 @@ VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hype
 
 
 
-<a href="https://nekonull.me/index.xml" target="_blank"><img class="icon-social" src="/img/feed.svg" alt="Feed"></a>
+
+
 
 
 				<p>
