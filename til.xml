@@ -7,7 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 02 Mar 2025 09:33:03 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Mar 2025 13:46:14 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Unicode 变体选择器隐藏信息</title>
+      <link>https://nekonull.me/til/hide-info-unicode-var-selector/</link>
+      <pubDate>Sun, 02 Mar 2025 13:46:14 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/hide-info-unicode-var-selector/</guid>
+      <description>&lt;p&gt;用 variation selector (VS 变体选择器） 把二进制数据藏在 unicode 字符串里；VS 有 256 个（VS1~VS256），刚好一个 byte 一个，二进制数据甚至不需要特殊处理（例如 base64）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一般应用（如浏览器）不会渲染出来&lt;/li&gt;
+&lt;li&gt;LLM 可以阅读（很适合做 prompt injecting）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&#34;&gt;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>LLMSerp - 把大语言模型当作搜索引擎</title>
       <link>https://nekonull.me/til/llmserp-llm-as-search-engine-page/</link>

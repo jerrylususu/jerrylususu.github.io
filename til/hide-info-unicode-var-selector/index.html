@@ -4,9 +4,14 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>LLMSerp - 把大语言模型当作搜索引擎 - Nekonull&#39;s Garden</title>
+	<title>用 Unicode 变体选择器隐藏信息 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="LLM 内部已经存储了很多事实性信息。如果通过一些 prompt，让 LLM 输出 [{title, abstract, url}]，就能实现一个搜索引擎。通过把这个&quot;假&quot;搜索引擎和真搜索引擎（例如 Google）的结果混合，Jina.AI 发现可以解决 RAG 中“什么时候需要调用外部搜索”的问题（可以阅读他们的博客文章了解更多信息）。但即使没有这个作用，单纯把 LLM 当作搜索引擎用也是一个很神奇的想法。">
+	<meta name="description" content="用 variation selector (VS 变体选择器） 把二进制数据藏在 unicode 字符串里；VS 有 256 个（VS1~VS256），刚好一个 byte 一个，二进制数据甚至不需要特殊处理（例如 base64）
+
+一般应用（如浏览器）不会渲染出来
+LLM 可以阅读（很适合做 prompt injecting）
+
+src: https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/">
 
 
 	
@@ -56,7 +61,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/llmserp-llm-as-search-engine-page/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/hide-info-unicode-var-selector/" class="active langselect">简体中文</a></li>
             
           
       
@@ -77,10 +82,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>LLMSerp - 把大语言模型当作搜索引擎</h1>
+	<h1>用 Unicode 变体选择器隐藏信息</h1>
 	<h5>
 		
-		<time datetime="2025-03-02 09:33:03.045 &#43;0000 UTC">2025/03/02</time>
+		<time datetime="2025-03-02 13:46:14.075 &#43;0000 UTC">2025/03/02</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -88,19 +93,19 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>LLM 内部已经存储了很多事实性信息。如果通过一些 prompt，让 LLM 输出 [{title, abstract, url}]，就能实现一个搜索引擎。通过把这个&quot;假&quot;搜索引擎和真搜索引擎（例如 Google）的结果混合，Jina.AI 发现可以解决 RAG 中“什么时候需要调用外部搜索”的问题（可以阅读他们的博客文章了解更多信息）。但即使没有这个作用，单纯把 LLM 当作搜索引擎用也是一个很神奇的想法。</p>
-<p>demo: <a href="https://jina.ai/llm-serp-demo/">https://jina.ai/llm-serp-demo/</a></p>
-<p>blog: <a href="https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models">https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models</a></p>
+	<p>用 variation selector (VS 变体选择器） 把二进制数据藏在 unicode 字符串里；VS 有 256 个（VS1~VS256），刚好一个 byte 一个，二进制数据甚至不需要特殊处理（例如 base64）</p>
+<ul>
+<li>一般应用（如浏览器）不会渲染出来</li>
+<li>LLM 可以阅读（很适合做 prompt injecting）</li>
+</ul>
+<p>src: <a href="https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/">https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/debugpy-vscode/">
-		<img class="icon-text" src="/img/prev.svg"/>debugpy - VSCode 无配置文件调试 Python</a>
+	<a class="prev-post" href="https://nekonull.me/til/llmserp-llm-as-search-engine-page/">
+		<img class="icon-text" src="/img/prev.svg"/>LLMSerp - 把大语言模型当作搜索引擎</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/hide-info-unicode-var-selector/">用 Unicode 变体选择器隐藏信息<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
