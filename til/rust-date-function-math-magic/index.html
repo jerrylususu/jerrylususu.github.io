@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>Rust 的日期库的奇妙实现 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="
+问题：实现一个函数，输入 (year, day-of-year) ，输出 (year, month, day)
+基本做法：硬编码一个月份-日期数组，简单写一个循环
+Rust 的新做法：利用一些神奇的数学关系（仿射函数），可以在无循环的情况下实现判断，核心是这两个公式：
+
+let month = (ordinal &#43; 30) * 10 / 306 &#43; 2;
+let days_in_preceding_months = (month &#43; 3) * 306 / 10 - 122;
+最终优化后的代码如下：">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono|Lato|Raleway">
+	
+				
+	
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/til/rust-date-function-math-magic/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Rust 的日期库的奇妙实现</h1>
+	<h5>
+		
+		<time datetime="2025-03-02 13:51:04.427 &#43;0000 UTC">2025/03/02</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<ul>
+<li>问题：实现一个函数，输入 (year, day-of-year) ，输出 (year, month, day)</li>
+<li>基本做法：硬编码一个月份-日期数组，简单写一个循环</li>
+<li>Rust 的新做法：利用一些神奇的数学关系（仿射函数），可以在无循环的情况下实现判断，核心是这两个公式：</li>
+</ul>
+<pre tabindex="0"><code>let month = (ordinal + 30) * 10 / 306 + 2;
+let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
+</code></pre><p>最终优化后的代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">ordinal_date_to_calendar_date</span>(year: <span style="color:#66d9ef">i32</span>, ordinal: <span style="color:#66d9ef">u16</span>) -&gt; (<span style="color:#66d9ef">i32</span>, <span style="color:#66d9ef">u8</span>, <span style="color:#66d9ef">u8</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> ordinal <span style="color:#f92672">=</span> ordinal <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">u32</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> jan_feb_len <span style="color:#f92672">=</span> <span style="color:#ae81ff">59</span> <span style="color:#f92672">+</span> is_leap_year(year) <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">u32</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> (month_adj, ordinal_adj) <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> ordinal <span style="color:#f92672">&lt;=</span> jan_feb_len {
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        (<span style="color:#ae81ff">2</span>, jan_feb_len)
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> ordinal <span style="color:#f92672">=</span> ordinal <span style="color:#f92672">-</span> ordinal_adj;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> month <span style="color:#f92672">=</span> (ordinal <span style="color:#f92672">*</span> <span style="color:#ae81ff">268</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">8031</span>) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">13</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> days_in_preceding_months <span style="color:#f92672">=</span> (month <span style="color:#f92672">*</span> <span style="color:#ae81ff">3917</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">3866</span>) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">7</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> day <span style="color:#f92672">=</span> ordinal <span style="color:#f92672">-</span> days_in_preceding_months;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> month <span style="color:#f92672">=</span> month <span style="color:#f92672">+</span> month_adj;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    (year, month <span style="color:#66d9ef">as</span> _, day <span style="color:#66d9ef">as</span> _)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>src: <a href="https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/">https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/</a></p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/hide-info-unicode-var-selector/">
+		<img class="icon-text" src="/img/prev.svg"/>用 Unicode 变体选择器隐藏信息</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
