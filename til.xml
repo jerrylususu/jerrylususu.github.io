@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 04 Feb 2025 21:07:26 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Mar 2025 09:01:58 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>debugpy - VSCode 无配置文件调试 Python</title>
+      <link>https://nekonull.me/til/debugpy-vscode/</link>
+      <pubDate>Sun, 02 Mar 2025 09:01:58 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/debugpy-vscode/</guid>
+      <description>&lt;p&gt;VSCode 里用 debugpy 可以直接启动 debug session，无需配置文件（launch.json）。基于 &lt;a href=&#34;https://microsoft.github.io/debug-adapter-protocol/&#34;&gt;Debug Adapter Protocol&lt;/a&gt;，和 Language Server Protocl 类似的调试协议。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&#34;&gt;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://www.bitecode.dev/p/whats-up-python-better-packaging&#34;&gt;https://www.bitecode.dev/p/whats-up-python-better-packaging&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>要求 LLM 在完成任务时留下笔记</title>
       <link>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</link>
