@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 02 Mar 2025 09:01:58 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Mar 2025 09:31:58 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LLMSerp - 把大语言模型当作搜索引擎</title>
+      <link>https://nekonull.me/til/llmserp-llm-as-search-engine-page/</link>
+      <pubDate>Sun, 02 Mar 2025 09:31:58 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/llmserp-llm-as-search-engine-page/</guid>
+      <description>&lt;p&gt;LLM 内部已经存储了很多事实性信息。如果通过一些 prompt，让 LLM 输出 [{title, abstract, url}]，就能实现一个搜索引擎。通过把这个&amp;quot;假&amp;quot;搜索引擎和真搜索引擎（例如 Google）的结果混合，Jina.AI 发现可以解决 RAG 中“什么时候需要调用外部搜索”的问题（可以阅读他们的博客文章了解更多信息）。但即使没有这个作用，单纯把 LLM 当作搜索引擎用也是一个很神奇的想法。&lt;/p&gt;
+&lt;p&gt;demo：https://jina.ai/llm-serp-demo/&lt;/p&gt;
+&lt;p&gt;blog: &lt;a href=&#34;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&#34;&gt;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>debugpy - VSCode 无配置文件调试 Python</title>
       <link>https://nekonull.me/til/debugpy-vscode/</link>
