@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-03-02T13:51:04+00:00</lastmod>
+    <lastmod>2025-03-03T23:23:31+08:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -13,6 +13,38 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://nekonull.me/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/tags/</loc>
+    <lastmod>2025-03-03T23:23:31+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://nekonull.me/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://nekonull.me/tags/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/posts/the-drive-to-develop/</loc>
+    <lastmod>2025-03-03T23:23:31+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/tags/%E6%9D%82%E7%89%A9/</loc>
+    <lastmod>2025-03-03T23:23:31+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/posts/</loc>
+    <lastmod>2025-03-03T23:23:31+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://nekonull.me/en/posts/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://nekonull.me/posts/"
                 />
   </url><url>
     <loc>https://nekonull.me/til/rust-date-function-math-magic/</loc>
@@ -29,19 +61,6 @@
   </url><url>
     <loc>https://nekonull.me/til/debugpy-vscode/</loc>
     <lastmod>2025-03-02T09:01:58+00:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/</loc>
-    <lastmod>2025-02-04T21:07:26+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://nekonull.me/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://nekonull.me/tags/"
-                />
   </url><url>
     <loc>https://nekonull.me/share/</loc>
     <lastmod>2025-02-04T21:07:26+08:00</lastmod>
@@ -70,19 +89,6 @@
   </url><url>
     <loc>https://nekonull.me/posts/end-of-2024/</loc>
     <lastmod>2025-01-01T15:57:31+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/posts/</loc>
-    <lastmod>2025-01-01T15:57:31+08:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://nekonull.me/en/posts/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://nekonull.me/posts/"
-                />
   </url><url>
     <loc>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</loc>
     <lastmod>2024-11-28T13:39:17+00:00</lastmod>
@@ -152,9 +158,6 @@
                 />
   </url><url>
     <loc>https://nekonull.me/archive/2408-huizhou-layflat/</loc>
-    <lastmod>2024-08-12T17:08:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/%E6%9D%82%E7%89%A9/</loc>
     <lastmod>2024-08-12T17:08:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/2-years-of-work/</loc>
