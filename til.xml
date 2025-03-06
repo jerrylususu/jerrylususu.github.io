@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 03 Mar 2025 23:23:31 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Mar 2025 14:10:10 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 PATH 里的脚本是更好的别名</title>
+      <link>https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/</link>
+      <pubDate>Thu, 06 Mar 2025 14:10:10 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/</guid>
+      <description>&lt;p&gt;我自己的 .bashrc 里有不少小工具，但是要每次改起来得写 shell script 着实烦人（即使能用 LLM 写，也免不了来回调试几次才能满意）。读到这篇文章，我才意识到原来可以写脚本放到 script 里，还有一些额外的优势（不用手动 source 重载、用 shell script 之外的任何语言、各种 shell 都能用）。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&#34;&gt;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Rust 的日期库的奇妙实现</title>
       <link>https://nekonull.me/til/rust-date-function-math-magic/</link>
