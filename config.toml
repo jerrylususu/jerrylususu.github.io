@@ -14,7 +14,9 @@ rssLimit = 25
 
 disqusShortname = "nekonull"
 
-googleAnalytics = "G-R01JLDY2KE"
+[services]
+  [services.googleAnalytics]
+    id = "G-R01JLDY2KE"
 
 [markup]
   [markup.goldmark]
