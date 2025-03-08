@@ -10,11 +10,11 @@
 	{{- else if eq .Kind "page" -}}
 	<h1>{{ .Title }}</h1>
 	<h5>
-		{{ $dateformat := .Site.Params.DateFmt | default "Jan 02, 2006" }}
+		{{ $dateformat := .Site.Params.BlogDateFmt | default "Jan 02, 2006 15:04" }}
 		<time datetime="{{.Date}}">{{ .Date.Format $dateformat }}</time>
 		<span class="no-print">
 			{{ with .Params.tags -}}
-			-
+			|
 				{{ range . }}
 				<a href="/tags/{{.}}">{{.}}</a>
 				{{ end }}
