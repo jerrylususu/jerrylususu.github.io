@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>用 PATH 里的脚本是更好的别名 - Nekonull&#39;s Garden</title>
+	<title>Emoji Kitchen - 用 2 个已有的 emoji 生成新的 emoji - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="我自己的 .bashrc 里有不少小工具，但是要每次改起来得写 shell script 着实烦人（即使能用 LLM 写，也免不了来回调试几次才能满意）。读到这篇文章，我才意识到原来可以写脚本放到 script 里，还有一些额外的优势（不用手动 source 重载、用 shell script 之外的任何语言、各种 shell 都能用）。">
+	<meta name="description" content="虽然我是 Gboard 输入法的用户，但是因为日常用 Emoji 不多，直到最近才了解到 Emoji Kitchen 这个功能（或者说项目？）。简而言之，给定两个 Emoji，可以生成一个符合加法语义的新 Emoji （实际上是图像，而不是 Unicode 标准的字符）。例如 热狗&#43;花束=热狗花束。">
 
 
 	
@@ -56,7 +56,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/emoji-kitchen/" class="active langselect">简体中文</a></li>
             
           
       
@@ -77,10 +77,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>用 PATH 里的脚本是更好的别名</h1>
+	<h1>Emoji Kitchen - 用 2 个已有的 emoji 生成新的 emoji</h1>
 	<h5>
 		
-		<time datetime="2025-03-06 14:10:10.642 &#43;0000 UTC">2025/03/06</time>
+		<time datetime="2025-03-08 12:41:00.649 &#43;0000 UTC">2025/03/08</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -88,18 +88,20 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>我自己的 .bashrc 里有不少小工具，但是要每次改起来得写 shell script 着实烦人（即使能用 LLM 写，也免不了来回调试几次才能满意）。读到这篇文章，我才意识到原来可以写脚本放到 script 里，还有一些额外的优势（不用手动 source 重载、用 shell script 之外的任何语言、各种 shell 都能用）。</p>
-<p>src: <a href="https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/">https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/</a></p>
+	<p>虽然我是 Gboard 输入法的用户，但是因为日常用 Emoji 不多，直到最近才了解到 Emoji Kitchen 这个功能（或者说项目？）。简而言之，给定两个 Emoji，可以生成一个符合加法语义的新 Emoji （实际上是图像，而不是 Unicode 标准的字符）。例如 热狗+花束=热狗花束。</p>
+<p>阅读相关资料可以发现，每一个组合都是 Google 的设计团队手绘的[1]；虽然有一些组合原则[2]，但是没有自动化（至少从我能找到的信息来看是这样）。考虑到图像生成模型已经广泛可用了，可能未来会有更多的组合是生成而不是手绘的？</p>
+<blockquote>
+<p>we&rsquo;ve drawn over 30,000 images in just a few years lmao</p></blockquote>
+<p><a href="https://emojikitchen.dev/">https://emojikitchen.dev/</a></p>
+<p>ref1: <a href="https://jenniferdaniel.substack.com/p/introducing-emoji-kitchen-">https://jenniferdaniel.substack.com/p/introducing-emoji-kitchen-</a></p>
+<p>ref2: <a href="https://9to5google.com/2024/12/27/gboard-android-emoji-kitchen-list/">https://9to5google.com/2024/12/27/gboard-android-emoji-kitchen-list/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/rust-date-function-math-magic/">
-		<img class="icon-text" src="/img/prev.svg"/>Rust 的日期库的奇妙实现</a>
+	<a class="prev-post" href="https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/">
+		<img class="icon-text" src="/img/prev.svg"/>用 PATH 里的脚本是更好的别名</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/emoji-kitchen/">Emoji Kitchen - 用 2 个已有的 emoji 生成新的 emoji<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
