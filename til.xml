@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 08 Mar 2025 12:41:00 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 09 Mar 2025 15:39:03 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 LLM 计算可视化文字的信息增量</title>
+      <link>https://nekonull.me/til/llm-perplexity-visualization/</link>
+      <pubDate>Sun, 09 Mar 2025 15:39:03 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/llm-perplexity-visualization/</guid>
+      <description>&lt;p&gt;读 LLM 推理相关的资料时，想到：在 LLM 前向推理的过程中，会计算从输入开头到当前 token 的所有 token 的 logit，最后采样的时候只用了最后一个 token 的 logit；是否可以构建一个工具，用户输入一段文本，让LLM计算每个token上出现用户输入token的概率，并且加点可视化（概率大：说明这个接续很常见，没什么信息增量；概率小：说明这个接续不太常见，可能有点意思），来得到一个展示文本信息增量的工具？&lt;/p&gt;
+&lt;p&gt;搜了搜，发现果然已经有人做过了，用的是 GPT-2 （虽然老了一些，但是足够小，可以直接跑在浏览器里），效果也很棒。或许可以考虑下用现代的 SLM（Small Language Model）更新下？&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://perplexity.vercel.app/&#34;&gt;https://perplexity.vercel.app/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Emoji Kitchen - 用 2 个已有的 emoji 生成新的 emoji</title>
       <link>https://nekonull.me/til/emoji-kitchen/</link>
