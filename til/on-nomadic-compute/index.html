@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>用 LLM 计算可视化文字的信息增量 - Nekonull&#39;s Garden</title>
+	<title>游牧计算 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="读 LLM 推理相关的资料时，想到：在 LLM 前向推理的过程中，会计算从输入开头到当前 token 的所有 token 的 logit，最后采样的时候只用了最后一个 token 的 logit；是否可以构建一个工具，用户输入一段文本，让LLM计算每个token上出现用户输入token的概率，并且加点可视化（概率大：说明这个接续很常见，没什么信息增量；概率小：说明这个接续不太常见，可能有点意思），来得到一个展示文本信息增量的工具？">
+	<meta name="description" content="在使用 LLM 的时候很容易陷入两个极端之一：完全信任服务提供商（无论是 OpenAI/Deepseek 这样的官方服务，还是像 SiliconFlow/OpenRouter 这样的推理提供商），或者是完全自己部署。前者很方便，外包了复杂度，但是也意味着模型不受自己控制；后者很自由，但前提是得有足够多的钱买卡。">
 
 
 	
@@ -70,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/llm-perplexity-visualization/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/on-nomadic-compute/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +91,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>用 LLM 计算可视化文字的信息增量</h1>
+	<h1>游牧计算</h1>
 	<h5>
 		
-		<time datetime="2025-03-09 15:39:03.518 &#43;0000 UTC">2025/03/09 15:39</time>
+		<time datetime="2025-03-11 14:59:03.303 &#43;0000 UTC">2025/03/11 14:59</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,19 +102,19 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>读 LLM 推理相关的资料时，想到：在 LLM 前向推理的过程中，会计算从输入开头到当前 token 的所有 token 的 logit，最后采样的时候只用了最后一个 token 的 logit；是否可以构建一个工具，用户输入一段文本，让LLM计算每个token上出现用户输入token的概率，并且加点可视化（概率大：说明这个接续很常见，没什么信息增量；概率小：说明这个接续不太常见，可能有点意思），来得到一个展示文本信息增量的工具？</p>
-<p>搜了搜，发现果然已经有人做过了，用的是 GPT-2 （虽然老了一些，但是足够小，可以直接跑在浏览器里），效果也很棒。或许可以考虑下用现代的 SLM（Small Language Model）更新下？</p>
-<p><a href="https://perplexity.vercel.app/">https://perplexity.vercel.app/</a></p>
+	<p>在使用 LLM 的时候很容易陷入两个极端之一：完全信任服务提供商（无论是 OpenAI/Deepseek 这样的官方服务，还是像 SiliconFlow/OpenRouter 这样的推理提供商），或者是完全自己部署。前者很方便，外包了复杂度，但是也意味着模型不受自己控制；后者很自由，但前提是得有足够多的钱买卡。</p>
+<p>但其实全托管-自托管是一段连续的光谱，游牧计算（Nomadic Compute）则是其中一个有趣的中间点。这个概念似乎一位外国博主 Xe Iaso 创造的，指的是像游牧民族那样，带着自己的数据在不同的云服务基础设施提供商之间漫游，逐水草而居（实际上是价格最低的 GPU）。这样的行为方式之所以能成立，是因为计算（Nvidia GPU）和存储（假设使用某种对象存储服务，例如 S3 或者各种 S3-兼容服务）都是云供应商中立，可以互换的。只要你在需要时在价格最低的云上启动实例，并在不用的时候完全关闭，就能享受到相对低的价格和更自由的选择，并且避免供应商锁定。</p>
+<p>如果这听起来很有趣，你应该继续阅读这篇演讲记录。</p>
+<p><a href="https://xeiaso.net/talks/2025/ai-chatbot-friends/">https://xeiaso.net/talks/2025/ai-chatbot-friends/</a></p>
+<p>或者看看已有的帮你自动跨云服务商找最低价 GPU 并完成计算的开源项目</p>
+<p><a href="https://github.com/skypilot-org/skypilot/">https://github.com/skypilot-org/skypilot/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/emoji-kitchen/">
-		<img class="icon-text" src="/img/prev.svg"/>Emoji Kitchen - 用 2 个已有的 emoji 生成新的 emoji</a>
+	<a class="prev-post" href="https://nekonull.me/til/llm-perplexity-visualization/">
+		<img class="icon-text" src="/img/prev.svg"/>用 LLM 计算可视化文字的信息增量</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/on-nomadic-compute/">游牧计算<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
