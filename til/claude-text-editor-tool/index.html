@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>游牧计算 - Nekonull&#39;s Garden</title>
+	<title>Claude 的 Text Editor Tool - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="在使用 LLM 的时候很容易陷入两个极端之一：完全信任服务提供商（无论是 OpenAI/Deepseek 这样的官方服务，还是像 SiliconFlow/OpenRouter 这样的推理提供商），或者是完全自己部署。前者很方便，外包了复杂度，但是也意味着模型不受自己控制；后者很自由，但前提是得有足够多的钱买卡。">
+	<meta name="description" content="Claude 最近新支持了一个特殊的工具：Text Editor Tool，本质上是一组预定义的接口，让 LLM 可以实现文本编辑（不过看起来更像是为了代码编辑准备的）。具体定义的接口有 view, create, str_replace, insert, undo_edit。">
 
 
 	
@@ -70,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/on-nomadic-compute/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/claude-text-editor-tool/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +91,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>游牧计算</h1>
+	<h1>Claude 的 Text Editor Tool</h1>
 	<h5>
 		
-		<time datetime="2025-03-11 14:59:03.303 &#43;0000 UTC">2025/03/11 14:59</time>
+		<time datetime="2025-03-14 13:45:33.145 &#43;0000 UTC">2025/03/14 13:45</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,22 +102,29 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>在使用 LLM 的时候很容易陷入两个极端之一：完全信任服务提供商（无论是 OpenAI/Deepseek 这样的官方服务，还是像 SiliconFlow/OpenRouter 这样的推理提供商），或者是完全自己部署。前者很方便，外包了复杂度，但是也意味着模型不受自己控制；后者很自由，但前提是得有足够多的钱买卡。</p>
-<p>但其实全托管-自托管是一段连续的光谱，游牧计算（Nomadic Compute）则是其中一个有趣的中间点。这个概念似乎一位外国博主 Xe Iaso 创造的，指的是像游牧民族那样，带着自己的数据在不同的云服务基础设施提供商之间漫游，逐水草而居（实际上是价格最低的 GPU）。这样的行为方式之所以能成立，是因为计算（Nvidia GPU）和存储（假设使用某种对象存储服务，例如 S3 或者各种 S3-兼容服务）都是云供应商中立，可以互换的。只要你在需要时在价格最低的云上启动实例，并在不用的时候完全关闭，就能享受到相对低的价格和更自由的选择，并且避免供应商锁定。</p>
-<p>如果这听起来很有趣，你应该继续阅读这篇演讲记录。</p>
-<p><a href="https://xeiaso.net/talks/2025/ai-chatbot-friends/">https://xeiaso.net/talks/2025/ai-chatbot-friends/</a></p>
-<p>或者看看已有的帮你自动跨云服务商找最低价 GPU 并完成计算的开源项目</p>
-<p><a href="https://github.com/skypilot-org/skypilot/">https://github.com/skypilot-org/skypilot/</a></p>
+	<p>Claude 最近新支持了一个特殊的工具：Text Editor Tool，本质上是一组预定义的接口，让 LLM 可以实现文本编辑（不过看起来更像是为了代码编辑准备的）。具体定义的接口有 view, create, str_replace, insert, undo_edit。</p>
+<p>文档里一些比较有趣的点：</p>
+<ol>
+<li>view 文件的时候，可以指定特定的 range（有助于处理特别大的文件）</li>
+<li>view 的时候，推荐把行号也塞进去（例如<code>1:import os</code>），这样能有助于编辑（因为 insert 需要指定行号）</li>
+<li>str_replace 的时候应该只有一个精确匹配，匹配不存在或者有多个匹配都是 error</li>
+</ol>
+<p>一些自己的思考：</p>
+<ul>
+<li>对比其他基于 diff 的编辑方式（例如 cline），用行号来声明编辑范围的确会更省 token，但是也对模型能力提出了更高要求（算不对行号的话很容易导致编辑失败）。</li>
+<li>str_replace 只能有一个精确匹配的行为也比较诡异，且参数没有 range，感觉上对于重构似乎不太友好（例如把一个文件里的所有 var1a 换成 slight_better_name）</li>
+<li>只有 create / insert，但没有 update / delete / remove？难道真就只增不减了？</li>
+</ul>
+<p>这个工具具体是否有用，还是等各路开发者的验证了。毕竟官方只定义了接口，具体实现当然是“留作练习”了。</p>
+<p>src: <a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool">https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool</a></p>
+<p>via: <a href="https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything">https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/llm-perplexity-visualization/">
-		<img class="icon-text" src="/img/prev.svg"/>用 LLM 计算可视化文字的信息增量</a>
+	<a class="prev-post" href="https://nekonull.me/til/on-nomadic-compute/">
+		<img class="icon-text" src="/img/prev.svg"/>游牧计算</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/claude-text-editor-tool/">Claude 的 Text Editor Tool<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 

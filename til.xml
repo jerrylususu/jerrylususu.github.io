@@ -7,7 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 11 Mar 2025 14:59:03 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 Mar 2025 13:45:33 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Claude 的 Text Editor Tool</title>
+      <link>https://nekonull.me/til/claude-text-editor-tool/</link>
+      <pubDate>Fri, 14 Mar 2025 13:45:33 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/claude-text-editor-tool/</guid>
+      <description>&lt;p&gt;Claude 最近新支持了一个特殊的工具：Text Editor Tool，本质上是一组预定义的接口，让 LLM 可以实现文本编辑（不过看起来更像是为了代码编辑准备的）。具体定义的接口有 view, create, str_replace, insert, undo_edit。&lt;/p&gt;
+&lt;p&gt;文档里一些比较有趣的点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;view 文件的时候，可以指定特定的 range（有助于处理特别大的文件）&lt;/li&gt;
+&lt;li&gt;view 的时候，推荐把行号也塞进去（例如&lt;code&gt;1:import os&lt;/code&gt;），这样能有助于编辑（因为 insert 需要指定行号）&lt;/li&gt;
+&lt;li&gt;str_replace 的时候应该只有一个精确匹配，匹配不存在或者有多个匹配都是 error&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一些自己的思考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对比其他基于 diff 的编辑方式（例如 cline），用行号来声明编辑范围的确会更省 token，但是也对模型能力提出了更高要求（算不对行号的话很容易导致编辑失败）。&lt;/li&gt;
+&lt;li&gt;str_replace 只能有一个精确匹配的行为也比较诡异，且参数没有 range，感觉上对于重构似乎不太友好（例如把一个文件里的所有 var1a 换成 slight_better_name）&lt;/li&gt;
+&lt;li&gt;只有 create / insert，但没有 update / delete / remove？难道真就只增不减了？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个工具具体是否有用，还是等各路开发者的验证了。毕竟官方只定义了接口，具体实现当然是“留作练习”了。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool&#34;&gt;https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>游牧计算</title>
       <link>https://nekonull.me/til/on-nomadic-compute/</link>
