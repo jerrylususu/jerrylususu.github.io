@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 17 Mar 2025 14:07:45 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Mar 2025 14:22:19 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LLM 是现实世界的快照</title>
+      <link>https://nekonull.me/til/llm-as-world-snapshot/</link>
+      <pubDate>Mon, 17 Mar 2025 14:22:19 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/llm-as-world-snapshot/</guid>
+      <description>&lt;p&gt;读到了 Redis 作者 antirez 的一篇文章《LLM 的权重是历史的一部分》。&lt;/p&gt;
+&lt;p&gt;的确，网络上越来越多的信息已经永久消失了（现在能打开一个 2010~2020 年之间的某个链接都已经几乎是奇迹了）。存档的工作很重要，但是这样做并没有经济效益。已训练的 LLM 虽然可能会有幻觉，但至少代表了某一个时刻的现实。而且考虑到模型分散的足够多，可能比传统的集中式存档（例如 Internet Archive）更能持久的保存下来当前我们所见的世界。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://antirez.com/news/147&#34;&gt;https://antirez.com/news/147&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>浏览器内置的默认 HTML 样式</title>
       <link>https://nekonull.me/til/browser-default-css/</link>
