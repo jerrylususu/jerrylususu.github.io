@@ -3,6 +3,15 @@ title: 项目
 date: 2024-08-31T23:45:30+08:00
 ---
 
+
+- 我的个人项目主要都在我的 Github 上。
+    - [Nekonull's Github](https://github.com/jerrylususu)
+- 偶尔我会写一些小工具。为什么不去看看有没有什么能帮到你的呢？
+    - [Nekonull's Pages](https://pages.nekonull.me/)
+
+<details>
+<summary>历史项目</summary>
+
 | 时间    | 类型| 项目                                                         | 链接                                                         | 状态            |
 | ------- | ---- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------- |
 | 2024    | 个人 | cococlock：模拟 Apple Watch 的 Gradient 表盘（JS）           | [WebApp](http://nekonull.me/cococlock/) [Github](https://github.com/jerrylususu/cococlock) | ✅在用           |
@@ -38,4 +47,5 @@ date: 2024-08-31T23:45:30+08:00
 | 2017/9  | 课程 | Java 1: 答疑预约系统                                         | 非公开                                                       | 🚫不适用         |
 | 2017/6  | <div style="width:4ch">个人</div> | Project SFLS 🎶                                               | [Github](https://github.com/jerrylususu/projectsflsmusic)    | ⛔不再维护       |
 
+</details>
 
