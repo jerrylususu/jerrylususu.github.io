@@ -1135,7 +1135,21 @@ inside: addr=0x7ffc4b13dc04
       <pubDate>Sat, 31 Aug 2024 23:45:30 +0800</pubDate>
       
       <guid>https://nekonull.me/project/</guid>
-      <description>&lt;table&gt;
+      <description>&lt;ul&gt;
+&lt;li&gt;我的个人项目主要都在我的 Github 上。
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jerrylususu&#34;&gt;Nekonull&amp;rsquo;s Github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;偶尔我会写一些小工具。为什么不去看看有没有什么能帮到你的呢？
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://pages.nekonull.me/&#34;&gt;Nekonull&amp;rsquo;s Pages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;summary&gt;历史项目&lt;/summary&gt;
+&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;时间&lt;/th&gt;
@@ -1372,6 +1386,7 @@ inside: addr=0x7ffc4b13dc04
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;/details&gt;
 </description>
     </item>
     
