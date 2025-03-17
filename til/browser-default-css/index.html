@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>Claude 的 Text Editor Tool - Nekonull&#39;s Garden</title>
+	<title>浏览器内置的默认 HTML 样式 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="Claude 最近新支持了一个特殊的工具：Text Editor Tool，本质上是一组预定义的接口，让 LLM 可以实现文本编辑（不过看起来更像是为了代码编辑准备的）。具体定义的接口有 view, create, str_replace, insert, undo_edit。">
+	<meta name="description" content="HTML 如果没有指定一个元素的样式，那么会用“默认”样式展示。（在 DevTools 里似乎被标记为“用户代理样式表”）。之前一直有些疑惑到底是在哪里定义的，今天在读其他信息的时候发现了。">
 
 
 	
@@ -70,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/claude-text-editor-tool/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/browser-default-css/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +91,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>Claude 的 Text Editor Tool</h1>
+	<h1>浏览器内置的默认 HTML 样式</h1>
 	<h5>
 		
-		<time datetime="2025-03-14 13:45:33.145 &#43;0000 UTC">2025/03/14 13:45</time>
+		<time datetime="2025-03-17 14:07:45.292 &#43;0000 UTC">2025/03/17 14:07</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,32 +102,16 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>Claude 最近新支持了一个特殊的工具：Text Editor Tool，本质上是一组预定义的接口，让 LLM 可以实现文本编辑（不过看起来更像是为了代码编辑准备的）。具体定义的接口有 view, create, str_replace, insert, undo_edit。</p>
-<p>文档里一些比较有趣的点：</p>
-<ol>
-<li>view 文件的时候，可以指定特定的 range（有助于处理特别大的文件）</li>
-<li>view 的时候，推荐把行号也塞进去（例如<code>1:import os</code>），这样能有助于编辑（因为 insert 需要指定行号）</li>
-<li>str_replace 的时候应该只有一个精确匹配，匹配不存在或者有多个匹配都是 error</li>
-</ol>
-<p>一些自己的思考：</p>
-<ul>
-<li>对比其他基于 diff 的编辑方式（例如 cline），用行号来声明编辑范围的确会更省 token，但是也对模型能力提出了更高要求（算不对行号的话很容易导致编辑失败）。</li>
-<li>str_replace 只能有一个精确匹配的行为也比较诡异，且参数没有 range，感觉上对于重构似乎不太友好（例如把一个文件里的所有 var1a 换成 slight_better_name）</li>
-<li>只有 create / insert，但没有 update / delete / remove？难道真就只增不减了？</li>
-</ul>
-<p>这个工具具体是否有用，还是等各路开发者的验证了。毕竟官方只定义了接口，具体实现当然是“留作练习”了。</p>
-<p>src: <a href="https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool">https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool</a></p>
-<p>via: <a href="https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything">https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything</a></p>
+	<p>HTML 如果没有指定一个元素的样式，那么会用“默认”样式展示。（在 DevTools 里似乎被标记为“用户代理样式表”）。之前一直有些疑惑到底是在哪里定义的，今天在读其他信息的时候发现了。</p>
+<p>src: <a href="https://github.com/chromium/chromium/blob/main/third_party/blink/renderer/core/html/resources/html.css">https://github.com/chromium/chromium/blob/main/third_party/blink/renderer/core/html/resources/html.css</a></p>
+<p>via: <a href="https://simonwillison.net/2025/Mar/16/backstory/">https://simonwillison.net/2025/Mar/16/backstory/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/on-nomadic-compute/">
-		<img class="icon-text" src="/img/prev.svg"/>游牧计算</a>
+	<a class="prev-post" href="https://nekonull.me/til/claude-text-editor-tool/">
+		<img class="icon-text" src="/img/prev.svg"/>Claude 的 Text Editor Tool</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/browser-default-css/">浏览器内置的默认 HTML 样式<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 

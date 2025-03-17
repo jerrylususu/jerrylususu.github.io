@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/til/claude-text-editor-tool/</loc>
-    <lastmod>2025-03-14T13:45:33+00:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-03-14T13:45:33+00:00</lastmod>
+    <lastmod>2025-03-17T14:07:45+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -19,6 +16,12 @@
                 />
   </url><url>
     <loc>https://nekonull.me/til/</loc>
+    <lastmod>2025-03-17T14:07:45+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/browser-default-css/</loc>
+    <lastmod>2025-03-17T14:07:45+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/claude-text-editor-tool/</loc>
     <lastmod>2025-03-14T13:45:33+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/on-nomadic-compute/</loc>
