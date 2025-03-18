@@ -4,11 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>DVC - Data Version Control - Nekonull&#39;s Garden</title>
+	<title>Wasp - 用于构建全栈网站的元框架 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="看起来像是一个给数据集用的 Git，还整合了一些模型训练相关的记录和工作流能力（例如对比不同实验，以及把输入、实验和输出结合起来）。
-src: https://dvc.org/
-via: https://github.com/dfsnow/opentimes">
+	<meta name="description" content="一个看起来比较有趣的项目。构建网站的时候通常有很多重复工作（登录/鉴权/邮件&hellip;）。为了减少重复，作者提出了一种元框架，在现有的前后端框架之上再叠加一层，写一些 DSL 来定义一个“网站”，然后再通过一个自定义的“编译器”生成底层的框架结构。">
 
 
 	
@@ -72,7 +70,7 @@ via: https://github.com/dfsnow/opentimes">
           
             
             
-                <li><a href="https://nekonull.me/til/data-version-control/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/wasp-as-a-meta-framework/" class="active langselect">简体中文</a></li>
             
           
       
@@ -93,10 +91,10 @@ via: https://github.com/dfsnow/opentimes">
 
 <article>
 	<header><hgroup id="brand">
-	<h1>DVC - Data Version Control</h1>
+	<h1>Wasp - 用于构建全栈网站的元框架</h1>
 	<h5>
 		
-		<time datetime="2025-03-18 15:38:44.866 &#43;0000 UTC">2025/03/18 15:38</time>
+		<time datetime="2025-03-18 15:54:33.214 &#43;0000 UTC">2025/03/18 15:54</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -104,19 +102,35 @@ via: https://github.com/dfsnow/opentimes">
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>看起来像是一个给数据集用的 Git，还整合了一些模型训练相关的记录和工作流能力（例如对比不同实验，以及把输入、实验和输出结合起来）。</p>
-<p>src: <a href="https://dvc.org/">https://dvc.org/</a></p>
-<p>via: <a href="https://github.com/dfsnow/opentimes">https://github.com/dfsnow/opentimes</a></p>
+	<p>一个看起来比较有趣的项目。构建网站的时候通常有很多重复工作（登录/鉴权/邮件&hellip;）。为了减少重复，作者提出了一种元框架，在现有的前后端框架之上再叠加一层，写一些 DSL 来定义一个“网站”，然后再通过一个自定义的“编译器”生成底层的框架结构。</p>
+<p>虽然感觉能解决一些常见问题，但是如果不能满足需求的话，自定义起来可能会是灾难。</p>
+<p>DSL 示例如下：</p>
+<pre tabindex="0"><code>app todoApp {
+  title: &#34;ToDo App&#34;,  // visible in the browser tab
+  auth: { // full-stack auth out-of-the-box
+    userEntity: User, 
+    methods: { google: {}, gitHub: {}, email: {...} }
+  }
+}
+
+route RootRoute { path: &#34;/&#34;, to: MainPage }
+page MainPage {
+  authRequired: true, // Limit access to logged in users.
+  component: import Main from &#34;@client/Main.tsx&#34; // Your React code.
+}
+
+query getTasks {
+  fn: import { getTasks } from &#34;@server/tasks.js&#34;, // Your Node.js code.
+  entities: [Task] // Automatic cache invalidation.
+}
+</code></pre><p>src: <a href="https://wasp.sh/">https://wasp.sh/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/code-contextual-retrieval/">
-		<img class="icon-text" src="/img/prev.svg"/>对代码的上下文检索（Contextual Retrieval）</a>
+	<a class="prev-post" href="https://nekonull.me/til/data-version-control/">
+		<img class="icon-text" src="/img/prev.svg"/>DVC - Data Version Control</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/wasp-as-a-meta-framework/">Wasp - 用于构建全栈网站的元框架<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
