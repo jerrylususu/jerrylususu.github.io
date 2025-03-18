@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 17 Mar 2025 15:07:18 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 Mar 2025 15:38:44 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DVC - Data Version Control</title>
+      <link>https://nekonull.me/til/data-version-control/</link>
+      <pubDate>Tue, 18 Mar 2025 15:38:44 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/data-version-control/</guid>
+      <description>&lt;p&gt;看起来像是一个给数据集用的 Git，还整合了一些模型训练相关的记录和工作流能力（例如对比不同实验，以及把输入、实验和输出结合起来）。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://dvc.org/&#34;&gt;https://dvc.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://github.com/dfsnow/opentimes&#34;&gt;https://github.com/dfsnow/opentimes&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>对代码的上下文检索（Contextual Retrieval）</title>
       <link>https://nekonull.me/til/code-contextual-retrieval/</link>
