@@ -7,7 +7,30 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 20 Mar 2025 15:47:10 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Mar 2025 15:56:18 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TypeScript 中的错误处理光谱</title>
+      <link>https://nekonull.me/til/typescript-error-handling-spectrum/</link>
+      <pubDate>Thu, 20 Mar 2025 15:56:18 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/typescript-error-handling-spectrum/</guid>
+      <description>&lt;p&gt;看了 Theo 的一个视频，讲到了 TypeScript 中的错误处理，把各种“流派”按照对错误的态度（从不在意到视为核心）划分了一个光谱：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;完全不管：默认状态，到处 try catch （很不幸我也是这样的）&lt;/li&gt;
+&lt;li&gt;低度关心：认识到错误需要被明确表达，而不是被隐藏在执行流中；用 tryCatch 或类似实现，让错误在调用返回中明确（&lt;code&gt;const {data, err} = await someFunc()&lt;/code&gt;，类似于 Go 的写法）&lt;/li&gt;
+&lt;li&gt;中等关心：认为需要一个专门的库来封装错误；例如 &lt;code&gt;neverthrow&lt;/code&gt;，实现了 Rust 风格的 Ok, Err 和 chaining&lt;/li&gt;
+&lt;li&gt;高度关心：认为需要围绕错误和异常状态设计整个应用；例如 effect 作为一个完整的框架，写起来其实已经不像是 TypeScript 了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我自己在写代码的时候，其实有的时候也会对到处 try-catch，catch 了又 throw 有点烦躁，但是不知道什么是更好的做法。看起来可以试试低度关心，再给错误层级有合理封装（至少 throw 之前包一层）。&lt;/p&gt;
+&lt;p&gt;video: &lt;a href=&#34;https://www.youtube.com/watch?v=Y6jT-IkV0VM&#34;&gt;https://www.youtube.com/watch?v=Y6jT-IkV0VM&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tryCatch: &lt;a href=&#34;https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b&#34;&gt;https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;neverthrow: &lt;a href=&#34;https://github.com/supermacro/neverthrow&#34;&gt;https://github.com/supermacro/neverthrow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;effect: &lt;a href=&#34;https://effect.website/&#34;&gt;https://effect.website/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>Block Diffusion - 分块扩散的半自回归模型 (2503.09573)</title>
       <link>https://nekonull.me/til/block-diffusion-half-autoregressive-llm/</link>
