@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 20 Mar 2025 15:56:18 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 22 Mar 2025 12:28:12 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Think Tool - 用 Noop Tool Call 让 LLM 记录自己的思考</title>
+      <link>https://nekonull.me/til/think-tool-no-op-tool-call/</link>
+      <pubDate>Sat, 22 Mar 2025 12:28:12 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/think-tool-no-op-tool-call/</guid>
+      <description>&lt;p&gt;给可用工具列表新增一个 &lt;code&gt;think&lt;/code&gt; 工具，只有一个必填参数 &lt;code&gt;thought&lt;/code&gt;；这个工具什么都不做，唯一的作用就是让 thought 可以在后续对话中被 tool_call 块携带。&lt;/p&gt;
+&lt;p&gt;因为是标准的 tool call，所以对于非推理模型也能用。看起来似乎在 prompt 对应调优过的情况下表现最佳，但是单独用似乎也不错。值得一试。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://www.anthropic.com/engineering/claude-think-tool&#34;&gt;https://www.anthropic.com/engineering/claude-think-tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>TypeScript 中的错误处理光谱</title>
       <link>https://nekonull.me/til/typescript-error-handling-spectrum/</link>

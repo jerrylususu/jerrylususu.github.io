@@ -4,16 +4,10 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>TypeScript 中的错误处理光谱 - Nekonull&#39;s Garden</title>
+	<title>Think Tool - 用 Noop Tool Call 让 LLM 记录自己的思考 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="看了 Theo 的一个视频，讲到了 TypeScript 中的错误处理，把各种“流派”按照对错误的态度（从不在意到视为核心）划分了一个光谱：
-
-完全不管：默认状态，到处 try catch （很不幸我也是这样的）
-低度关心：认识到错误需要被明确表达，而不是被隐藏在执行流中；用 tryCatch 或类似实现，让错误在调用返回中明确（const {data, err} = await someFunc()，类似于 Go 的写法）
-中等关心：认为需要一个专门的库来封装错误；例如 neverthrow，实现了 Rust 风格的 Ok, Err 和 chaining
-高度关心：认为需要围绕错误和异常状态设计整个应用；例如 effect 作为一个完整的框架，写起来其实已经不像是 TypeScript 了
-
-我自己在写代码的时候，其实有的时候也会对到处 try-catch，catch 了又 throw 有点烦躁，但是不知道什么是更好的做法。看起来可以试试低度关心，再给错误层级有合理封装（至少 throw 之前包一层）。">
+	<meta name="description" content="给可用工具列表新增一个 think 工具，只有一个必填参数 thought；这个工具什么都不做，唯一的作用就是让 thought 可以在后续对话中被 tool_call 块携带。
+因为是标准的 tool call，所以对于非推理模型也能用。看起来似乎在 prompt 对应调优过的情况下表现最佳，但是单独用似乎也不错。值得一试。">
 
 
 	
@@ -77,7 +71,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/typescript-error-handling-spectrum/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/think-tool-no-op-tool-call/" class="active langselect">简体中文</a></li>
             
           
       
@@ -98,10 +92,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>TypeScript 中的错误处理光谱</h1>
+	<h1>Think Tool - 用 Noop Tool Call 让 LLM 记录自己的思考</h1>
 	<h5>
 		
-		<time datetime="2025-03-20 15:56:18.346 &#43;0000 UTC">2025/03/20 15:56</time>
+		<time datetime="2025-03-22 12:28:12.361 &#43;0000 UTC">2025/03/22 12:28</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -109,30 +103,17 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>看了 Theo 的一个视频，讲到了 TypeScript 中的错误处理，把各种“流派”按照对错误的态度（从不在意到视为核心）划分了一个光谱：</p>
-<ul>
-<li>完全不管：默认状态，到处 try catch （很不幸我也是这样的）</li>
-<li>低度关心：认识到错误需要被明确表达，而不是被隐藏在执行流中；用 tryCatch 或类似实现，让错误在调用返回中明确（<code>const {data, err} = await someFunc()</code>，类似于 Go 的写法）</li>
-<li>中等关心：认为需要一个专门的库来封装错误；例如 <code>neverthrow</code>，实现了 Rust 风格的 Ok, Err 和 chaining</li>
-<li>高度关心：认为需要围绕错误和异常状态设计整个应用；例如 effect 作为一个完整的框架，写起来其实已经不像是 TypeScript 了</li>
-</ul>
-<p>我自己在写代码的时候，其实有的时候也会对到处 try-catch，catch 了又 throw 有点烦躁，但是不知道什么是更好的做法。看起来可以试试低度关心，再给错误层级有合理封装（至少 throw 之前包一层）。</p>
-<p>video: <a href="https://www.youtube.com/watch?v=Y6jT-IkV0VM">https://www.youtube.com/watch?v=Y6jT-IkV0VM</a></p>
-<ul>
-<li>tryCatch: <a href="https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b">https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b</a></li>
-<li>neverthrow: <a href="https://github.com/supermacro/neverthrow">https://github.com/supermacro/neverthrow</a></li>
-<li>effect: <a href="https://effect.website/">https://effect.website/</a></li>
-</ul>
+	<p>给可用工具列表新增一个 <code>think</code> 工具，只有一个必填参数 <code>thought</code>；这个工具什么都不做，唯一的作用就是让 thought 可以在后续对话中被 tool_call 块携带。</p>
+<p>因为是标准的 tool call，所以对于非推理模型也能用。看起来似乎在 prompt 对应调优过的情况下表现最佳，但是单独用似乎也不错。值得一试。</p>
+<p>src: <a href="https://www.anthropic.com/engineering/claude-think-tool">https://www.anthropic.com/engineering/claude-think-tool</a></p>
+<p>via: <a href="https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything">https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/block-diffusion-half-autoregressive-llm/">
-		<img class="icon-text" src="/img/prev.svg"/>Block Diffusion - 分块扩散的半自回归模型 (2503.09573)</a>
+	<a class="prev-post" href="https://nekonull.me/til/typescript-error-handling-spectrum/">
+		<img class="icon-text" src="/img/prev.svg"/>TypeScript 中的错误处理光谱</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/think-tool-no-op-tool-call/">Think Tool - 用 Noop Tool Call 让 LLM 记录自己的思考<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
