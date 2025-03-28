@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-03-27T14:16:48+00:00</lastmod>
+    <lastmod>2025-03-28T15:55:59+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -15,8 +15,11 @@
                 href="https://nekonull.me/"
                 />
   </url><url>
+    <loc>https://nekonull.me/til/node-module-inspector/</loc>
+    <lastmod>2025-03-28T15:55:59+00:00</lastmod>
+  </url><url>
     <loc>https://nekonull.me/til/</loc>
-    <lastmod>2025-03-27T14:16:48+00:00</lastmod>
+    <lastmod>2025-03-28T15:55:59+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/prompt-for-visualize-file-in-style/</loc>
     <lastmod>2025-03-27T14:16:48+00:00</lastmod>

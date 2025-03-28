@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 27 Mar 2025 14:16:48 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 28 Mar 2025 15:55:59 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Node Module Inspector</title>
+      <link>https://nekonull.me/til/node-module-inspector/</link>
+      <pubDate>Fri, 28 Mar 2025 15:55:59 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/node-module-inspector/</guid>
+      <description>&lt;p&gt;可视化展示本地 node_modules 文件夹中的依赖项的小工具，包括依赖关系、大小分布等。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/antfu/node-modules-inspector&#34;&gt;https://github.com/antfu/node-modules-inspector&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;example: &lt;a href=&#34;https://everything.antfu.dev/chart&#34;&gt;https://everything.antfu.dev/chart&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>让 LLM 从文件生成美观的网页的 prompt</title>
       <link>https://nekonull.me/til/prompt-for-visualize-file-in-style/</link>
