@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 30 Mar 2025 21:00:34 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Mar 2025 13:07:41 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>coredumpy - 实现事后调试的 Python 库</title>
+      <link>https://nekonull.me/til/coredumpy-post-mortem-debugging/</link>
+      <pubDate>Sun, 30 Mar 2025 13:07:41 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/coredumpy-post-mortem-debugging/</guid>
+      <description>&lt;p&gt;Coredump 已经是一个被广为人知的概念了，想法是在出错的时候把当前的完整状态保存下来以供事后分析（Post-mortem debugging）。&lt;code&gt;coredumpy&lt;/code&gt; 为 Python 实现了这一功能，出现异常的时候生成一个 dump 文件，后续可以用 pdb 或者是 VSCode 的调试工具加载，还原事故现场。这个库有一个优势是没有使用 &lt;code&gt;pickle&lt;/code&gt;，因此不要求故障环境和调试环境完全一致，也避免了不安全代码的意外执行。在一个示例中，作者用它调试了一个 CI 问题，看起来比传统排查效率高非常多。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/gaogaotiantian/coredumpy&#34;&gt;https://github.com/gaogaotiantian/coredumpy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;video: &lt;a href=&#34;https://www.bilibili.com/video/BV1nRQkYoE2c&#34;&gt;https://www.bilibili.com/video/BV1nRQkYoE2c&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Node Module Inspector</title>
       <link>https://nekonull.me/til/node-module-inspector/</link>
