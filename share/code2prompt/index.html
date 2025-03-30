@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>code2prompt - 满足「这是怎么做到的」好奇心的小工具 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="我发现自己经常对着一个有趣的 Github Repo 思考：「这看起来真不错！但是究竟是怎么做到的？」。但很多时候我无法满足我的好奇心。要么是这个项目并没有自带一个「How it works / 工作原理」的介绍（在我看来这应该是每个项目 README 的必备），要么是我没有时间或者耐心在层层叠叠的文件树或者错综复杂的调用链里自己找到答案。得益于近来 LLM 的上下文窗口增长，让 LLM 来帮我回答这一问题似乎是个不错的选择。即使 LLM 回答给出的答案可能有错误或者不完整，但至少能给出一些探索方向，让我自己的理解更有效率。然而在通常的对话窗口里复制粘贴代码有些烦人，更别提无法在文件数多的项目里应用了。为此，我（让 LLM）帮我写了一个小工具，让我能更方便的从代码生成发送给 LLM 的 prompt。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/share/code2prompt/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>code2prompt - 满足「这是怎么做到的」好奇心的小工具</h1>
+	<h5>
+		
+		<time datetime="2025-03-30 15:57:05 &#43;0800 &#43;0800">2025/03/30 15:57</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>我发现自己经常对着一个有趣的 Github Repo 思考：「这看起来真不错！但是究竟是怎么做到的？」。但很多时候我无法满足我的好奇心。要么是这个项目并没有自带一个「How it works / 工作原理」的介绍（在我看来这应该是每个项目 README 的必备），要么是我没有时间或者耐心在层层叠叠的文件树或者错综复杂的调用链里自己找到答案。得益于近来 LLM 的上下文窗口增长，让 LLM 来帮我回答这一问题似乎是个不错的选择。即使 LLM 回答给出的答案可能有错误或者不完整，但至少能给出一些探索方向，让我自己的理解更有效率。然而在通常的对话窗口里复制粘贴代码有些烦人，更别提无法在文件数多的项目里应用了。为此，我（让 LLM）帮我写了一个小工具，让我能更方便的从代码生成发送给 LLM 的 prompt。</p>
+<ul>
+<li>体验地址：<a href="https://nekonull.me/code2prompt/">https://nekonull.me/code2prompt/</a></li>
+<li>代码库：<a href="https://github.com/jerrylususu/code2prompt">https://github.com/jerrylususu/code2prompt</a></li>
+</ul>
+<h2 id="如何使用">如何使用</h2>
+<p>具体使用起来很简单：</p>
+<ol>
+<li>在GitHub项目页面，点击右上角&quot;Code&quot;→&ldquo;Download Zip&quot;下载代码</li>
+<li>打开工具页面，点击&quot;选择文件&quot;并上传刚下载的zip包</li>
+<li>根据文件数量或token大小进行筛选（比如排除test/、vendor/或package-lock.json等无关文件）</li>
+<li>点击&quot;Generate&quot;生成提示词</li>
+<li>点击&quot;Copy&quot;复制到剪贴板，然后粘贴到你喜欢的LLM对话工具中</li>
+</ol>
+<p>还有一些其他特性：</p>
+<ol>
+<li>文件树可以一次选中/取消选中整个文件夹</li>
+<li>每个文件旁标记了该文件的大小和 token 预估</li>
+<li>点击文件，可以直接展示该文件的内容（monaco editor）</li>
+</ol>
+<h2 id="实现原理">实现原理</h2>
+<ol>
+<li>解析zip文件（jszip 库）</li>
+<li>计算每个文件的token占用（用的是 gpt-tokenizer，基于 cl100k 计算，也就是 gpt-3.5-turbo 的分词器）</li>
+<li>展示文件列表和占用空间最大的文件，并根据选择更新</li>
+<li>最后用文件内容填充预设的提示模板</li>
+</ol>
+<h2 id="使用技巧">使用技巧</h2>
+<ul>
+<li>模型：用上下文足够长的模型，注意上下文限制；如果有可能的话用带上下文缓存的提供商
+<ul>
+<li>比较推荐的模型
+<ul>
+<li>Gemini 2.0 Flash Lite：输入 ￥0.55/1m, 输出 ￥2.19/1m, 上下文 1m</li>
+<li>qwen-turbo：输入 ￥0.3/1m, 输出 ￥0.6/1m out, 上下文 1m</li>
+</ul>
+</li>
+<li>如果最后得到的 token 数少，再考虑 deepseek-v3（官方上下文 64k，部分提供商 128k）等模型</li>
+</ul>
+</li>
+<li>筛选：根据自己的需要提前删掉不需要的文件
+<ul>
+<li>二进制文件已经预先被筛掉了，不会出现在文件树里</li>
+<li>test / vendor / docker 相关的通常可以做排除</li>
+<li>如果只看后端，则可以把前端的全排除掉</li>
+</ul>
+</li>
+<li>提示词：建议加在输入的最后，避免模型丢失焦点
+<ul>
+<li>首次阅读：简要说明代码做了什么， 以及是如何做到的。列出核心函数所在的位置。</li>
+<li>理解流程：用 mermaid sequence diagram 说明 XXX 的完整流程</li>
+<li>分析结构：这个项目主要有哪些组成部分？用 mermaid flowchart 展示</li>
+</ul>
+</li>
+</ul>
+<h2 id="开发">开发</h2>
+<ul>
+<li>大部分都是 LLM 写的（Windsurf + Claude），人主要是测试和提出修改意见。</li>
+<li>目前并没有用任何前端框架，都是裸 DOM 操作。（主要原因是没找到一个比较好的不需要构建过程的前端框架使用方式）。</li>
+<li>一开始的时候只是一个简单的单页面（所有代码都在 index.html）里的小应用，但随着复杂度上升和功能增加不得不做重构，拆分多个文件（不然的话编辑操作会因为影响行数过多常常失败）。未来可能一开始就考虑多文件架构会比较合适。</li>
+<li>目前每次 LLM 改完之后，得靠人手动操作下来验证是否有功能被破坏，有点麻烦。要是能有更自动化的 E2E 测试（例如基于 Playwright）就好了。</li>
+</ul>
+<h2 id="可能的后续方向">可能的后续方向</h2>
+<ul>
+<li>直接从 Github 加载：目前直连 Github 下载 zip 会有 CORS 问题，需要一个后端来代理下（但是就引入额外的运行成本了；我还是更喜欢纯前端而不依赖任何后端的工具）</li>
+<li>预设提示词：提供几个常用提示模板方便一键使用</li>
+<li>本地文件夹支持：直接加载本地项目文件夹</li>
+<li>gitignore支持：自动忽略.gitignore中指定的文件</li>
+</ul>
+<h2 id="其他方案对比">其他方案对比</h2>
+<ul>
+<li>Cursor / Windsurf：需要依赖编辑器自己去读取文件，慢而且可能会缺失文件</li>
+<li><a href="https://github.com/yamadashy/repomix">repofix</a>：开发之后才关注到，前端缺少控制能力，用起来不太方便</li>
+<li><a href="https://github.com/simonw/files-to-prompt">files-to-prompt</a>：纯命令行工具，对我这种临时性探索稍微有点繁琐（但是用在其他工作流里可能比较合适）</li>
+</ul>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/game-a-short-hike/">
+		<img class="icon-text" src="/img/prev.svg"/>游戏推荐 - A Short Hike</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

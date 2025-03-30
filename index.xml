@@ -7,7 +7,91 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Fri, 28 Mar 2025 15:55:59 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Mar 2025 15:57:05 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>code2prompt - 满足「这是怎么做到的」好奇心的小工具</title>
+      <link>https://nekonull.me/share/code2prompt/</link>
+      <pubDate>Sun, 30 Mar 2025 15:57:05 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/code2prompt/</guid>
+      <description>&lt;p&gt;我发现自己经常对着一个有趣的 Github Repo 思考：「这看起来真不错！但是究竟是怎么做到的？」。但很多时候我无法满足我的好奇心。要么是这个项目并没有自带一个「How it works / 工作原理」的介绍（在我看来这应该是每个项目 README 的必备），要么是我没有时间或者耐心在层层叠叠的文件树或者错综复杂的调用链里自己找到答案。得益于近来 LLM 的上下文窗口增长，让 LLM 来帮我回答这一问题似乎是个不错的选择。即使 LLM 回答给出的答案可能有错误或者不完整，但至少能给出一些探索方向，让我自己的理解更有效率。然而在通常的对话窗口里复制粘贴代码有些烦人，更别提无法在文件数多的项目里应用了。为此，我（让 LLM）帮我写了一个小工具，让我能更方便的从代码生成发送给 LLM 的 prompt。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;体验地址：&lt;a href=&#34;https://nekonull.me/code2prompt/&#34;&gt;https://nekonull.me/code2prompt/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;代码库：&lt;a href=&#34;https://github.com/jerrylususu/code2prompt&#34;&gt;https://github.com/jerrylususu/code2prompt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;如何使用&#34;&gt;如何使用&lt;/h2&gt;
+&lt;p&gt;具体使用起来很简单：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在GitHub项目页面，点击右上角&amp;quot;Code&amp;quot;→&amp;ldquo;Download Zip&amp;quot;下载代码&lt;/li&gt;
+&lt;li&gt;打开工具页面，点击&amp;quot;选择文件&amp;quot;并上传刚下载的zip包&lt;/li&gt;
+&lt;li&gt;根据文件数量或token大小进行筛选（比如排除test/、vendor/或package-lock.json等无关文件）&lt;/li&gt;
+&lt;li&gt;点击&amp;quot;Generate&amp;quot;生成提示词&lt;/li&gt;
+&lt;li&gt;点击&amp;quot;Copy&amp;quot;复制到剪贴板，然后粘贴到你喜欢的LLM对话工具中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;还有一些其他特性：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;文件树可以一次选中/取消选中整个文件夹&lt;/li&gt;
+&lt;li&gt;每个文件旁标记了该文件的大小和 token 预估&lt;/li&gt;
+&lt;li&gt;点击文件，可以直接展示该文件的内容（monaco editor）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;实现原理&#34;&gt;实现原理&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;解析zip文件（jszip 库）&lt;/li&gt;
+&lt;li&gt;计算每个文件的token占用（用的是 gpt-tokenizer，基于 cl100k 计算，也就是 gpt-3.5-turbo 的分词器）&lt;/li&gt;
+&lt;li&gt;展示文件列表和占用空间最大的文件，并根据选择更新&lt;/li&gt;
+&lt;li&gt;最后用文件内容填充预设的提示模板&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;使用技巧&#34;&gt;使用技巧&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;模型：用上下文足够长的模型，注意上下文限制；如果有可能的话用带上下文缓存的提供商
+&lt;ul&gt;
+&lt;li&gt;比较推荐的模型
+&lt;ul&gt;
+&lt;li&gt;Gemini 2.0 Flash Lite：输入 ￥0.55/1m, 输出 ￥2.19/1m, 上下文 1m&lt;/li&gt;
+&lt;li&gt;qwen-turbo：输入 ￥0.3/1m, 输出 ￥0.6/1m out, 上下文 1m&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如果最后得到的 token 数少，再考虑 deepseek-v3（官方上下文 64k，部分提供商 128k）等模型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;筛选：根据自己的需要提前删掉不需要的文件
+&lt;ul&gt;
+&lt;li&gt;二进制文件已经预先被筛掉了，不会出现在文件树里&lt;/li&gt;
+&lt;li&gt;test / vendor / docker 相关的通常可以做排除&lt;/li&gt;
+&lt;li&gt;如果只看后端，则可以把前端的全排除掉&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;提示词：建议加在输入的最后，避免模型丢失焦点
+&lt;ul&gt;
+&lt;li&gt;首次阅读：简要说明代码做了什么， 以及是如何做到的。列出核心函数所在的位置。&lt;/li&gt;
+&lt;li&gt;理解流程：用 mermaid sequence diagram 说明 XXX 的完整流程&lt;/li&gt;
+&lt;li&gt;分析结构：这个项目主要有哪些组成部分？用 mermaid flowchart 展示&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;开发&#34;&gt;开发&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;大部分都是 LLM 写的（Windsurf + Claude），人主要是测试和提出修改意见。&lt;/li&gt;
+&lt;li&gt;目前并没有用任何前端框架，都是裸 DOM 操作。（主要原因是没找到一个比较好的不需要构建过程的前端框架使用方式）。&lt;/li&gt;
+&lt;li&gt;一开始的时候只是一个简单的单页面（所有代码都在 index.html）里的小应用，但随着复杂度上升和功能增加不得不做重构，拆分多个文件（不然的话编辑操作会因为影响行数过多常常失败）。未来可能一开始就考虑多文件架构会比较合适。&lt;/li&gt;
+&lt;li&gt;目前每次 LLM 改完之后，得靠人手动操作下来验证是否有功能被破坏，有点麻烦。要是能有更自动化的 E2E 测试（例如基于 Playwright）就好了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;可能的后续方向&#34;&gt;可能的后续方向&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;直接从 Github 加载：目前直连 Github 下载 zip 会有 CORS 问题，需要一个后端来代理下（但是就引入额外的运行成本了；我还是更喜欢纯前端而不依赖任何后端的工具）&lt;/li&gt;
+&lt;li&gt;预设提示词：提供几个常用提示模板方便一键使用&lt;/li&gt;
+&lt;li&gt;本地文件夹支持：直接加载本地项目文件夹&lt;/li&gt;
+&lt;li&gt;gitignore支持：自动忽略.gitignore中指定的文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;其他方案对比&#34;&gt;其他方案对比&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cursor / Windsurf：需要依赖编辑器自己去读取文件，慢而且可能会缺失文件&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/yamadashy/repomix&#34;&gt;repofix&lt;/a&gt;：开发之后才关注到，前端缺少控制能力，用起来不太方便&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/simonw/files-to-prompt&#34;&gt;files-to-prompt&lt;/a&gt;：纯命令行工具，对我这种临时性探索稍微有点繁琐（但是用在其他工作流里可能比较合适）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
     <item>
       <title>The drive to develop</title>
       <link>https://nekonull.me/posts/the-drive-to-develop/</link>
@@ -2433,117 +2517,6 @@ TL;DR summary: Summary in no more than 50 words.
 &lt;li&gt;中性的决定5：提前换太多日元；为了保险起见一次换了[REDACTED]，不过实际上大部分地方都可以刷信用卡或者微信支付，所以现金其实不需要准备这么多，可能一天一万就差不多是极限了，实际上也并不会花到这个程度&lt;/li&gt;
 &lt;li&gt;中性的决定6：每天睡的太晚导致早上起不来；发现自己旅行一天的精力极限大概是12h，早上十点出门的话晚上十点就差不多已经力竭了（例如东京第一天），回了酒店还要洗澡+收拾+写日记（1h+），所以轻轻松松就过0点入睡了；起床再顺手多按掉几个闹钟就差不多十点了；不过旅行去新地点的话，这种探索欲可能也的确无从发泄；后来根据京都的体验，可能一天10h是比较合适的安排，这样回酒店还有足够的时间处理各种事情；10点起来的话，到各种景点的时候游客通常就已经很多了，不过这点对我来说倒不算什么大问题，毕竟不追求出片&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>健身房等待时间模拟</title>
-      <link>https://nekonull.me/share/gym-wait-sim/</link>
-      <pubDate>Fri, 29 Sep 2023 15:34:23 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/gym-wait-sim/</guid>
-      <description>&lt;p&gt;七月中旬去了趟医院，在医生的建议下开始定期运动了。综合考虑工作日的时间安排和自己的身体状态后，暂且决定每天中午去健身房运动一会。目前每日运动就是中午去健身房踩20多分钟的椭圆机（顺带看一集番），消耗热量约320卡。然而虽然健身房里的椭圆机数量并不少，足足有10台，但是偶尔还是会发生去了没有位置，需要等人结束的情况，但是因为不知道到底要等多久，还是略微有些焦虑。于是在想，有没有办法量化等待时间，例如模拟计算下概率分布函数，所以有了这篇文章。&lt;/p&gt;
-&lt;p&gt;代码（基本是 GPT3.5 写的，有手动调整）：https://gist.github.com/jerrylususu/2d8f7099a1c4af37160179b12ce13895&lt;/p&gt;
-&lt;p&gt;假设：有 10 个椭圆机，每个椭圆机上的运动者的运动时间 &lt;code&gt;t_n&lt;/code&gt; 遵循均值为 &lt;code&gt;μ&lt;/code&gt;，标准差为 &lt;code&gt;σ&lt;/code&gt; 的正态分布。到达健身房时，所有 10 台椭圆机都已被占用，且每个运动者的剩余时间在 &lt;code&gt;[0, t_n]&lt;/code&gt; 中均匀分布。等待时间为所有运动者剩余时间的最小值。&lt;/p&gt;
-&lt;p&gt;考虑到参数 &lt;code&gt;μ&lt;/code&gt; 和 &lt;code&gt;σ&lt;/code&gt; 都无法被准确估计，因此考虑 &lt;code&gt;μ&lt;/code&gt; = 5/10/15，&lt;code&gt;σ&lt;/code&gt; = 20/25/30，组合起来共 9 种情况；对每种情况运行一万次模拟，统计等待时间的 p50/p75/p90/p95，得到下表：&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;μ&lt;/th&gt;
-          &lt;th&gt;σ&lt;/th&gt;
-          &lt;th&gt;mean&lt;/th&gt;
-          &lt;th&gt;p50&lt;/th&gt;
-          &lt;th&gt;p75&lt;/th&gt;
-          &lt;th&gt;p90&lt;/th&gt;
-          &lt;th&gt;p95&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;20&lt;/td&gt;
-          &lt;td&gt;5&lt;/td&gt;
-          &lt;td&gt;1.698&lt;/td&gt;
-          &lt;td&gt;1.252&lt;/td&gt;
-          &lt;td&gt;2.406&lt;/td&gt;
-          &lt;td&gt;3.817&lt;/td&gt;
-          &lt;td&gt;4.811&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;20&lt;/td&gt;
-          &lt;td&gt;10&lt;/td&gt;
-          &lt;td&gt;1.258&lt;/td&gt;
-          &lt;td&gt;0.858&lt;/td&gt;
-          &lt;td&gt;1.772&lt;/td&gt;
-          &lt;td&gt;2.944&lt;/td&gt;
-          &lt;td&gt;3.813&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;20&lt;/td&gt;
-          &lt;td&gt;15&lt;/td&gt;
-          &lt;td&gt;1.151&lt;/td&gt;
-          &lt;td&gt;0.737&lt;/td&gt;
-          &lt;td&gt;1.604&lt;/td&gt;
-          &lt;td&gt;2.761&lt;/td&gt;
-          &lt;td&gt;3.641&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;25&lt;/td&gt;
-          &lt;td&gt;5&lt;/td&gt;
-          &lt;td&gt;2.198&lt;/td&gt;
-          &lt;td&gt;1.632&lt;/td&gt;
-          &lt;td&gt;3.123&lt;/td&gt;
-          &lt;td&gt;4.978&lt;/td&gt;
-          &lt;td&gt;6.229&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;25&lt;/td&gt;
-          &lt;td&gt;10&lt;/td&gt;
-          &lt;td&gt;1.769&lt;/td&gt;
-          &lt;td&gt;1.258&lt;/td&gt;
-          &lt;td&gt;2.494&lt;/td&gt;
-          &lt;td&gt;4.077&lt;/td&gt;
-          &lt;td&gt;5.213&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;25&lt;/td&gt;
-          &lt;td&gt;15&lt;/td&gt;
-          &lt;td&gt;1.477&lt;/td&gt;
-          &lt;td&gt;0.967&lt;/td&gt;
-          &lt;td&gt;2.069&lt;/td&gt;
-          &lt;td&gt;3.508&lt;/td&gt;
-          &lt;td&gt;4.634&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;30&lt;/td&gt;
-          &lt;td&gt;5&lt;/td&gt;
-          &lt;td&gt;2.671&lt;/td&gt;
-          &lt;td&gt;1.977&lt;/td&gt;
-          &lt;td&gt;3.813&lt;/td&gt;
-          &lt;td&gt;6.059&lt;/td&gt;
-          &lt;td&gt;7.515&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;30&lt;/td&gt;
-          &lt;td&gt;10&lt;/td&gt;
-          &lt;td&gt;2.284&lt;/td&gt;
-          &lt;td&gt;1.669&lt;/td&gt;
-          &lt;td&gt;3.219&lt;/td&gt;
-          &lt;td&gt;5.186&lt;/td&gt;
-          &lt;td&gt;6.632&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;30&lt;/td&gt;
-          &lt;td&gt;15&lt;/td&gt;
-          &lt;td&gt;1.965&lt;/td&gt;
-          &lt;td&gt;1.364&lt;/td&gt;
-          &lt;td&gt;2.720&lt;/td&gt;
-          &lt;td&gt;4.624&lt;/td&gt;
-          &lt;td&gt;6.019&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/gym_wait_sim_result.png&#34; alt=&#34;模拟结果可视化&#34;&gt;&lt;/p&gt;
-&lt;p&gt;结论：考虑所有情况，一般等 2 分钟就有 50% 概率可以等到位置，最坏情况下等 6 分钟也有 90% 的概率等到位置。&lt;/p&gt;
 </description>
     </item>
     
