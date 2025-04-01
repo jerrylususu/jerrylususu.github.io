@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>debug-gym - 给 LLM 提供调试工具可以提高代码任务能力 - Nekonull&#39;s Garden</title>
+	<title>Pydantic Evals - 给 LLM 的单元测试 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="自 MCP 大爆炸以来，LLM 可以做的事情被大幅扩展了（甚至是 3D 建模！）还有多少 LLM 的能力是因为没有提供足够的工具，而未能被解锁的呢？微软的这篇文章给 LLM 提供了 pdb （Python Debugger），并且（毫不意外地）发现这能提高代码任务的完成成功率。">
+	<meta name="description" content="最近工作上需要临时当一次 prompt engineer，很快就发现 vibe-based prompting （凭着感觉改 prompt）是不可靠的。理想情况下，应该和传统 ML 类似，有明确定义的 eval set 让我来测试。最后是写了个小脚本来做，但是总觉得有点太粗糙了。今天看到了 Pydantic 的这个 Evals 框架，看起来是一个更干净更系统化的解决方案，抽象也很合理，未来可以试试。">
 
 
 	
@@ -70,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/debug-gym-debugger-for-llm-helps-coding/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/pydantic-evals/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +91,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>debug-gym - 给 LLM 提供调试工具可以提高代码任务能力</h1>
+	<h1>Pydantic Evals - 给 LLM 的单元测试</h1>
 	<h5>
 		
-		<time datetime="2025-04-01 14:49:50.795 &#43;0000 UTC">2025/04/01 14:49</time>
+		<time datetime="2025-04-01 14:55:44.982 &#43;0000 UTC">2025/04/01 14:55</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,20 +102,16 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>自 MCP 大爆炸以来，LLM 可以做的事情被大幅扩展了（甚至是 3D 建模！）还有多少 LLM 的能力是因为没有提供足够的工具，而未能被解锁的呢？微软的这篇文章给 LLM 提供了 pdb （Python Debugger），并且（毫不意外地）发现这能提高代码任务的完成成功率。</p>
-<p>顺带一提，其中发现相比于 <code>debug</code> 策略（从一开始就可以调用调试器），<code>debug(5)</code>（前5步禁用调试器，只能用传统方式例如加日志或者改代码运行来调试，5步之后才允许启用）的提升更多。听起来很像人类的做法，先尝试一些简单的修改，实在不行再打开调试工具慢慢查。</p>
-<p>src: <a href="https://microsoft.github.io/debug-gym/">https://microsoft.github.io/debug-gym/</a></p>
-<p>via: <a href="https://simonwillison.net/2025/Mar/31/debug-gym/#atom-everything">https://simonwillison.net/2025/Mar/31/debug-gym/#atom-everything</a></p>
+	<p>最近工作上需要临时当一次 prompt engineer，很快就发现 vibe-based prompting （凭着感觉改 prompt）是不可靠的。理想情况下，应该和传统 ML 类似，有明确定义的 eval set 让我来测试。最后是写了个小脚本来做，但是总觉得有点太粗糙了。今天看到了 Pydantic 的这个 Evals 框架，看起来是一个更干净更系统化的解决方案，抽象也很合理，未来可以试试。</p>
+<p>src: <a href="https://ai.pydantic.dev/evals/">https://ai.pydantic.dev/evals/</a></p>
+<p>via: <a href="https://simonwillison.net/2025/Apr/1/pydantic-evals/#atom-everything">https://simonwillison.net/2025/Apr/1/pydantic-evals/#atom-everything</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/coredumpy-post-mortem-debugging/">
-		<img class="icon-text" src="/img/prev.svg"/>coredumpy - 实现事后调试的 Python 库</a>
+	<a class="prev-post" href="https://nekonull.me/til/debug-gym-debugger-for-llm-helps-coding/">
+		<img class="icon-text" src="/img/prev.svg"/>debug-gym - 给 LLM 提供调试工具可以提高代码任务能力</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/pydantic-evals/">Pydantic Evals - 给 LLM 的单元测试<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
