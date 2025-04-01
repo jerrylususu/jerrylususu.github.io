@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 30 Mar 2025 13:07:41 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Apr 2025 14:49:50 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>debug-gym - 给 LLM 提供调试工具可以提高代码任务能力</title>
+      <link>https://nekonull.me/til/debug-gym-debugger-for-llm-helps-coding/</link>
+      <pubDate>Tue, 01 Apr 2025 14:49:50 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/debug-gym-debugger-for-llm-helps-coding/</guid>
+      <description>&lt;p&gt;自 MCP 大爆炸以来，LLM 可以做的事情被大幅扩展了（甚至是 3D 建模！）还有多少 LLM 的能力是因为没有提供足够的工具，而未能被解锁的呢？微软的这篇文章给 LLM 提供了 pdb （Python Debugger），并且（毫不意外地）发现这能提高代码任务的完成成功率。&lt;/p&gt;
+&lt;p&gt;顺带一提，其中发现相比于 &lt;code&gt;debug&lt;/code&gt; 策略（从一开始就可以调用调试器），&lt;code&gt;debug(5)&lt;/code&gt;（前5步禁用调试器，只能用传统方式例如加日志或者改代码运行来调试，5步之后才允许启用）的提升更多。听起来很像人类的做法，先尝试一些简单的修改，实在不行再打开调试工具慢慢查。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://microsoft.github.io/debug-gym/&#34;&gt;https://microsoft.github.io/debug-gym/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/31/debug-gym/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/31/debug-gym/#atom-everything&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>coredumpy - 实现事后调试的 Python 库</title>
       <link>https://nekonull.me/til/coredumpy-post-mortem-debugging/</link>
