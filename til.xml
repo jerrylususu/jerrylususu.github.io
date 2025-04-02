@@ -7,18 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 02 Apr 2025 15:04:15 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Apr 2025 15:05:37 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>用连字实现图标</title>
       <link>https://nekonull.me/til/google-material-icon-ligature/</link>
-      <pubDate>Wed, 02 Apr 2025 15:04:15 +0000</pubDate>
+      <pubDate>Wed, 02 Apr 2025 15:05:37 +0000</pubDate>
       
       <guid>https://nekonull.me/til/google-material-icon-ligature/</guid>
       <description>&lt;p&gt;在阅读一篇关于“连字”（ligature）的文章时，了解到原来 Google 的 Material Icon 库用连字实现了图标选择（特定字符在一起会被直接替换为图标）。有趣！&lt;/p&gt;
 &lt;p&gt;顺带一提，这篇（via）关于连字的文章写的也很棒。强烈推荐阅读。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;span&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;material-icons&amp;#34;&lt;/span&gt;&amp;gt;face&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;span&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;src: &lt;a href=&#34;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&#34;&gt;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&lt;/a&gt;&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;（还有，连 Office 也支持连字，不过得自己打开 OpenType 特性开关。）&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&#34;&gt;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://webzhao.me/posts/ligature/&#34;&gt;https://webzhao.me/posts/ligature/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;office: &lt;a href=&#34;https://support.microsoft.com/zh-cn/office/-%E5%AD%97%E4%BD%93-%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E7%9A%84-opentype-%E9%80%89%E9%A1%B9-1033d3a7-511a-4d77-a2e2-d10d32889e28&#34;&gt;https://support.microsoft.com/zh-cn/office/-%E5%AD%97%E4%BD%93-%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E7%9A%84-opentype-%E9%80%89%E9%A1%B9-1033d3a7-511a-4d77-a2e2-d10d32889e28&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
