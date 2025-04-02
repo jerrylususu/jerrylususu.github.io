@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-04-01T14:55:44+00:00</lastmod>
+    <lastmod>2025-04-02T15:04:15+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -15,10 +15,13 @@
                 href="https://nekonull.me/"
                 />
   </url><url>
-    <loc>https://nekonull.me/til/pydantic-evals/</loc>
-    <lastmod>2025-04-01T14:55:44+00:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/til/</loc>
+    <lastmod>2025-04-02T15:04:15+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/google-material-icon-ligature/</loc>
+    <lastmod>2025-04-02T15:04:15+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/pydantic-evals/</loc>
     <lastmod>2025-04-01T14:55:44+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/debug-gym-debugger-for-llm-helps-coding/</loc>

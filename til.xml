@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 01 Apr 2025 14:55:44 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Apr 2025 15:04:15 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用连字实现图标</title>
+      <link>https://nekonull.me/til/google-material-icon-ligature/</link>
+      <pubDate>Wed, 02 Apr 2025 15:04:15 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/google-material-icon-ligature/</guid>
+      <description>&lt;p&gt;在阅读一篇关于“连字”（ligature）的文章时，了解到原来 Google 的 Material Icon 库用连字实现了图标选择（特定字符在一起会被直接替换为图标）。有趣！&lt;/p&gt;
+&lt;p&gt;顺带一提，这篇（via）关于连字的文章写的也很棒。强烈推荐阅读。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;span&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;material-icons&amp;#34;&lt;/span&gt;&amp;gt;face&amp;lt;/&lt;span style=&#34;color:#f92672&#34;&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;src: &lt;a href=&#34;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&#34;&gt;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://webzhao.me/posts/ligature/&#34;&gt;https://webzhao.me/posts/ligature/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Pydantic Evals - 给 LLM 的单元测试</title>
       <link>https://nekonull.me/til/pydantic-evals/</link>
@@ -480,18 +494,6 @@ let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
 &lt;li&gt;在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动&lt;/li&gt;
 &lt;/ol&gt;&lt;/blockquote&gt;
 &lt;p&gt;这看起来是一个显而易见的有效做法，但是之前却没有人提出过！下次使用 cursor 或者其他 LLM 加持的编辑器时我肯定会试试这样做。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>curl 有 LTS 了</title>
-      <link>https://nekonull.me/til/curl-has-5-year-lts/</link>
-      <pubDate>Sun, 17 Nov 2024 13:27:04 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/curl-has-5-year-lts/</guid>
-      <description>&lt;p&gt;curl 有 5 年 LTS (Long Time Support) 版本了，不过只有签了商业协议的用户才能使用&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://rock-solid.curl.dev/&#34;&gt;https://rock-solid.curl.dev/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&#34;&gt;https://daniel.haxx.se/blog/2024/11/07/rock-solid-curl/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
