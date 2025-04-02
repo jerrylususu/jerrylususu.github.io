@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 02 Apr 2025 15:05:37 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Apr 2025 15:29:33 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 Quak 探索数据</title>
+      <link>https://nekonull.me/til/quak-data-explorer/</link>
+      <pubDate>Wed, 02 Apr 2025 15:29:33 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/quak-data-explorer/</guid>
+      <description>&lt;p&gt;大学里学过一些数据科学的课程，对 Kaggle 上的数据集页面印象深刻：每列顶部有一个分布概览，扫一眼就能对数据有个大概了解。今天遇到了一个开源库，也能实现这一点。更棒的是可以交互式探索数据（例如直接选中某个区间进一步下钻），甚至还能把当前的过滤状态导出为 SQL。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/manzt/quak&#34;&gt;https://github.com/manzt/quak&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;demo: &lt;a href=&#34;https://manzt.github.io/quak/&#34;&gt;https://manzt.github.io/quak/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://deno.com/blog/exploring-art-with-typescript-and-jupyter&#34;&gt;https://deno.com/blog/exploring-art-with-typescript-and-jupyter&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>用连字实现图标</title>
       <link>https://nekonull.me/til/google-material-icon-ligature/</link>
@@ -480,22 +493,6 @@ let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
       <description>&lt;p&gt;VSCode 里用 debugpy 可以直接启动 debug session，无需配置文件（launch.json）。基于 &lt;a href=&#34;https://microsoft.github.io/debug-adapter-protocol/&#34;&gt;Debug Adapter Protocol&lt;/a&gt;，和 Language Server Protocl 类似的调试协议。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&#34;&gt;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://www.bitecode.dev/p/whats-up-python-better-packaging&#34;&gt;https://www.bitecode.dev/p/whats-up-python-better-packaging&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>要求 LLM 在完成任务时留下笔记</title>
-      <link>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</link>
-      <pubDate>Thu, 28 Nov 2024 13:39:17 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/make-llm-take-notes-when-finishing-task/</guid>
-      <description>&lt;p&gt;ref: &lt;a href=&#34;https://addyosmani.com/blog/automated-decision-logs/&#34;&gt;https://addyosmani.com/blog/automated-decision-logs/&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;在项目目录下放一个 &lt;code&gt;fyi.md&lt;/code&gt; 或者 &lt;code&gt;notes.md&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;在 prompt 里要求 LLM 完成任务时同时更新此笔记，包含目标、方案和实际执行的行动&lt;/li&gt;
-&lt;/ol&gt;&lt;/blockquote&gt;
-&lt;p&gt;这看起来是一个显而易见的有效做法，但是之前却没有人提出过！下次使用 cursor 或者其他 LLM 加持的编辑器时我肯定会试试这样做。&lt;/p&gt;
 </description>
     </item>
     
