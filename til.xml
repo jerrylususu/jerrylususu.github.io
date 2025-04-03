@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 02 Apr 2025 15:29:33 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Apr 2025 14:03:04 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Wish - 用 SSH 作为任何 TUI 应用的入口</title>
+      <link>https://nekonull.me/til/wish-for-ssh-apps/</link>
+      <pubDate>Thu, 03 Apr 2025 14:03:04 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/wish-for-ssh-apps/</guid>
+      <description>&lt;p&gt;从 HackerNews 上看到了一个名为 pico.sh 的项目，可以在不安装第三方工具的前提下，直接使用系统自带的工具（ssh/rsync）来实现发布文章、暴露本地服务等能力。他们的文档有一个 How it works 章节，其中提到底层用的是 wish 的能力。&lt;/p&gt;
+&lt;p&gt;继续翻 Wish 的文档，是一个看起来很自然但是之前从来没有想过的方向：把 SSH 作为一个通用协议。虽然 SSH 一般都被用于 remote login，但本质上它也提供了一个受加密保护的 tunnel；Server 可以提供一个 shell，也可以提供任何其他的“应用”，例如任意 TUI 应用。Wish 提供了类似于现代 Web 框架的中间件的能力，可以自定义给 client 的返回，可以被用于开发 “SSH Apps”。举个例子，想象一个现有的 TUI 应用，你可以 ssh 到某个机器上然后 ./run-my-app，或者干脆直接让这个应用接管 SSH，不仅用起来更简单，也更安全（因为不需要给出完整的 shell，也不用担心 openssh-server 的各种问题了。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/charmbracelet/wish&#34;&gt;https://github.com/charmbracelet/wish&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://pico.sh/how-it-works&#34;&gt;https://pico.sh/how-it-works&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>用 Quak 探索数据</title>
       <link>https://nekonull.me/til/quak-data-explorer/</link>
@@ -481,18 +494,6 @@ let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
       <description>&lt;p&gt;LLM 内部已经存储了很多事实性信息。如果通过一些 prompt，让 LLM 输出 [{title, abstract, url}]，就能实现一个搜索引擎。通过把这个&amp;quot;假&amp;quot;搜索引擎和真搜索引擎（例如 Google）的结果混合，Jina.AI 发现可以解决 RAG 中“什么时候需要调用外部搜索”的问题（可以阅读他们的博客文章了解更多信息）。但即使没有这个作用，单纯把 LLM 当作搜索引擎用也是一个很神奇的想法。&lt;/p&gt;
 &lt;p&gt;demo: &lt;a href=&#34;https://jina.ai/llm-serp-demo/&#34;&gt;https://jina.ai/llm-serp-demo/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;blog: &lt;a href=&#34;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&#34;&gt;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>debugpy - VSCode 无配置文件调试 Python</title>
-      <link>https://nekonull.me/til/debugpy-vscode/</link>
-      <pubDate>Sun, 02 Mar 2025 09:01:58 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/debugpy-vscode/</guid>
-      <description>&lt;p&gt;VSCode 里用 debugpy 可以直接启动 debug session，无需配置文件（launch.json）。基于 &lt;a href=&#34;https://microsoft.github.io/debug-adapter-protocol/&#34;&gt;Debug Adapter Protocol&lt;/a&gt;，和 Language Server Protocl 类似的调试协议。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&#34;&gt;https://github.com/microsoft/vscode-python-debugger/wiki/No%E2%80%90Config-Debugging&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://www.bitecode.dev/p/whats-up-python-better-packaging&#34;&gt;https://www.bitecode.dev/p/whats-up-python-better-packaging&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

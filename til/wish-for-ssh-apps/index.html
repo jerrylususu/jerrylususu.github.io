@@ -4,9 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>用 Quak 探索数据 - Nekonull&#39;s Garden</title>
+	<title>Wish - 用 SSH 作为任何 TUI 应用的入口 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="大学里学过一些数据科学的课程，对 Kaggle 上的数据集页面印象深刻：每列顶部有一个分布概览，扫一眼就能对数据有个大概了解。今天遇到了一个开源库，也能实现这一点。更棒的是可以交互式探索数据（例如直接选中某个区间进一步下钻），甚至还能把当前的过滤状态导出为 SQL。">
+	<meta name="description" content="从 HackerNews 上看到了一个名为 pico.sh 的项目，可以在不安装第三方工具的前提下，直接使用系统自带的工具（ssh/rsync）来实现发布文章、暴露本地服务等能力。他们的文档有一个 How it works 章节，其中提到底层用的是 wish 的能力。">
 
 
 	
@@ -70,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/quak-data-explorer/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/wish-for-ssh-apps/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +91,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>用 Quak 探索数据</h1>
+	<h1>Wish - 用 SSH 作为任何 TUI 应用的入口</h1>
 	<h5>
 		
-		<time datetime="2025-04-02 15:29:33.667 &#43;0000 UTC">2025/04/02 15:29</time>
+		<time datetime="2025-04-03 14:03:04.33 &#43;0000 UTC">2025/04/03 14:03</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,20 +102,17 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>大学里学过一些数据科学的课程，对 Kaggle 上的数据集页面印象深刻：每列顶部有一个分布概览，扫一眼就能对数据有个大概了解。今天遇到了一个开源库，也能实现这一点。更棒的是可以交互式探索数据（例如直接选中某个区间进一步下钻），甚至还能把当前的过滤状态导出为 SQL。</p>
-<p>src: <a href="https://github.com/manzt/quak">https://github.com/manzt/quak</a></p>
-<p>demo: <a href="https://manzt.github.io/quak/">https://manzt.github.io/quak/</a></p>
-<p>via: <a href="https://deno.com/blog/exploring-art-with-typescript-and-jupyter">https://deno.com/blog/exploring-art-with-typescript-and-jupyter</a></p>
+	<p>从 HackerNews 上看到了一个名为 pico.sh 的项目，可以在不安装第三方工具的前提下，直接使用系统自带的工具（ssh/rsync）来实现发布文章、暴露本地服务等能力。他们的文档有一个 How it works 章节，其中提到底层用的是 wish 的能力。</p>
+<p>继续翻 Wish 的文档，是一个看起来很自然但是之前从来没有想过的方向：把 SSH 作为一个通用协议。虽然 SSH 一般都被用于 remote login，但本质上它也提供了一个受加密保护的 tunnel；Server 可以提供一个 shell，也可以提供任何其他的“应用”，例如任意 TUI 应用。Wish 提供了类似于现代 Web 框架的中间件的能力，可以自定义给 client 的返回，可以被用于开发 “SSH Apps”。举个例子，想象一个现有的 TUI 应用，你可以 ssh 到某个机器上然后 ./run-my-app，或者干脆直接让这个应用接管 SSH，不仅用起来更简单，也更安全（因为不需要给出完整的 shell，也不用担心 openssh-server 的各种问题了。</p>
+<p>src: <a href="https://github.com/charmbracelet/wish">https://github.com/charmbracelet/wish</a></p>
+<p>via: <a href="https://pico.sh/how-it-works">https://pico.sh/how-it-works</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/google-material-icon-ligature/">
-		<img class="icon-text" src="/img/prev.svg"/>用连字实现图标</a>
+	<a class="prev-post" href="https://nekonull.me/til/quak-data-explorer/">
+		<img class="icon-text" src="/img/prev.svg"/>用 Quak 探索数据</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/wish-for-ssh-apps/">Wish - 用 SSH 作为任何 TUI 应用的入口<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
