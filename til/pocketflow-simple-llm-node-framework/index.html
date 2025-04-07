@@ -4,9 +4,15 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>Wish - 用 SSH 作为任何 TUI 应用的入口 - Nekonull&#39;s Garden</title>
+	<title>PocketFlow - 仅有 100 行的 LLM 工作流框架 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="从 HackerNews 上看到了一个名为 pico.sh 的项目，可以在不安装第三方工具的前提下，直接使用系统自带的工具（ssh/rsync）来实现发布文章、暴露本地服务等能力。他们的文档有一个 How it works 章节，其中提到底层用的是 wish 的能力。">
+	<meta name="description" content="起因是油管给我推送了一个 “Codebase2Tutorial” 的视频，从里面了解到了 PocketFlow 这个框架。特点如下：
+
+设计精巧（用 &gt;&gt; 和 - 连接不同节点）
+核心代码只有 100 行左右，可以被包含在单个文件中（让我想起了 Header-Only Lib）
+每个节点分为 prep, exec, post 的设计，以及数据单独存放在 shared（有点像 Vue）
+
+因为框架本身很小，让 LLM 帮助写代码的时候也可以很轻松的放在上下文中。">
 
 
 	
@@ -70,7 +76,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/wish-for-ssh-apps/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/pocketflow-simple-llm-node-framework/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +97,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>Wish - 用 SSH 作为任何 TUI 应用的入口</h1>
+	<h1>PocketFlow - 仅有 100 行的 LLM 工作流框架</h1>
 	<h5>
 		
-		<time datetime="2025-04-03 14:03:04.33 &#43;0000 UTC">2025/04/03 14:03</time>
+		<time datetime="2025-04-07 13:52:18.592 &#43;0000 UTC">2025/04/07 13:52</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,20 +108,22 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>从 HackerNews 上看到了一个名为 pico.sh 的项目，可以在不安装第三方工具的前提下，直接使用系统自带的工具（ssh/rsync）来实现发布文章、暴露本地服务等能力。他们的文档有一个 How it works 章节，其中提到底层用的是 wish 的能力。</p>
-<p>继续翻 Wish 的文档，是一个看起来很自然但是之前从来没有想过的方向：把 SSH 作为一个通用协议。虽然 SSH 一般都被用于 remote login，但本质上它也提供了一个受加密保护的 tunnel；Server 可以提供一个 shell，也可以提供任何其他的“应用”，例如任意 TUI 应用。Wish 提供了类似于现代 Web 框架的中间件的能力，可以自定义给 client 的返回，可以被用于开发 “SSH Apps”。举个例子，想象一个现有的 TUI 应用，你可以 ssh 到某个机器上然后 ./run-my-app，或者干脆直接让这个应用接管 SSH，不仅用起来更简单，也更安全（因为不需要给出完整的 shell，也不用担心 openssh-server 的各种问题了。</p>
-<p>src: <a href="https://github.com/charmbracelet/wish">https://github.com/charmbracelet/wish</a></p>
-<p>via: <a href="https://pico.sh/how-it-works">https://pico.sh/how-it-works</a></p>
+	<p>起因是油管给我推送了一个 “Codebase2Tutorial” 的视频，从里面了解到了 PocketFlow 这个框架。特点如下：</p>
+<ul>
+<li>设计精巧（用 <code>&gt;&gt;</code> 和 <code>-</code> 连接不同节点）</li>
+<li>核心代码只有 100 行左右，可以被包含在单个文件中（让我想起了 Header-Only Lib）</li>
+<li>每个节点分为 <code>prep</code>, <code>exec</code>, <code>post</code> 的设计，以及数据单独存放在 <code>shared</code>（有点像 Vue）</li>
+</ul>
+<p>因为框架本身很小，让 LLM 帮助写代码的时候也可以很轻松的放在上下文中。</p>
+<p>src: <a href="https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py">https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py</a></p>
+<p>video: <a href="https://www.youtube.com/watch?v=AFY67zOpbSo">https://www.youtube.com/watch?v=AFY67zOpbSo</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/quak-data-explorer/">
-		<img class="icon-text" src="/img/prev.svg"/>用 Quak 探索数据</a>
+	<a class="prev-post" href="https://nekonull.me/til/wish-for-ssh-apps/">
+		<img class="icon-text" src="/img/prev.svg"/>Wish - 用 SSH 作为任何 TUI 应用的入口</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/pocketflow-simple-llm-node-framework/">PocketFlow - 仅有 100 行的 LLM 工作流框架<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 

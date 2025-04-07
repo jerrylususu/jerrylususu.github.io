@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 03 Apr 2025 14:03:04 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Apr 2025 13:52:18 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PocketFlow - 仅有 100 行的 LLM 工作流框架</title>
+      <link>https://nekonull.me/til/pocketflow-simple-llm-node-framework/</link>
+      <pubDate>Mon, 07 Apr 2025 13:52:18 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/pocketflow-simple-llm-node-framework/</guid>
+      <description>&lt;p&gt;起因是油管给我推送了一个 “Codebase2Tutorial” 的视频，从里面了解到了 PocketFlow 这个框架。特点如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设计精巧（用 &lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt; 和 &lt;code&gt;-&lt;/code&gt; 连接不同节点）&lt;/li&gt;
+&lt;li&gt;核心代码只有 100 行左右，可以被包含在单个文件中（让我想起了 Header-Only Lib）&lt;/li&gt;
+&lt;li&gt;每个节点分为 &lt;code&gt;prep&lt;/code&gt;, &lt;code&gt;exec&lt;/code&gt;, &lt;code&gt;post&lt;/code&gt; 的设计，以及数据单独存放在 &lt;code&gt;shared&lt;/code&gt;（有点像 Vue）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为框架本身很小，让 LLM 帮助写代码的时候也可以很轻松的放在上下文中。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&#34;&gt;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;video: &lt;a href=&#34;https://www.youtube.com/watch?v=AFY67zOpbSo&#34;&gt;https://www.youtube.com/watch?v=AFY67zOpbSo&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Wish - 用 SSH 作为任何 TUI 应用的入口</title>
       <link>https://nekonull.me/til/wish-for-ssh-apps/</link>
@@ -482,18 +500,6 @@ let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
 &lt;li&gt;LLM 可以阅读（很适合做 prompt injecting）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&#34;&gt;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>LLMSerp - 把大语言模型当作搜索引擎</title>
-      <link>https://nekonull.me/til/llmserp-llm-as-search-engine-page/</link>
-      <pubDate>Sun, 02 Mar 2025 09:33:03 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/llmserp-llm-as-search-engine-page/</guid>
-      <description>&lt;p&gt;LLM 内部已经存储了很多事实性信息。如果通过一些 prompt，让 LLM 输出 [{title, abstract, url}]，就能实现一个搜索引擎。通过把这个&amp;quot;假&amp;quot;搜索引擎和真搜索引擎（例如 Google）的结果混合，Jina.AI 发现可以解决 RAG 中“什么时候需要调用外部搜索”的问题（可以阅读他们的博客文章了解更多信息）。但即使没有这个作用，单纯把 LLM 当作搜索引擎用也是一个很神奇的想法。&lt;/p&gt;
-&lt;p&gt;demo: &lt;a href=&#34;https://jina.ai/llm-serp-demo/&#34;&gt;https://jina.ai/llm-serp-demo/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;blog: &lt;a href=&#34;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&#34;&gt;https://jina.ai/news/llm-as-serp-search-engine-result-pages-from-large-language-models&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
