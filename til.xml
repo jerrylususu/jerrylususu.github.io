@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 07 Apr 2025 13:52:18 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Apr 2025 13:53:17 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PocketFlow - 仅有 100 行的 LLM 工作流框架</title>
       <link>https://nekonull.me/til/pocketflow-simple-llm-node-framework/</link>
-      <pubDate>Mon, 07 Apr 2025 13:52:18 +0000</pubDate>
+      <pubDate>Mon, 07 Apr 2025 13:53:17 +0000</pubDate>
       
       <guid>https://nekonull.me/til/pocketflow-simple-llm-node-framework/</guid>
       <description>&lt;p&gt;起因是油管给我推送了一个 “Codebase2Tutorial” 的视频，从里面了解到了 PocketFlow 这个框架。特点如下：&lt;/p&gt;
@@ -21,7 +21,16 @@
 &lt;li&gt;每个节点分为 &lt;code&gt;prep&lt;/code&gt;, &lt;code&gt;exec&lt;/code&gt;, &lt;code&gt;post&lt;/code&gt; 的设计，以及数据单独存放在 &lt;code&gt;shared&lt;/code&gt;（有点像 Vue）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;因为框架本身很小，让 LLM 帮助写代码的时候也可以很轻松的放在上下文中。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&#34;&gt;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一个示例工作流如下（摘自官方文档）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-py&#34; data-lang=&#34;py&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;review &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;approved&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; payment
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;review &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;needs_revision&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; revise
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;review &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;rejected&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; finish 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;revise &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; review
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;payment &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; finish
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;flow &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Flow(start&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;review)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;src: &lt;a href=&#34;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&#34;&gt;https://github.com/The-Pocket/PocketFlow/blob/main/pocketflow/__init__.py&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;video: &lt;a href=&#34;https://www.youtube.com/watch?v=AFY67zOpbSo&#34;&gt;https://www.youtube.com/watch?v=AFY67zOpbSo&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
