@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>来自「You don&#39;t know Git」演讲的一些 Git 小技巧 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="油管给我推送了一个名为「You don&rsquo;t know Git」的演讲1，其中提到了一些我之前不知道的小技巧，特此记录下：
+
+git recover：只要某个变更被放入过暂存区（例如 git add 过），即使没有提交，也会被写入 object database，在意外丢失后依然可以从 git 内部数据库中捞回来（似乎有个两周的时间期限）；git-recover 是一个简化了恢复过程的小工具2
+git diff &ndash;word-diff：可以把变更在行内直接显示（而不是分别显示 old 和 new 分行显示）；一些情况下能更直接看出来哪里修改了
+git blame -C -C -C：每一个 -C 都增加了搜索深度，从而能更好确认当前行的来源（例如是否是之前从其他文件复制过来的）；但是也会耗时更长
+mergetool：配置文件里可以用 mergetool 自定义出现合并冲突的时候用的处理工具（虽然我自己一般都用 vscode 自带的那个）；sgdm3 看起来是一个不错的 3-way merge tool
+·* text=auto：放在 .gitattribute` 里，自动正确处理跨系统的 CRLF 问题
+
+顺带一提，Github 最近发布了一个和 Linus 在 Git 20 年的访谈4，有兴趣的话也可以去看看。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/til/some-git-tricks-from-you-dont-know-git/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>来自「You don&#39;t know Git」演讲的一些 Git 小技巧</h1>
+	<h5>
+		
+		<time datetime="2025-04-08 15:01:33.41 &#43;0000 UTC">2025/04/08 15:01</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>油管给我推送了一个名为「You don&rsquo;t know Git」的演讲<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，其中提到了一些我之前不知道的小技巧，特此记录下：</p>
+<ul>
+<li>git recover：只要某个变更被放入过暂存区（例如 git add 过），即使没有提交，也会被写入 object database，在意外丢失后依然可以从 git 内部数据库中捞回来（似乎有个两周的时间期限）；<code>git-recover</code> 是一个简化了恢复过程的小工具<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li>git diff &ndash;word-diff：可以把变更在行内直接显示（而不是分别显示 old 和 new 分行显示）；一些情况下能更直接看出来哪里修改了</li>
+<li>git blame -C -C -C：每一个 -C 都增加了搜索深度，从而能更好确认当前行的来源（例如是否是之前从其他文件复制过来的）；但是也会耗时更长</li>
+<li>mergetool：配置文件里可以用 mergetool 自定义出现合并冲突的时候用的处理工具（虽然我自己一般都用 vscode 自带的那个）；sgdm<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> 看起来是一个不错的 3-way merge tool</li>
+<li>·* text=auto<code>：放在 </code>.gitattribute` 里，自动正确处理跨系统的 CRLF 问题</li>
+</ul>
+<p>顺带一提，Github 最近发布了一个和 Linus 在 Git 20 年的访谈<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup>，有兴趣的话也可以去看看。</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://www.youtube.com/watch?v=DZI0Zl-1JqQ&amp;pp=0gcJCX4JAYcqIYzv">https://www.youtube.com/watch?v=DZI0Zl-1JqQ&pp=0gcJCX4JAYcqIYzv</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/ethomson/git-recover">https://github.com/ethomson/git-recover</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://www.sourcegear.com/diffmerge/">https://www.sourcegear.com/diffmerge/</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://github.blog/open-source/git/git-turns-20-a-qa-with-linus-torvalds/">https://github.blog/open-source/git/git-turns-20-a-qa-with-linus-torvalds/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/pocketflow-simple-llm-node-framework/">
+		<img class="icon-text" src="/img/prev.svg"/>PocketFlow - 仅有 100 行的 LLM 工作流框架</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

@@ -7,7 +7,42 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 07 Apr 2025 13:53:17 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Apr 2025 15:01:33 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>来自「You don&#39;t know Git」演讲的一些 Git 小技巧</title>
+      <link>https://nekonull.me/til/some-git-tricks-from-you-dont-know-git/</link>
+      <pubDate>Tue, 08 Apr 2025 15:01:33 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/some-git-tricks-from-you-dont-know-git/</guid>
+      <description>&lt;p&gt;油管给我推送了一个名为「You don&amp;rsquo;t know Git」的演讲&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，其中提到了一些我之前不知道的小技巧，特此记录下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;git recover：只要某个变更被放入过暂存区（例如 git add 过），即使没有提交，也会被写入 object database，在意外丢失后依然可以从 git 内部数据库中捞回来（似乎有个两周的时间期限）；&lt;code&gt;git-recover&lt;/code&gt; 是一个简化了恢复过程的小工具&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;git diff &amp;ndash;word-diff：可以把变更在行内直接显示（而不是分别显示 old 和 new 分行显示）；一些情况下能更直接看出来哪里修改了&lt;/li&gt;
+&lt;li&gt;git blame -C -C -C：每一个 -C 都增加了搜索深度，从而能更好确认当前行的来源（例如是否是之前从其他文件复制过来的）；但是也会耗时更长&lt;/li&gt;
+&lt;li&gt;mergetool：配置文件里可以用 mergetool 自定义出现合并冲突的时候用的处理工具（虽然我自己一般都用 vscode 自带的那个）；sgdm&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; 看起来是一个不错的 3-way merge tool&lt;/li&gt;
+&lt;li&gt;·* text=auto&lt;code&gt;：放在 &lt;/code&gt;.gitattribute` 里，自动正确处理跨系统的 CRLF 问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;顺带一提，Github 最近发布了一个和 Linus 在 Git 20 年的访谈&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;，有兴趣的话也可以去看看。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=DZI0Zl-1JqQ&amp;amp;pp=0gcJCX4JAYcqIYzv&#34;&gt;https://www.youtube.com/watch?v=DZI0Zl-1JqQ&amp;pp=0gcJCX4JAYcqIYzv&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/ethomson/git-recover&#34;&gt;https://github.com/ethomson/git-recover&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.sourcegear.com/diffmerge/&#34;&gt;https://www.sourcegear.com/diffmerge/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.blog/open-source/git/git-turns-20-a-qa-with-linus-torvalds/&#34;&gt;https://github.blog/open-source/git/git-turns-20-a-qa-with-linus-torvalds/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
     <item>
       <title>PocketFlow - 仅有 100 行的 LLM 工作流框架</title>
       <link>https://nekonull.me/til/pocketflow-simple-llm-node-framework/</link>
@@ -494,21 +529,6 @@ let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    (year, month &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; _, day &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; _)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;src: &lt;a href=&#34;https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/&#34;&gt;https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用 Unicode 变体选择器隐藏信息</title>
-      <link>https://nekonull.me/til/hide-info-unicode-var-selector/</link>
-      <pubDate>Sun, 02 Mar 2025 13:46:14 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/hide-info-unicode-var-selector/</guid>
-      <description>&lt;p&gt;用 variation selector (VS 变体选择器） 把二进制数据藏在 unicode 字符串里；VS 有 256 个（VS1~VS256），刚好一个 byte 一个，二进制数据甚至不需要特殊处理（例如 base64）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一般应用（如浏览器）不会渲染出来&lt;/li&gt;
-&lt;li&gt;LLM 可以阅读（很适合做 prompt injecting）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&#34;&gt;https://paulbutler.org/2025/smuggling-arbitrary-data-through-an-emoji/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
