@@ -7,7 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 08 Apr 2025 15:01:33 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Apr 2025 14:38:37 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Graft - 支持部分复制的同步引擎</title>
+      <link>https://nekonull.me/til/graft-rust-sync-engine/</link>
+      <pubDate>Wed, 09 Apr 2025 14:38:37 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/graft-rust-sync-engine/</guid>
+      <description>&lt;p&gt;一个新的同步引擎，可以在此之上构建需要同步功能的应用（当然是用 Rust 写的）。&lt;/p&gt;
+&lt;p&gt;主要特性是将数据视作多个页面（page），页面本身存储在对象存储上；客户端使用（例如需要读取数据时）先获取元数据，再根据实际需要获取所需的页面，而不需要每次都拉取全量数据。每个页面可以有多个版本，由此可以得到快照和时间点恢复。&lt;/p&gt;
+&lt;p&gt;当然和任何分布式系统一样，某个客户端可能会尝试在一个旧版本上写入再提交。（想象在 git 中一个在旧未更新的分支上 commit 再 push）对这种情况，Graft 提供了多种冲突处理方式，可以让客户端在最新版本上重放变更（rebase），或是尝试和新版本做语义合并（merge），或是干脆分叉出一个新的分支。&lt;/p&gt;
+&lt;p&gt;作者的博客描述了和现有各种方案的对比，看起来在易用性和功能上取得了最佳的平衡。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/orbitinghail/graft&#34;&gt;https://github.com/orbitinghail/graft&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;blog: &lt;a href=&#34;https://sqlsync.dev/posts/stop-syncing-everything/&#34;&gt;https://sqlsync.dev/posts/stop-syncing-everything/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Apr/8/stop-syncing-everything/#atom-everything&#34;&gt;https://simonwillison.net/2025/Apr/8/stop-syncing-everything/#atom-everything&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>来自「You don&#39;t know Git」演讲的一些 Git 小技巧</title>
       <link>https://nekonull.me/til/some-git-tricks-from-you-dont-know-git/</link>
@@ -493,42 +509,6 @@ query getTasks {
       <guid>https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/</guid>
       <description>&lt;p&gt;我自己的 .bashrc 里有不少小工具，但是要每次改起来得写 shell script 着实烦人（即使能用 LLM 写，也免不了来回调试几次才能满意）。读到这篇文章，我才意识到原来可以写脚本放到 script 里，还有一些额外的优势（不用手动 source 重载、用 shell script 之外的任何语言、各种 shell 都能用）。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&#34;&gt;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Rust 的日期库的奇妙实现</title>
-      <link>https://nekonull.me/til/rust-date-function-math-magic/</link>
-      <pubDate>Sun, 02 Mar 2025 13:51:04 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/rust-date-function-math-magic/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;问题：实现一个函数，输入 (year, day-of-year) ，输出 (year, month, day)&lt;/li&gt;
-&lt;li&gt;基本做法：硬编码一个月份-日期数组，简单写一个循环&lt;/li&gt;
-&lt;li&gt;Rust 的新做法：利用一些神奇的数学关系（仿射函数），可以在无循环的情况下实现判断，核心是这两个公式：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;let month = (ordinal + 30) * 10 / 306 + 2;
-let days_in_preceding_months = (month + 3) * 306 / 10 - 122;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终优化后的代码如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;fn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ordinal_date_to_calendar_date&lt;/span&gt;(year: &lt;span style=&#34;color:#66d9ef&#34;&gt;i32&lt;/span&gt;, ordinal: &lt;span style=&#34;color:#66d9ef&#34;&gt;u16&lt;/span&gt;) -&amp;gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;i32&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;, &lt;span style=&#34;color:#66d9ef&#34;&gt;u8&lt;/span&gt;) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; ordinal &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ordinal &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;u32&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; jan_feb_len &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;59&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; is_leap_year(year) &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;u32&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; (month_adj, ordinal_adj) &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; ordinal &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;=&lt;/span&gt; jan_feb_len {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        (&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    } &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        (&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;, jan_feb_len)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    };
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; ordinal &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ordinal &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; ordinal_adj;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; month &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (ordinal &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;268&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;8031&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;13&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; days_in_preceding_months &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (month &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3917&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3866&lt;/span&gt;) &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;7&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; day &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; ordinal &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; days_in_preceding_months;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;let&lt;/span&gt; month &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; month &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; month_adj;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    (year, month &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; _, day &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; _)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;src: &lt;a href=&#34;https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/&#34;&gt;https://jhpratt.dev/blog/optimizing-with-novel-calendrical-algorithms/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
