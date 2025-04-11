@@ -7,7 +7,45 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 09 Apr 2025 14:38:37 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Apr 2025 16:59:46 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Concrete Syntax Tree 具体语法树</title>
+      <link>https://nekonull.me/til/concrete-syntax-tree/</link>
+      <pubDate>Fri, 11 Apr 2025 16:59:46 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/concrete-syntax-tree/</guid>
+      <description>&lt;p&gt;在阅读一个用 LLM 给 Python 加 docstring 的工具&lt;code&gt;llm-docsmith&lt;/code&gt;的创作笔记&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;时，首次了解到了 Concrete Syntax Tree 具体语法树这个概念（之前只知道 AST 抽象语法树）。&lt;/p&gt;
+&lt;p&gt;搜索了一些相关资料，看起来可以按照抽象层级从低到高这样排序：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;源代码：抽象层级最低，信息最丰富&lt;/li&gt;
+&lt;li&gt;CST：抽象层级略高（有语言 grammer 能有的全部信息），信息较为丰富，但是视解析器可能丢失一些语言 grammer 没有的信息（例如缩进）&lt;/li&gt;
+&lt;li&gt;AST：抽象层级最高，只含有相对必要的信息（例如 &lt;code&gt;(a+b)&lt;/code&gt; 的左右括号在 CST 里存在，但是 AST 里没有，因为可以通过 AST 树上节点的父子关系推断出来。）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;大部分时候我们所需要的是 AST （例如实际 eval 某个程序），解析器实现则基本可以分为(1)源代码-&amp;gt;AST，(2)源代码-&amp;gt;CST-&amp;gt;AST两种。（注意 CST-&amp;gt;AST 可能不是 trivial 的，需要一些复杂的转换操作。）但是如果你想重构/格式化代码而不影响其他现存代码，CST 里包含的丰富信息就很重要了，这意味着可以在修改树结构之后，再重新用 CST 生成源代码，且对于未修改的 CST 部分，生成的代码和原始输入的代码（基本）一致。&lt;/p&gt;
+&lt;p&gt;对于 Python，libcst&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; 实现了最精确的解析，可以无损从 CST 转换为原始代码（含缩进/空格/注释）；对于其他语言，则可以考虑用通用的 tree-sitter&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;，其实现了多个语言的 CST 解析器（但我似乎还没太弄清楚是否能像 libcst 那样精确）。&lt;/p&gt;
+&lt;p&gt;相关链接：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/&#34;&gt;https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/&lt;/a&gt; （一篇 AST vs CST 的深入对比）&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zed.dev/blog/syntax-aware-editing&#34;&gt;https://zed.dev/blog/syntax-aware-editing&lt;/a&gt; (tree-sitter 的作者也是 zed 的作者？）&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=ms-vscode.anycode&#34;&gt;https://marketplace.visualstudio.com/items?itemName=ms-vscode.anycode&lt;/a&gt; （在语言服务不可用的时候，VS Code 会用 tree-sitter 来实现基本的语言理解，支持 outline，jump to symbol 等功能）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;llm-docsmith blog: &lt;a href=&#34;https://mathpn.com/posts/llm-docsmith/&#34;&gt;https://mathpn.com/posts/llm-docsmith/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;libcst: &lt;a href=&#34;https://libcst.readthedocs.io/en/latest/why_libcst.html&#34;&gt;https://libcst.readthedocs.io/en/latest/why_libcst.html&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;tree-sitter: &lt;a href=&#34;https://tree-sitter.github.io/tree-sitter/7-playground.html&#34;&gt;https://tree-sitter.github.io/tree-sitter/7-playground.html&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
     <item>
       <title>Graft - 支持部分复制的同步引擎</title>
       <link>https://nekonull.me/til/graft-rust-sync-engine/</link>
@@ -498,17 +536,6 @@ query getTasks {
 &lt;p&gt;&lt;a href=&#34;https://emojikitchen.dev/&#34;&gt;https://emojikitchen.dev/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;ref1: &lt;a href=&#34;https://jenniferdaniel.substack.com/p/introducing-emoji-kitchen-&#34;&gt;https://jenniferdaniel.substack.com/p/introducing-emoji-kitchen-&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;ref2: &lt;a href=&#34;https://9to5google.com/2024/12/27/gboard-android-emoji-kitchen-list/&#34;&gt;https://9to5google.com/2024/12/27/gboard-android-emoji-kitchen-list/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用 PATH 里的脚本是更好的别名</title>
-      <link>https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/</link>
-      <pubDate>Thu, 06 Mar 2025 14:10:10 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/scripts-in-path-can-do-more-than-alias/</guid>
-      <description>&lt;p&gt;我自己的 .bashrc 里有不少小工具，但是要每次改起来得写 shell script 着实烦人（即使能用 LLM 写，也免不了来回调试几次才能满意）。读到这篇文章，我才意识到原来可以写脚本放到 script 里，还有一些额外的优势（不用手动 source 重载、用 shell script 之外的任何语言、各种 shell 都能用）。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&#34;&gt;https://evanhahn.com/why-alias-is-my-last-resort-for-aliases/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

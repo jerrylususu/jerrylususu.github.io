@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>Concrete Syntax Tree 具体语法树 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="在阅读一个用 LLM 给 Python 加 docstring 的工具llm-docsmith的创作笔记1时，首次了解到了 Concrete Syntax Tree 具体语法树这个概念（之前只知道 AST 抽象语法树）。
+搜索了一些相关资料，看起来可以按照抽象层级从低到高这样排序：">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/til/concrete-syntax-tree/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>Concrete Syntax Tree 具体语法树</h1>
+	<h5>
+		
+		<time datetime="2025-04-11 16:59:46.516 &#43;0000 UTC">2025/04/11 16:59</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>在阅读一个用 LLM 给 Python 加 docstring 的工具<code>llm-docsmith</code>的创作笔记<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>时，首次了解到了 Concrete Syntax Tree 具体语法树这个概念（之前只知道 AST 抽象语法树）。</p>
+<p>搜索了一些相关资料，看起来可以按照抽象层级从低到高这样排序：</p>
+<ul>
+<li>源代码：抽象层级最低，信息最丰富</li>
+<li>CST：抽象层级略高（有语言 grammer 能有的全部信息），信息较为丰富，但是视解析器可能丢失一些语言 grammer 没有的信息（例如缩进）</li>
+<li>AST：抽象层级最高，只含有相对必要的信息（例如 <code>(a+b)</code> 的左右括号在 CST 里存在，但是 AST 里没有，因为可以通过 AST 树上节点的父子关系推断出来。）</li>
+</ul>
+<p>大部分时候我们所需要的是 AST （例如实际 eval 某个程序），解析器实现则基本可以分为(1)源代码-&gt;AST，(2)源代码-&gt;CST-&gt;AST两种。（注意 CST-&gt;AST 可能不是 trivial 的，需要一些复杂的转换操作。）但是如果你想重构/格式化代码而不影响其他现存代码，CST 里包含的丰富信息就很重要了，这意味着可以在修改树结构之后，再重新用 CST 生成源代码，且对于未修改的 CST 部分，生成的代码和原始输入的代码（基本）一致。</p>
+<p>对于 Python，libcst<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> 实现了最精确的解析，可以无损从 CST 转换为原始代码（含缩进/空格/注释）；对于其他语言，则可以考虑用通用的 tree-sitter<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>，其实现了多个语言的 CST 解析器（但我似乎还没太弄清楚是否能像 libcst 那样精确）。</p>
+<p>相关链接：</p>
+<ul>
+<li><a href="https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/">https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/</a> （一篇 AST vs CST 的深入对比）</li>
+<li><a href="https://zed.dev/blog/syntax-aware-editing">https://zed.dev/blog/syntax-aware-editing</a> (tree-sitter 的作者也是 zed 的作者？）</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.anycode">https://marketplace.visualstudio.com/items?itemName=ms-vscode.anycode</a> （在语言服务不可用的时候，VS Code 会用 tree-sitter 来实现基本的语言理解，支持 outline，jump to symbol 等功能）</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>llm-docsmith blog: <a href="https://mathpn.com/posts/llm-docsmith/">https://mathpn.com/posts/llm-docsmith/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>libcst: <a href="https://libcst.readthedocs.io/en/latest/why_libcst.html">https://libcst.readthedocs.io/en/latest/why_libcst.html</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>tree-sitter: <a href="https://tree-sitter.github.io/tree-sitter/7-playground.html">https://tree-sitter.github.io/tree-sitter/7-playground.html</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/graft-rust-sync-engine/">
+		<img class="icon-text" src="/img/prev.svg"/>Graft - 支持部分复制的同步引擎</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
