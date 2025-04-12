@@ -7,7 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 12 Apr 2025 11:50:26 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Apr 2025 12:04:12 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GCRA 限流算法</title>
+      <link>https://nekonull.me/til/gcra-rate-limiting/</link>
+      <pubDate>Sat, 12 Apr 2025 12:04:12 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/gcra-rate-limiting/</guid>
+      <description>&lt;p&gt;在看一个 Python 限流库（&lt;code&gt;throttled-py&lt;/code&gt;）的仓库的时候，注意到了一个之前没有听说过的限流算法 GCRA（Generic Cell Rate Algorithm，通用信元速率算法）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;漏桶算法无法应对突发请求&lt;/li&gt;
+&lt;li&gt;令牌桶算法可以应对突发，但是需要维护两个状态（当前桶内令牌数、上一次补充令牌时间），且需要对状态加锁（这两个状态需要在一个原子里修改）&lt;/li&gt;
+&lt;li&gt;GRCA 是对令牌桶的改进，减少了状态数（只需要维护一个状态 &lt;code&gt;tat&lt;/code&gt; 理论到达时间），实现上更轻量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;顺带一提，Let&amp;rsquo;s Encrypt 用的也是 GRCA（底层状态存储在 Redis 里）。&lt;/p&gt;
+&lt;p&gt;blog: &lt;a href=&#34;https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html&#34;&gt;https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic&#34;&gt;https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;lets-encrypt: &lt;a href=&#34;https://letsencrypt.org/2025/01/30/scaling-rate-limits/&#34;&gt;https://letsencrypt.org/2025/01/30/scaling-rate-limits/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>rustc_codegen_clr - 把 Rust 编译成 C</title>
       <link>https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/</link>
@@ -536,21 +555,6 @@ query getTasks {
 &lt;p&gt;这个工具具体是否有用，还是等各路开发者的验证了。毕竟官方只定义了接口，具体实现当然是“留作练习”了。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool&#34;&gt;https://docs.anthropic.com/en/docs/build-with-claude/tool-use/text-editor-tool&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/13/anthropic-api-text-editor-tool/#atom-everything&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>游牧计算</title>
-      <link>https://nekonull.me/til/on-nomadic-compute/</link>
-      <pubDate>Tue, 11 Mar 2025 14:59:03 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/on-nomadic-compute/</guid>
-      <description>&lt;p&gt;在使用 LLM 的时候很容易陷入两个极端之一：完全信任服务提供商（无论是 OpenAI/Deepseek 这样的官方服务，还是像 SiliconFlow/OpenRouter 这样的推理提供商），或者是完全自己部署。前者很方便，外包了复杂度，但是也意味着模型不受自己控制；后者很自由，但前提是得有足够多的钱买卡。&lt;/p&gt;
-&lt;p&gt;但其实全托管-自托管是一段连续的光谱，游牧计算（Nomadic Compute）则是其中一个有趣的中间点。这个概念似乎一位外国博主 Xe Iaso 创造的，指的是像游牧民族那样，带着自己的数据在不同的云服务基础设施提供商之间漫游，逐水草而居（实际上是价格最低的 GPU）。这样的行为方式之所以能成立，是因为计算（Nvidia GPU）和存储（假设使用某种对象存储服务，例如 S3 或者各种 S3-兼容服务）都是云供应商中立，可以互换的。只要你在需要时在价格最低的云上启动实例，并在不用的时候完全关闭，就能享受到相对低的价格和更自由的选择，并且避免供应商锁定。&lt;/p&gt;
-&lt;p&gt;如果这听起来很有趣，你应该继续阅读这篇演讲记录。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://xeiaso.net/talks/2025/ai-chatbot-friends/&#34;&gt;https://xeiaso.net/talks/2025/ai-chatbot-friends/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;或者看看已有的帮你自动跨云服务商找最低价 GPU 并完成计算的开源项目&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/skypilot-org/skypilot/&#34;&gt;https://github.com/skypilot-org/skypilot/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

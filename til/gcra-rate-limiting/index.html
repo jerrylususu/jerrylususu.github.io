@@ -4,10 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>rustc_codegen_clr - 把 Rust 编译成 C - Nekonull&#39;s Garden</title>
+	<title>GCRA 限流算法 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="Why?：有的架构/平台不支持 Rust，但是基本都有 C 编译器；如果可以把 Rust 编译成 C，那就可以让 Rust 在更多更广泛的平台上运行了。
-How?: 作为一个 Rust 编译器(rustc)后端，目标是 C 而不是机器语言。">
+	<meta name="description" content="在看一个 Python 限流库（throttled-py）的仓库的时候，注意到了一个之前没有听说过的限流算法 GCRA（Generic Cell Rate Algorithm，通用信元速率算法）。">
 
 
 	
@@ -71,7 +70,7 @@ How?: 作为一个 Rust 编译器(rustc)后端，目标是 C 而不是机器语�
           
             
             
-                <li><a href="https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/gcra-rate-limiting/" class="active langselect">简体中文</a></li>
             
           
       
@@ -92,10 +91,10 @@ How?: 作为一个 Rust 编译器(rustc)后端，目标是 C 而不是机器语�
 
 <article>
 	<header><hgroup id="brand">
-	<h1>rustc_codegen_clr - 把 Rust 编译成 C</h1>
+	<h1>GCRA 限流算法</h1>
 	<h5>
 		
-		<time datetime="2025-04-12 11:50:26.928 &#43;0000 UTC">2025/04/12 11:50</time>
+		<time datetime="2025-04-12 12:04:12.253 &#43;0000 UTC">2025/04/12 12:04</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -103,20 +102,23 @@ How?: 作为一个 Rust 编译器(rustc)后端，目标是 C 而不是机器语�
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>Why?：有的架构/平台不支持 Rust，但是基本都有 C 编译器；如果可以把 Rust 编译成 C，那就可以让 Rust 在更多更广泛的平台上运行了。</p>
-<p>How?: 作为一个 Rust 编译器(<code>rustc</code>)后端，目标是 C 而不是机器语言。</p>
-<p>repo: <a href="https://github.com/FractalFir/rustc_codegen_clr">https://github.com/FractalFir/rustc_codegen_clr</a></p>
-<p>via: <a href="https://fractalfir.github.io/generated_html/cg_clr_odd_platforms.html">https://fractalfir.github.io/generated_html/cg_clr_odd_platforms.html</a></p>
+	<p>在看一个 Python 限流库（<code>throttled-py</code>）的仓库的时候，注意到了一个之前没有听说过的限流算法 GCRA（Generic Cell Rate Algorithm，通用信元速率算法）。</p>
+<ul>
+<li>漏桶算法无法应对突发请求</li>
+<li>令牌桶算法可以应对突发，但是需要维护两个状态（当前桶内令牌数、上一次补充令牌时间），且需要对状态加锁（这两个状态需要在一个原子里修改）</li>
+<li>GRCA 是对令牌桶的改进，减少了状态数（只需要维护一个状态 <code>tat</code> 理论到达时间），实现上更轻量</li>
+</ul>
+<p>顺带一提，Let&rsquo;s Encrypt 用的也是 GRCA（底层状态存储在 Redis 里）。</p>
+<p>blog: <a href="https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html">https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html</a></p>
+<p>via: <a href="https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic">https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic</a></p>
+<p>lets-encrypt: <a href="https://letsencrypt.org/2025/01/30/scaling-rate-limits/">https://letsencrypt.org/2025/01/30/scaling-rate-limits/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/camel-helps-prompt-injection-by-dual-llm-and-data-flow-analysis/">
-		<img class="icon-text" src="/img/prev.svg"/>CaMeL - 用双 LLM 和数据流分析实现提示注入缓解 (2503.18813)</a>
+	<a class="prev-post" href="https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/">
+		<img class="icon-text" src="/img/prev.svg"/>rustc_codegen_clr - 把 Rust 编译成 C</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/gcra-rate-limiting/">GCRA 限流算法<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
