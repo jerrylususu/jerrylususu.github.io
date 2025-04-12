@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 12 Apr 2025 06:34:40 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Apr 2025 06:35:07 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>CaMeL - 用双 LLM 和数据流分析实现提示注入缓解</title>
+      <title>CaMeL - 用双 LLM 和数据流分析实现提示注入缓解 (2503.18813)</title>
       <link>https://nekonull.me/til/camel-helps-prompt-injection-by-dual-llm-and-data-flow-analysis/</link>
-      <pubDate>Sat, 12 Apr 2025 06:34:40 +0000</pubDate>
+      <pubDate>Sat, 12 Apr 2025 06:35:07 +0000</pubDate>
       
       <guid>https://nekonull.me/til/camel-helps-prompt-injection-by-dual-llm-and-data-flow-analysis/</guid>
       <description>&lt;p&gt;LLM 的提示注入是一个长久存在但鲜有突破性进展的问题，但今天一个这样的突破性进展似乎出现了。在 Simon Willson 的双 LLM 方案上&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，Deepmind 提出了 CaMeL&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;。以下是简要介绍：&lt;/p&gt;
