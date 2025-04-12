@@ -94,7 +94,7 @@
 	<h1>GCRA 限流算法</h1>
 	<h5>
 		
-		<time datetime="2025-04-12 12:04:12.253 &#43;0000 UTC">2025/04/12 12:04</time>
+		<time datetime="2025-04-12 12:04:44.769 &#43;0000 UTC">2025/04/12 12:04</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -106,9 +106,9 @@
 <ul>
 <li>漏桶算法无法应对突发请求</li>
 <li>令牌桶算法可以应对突发，但是需要维护两个状态（当前桶内令牌数、上一次补充令牌时间），且需要对状态加锁（这两个状态需要在一个原子里修改）</li>
-<li>GRCA 是对令牌桶的改进，减少了状态数（只需要维护一个状态 <code>tat</code> 理论到达时间），实现上更轻量</li>
+<li>GCRA 是对令牌桶的改进，减少了状态数（只需要维护一个状态 <code>tat</code> 理论到达时间），实现上更轻量</li>
 </ul>
-<p>顺带一提，Let&rsquo;s Encrypt 用的也是 GRCA（底层状态存储在 Redis 里）。</p>
+<p>顺带一提，Let&rsquo;s Encrypt 用的也是 GCRA（底层状态存储在 Redis 里）。</p>
 <p>blog: <a href="https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html">https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html</a></p>
 <p>via: <a href="https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic">https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic</a></p>
 <p>lets-encrypt: <a href="https://letsencrypt.org/2025/01/30/scaling-rate-limits/">https://letsencrypt.org/2025/01/30/scaling-rate-limits/</a></p>
