@@ -1,6 +1,6 @@
 ---
-title: CaMeL - 用双 LLM 和数据流分析实现提示注入缓解
-date: 2025-04-12T06:34:40.463Z
+title: CaMeL - 用双 LLM 和数据流分析实现提示注入缓解 (2503.18813)
+date: 2025-04-12T06:35:07.481Z
 ---
 
 LLM 的提示注入是一个长久存在但鲜有突破性进展的问题，但今天一个这样的突破性进展似乎出现了。在 Simon Willson 的双 LLM 方案上[^dual-llm]，Deepmind 提出了 CaMeL[^camel]。以下是简要介绍：
