@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 12 Apr 2025 06:35:07 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Apr 2025 11:50:26 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rustc_codegen_clr - 把 Rust 编译成 C</title>
+      <link>https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/</link>
+      <pubDate>Sat, 12 Apr 2025 11:50:26 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/</guid>
+      <description>&lt;p&gt;Why?：有的架构/平台不支持 Rust，但是基本都有 C 编译器；如果可以把 Rust 编译成 C，那就可以让 Rust 在更多更广泛的平台上运行了。&lt;/p&gt;
+&lt;p&gt;How?: 作为一个 Rust 编译器(&lt;code&gt;rustc&lt;/code&gt;)后端，目标是 C 而不是机器语言。&lt;/p&gt;
+&lt;p&gt;repo: &lt;a href=&#34;https://github.com/FractalFir/rustc_codegen_clr&#34;&gt;https://github.com/FractalFir/rustc_codegen_clr&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://fractalfir.github.io/generated_html/cg_clr_odd_platforms.html&#34;&gt;https://fractalfir.github.io/generated_html/cg_clr_odd_platforms.html&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>CaMeL - 用双 LLM 和数据流分析实现提示注入缓解 (2503.18813)</title>
       <link>https://nekonull.me/til/camel-helps-prompt-injection-by-dual-llm-and-data-flow-analysis/</link>
@@ -538,18 +551,6 @@ query getTasks {
 &lt;p&gt;&lt;a href=&#34;https://xeiaso.net/talks/2025/ai-chatbot-friends/&#34;&gt;https://xeiaso.net/talks/2025/ai-chatbot-friends/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;或者看看已有的帮你自动跨云服务商找最低价 GPU 并完成计算的开源项目&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/skypilot-org/skypilot/&#34;&gt;https://github.com/skypilot-org/skypilot/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>用 LLM 计算可视化文字的信息增量</title>
-      <link>https://nekonull.me/til/llm-perplexity-visualization/</link>
-      <pubDate>Sun, 09 Mar 2025 15:39:03 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/llm-perplexity-visualization/</guid>
-      <description>&lt;p&gt;读 LLM 推理相关的资料时，想到：在 LLM 前向推理的过程中，会计算从输入开头到当前 token 的所有 token 的 logit，最后采样的时候只用了最后一个 token 的 logit；是否可以构建一个工具，用户输入一段文本，让LLM计算每个token上出现用户输入token的概率，并且加点可视化（概率大：说明这个接续很常见，没什么信息增量；概率小：说明这个接续不太常见，可能有点意思），来得到一个展示文本信息增量的工具？&lt;/p&gt;
-&lt;p&gt;搜了搜，发现果然已经有人做过了，用的是 GPT-2 （虽然老了一些，但是足够小，可以直接跑在浏览器里），效果也很棒。或许可以考虑下用现代的 SLM（Small Language Model）更新下？&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://perplexity.vercel.app/&#34;&gt;https://perplexity.vercel.app/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
