@@ -4,9 +4,14 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>GCRA 限流算法 - Nekonull&#39;s Garden</title>
+	<title>JSX Over The Wire - 对 React 服务端组件的自然推导 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="在看一个 Python 限流库（throttled-py）的仓库的时候，注意到了一个之前没有听说过的限流算法 GCRA（Generic Cell Rate Algorithm，通用信元速率算法）。">
+	<meta name="description" content="一篇介绍 React Server Component 的文章，第一次让我有了一种“原来如此！”的感觉。作者分两条线，分别从概念和历史层面介绍了 RSC 的设计思想。十分推荐的 deepdive 文章！
+
+概念：Model -&gt; ViewModel -&gt; REST -&gt; Backend For Frontend
+历史：CGI -&gt; PHP -&gt; XHP -&gt; Async XHP -&gt; Server Driven UI
+
+src: https://overreacted.io/jsx-over-the-wire">
 
 
 	
@@ -70,7 +75,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/gcra-rate-limiting/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/jsx-over-the-wire-react-server-side-component/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +96,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>GCRA 限流算法</h1>
+	<h1>JSX Over The Wire - 对 React 服务端组件的自然推导</h1>
 	<h5>
 		
-		<time datetime="2025-04-12 12:04:44.769 &#43;0000 UTC">2025/04/12 12:04</time>
+		<time datetime="2025-04-16 15:04:40.528 &#43;0000 UTC">2025/04/16 15:04</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,26 +107,47 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>在看一个 Python 限流库（<code>throttled-py</code>）的仓库的时候，注意到了一个之前没有听说过的限流算法 GCRA（Generic Cell Rate Algorithm，通用信元速率算法）。</p>
+	<p>一篇介绍 React Server Component 的文章，第一次让我有了一种“原来如此！”的感觉。作者分两条线，分别从概念和历史层面介绍了 RSC 的设计思想。十分推荐的 deepdive 文章！</p>
 <ul>
-<li>漏桶算法无法应对突发请求</li>
-<li>令牌桶算法可以应对突发，但是需要维护两个状态（当前桶内令牌数、上一次补充令牌时间），且需要对状态加锁（这两个状态需要在一个原子里修改）</li>
-<li>GCRA 是对令牌桶的改进，减少了状态数（只需要维护一个状态 <code>tat</code> 理论到达时间），实现上更轻量</li>
+<li>概念：Model -&gt; ViewModel -&gt; REST -&gt; Backend For Frontend</li>
+<li>历史：CGI -&gt; PHP -&gt; XHP -&gt; Async XHP -&gt; Server Driven UI</li>
 </ul>
-<p>顺带一提，Let&rsquo;s Encrypt 用的也是 GCRA（底层状态存储在 Redis 里）。</p>
-<p>blog: <a href="https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html">https://leungyukshing.cn/archives/Rate-Limit-Algorithm.html</a></p>
-<p>via: <a href="https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic">https://github.com/ZhuoZhuoCrayon/throttled-py/tree/main/docs/basic</a></p>
-<p>lets-encrypt: <a href="https://letsencrypt.org/2025/01/30/scaling-rate-limits/">https://letsencrypt.org/2025/01/30/scaling-rate-limits/</a></p>
+<p>src: <a href="https://overreacted.io/jsx-over-the-wire">https://overreacted.io/jsx-over-the-wire</a></p>
+<hr>
+<p>以下是我自己尝试复现这个推导过程：</p>
+<ul>
+<li>Stage 1
+<ul>
+<li>Q：为了展示一个前端页面，可能需要请求很多不同的后端接口，造成前端性能差（request waterfall）</li>
+<li>A：那就为了每个前端页面，创建一个专门用于这个页面的后端接口，刚好返回这个页面所需的所有信息（Backend For Frontend）</li>
+</ul>
+</li>
+<li>Stage 2
+<ul>
+<li>Q：不同的前端页面可能有共享的内容（文章列表 / 文章内容），后端接口实现存在很多代码重复</li>
+<li>A：提供可组合的后端实现 （Composable BFF)，例如文章列表屏幕接口调用文章内容屏幕的接口，用参数控制所需内容（是否需要截断正文）</li>
+</ul>
+</li>
+<li>Stage 3
+<ul>
+<li>Q：现在虽然后端可以返回一个大 JSON，恰好包含本页面前端所需的所有信息，但是前端的每个组件都需要自己解析 JSON，从里面取出自己需要的一部分塞到 Prompt 里，还是有点繁琐</li>
+<li>A：后端返回的 JSON 中，除了组件的数据（props），还加上组件的结构；后端返回一个组件树，前端直接渲染这棵树（Server Driven UI）</li>
+</ul>
+</li>
+<li>Stage 4
+<ul>
+<li>Q：这一切都很棒，但是需要自己手动协调前后端的一致性，避免前后端 desync</li>
+<li>A：让框架来做（React Server Side Component）</li>
+</ul>
+</li>
+</ul>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/rustc-codegen-clr-compile-rust-to-c/">
-		<img class="icon-text" src="/img/prev.svg"/>rustc_codegen_clr - 把 Rust 编译成 C</a>
+	<a class="prev-post" href="https://nekonull.me/til/gcra-rate-limiting/">
+		<img class="icon-text" src="/img/prev.svg"/>GCRA 限流算法</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/jsx-over-the-wire-react-server-side-component/">JSX Over The Wire - 对 React 服务端组件的自然推导<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
