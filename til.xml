@@ -7,7 +7,34 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 16 Apr 2025 15:04:40 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Apr 2025 14:10:25 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>部分视频中的马赛克可以被去除</title>
+      <link>https://nekonull.me/til/video-decensoring/</link>
+      <pubDate>Thu, 17 Apr 2025 14:10:25 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/video-decensoring/</guid>
+      <description>&lt;p&gt;油管给我推荐了这个视频&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，标题是 &amp;ldquo;It&amp;rsquo;s easier than ever to de-censor videos&amp;rdquo;。一个代码实现在这里&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;。&lt;/p&gt;
+&lt;p&gt;简单来说，如果一个视频中存在某个被打码的静态图片（例如一个文件查看器窗口），且这个图片（和马赛克）一起在视频画面上移动（例如从左侧拖到右侧），就有可能还原图片。（对动态视频的打码似乎还是安全的。）&lt;/p&gt;
+&lt;p&gt;这是怎么做到的？一般视频编辑器中，实现马赛克的方式是，将某一个区域（例如一个5x5像素的区域）用当前区域中心的像素填充。假如这个区域划分在整个视频中保持一致，那么移动被打码的内容，会导致原始图片中不同的像素被选做“中心像素”。假如收集到足够多的中心像素，就有可能可以还原出原始内容（不完美但是可以辨认出文字）。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在代码仓库里有一个更好的比喻：想象马赛克是一面栅栏，上面有很多小洞；假如栅栏本身移动了，或者是栅栏后面的物体移动了，就能从相同的洞口看到更多内容。&lt;/p&gt;
+&lt;p&gt;LLM 的总结：马赛克遮挡的本质是网格覆盖，当网格或背景移动时，每个网格中心点在不同帧中会暴露被遮挡区域的不同部分。通过累积多帧的中心像素并插值填充未覆盖区域，可逐步还原完整图像。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;结论：看起来对于视频中的敏感信息，还是直接纯色覆盖更保险。&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;video: &lt;a href=&#34;https://www.youtube.com/watch?v=acKYYwcxpGk&#34;&gt;https://www.youtube.com/watch?v=acKYYwcxpGk&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;code: &lt;a href=&#34;https://github.com/KoKuToru/de-pixelate_gaV-O6NPWrI&#34;&gt;https://github.com/KoKuToru/de-pixelate_gaV-O6NPWrI&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
     <item>
       <title>JSX Over The Wire - 对 React 服务端组件的自然推导</title>
       <link>https://nekonull.me/til/jsx-over-the-wire-react-server-side-component/</link>
@@ -561,18 +588,6 @@ query getTasks {
       <description>&lt;p&gt;读到了 Redis 作者 antirez 的一篇文章《LLM 的权重是历史的一部分》。&lt;/p&gt;
 &lt;p&gt;的确，网络上越来越多的信息已经永久消失了（现在能打开一个 2010~2020 年之间的某个链接都已经几乎是奇迹了）。存档的工作很重要，但是这样做并没有经济效益。已训练的 LLM 虽然可能会有幻觉，但至少代表了某一个时刻的现实。而且考虑到模型分散的足够多，可能比传统的集中式存档（例如 Internet Archive）更能持久的保存下来当前我们所见的世界。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://antirez.com/news/147&#34;&gt;https://antirez.com/news/147&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>浏览器内置的默认 HTML 样式</title>
-      <link>https://nekonull.me/til/browser-default-css/</link>
-      <pubDate>Mon, 17 Mar 2025 14:07:45 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/browser-default-css/</guid>
-      <description>&lt;p&gt;HTML 如果没有指定一个元素的样式，那么会用“默认”样式展示。（在 DevTools 里似乎被标记为“用户代理样式表”）。之前一直有些疑惑到底是在哪里定义的，今天在读其他信息的时候发现了。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://github.com/chromium/chromium/blob/main/third_party/blink/renderer/core/html/resources/html.css&#34;&gt;https://github.com/chromium/chromium/blob/main/third_party/blink/renderer/core/html/resources/html.css&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/16/backstory/&#34;&gt;https://simonwillison.net/2025/Mar/16/backstory/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

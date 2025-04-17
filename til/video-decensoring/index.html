@@ -4,14 +4,10 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>JSX Over The Wire - 对 React 服务端组件的自然推导 - Nekonull&#39;s Garden</title>
+	<title>部分视频中的马赛克可以被去除 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="一篇介绍 React Server Component 的文章，第一次让我有了一种“原来如此！”的感觉。作者分两条线，分别从概念和历史层面介绍了 RSC 的设计思想。十分推荐的 deepdive 文章！
-
-概念：Model -&gt; ViewModel -&gt; REST -&gt; Backend For Frontend
-历史：CGI -&gt; PHP -&gt; XHP -&gt; Async XHP -&gt; Server Driven UI
-
-src: https://overreacted.io/jsx-over-the-wire">
+	<meta name="description" content="油管给我推荐了这个视频1，标题是 &ldquo;It&rsquo;s easier than ever to de-censor videos&rdquo;。一个代码实现在这里2。
+简单来说，如果一个视频中存在某个被打码的静态图片（例如一个文件查看器窗口），且这个图片（和马赛克）一起在视频画面上移动（例如从左侧拖到右侧），就有可能还原图片。（对动态视频的打码似乎还是安全的。）">
 
 
 	
@@ -75,7 +71,7 @@ src: https://overreacted.io/jsx-over-the-wire">
           
             
             
-                <li><a href="https://nekonull.me/til/jsx-over-the-wire-react-server-side-component/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/video-decensoring/" class="active langselect">简体中文</a></li>
             
           
       
@@ -96,10 +92,10 @@ src: https://overreacted.io/jsx-over-the-wire">
 
 <article>
 	<header><hgroup id="brand">
-	<h1>JSX Over The Wire - 对 React 服务端组件的自然推导</h1>
+	<h1>部分视频中的马赛克可以被去除</h1>
 	<h5>
 		
-		<time datetime="2025-04-16 15:04:40.528 &#43;0000 UTC">2025/04/16 15:04</time>
+		<time datetime="2025-04-17 14:10:25.103 &#43;0000 UTC">2025/04/17 14:10</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -107,50 +103,31 @@ src: https://overreacted.io/jsx-over-the-wire">
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>一篇介绍 React Server Component 的文章，第一次让我有了一种“原来如此！”的感觉。作者分两条线，分别从概念和历史层面介绍了 RSC 的设计思想。十分推荐的 deepdive 文章！</p>
-<ul>
-<li>概念：Model -&gt; ViewModel -&gt; REST -&gt; Backend For Frontend</li>
-<li>历史：CGI -&gt; PHP -&gt; XHP -&gt; Async XHP -&gt; Server Driven UI</li>
-</ul>
-<p>src: <a href="https://overreacted.io/jsx-over-the-wire">https://overreacted.io/jsx-over-the-wire</a></p>
+	<p>油管给我推荐了这个视频<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，标题是 &ldquo;It&rsquo;s easier than ever to de-censor videos&rdquo;。一个代码实现在这里<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
+<p>简单来说，如果一个视频中存在某个被打码的静态图片（例如一个文件查看器窗口），且这个图片（和马赛克）一起在视频画面上移动（例如从左侧拖到右侧），就有可能还原图片。（对动态视频的打码似乎还是安全的。）</p>
+<p>这是怎么做到的？一般视频编辑器中，实现马赛克的方式是，将某一个区域（例如一个5x5像素的区域）用当前区域中心的像素填充。假如这个区域划分在整个视频中保持一致，那么移动被打码的内容，会导致原始图片中不同的像素被选做“中心像素”。假如收集到足够多的中心像素，就有可能可以还原出原始内容（不完美但是可以辨认出文字）。</p>
+<blockquote>
+<p>在代码仓库里有一个更好的比喻：想象马赛克是一面栅栏，上面有很多小洞；假如栅栏本身移动了，或者是栅栏后面的物体移动了，就能从相同的洞口看到更多内容。</p>
+<p>LLM 的总结：马赛克遮挡的本质是网格覆盖，当网格或背景移动时，每个网格中心点在不同帧中会暴露被遮挡区域的不同部分。通过累积多帧的中心像素并插值填充未覆盖区域，可逐步还原完整图像。</p></blockquote>
+<p>结论：看起来对于视频中的敏感信息，还是直接纯色覆盖更保险。</p>
+<div class="footnotes" role="doc-endnotes">
 <hr>
-<p>以下是我自己尝试复现这个推导过程：</p>
-<ul>
-<li>Stage 1
-<ul>
-<li>Q：为了展示一个前端页面，可能需要请求很多不同的后端接口，造成前端性能差（request waterfall）</li>
-<li>A：那就为了每个前端页面，创建一个专门用于这个页面的后端接口，刚好返回这个页面所需的所有信息（Backend For Frontend）</li>
-</ul>
+<ol>
+<li id="fn:1">
+<p>video: <a href="https://www.youtube.com/watch?v=acKYYwcxpGk">https://www.youtube.com/watch?v=acKYYwcxpGk</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li>Stage 2
-<ul>
-<li>Q：不同的前端页面可能有共享的内容（文章列表 / 文章内容），后端接口实现存在很多代码重复</li>
-<li>A：提供可组合的后端实现 （Composable BFF)，例如文章列表屏幕接口调用文章内容屏幕的接口，用参数控制所需内容（是否需要截断正文）</li>
-</ul>
+<li id="fn:2">
+<p>code: <a href="https://github.com/KoKuToru/de-pixelate_gaV-O6NPWrI">https://github.com/KoKuToru/de-pixelate_gaV-O6NPWrI</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
-<li>Stage 3
-<ul>
-<li>Q：现在虽然后端可以返回一个大 JSON，恰好包含本页面前端所需的所有信息，但是前端的每个组件都需要自己解析 JSON，从里面取出自己需要的一部分塞到 Prompt 里，还是有点繁琐</li>
-<li>A：后端返回的 JSON 中，除了组件的数据（props），还加上组件的结构；后端返回一个组件树，前端直接渲染这棵树（Server Driven UI）</li>
-</ul>
-</li>
-<li>Stage 4
-<ul>
-<li>Q：这一切都很棒，但是需要自己手动协调前后端的一致性，避免前后端 desync</li>
-<li>A：让框架来做（React Server Side Component）</li>
-</ul>
-</li>
-</ul>
+</ol>
+</div>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/gcra-rate-limiting/">
-		<img class="icon-text" src="/img/prev.svg"/>GCRA 限流算法</a>
+	<a class="prev-post" href="https://nekonull.me/til/jsx-over-the-wire-react-server-side-component/">
+		<img class="icon-text" src="/img/prev.svg"/>JSX Over The Wire - 对 React 服务端组件的自然推导</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/video-decensoring/">部分视频中的马赛克可以被去除<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
