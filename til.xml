@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 17 Apr 2025 14:10:25 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 22 Apr 2025 15:01:31 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prima.cpp - 跨设备运行 LLM (2504.08791)</title>
+      <link>https://nekonull.me/til/prime-cpp-run-llm-multi-node/</link>
+      <pubDate>Tue, 22 Apr 2025 15:01:31 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/prime-cpp-run-llm-multi-node/</guid>
+      <description>&lt;p&gt;在 exo 之后的另一个跨设备 LLM 运行工具，但是速度比 exo 快得多；原理大致是，把所有参与节点组成一个环，一次推理可以在环上转多次，某个设备第一次推理和第二次推理加载不同的层；因此对小内存环境友好，不要求所有节点内存总大小大于模型大小（只要存储加载速度够快就行）。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/Lizonghang/prima.cpp&#34;&gt;https://github.com/Lizonghang/prima.cpp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;paper: &lt;a href=&#34;https://arxiv.org/abs/2504.08791&#34;&gt;https://arxiv.org/abs/2504.08791&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://jack-clark.net/2025/04/21/import-ai-409-huawei-trains-a-model-on-8000-ascend-chips-32b-decentralized-training-run-and-the-era-of-experience-and-superintelligence/&#34;&gt;https://jack-clark.net/2025/04/21/import-ai-409-huawei-trains-a-model-on-8000-ascend-chips-32b-decentralized-training-run-and-the-era-of-experience-and-superintelligence/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>部分视频中的马赛克可以被去除</title>
       <link>https://nekonull.me/til/video-decensoring/</link>
@@ -576,18 +589,6 @@ query getTasks {
 &lt;p&gt;src: &lt;a href=&#34;https://nmn.gl/blog/cursor-guide&#34;&gt;https://nmn.gl/blog/cursor-guide&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;link: &lt;a href=&#34;https://gigamind.dev/&#34;&gt;https://gigamind.dev/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;releated: &lt;a href=&#34;https://www.anthropic.com/news/contextual-retrieval&#34;&gt;https://www.anthropic.com/news/contextual-retrieval&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>LLM 是现实世界的快照</title>
-      <link>https://nekonull.me/til/llm-as-world-snapshot/</link>
-      <pubDate>Mon, 17 Mar 2025 14:22:19 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/llm-as-world-snapshot/</guid>
-      <description>&lt;p&gt;读到了 Redis 作者 antirez 的一篇文章《LLM 的权重是历史的一部分》。&lt;/p&gt;
-&lt;p&gt;的确，网络上越来越多的信息已经永久消失了（现在能打开一个 2010~2020 年之间的某个链接都已经几乎是奇迹了）。存档的工作很重要，但是这样做并没有经济效益。已训练的 LLM 虽然可能会有幻觉，但至少代表了某一个时刻的现实。而且考虑到模型分散的足够多，可能比传统的集中式存档（例如 Internet Archive）更能持久的保存下来当前我们所见的世界。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://antirez.com/news/147&#34;&gt;https://antirez.com/news/147&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
