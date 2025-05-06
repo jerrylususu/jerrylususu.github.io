@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>comic-bbox-translator - 用 LLM 生成带边界框的翻译 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="起因是在看推上的日语同人；如果用 LLM 直接翻译的话，无论加了什么prompt，最后翻译出来的顺序也是乱的（可能是因为视觉模型内在的处理顺序问题？），需要脑内重排序，不太爽；正巧之前看到过其他人的博客，说现在视觉模型可以输出边界框了，于是趁着放假 vibe coding 了一把，果然还真可以用；虽然边界框偶尔不太准，但是大部分场景下也足够了。起初用 Python 写了一个版本，但后面意识到其实可以直接用 Web 技术实现，省的用户另外配置环境了。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/share/comic-bbox-translator/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>comic-bbox-translator - 用 LLM 生成带边界框的翻译</h1>
+	<h5>
+		
+		<time datetime="2025-05-06 22:25:05 &#43;0800 &#43;0800">2025/05/06 22:25</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>起因是在看推上的日语同人；如果用 LLM 直接翻译的话，无论加了什么prompt，最后翻译出来的顺序也是乱的（可能是因为视觉模型内在的处理顺序问题？），需要脑内重排序，不太爽；正巧之前看到过其他人的博客，说<a href="https://simonwillison.net/2024/Aug/26/gemini-bounding-box-visualization/">现在视觉模型可以输出边界框了</a>，于是趁着放假 vibe coding 了一把，果然还真可以用；虽然边界框偶尔不太准，但是大部分场景下也足够了。起初用 Python 写了一个版本，但后面意识到其实可以直接用 Web 技术实现，省的用户另外配置环境了。</p>
+<ul>
+<li>Repo: <a href="https://github.com/jerrylususu/comic_bbox_translator">https://github.com/jerrylususu/comic_bbox_translator</a></li>
+<li>Web Version: <a href="https://nekonull.me/comic_bbox_translator/">https://nekonull.me/comic_bbox_translator/</a></li>
+</ul>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/til-for-simpler-sharing/">
+		<img class="icon-text" src="/img/prev.svg"/>Today I Learned - 更简单更频繁的分享</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
