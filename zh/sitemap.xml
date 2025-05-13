@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/share/comic-bbox-translator/</loc>
-    <lastmod>2025-05-06T22:25:05+08:00</lastmod>
+    <loc>https://nekonull.me/til/apples-widget-backdoor/</loc>
+    <lastmod>2025-05-13T13:25:51+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-05-06T22:25:05+08:00</lastmod>
+    <lastmod>2025-05-13T13:25:51+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -17,6 +17,12 @@
                 hreflang="zh-cn"
                 href="https://nekonull.me/"
                 />
+  </url><url>
+    <loc>https://nekonull.me/til/</loc>
+    <lastmod>2025-05-13T13:25:51+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/share/comic-bbox-translator/</loc>
+    <lastmod>2025-05-06T22:25:05+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/share/</loc>
     <lastmod>2025-05-06T22:25:05+08:00</lastmod>
@@ -32,9 +38,6 @@
                 />
   </url><url>
     <loc>https://nekonull.me/til/prime-cpp-run-llm-multi-node/</loc>
-    <lastmod>2025-04-22T15:01:31+00:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/til/</loc>
     <lastmod>2025-04-22T15:01:31+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/video-decensoring/</loc>

@@ -7,7 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 06 May 2025 22:25:05 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 13 May 2025 13:25:51 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果</title>
+      <link>https://nekonull.me/til/apples-widget-backdoor/</link>
+      <pubDate>Tue, 13 May 2025 13:25:51 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/apples-widget-backdoor/</guid>
+      <description>&lt;p&gt;偶然被油管推送了这个视频，看完只能说太神奇了。&lt;/p&gt;
+&lt;p&gt;苹果允许开发者在 iOS 小组件上放置自己的内容，但是有一个重大限制：只能提供告诉系统在什么时间展示什么内容，而没法从主动刷新/重绘小组件。而且每次内容刷新之间至少需要间隔 5 分钟。然而，在此之外有两个小漏洞：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;苹果为了自己的“时钟” App 能够显示秒针，留下了一个能以 20 fps 旋转某个 view 的私有 API，在某个 XCode 版本不慎暴露了出来&lt;/li&gt;
+&lt;li&gt;应用可以在小组件上放置一个 timer，放置后可以以每秒刷新一个时间文本（例如 0:01）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;利用这两个极度受限的组件，视频作者却能用各种神奇的技巧（例如自定义连字、缩放调整、组件堆叠），在小组件上实现自定义的动画效果，甚至能以 60fps 运行。&lt;/p&gt;
+&lt;p&gt;怎么做到的？看视频吧：https://www.youtube.com/watch?v=NdJ_y1c_j_I&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Prima.cpp - 跨设备运行 LLM (2504.08791)</title>
       <link>https://nekonull.me/til/prime-cpp-run-llm-multi-node/</link>
@@ -546,49 +563,6 @@ query getTasks {
       <description>&lt;p&gt;看起来像是一个给数据集用的 Git，还整合了一些模型训练相关的记录和工作流能力（例如对比不同实验，以及把输入、实验和输出结合起来）。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://dvc.org/&#34;&gt;https://dvc.org/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://github.com/dfsnow/opentimes&#34;&gt;https://github.com/dfsnow/opentimes&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>对代码的上下文检索（Contextual Retrieval）</title>
-      <link>https://nekonull.me/til/code-contextual-retrieval/</link>
-      <pubDate>Mon, 17 Mar 2025 15:07:18 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/code-contextual-retrieval/</guid>
-      <description>&lt;p&gt;在用各类 LLM 编程工具的时候，难免会遇到“进一步退两步”的情况，例如改一个功能但是把不相关的代码改坏了，或者是为一个简单的功能引入了完全不必要的抽象层。造成这种现象的原因之一，是 LLM 对于项目的上下文并没有明确的感知（不知道应该改哪里、怎么改、会影响什么）。虽然可能在开干之前会读一些代码，但是考虑到每次对话都是全新的，不难想象这样获取到的上下文实际上是不完备的。&lt;/p&gt;
-&lt;p&gt;今天在阅读他人的博客时，了解到了一种让模型自动总结现有代码库，主动生成一些摘要的做法。这样可以让模型在遇到问题时参考已经生成过的摘要，从而获得对项目结构和惯用法的了解，让模型的输出结果更有用（或者说更接地气 Grounding？）。摘要大概类似下面这样：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;1. `Authentication Flow`
-   - Importance Score: 99
-   - Implementation:
-     - User signs up with email/password or OAuth provider
-     - Verification email sent with secure token
-     - On verification, JWT access and refresh tokens issued
-     - Access token used for API requests (1 hour expiry)
-     - Refresh token used to obtain new access tokens (7 day expiry)
-   - Key Files: 
-     - `apps/api/services/authService.ts`
-     - `apps/web/hooks/useAuth.ts`
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;突然想到，从代码库里找到一个文件，并将其和代码库里的其他文件联系起来（构建上下文）的流程，其实很类似 RAG 流程里从无数个文档块（chunk）里找到一块（例如用向量搜索），然后将其和文档联系起来的流程。延申想想，去年 Anthropic 出过一个叫做 Contextual Retrieval （上下文检索）的工作，利用前缀缓存，给每个 chunk 用 {full_text} + {chunk} 生成一个 context，再把这个 context 和 chunk 一起存储和检索。这一想法，是否也能应用于代码领域呢？&lt;/p&gt;
-&lt;p&gt;假设有一个上下文窗口足够大，且开启了前缀缓存的模型，一个可能的示例如下：&lt;/p&gt;
-&lt;p&gt;构建阶段：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;把代码库所有文件拼接为一个巨大的 codebase_str&lt;/li&gt;
-&lt;li&gt;对每个代码文件 file
-&lt;ul&gt;
-&lt;li&gt;用 system_prompt + codebase_str + file 调用 LLM，得到 context（在这个系统里，这段代码的作用是&amp;hellip;，和其他代码的联系是&amp;hellip;）&lt;/li&gt;
-&lt;li&gt;把 context 和 code 关联存储（可能是一个 SQLite 数据库，也可能是一个简单的 JSON，原始 code 文件的 path 作为 key）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;检索和生成阶段&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;根据用户的指示，同时在 code 和 context 上做召回&lt;/li&gt;
-&lt;li&gt;调用 LLM 时，对于每个 code 文件，同时提供其在整个项目的 context&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;听起来似乎有点希望。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://nmn.gl/blog/cursor-guide&#34;&gt;https://nmn.gl/blog/cursor-guide&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;link: &lt;a href=&#34;https://gigamind.dev/&#34;&gt;https://gigamind.dev/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;releated: &lt;a href=&#34;https://www.anthropic.com/news/contextual-retrieval&#34;&gt;https://www.anthropic.com/news/contextual-retrieval&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

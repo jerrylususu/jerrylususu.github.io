@@ -4,9 +4,10 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>Prima.cpp - 跨设备运行 LLM (2504.08791) - Nekonull&#39;s Garden</title>
+	<title>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="在 exo 之后的另一个跨设备 LLM 运行工具，但是速度比 exo 快得多；原理大致是，把所有参与节点组成一个环，一次推理可以在环上转多次，某个设备第一次推理和第二次推理加载不同的层；因此对小内存环境友好，不要求所有节点内存总大小大于模型大小（只要存储加载速度够快就行）。">
+	<meta name="description" content="偶然被油管推送了这个视频，看完只能说太神奇了。
+苹果允许开发者在 iOS 小组件上放置自己的内容，但是有一个重大限制：只能提供告诉系统在什么时间展示什么内容，而没法从主动刷新/重绘小组件。而且每次内容刷新之间至少需要间隔 5 分钟。然而，在此之外有两个小漏洞：">
 
 
 	
@@ -70,7 +71,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/prime-cpp-run-llm-multi-node/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/apples-widget-backdoor/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +92,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>Prima.cpp - 跨设备运行 LLM (2504.08791)</h1>
+	<h1>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果</h1>
 	<h5>
 		
-		<time datetime="2025-04-22 15:01:31.189 &#43;0000 UTC">2025/04/22 15:01</time>
+		<time datetime="2025-05-13 13:25:51.15 &#43;0000 UTC">2025/05/13 13:25</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,20 +103,21 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>在 exo 之后的另一个跨设备 LLM 运行工具，但是速度比 exo 快得多；原理大致是，把所有参与节点组成一个环，一次推理可以在环上转多次，某个设备第一次推理和第二次推理加载不同的层；因此对小内存环境友好，不要求所有节点内存总大小大于模型大小（只要存储加载速度够快就行）。</p>
-<p>src: <a href="https://github.com/Lizonghang/prima.cpp">https://github.com/Lizonghang/prima.cpp</a></p>
-<p>paper: <a href="https://arxiv.org/abs/2504.08791">https://arxiv.org/abs/2504.08791</a></p>
-<p>via: <a href="https://jack-clark.net/2025/04/21/import-ai-409-huawei-trains-a-model-on-8000-ascend-chips-32b-decentralized-training-run-and-the-era-of-experience-and-superintelligence/">https://jack-clark.net/2025/04/21/import-ai-409-huawei-trains-a-model-on-8000-ascend-chips-32b-decentralized-training-run-and-the-era-of-experience-and-superintelligence/</a></p>
+	<p>偶然被油管推送了这个视频，看完只能说太神奇了。</p>
+<p>苹果允许开发者在 iOS 小组件上放置自己的内容，但是有一个重大限制：只能提供告诉系统在什么时间展示什么内容，而没法从主动刷新/重绘小组件。而且每次内容刷新之间至少需要间隔 5 分钟。然而，在此之外有两个小漏洞：</p>
+<ol>
+<li>苹果为了自己的“时钟” App 能够显示秒针，留下了一个能以 20 fps 旋转某个 view 的私有 API，在某个 XCode 版本不慎暴露了出来</li>
+<li>应用可以在小组件上放置一个 timer，放置后可以以每秒刷新一个时间文本（例如 0:01）</li>
+</ol>
+<p>利用这两个极度受限的组件，视频作者却能用各种神奇的技巧（例如自定义连字、缩放调整、组件堆叠），在小组件上实现自定义的动画效果，甚至能以 60fps 运行。</p>
+<p>怎么做到的？看视频吧：https://www.youtube.com/watch?v=NdJ_y1c_j_I</p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/video-decensoring/">
-		<img class="icon-text" src="/img/prev.svg"/>部分视频中的马赛克可以被去除</a>
+	<a class="prev-post" href="https://nekonull.me/til/prime-cpp-run-llm-multi-node/">
+		<img class="icon-text" src="/img/prev.svg"/>Prima.cpp - 跨设备运行 LLM (2504.08791)</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/apples-widget-backdoor/">Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
