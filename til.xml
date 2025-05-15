@@ -7,11 +7,11 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 15 May 2025 14:15:53 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 May 2025 14:27:19 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>组织文档的 Diátaxis 框架</title>
       <link>https://nekonull.me/til/diataxis-framework-for-doc/</link>
-      <pubDate>Thu, 15 May 2025 14:15:53 +0000</pubDate>
+      <pubDate>Thu, 15 May 2025 14:27:19 +0000</pubDate>
       
       <guid>https://nekonull.me/til/diataxis-framework-for-doc/</guid>
       <description>&lt;p&gt;Diátaxis 框架旨在解决文档混乱导致信息无从查找的问题。这个框架把文档分为四个类型：&lt;/p&gt;
@@ -21,7 +21,13 @@
 &lt;li&gt;解释说明（Explanation）- 理解导向：提供背景和上下文，解释怎么做背后的“为什么”，帮助建立心智模型（例子：框架处理请求的完整流程）&lt;/li&gt;
 &lt;li&gt;参考文档（Reference）- 信息导向：提供完整准确的技术细节（例子：运行时配置参数列表）&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;其中 “教程” 和 “操作指南” 都是行动导向的，可能容易混淆；在另一篇文章中详细指出了这两者的不同：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;教程：帮助学习者获得基础技能（&lt;strong&gt;学习&lt;/strong&gt;），在人工设计的环境中提供安全的学习体验，没有意外情况，出错的责任在文档作者&lt;/li&gt;
+&lt;li&gt;操作指南：帮助已经掌握技能的用户完成具体任务（&lt;strong&gt;工作&lt;/strong&gt;），在现实环境中进行，提供步骤但也能灵活应对现实情况（if X then Y），出错的责任在用户自己&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://diataxis.fr/start-here/&#34;&gt;https://diataxis.fr/start-here/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;diff: &lt;a href=&#34;https://diataxis.fr/tutorials-how-to/#tutorials-how-to&#34;&gt;https://diataxis.fr/tutorials-how-to/#tutorials-how-to&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://github.blog/developer-skills/documentation-done-right-a-developers-guide/&#34;&gt;https://github.blog/developer-skills/documentation-done-right-a-developers-guide/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
