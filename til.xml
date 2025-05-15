@@ -7,7 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 15 May 2025 14:27:19 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 May 2025 14:32:27 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HyDE - 用生成的假答案来搜索嵌入 (2212.10496)</title>
+      <link>https://nekonull.me/til/hyde-llm-fake-answer-rag/</link>
+      <pubDate>Thu, 15 May 2025 14:32:27 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/hyde-llm-fake-answer-rag/</guid>
+      <description>&lt;p&gt;在读 Simon 的文章时，偶然学到这个精妙的小技巧（be like 这也行？）：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A neat trick is you can ask an LLM to entirely synthesize a potential answer to the user’s question—then embed that artificial answer and find your own content that’s nearby in vector space!&lt;/p&gt;
+&lt;p&gt;一个巧妙的小技巧是，你可以让大语言模型（LLM）完全合成一个用户问题的潜在答案——然后将这个人工生成的答案进行向量嵌入，并在向量空间中找到与你自有内容最接近的部分！&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;搜了下，原来 2022 年就有文章提出这个方法了，名叫 HyDE (Hypothetical Document Embeddings) 。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://arxiv.org/abs/2212.10496&#34;&gt;https://arxiv.org/abs/2212.10496&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/May/15/building-on-llms/&#34;&gt;https://simonwillison.net/2025/May/15/building-on-llms/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>组织文档的 Diátaxis 框架</title>
       <link>https://nekonull.me/til/diataxis-framework-for-doc/</link>
@@ -544,37 +560,6 @@
 &lt;p&gt;有人可能会问，为什么要训练一个自己的 AI 化身呢？原因其实有很多，但最吸引我的可能是，终于有机会把一些自己时常会思考，但是没有人可以讨论的东西，和“另一个自己”交流。此外在一些重大决策的时候，可能能获得一些更“客观”的视角，让自己的冲动也有迹可循（至少能问 AI 为什么“我”在某个情境下会“这样”做）。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://arxiv.org/abs/2503.08102&#34;&gt;https://arxiv.org/abs/2503.08102&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;related: &lt;a href=&#34;https://mp.weixin.qq.com/s/3rudrP4IsIu5ejQE_VMbrA&#34;&gt;https://mp.weixin.qq.com/s/3rudrP4IsIu5ejQE_VMbrA&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Wasp - 用于构建全栈网站的元框架</title>
-      <link>https://nekonull.me/til/wasp-as-a-meta-framework/</link>
-      <pubDate>Tue, 18 Mar 2025 15:54:33 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/wasp-as-a-meta-framework/</guid>
-      <description>&lt;p&gt;一个看起来比较有趣的项目。构建网站的时候通常有很多重复工作（登录/鉴权/邮件&amp;hellip;）。为了减少重复，作者提出了一种元框架，在现有的前后端框架之上再叠加一层，写一些 DSL 来定义一个“网站”，然后再通过一个自定义的“编译器”生成底层的框架结构。&lt;/p&gt;
-&lt;p&gt;虽然感觉能解决一些常见问题，但是如果不能满足需求的话，自定义起来可能会是灾难。&lt;/p&gt;
-&lt;p&gt;DSL 示例如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;app todoApp {
-  title: &amp;#34;ToDo App&amp;#34;,  // visible in the browser tab
-  auth: { // full-stack auth out-of-the-box
-    userEntity: User, 
-    methods: { google: {}, gitHub: {}, email: {...} }
-  }
-}
-
-route RootRoute { path: &amp;#34;/&amp;#34;, to: MainPage }
-page MainPage {
-  authRequired: true, // Limit access to logged in users.
-  component: import Main from &amp;#34;@client/Main.tsx&amp;#34; // Your React code.
-}
-
-query getTasks {
-  fn: import { getTasks } from &amp;#34;@server/tasks.js&amp;#34;, // Your Node.js code.
-  entities: [Task] // Automatic cache invalidation.
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;src: &lt;a href=&#34;https://wasp.sh/&#34;&gt;https://wasp.sh/&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
