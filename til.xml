@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 15 May 2025 14:32:27 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 May 2025 14:38:06 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>simpleeval - 受限安全的 Python 表达式评估</title>
+      <link>https://nekonull.me/til/simpleeval-safe-py-eval/</link>
+      <pubDate>Thu, 15 May 2025 14:38:06 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/simpleeval-safe-py-eval/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;提供了一个 Python 的简单子集，限制了高风险操作（例如指数操作在数值过大的时候也可以卡死运行环境(!)）&lt;/li&gt;
+&lt;li&gt;可以被放在各种需要表达式计算能力，但是又需要限制风险的场景下使用（例如拿来给 LLM 当计算器用）&lt;/li&gt;
+&lt;li&gt;底层用 &lt;code&gt;ast&lt;/code&gt; 库解析语法树，并递归节点求值。&lt;/li&gt;
+&lt;li&gt;核心代码只有一个 py 文件，因此很容易嵌入。&lt;/li&gt;
+&lt;li&gt;需要 Python 3.9+。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://github.com/danthedeckie/simpleeval&#34;&gt;https://github.com/danthedeckie/simpleeval&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html&#34;&gt;https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>HyDE - 用生成的假答案来搜索嵌入 (2212.10496)</title>
       <link>https://nekonull.me/til/hyde-llm-fake-answer-rag/</link>
@@ -540,26 +558,6 @@
 &lt;p&gt;分块扩散模型：输出分成多个块，块间自回归，块内扩散；既有自回归的效果（虽然没有纯自回归那么好），又有扩散模型的高并行度（虽然也没有纯扩散模型那么高）。&lt;/p&gt;
 &lt;p&gt;不过其实我对扩散模型有好感，其实是因为去噪过程中 token 是可以变化的，意味着模型“原生”就可以改主意。这不像自回归模型一旦 token 输出了就 commit 不能再改了；即使有 reasoning token 这种突破，但是本质上还是存在输出的不可改变性。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://arxiv.org/abs/2503.09573&#34;&gt;https://arxiv.org/abs/2503.09573&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Second Me - 训练一个自己的 AI 化身 (2503.08102)</title>
-      <link>https://nekonull.me/til/second-me-self-as-ai-model/</link>
-      <pubDate>Thu, 20 Mar 2025 15:32:31 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/second-me-self-as-ai-model/</guid>
-      <description>&lt;p&gt;自从 RAG 刚出来的时候，就有不少通过试图往 LLM 里塞自己相关的上下文（笔记/日记），试图让 LLM 更接近自己的尝试了。但是受限于模型能力，以及上下文窗口的限制，总归还是不太接近。另一个方向是微调，但是微调需要大量的 QA 数据，一般人也没有这个心思去问自己各种问题（除非你是传记主角），因此也不算很好推进。&lt;/p&gt;
-&lt;p&gt;本文提出了一种分层的记忆框架：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;输入依然是用户自身的原始数据（L0）&lt;/li&gt;
-&lt;li&gt;但是在此之上基于 COT 构造问答对，得到用自然语言描述的用户特征（L1）；&lt;/li&gt;
-&lt;li&gt;最后用这些问答对作为数据源，利用已经被广泛验证过的新训练技术（GRPO） ，微调（LoRA）得到一个存储了用户特性的模型（L2）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;后续交互的时候，用 L2 模型作为核心，但是依然用 RAG 从 L0 和 L1 里召回相关信息。虽然没有细读论文，但是感觉上比传统的纯 RAG 和纯微调都更给力一些。&lt;/p&gt;
-&lt;p&gt;有人可能会问，为什么要训练一个自己的 AI 化身呢？原因其实有很多，但最吸引我的可能是，终于有机会把一些自己时常会思考，但是没有人可以讨论的东西，和“另一个自己”交流。此外在一些重大决策的时候，可能能获得一些更“客观”的视角，让自己的冲动也有迹可循（至少能问 AI 为什么“我”在某个情境下会“这样”做）。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://arxiv.org/abs/2503.08102&#34;&gt;https://arxiv.org/abs/2503.08102&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;related: &lt;a href=&#34;https://mp.weixin.qq.com/s/3rudrP4IsIu5ejQE_VMbrA&#34;&gt;https://mp.weixin.qq.com/s/3rudrP4IsIu5ejQE_VMbrA&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

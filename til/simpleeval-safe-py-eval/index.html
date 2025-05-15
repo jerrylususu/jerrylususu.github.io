@@ -4,9 +4,16 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>TIL - Nekonull&#39;s Garden</title>
+	<title>simpleeval - 受限安全的 Python 表达式评估 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="">
+	<meta name="description" content="
+提供了一个 Python 的简单子集，限制了高风险操作（例如指数操作在数值过大的时候也可以卡死运行环境(!)）
+可以被放在各种需要表达式计算能力，但是又需要限制风险的场景下使用（例如拿来给 LLM 当计算器用）
+底层用 ast 库解析语法树，并递归节点求值。
+核心代码只有一个 py 文件，因此很容易嵌入。
+需要 Python 3.9&#43;。
+
+src: https://github.com/danthedeckie/simpleeval">
 
 
 	
@@ -70,7 +77,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/simpleeval-safe-py-eval/" class="active langselect">简体中文</a></li>
             
           
       
@@ -90,55 +97,61 @@
 <main class="container">
 
 <article>
-	<header>
-		<hgroup id="brand">
-	<h1>TIL</h1>
+	<header><hgroup id="brand">
+	<h1>simpleeval - 受限安全的 Python 表达式评估</h1>
+	<h5>
+		
+		<time datetime="2025-05-15 14:38:06.898 &#43;0000 UTC">2025/05/15 14:38</time>
+		<span class="no-print">
+			<span>
+	</h5>
 	
 </hgroup>
 <hr class="sep" />
+</header>
+	<ul>
+<li>提供了一个 Python 的简单子集，限制了高风险操作（例如指数操作在数值过大的时候也可以卡死运行环境(!)）</li>
+<li>可以被放在各种需要表达式计算能力，但是又需要限制风险的场景下使用（例如拿来给 LLM 当计算器用）</li>
+<li>底层用 <code>ast</code> 库解析语法树，并递归节点求值。</li>
+<li>核心代码只有一个 py 文件，因此很容易嵌入。</li>
+<li>需要 Python 3.9+。</li>
+</ul>
+<p>src: <a href="https://github.com/danthedeckie/simpleeval">https://github.com/danthedeckie/simpleeval</a></p>
+<p>via: <a href="https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html">https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html</a></p>
 
-		<p>TIL 全称为 Today I Learned，旨在简短的分享自己获得的知识/经验，或者仅仅是自认为有趣的事物。受到 <a href="https://til.simonwillison.net/">Simon Willision</a> 和 <a href="https://jvns.ca/til/">Julia Evans</a> 的启发。形态上可能类似于微博（广义的 micro-blogging），但是不受平台限制。</p>
-<p>我曾经让 LLM 找对应 TIL 的两个字的中文翻译，但似乎都不太满意，因此暂时保留原始名字。未来如果找到合适的可能会换上。以下是一些可能的翻译：今学；今知；今悟；今得；今获；今识；今明；今晓；今解。</p>
-<p>另外如果你喜欢 TIL，可能也会对我的 <a href="https://github.com/jerrylususu/bookmark-collection">书签</a> 和 <a href="https://github.com/jerrylususu/bookmark-summary">书签摘要</a> 感兴趣。</p>
+</article>
+<nav class="no-print post-nav">
 
-	</header>
-	<ul class="no-bullet">
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-28 13:39:17.449 &#43;0000 UTC">2024/11/28</time></span>
-	<a href="/til/make-llm-take-notes-when-finishing-task/">要求 LLM 在完成任务时留下笔记</a>
-</li>
+	<a class="prev-post" href="https://nekonull.me/til/hyde-llm-fake-answer-rag/">
+		<img class="icon-text" src="/img/prev.svg"/>HyDE - 用生成的假答案来搜索嵌入 (2212.10496)</a>
 
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-17 13:27:04.363 &#43;0000 UTC">2024/11/17</time></span>
-	<a href="/til/curl-has-5-year-lts/">curl 有 LTS 了</a>
-</li>
 
-	    
-	    <li>
-	
-	<span><time datetime="2024-11-17 13:36:00 &#43;0800 &#43;0800">2024/11/17</time></span>
-	<a href="/til/excel-auto-complete-as-program-systhenis/">Excel 的自动填充实际上是程序生成</a>
-</li>
-
-	    
-	</ul>
-	
-<nav class="pagination">
-    
-    <a href="/til/page/2/">
-    <img class="icon-text" src="/img/prev.svg"/>
-    </a>
-    
-    <span>3</span>
-    
 </nav>
 
 
-</article>
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
 			<hr class="sep" />
 		</main>
 		<footer class="container no-print">
