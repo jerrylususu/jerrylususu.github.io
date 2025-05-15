@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 13 May 2025 13:25:51 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 May 2025 14:15:53 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>组织文档的 Diátaxis 框架</title>
+      <link>https://nekonull.me/til/diataxis-framework-for-doc/</link>
+      <pubDate>Thu, 15 May 2025 14:15:53 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/diataxis-framework-for-doc/</guid>
+      <description>&lt;p&gt;Diátaxis 框架旨在解决文档混乱导致信息无从查找的问题。这个框架把文档分为四个类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;教程（Tutorials）- 学习导向：面向完全新手，从 0 开始，一步一步完成一个具体任务（例子：如何创建第一个接口）&lt;/li&gt;
+&lt;li&gt;操作指南（How-to Guides）- 任务导向：面向已有一些基础知识和经验的用户，达成某个特定目标，步骤清晰但是不过度详细（例子：如何排查接口的高耗时问题）&lt;/li&gt;
+&lt;li&gt;解释说明（Explanation）- 理解导向：提供背景和上下文，解释怎么做背后的“为什么”，帮助建立心智模型（例子：框架处理请求的完整流程）&lt;/li&gt;
+&lt;li&gt;参考文档（Reference）- 信息导向：提供完整准确的技术细节（例子：运行时配置参数列表）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://diataxis.fr/start-here/&#34;&gt;https://diataxis.fr/start-here/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;via: &lt;a href=&#34;https://github.blog/developer-skills/documentation-done-right-a-developers-guide/&#34;&gt;https://github.blog/developer-skills/documentation-done-right-a-developers-guide/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果</title>
       <link>https://nekonull.me/til/apples-widget-backdoor/</link>
@@ -551,18 +569,6 @@ query getTasks {
   entities: [Task] // Automatic cache invalidation.
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;src: &lt;a href=&#34;https://wasp.sh/&#34;&gt;https://wasp.sh/&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>DVC - Data Version Control</title>
-      <link>https://nekonull.me/til/data-version-control/</link>
-      <pubDate>Tue, 18 Mar 2025 15:38:44 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/data-version-control/</guid>
-      <description>&lt;p&gt;看起来像是一个给数据集用的 Git，还整合了一些模型训练相关的记录和工作流能力（例如对比不同实验，以及把输入、实验和输出结合起来）。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://dvc.org/&#34;&gt;https://dvc.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://github.com/dfsnow/opentimes&#34;&gt;https://github.com/dfsnow/opentimes&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

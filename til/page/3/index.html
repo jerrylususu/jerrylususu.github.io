@@ -4,10 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果 - Nekonull&#39;s Garden</title>
+	<title>TIL - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="偶然被油管推送了这个视频，看完只能说太神奇了。
-苹果允许开发者在 iOS 小组件上放置自己的内容，但是有一个重大限制：只能提供告诉系统在什么时间展示什么内容，而没法从主动刷新/重绘小组件。而且每次内容刷新之间至少需要间隔 5 分钟。然而，在此之外有两个小漏洞：">
+	<meta name="description" content="">
 
 
 	
@@ -71,7 +70,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/apples-widget-backdoor/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,63 +90,41 @@
 <main class="container">
 
 <article>
-	<header><hgroup id="brand">
-	<h1>Apple&#39;s Widget Backdoor - 如何用受限的 API 在小组件上实现动画效果</h1>
-	<h5>
-		
-		<time datetime="2025-05-13 13:25:51.15 &#43;0000 UTC">2025/05/13 13:25</time>
-		<span class="no-print">
-			<span>
-	</h5>
+	<header>
+		<hgroup id="brand">
+	<h1>TIL</h1>
 	
 </hgroup>
 <hr class="sep" />
-</header>
-	<p>偶然被油管推送了这个视频，看完只能说太神奇了。</p>
-<p>苹果允许开发者在 iOS 小组件上放置自己的内容，但是有一个重大限制：只能提供告诉系统在什么时间展示什么内容，而没法从主动刷新/重绘小组件。而且每次内容刷新之间至少需要间隔 5 分钟。然而，在此之外有两个小漏洞：</p>
-<ol>
-<li>苹果为了自己的“时钟” App 能够显示秒针，留下了一个能以 20 fps 旋转某个 view 的私有 API，在某个 XCode 版本不慎暴露了出来</li>
-<li>应用可以在小组件上放置一个 timer，放置后可以以每秒刷新一个时间文本（例如 0:01）</li>
-</ol>
-<p>利用这两个极度受限的组件，视频作者却能用各种神奇的技巧（例如自定义连字、缩放调整、组件堆叠），在小组件上实现自定义的动画效果，甚至能以 60fps 运行。</p>
-<p>怎么做到的？看视频吧：https://www.youtube.com/watch?v=NdJ_y1c_j_I</p>
 
-</article>
-<nav class="no-print post-nav">
+		<p>TIL 全称为 Today I Learned，旨在简短的分享自己获得的知识/经验，或者仅仅是自认为有趣的事物。受到 <a href="https://til.simonwillison.net/">Simon Willision</a> 和 <a href="https://jvns.ca/til/">Julia Evans</a> 的启发。形态上可能类似于微博（广义的 micro-blogging），但是不受平台限制。</p>
+<p>我曾经让 LLM 找对应 TIL 的两个字的中文翻译，但似乎都不太满意，因此暂时保留原始名字。未来如果找到合适的可能会换上。以下是一些可能的翻译：今学；今知；今悟；今得；今获；今识；今明；今晓；今解。</p>
+<p>另外如果你喜欢 TIL，可能也会对我的 <a href="https://github.com/jerrylususu/bookmark-collection">书签</a> 和 <a href="https://github.com/jerrylususu/bookmark-summary">书签摘要</a> 感兴趣。</p>
 
-	<a class="prev-post" href="https://nekonull.me/til/prime-cpp-run-llm-multi-node/">
-		<img class="icon-text" src="/img/prev.svg"/>Prima.cpp - 跨设备运行 LLM (2504.08791)</a>
+	</header>
+	<ul class="no-bullet">
+	    
+	    <li>
+	
+	<span><time datetime="2024-11-17 13:36:00 &#43;0800 &#43;0800">2024/11/17</time></span>
+	<a href="/til/excel-auto-complete-as-program-systhenis/">Excel 的自动填充实际上是程序生成</a>
+</li>
 
-
-	<a class="next-post" href="https://nekonull.me/til/diataxis-framework-for-doc/">组织文档的 Diátaxis 框架<img class="icon-text" src="/img/next.svg"/>
-	</a>
-
+	    
+	</ul>
+	
+<nav class="pagination">
+    
+    <a href="/til/page/2/">
+    <img class="icon-text" src="/img/prev.svg"/>
+    </a>
+    
+    <span>3</span>
+    
 </nav>
 
 
-
-
-
-	
-  <script
-    src="https://giscus.app/client.js"
-    data-repo="jerrylususu/jerrylususu.github.io"
-    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
-    data-category="Blog Comments"
-    data-category-id="DIC_kwDOCI3wAs4CZNcG"
-    data-mapping="pathname"
-    data-reactions-enabled="1"
-    data-input-position="top"
-    data-theme="preferred-color-scheme"
-    data-lang="zh-CN"
-    data-loading="lazy"
-    data-strict="1"
-    
-    data-theme="preferred-color-scheme"
-    crossorigin="anonymous"
-    async
-  ></script>
-
+</article>
 			<hr class="sep" />
 		</main>
 		<footer class="container no-print">
