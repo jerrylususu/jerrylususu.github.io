@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 15 May 2025 14:38:06 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 May 2025 15:23:59 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DumPy - 没有聪明技巧，用起来更省心的 Numpy 封装</title>
+      <link>https://nekonull.me/til/dumpy-numpy-when-dumb/</link>
+      <pubDate>Fri, 23 May 2025 15:23:59 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/dumpy-numpy-when-dumb/</guid>
+      <description>&lt;p&gt;NumPy 功能多，速度快，但是广播机制容易引发错误，高维操作时 dim 和 None 到处乱飞，用起来心智负担很重。鉴于此，作者封装了 DumPy，用类似循环的语法​（显式索引）表达高维操作，但实际通过​向量化编译​来加速执行；计算时使用的维度也需要显式声明表达意图，再也不用瞎猜了。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://dynomight.net/dumpy/&#34;&gt;https://dynomight.net/dumpy/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;related: &lt;a href=&#34;https://dynomight.net/numpy/&#34;&gt;https://dynomight.net/numpy/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>simpleeval - 受限安全的 Python 表达式评估</title>
       <link>https://nekonull.me/til/simpleeval-safe-py-eval/</link>
@@ -541,23 +553,6 @@
 &lt;li&gt;neverthrow: &lt;a href=&#34;https://github.com/supermacro/neverthrow&#34;&gt;https://github.com/supermacro/neverthrow&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;effect: &lt;a href=&#34;https://effect.website/&#34;&gt;https://effect.website/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Block Diffusion - 分块扩散的半自回归模型 (2503.09573)</title>
-      <link>https://nekonull.me/til/block-diffusion-half-autoregressive-llm/</link>
-      <pubDate>Thu, 20 Mar 2025 15:47:10 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/block-diffusion-half-autoregressive-llm/</guid>
-      <description>&lt;p&gt;又是一个 “middle ground” 的好主意！&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;自回归模型：效果好，输出长度范围大，但是没法并行&lt;/li&gt;
-&lt;li&gt;扩散模型：效果差，输出长度固定，但是很好并行&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;分块扩散模型：输出分成多个块，块间自回归，块内扩散；既有自回归的效果（虽然没有纯自回归那么好），又有扩散模型的高并行度（虽然也没有纯扩散模型那么高）。&lt;/p&gt;
-&lt;p&gt;不过其实我对扩散模型有好感，其实是因为去噪过程中 token 是可以变化的，意味着模型“原生”就可以改主意。这不像自回归模型一旦 token 输出了就 commit 不能再改了；即使有 reasoning token 这种突破，但是本质上还是存在输出的不可改变性。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://arxiv.org/abs/2503.09573&#34;&gt;https://arxiv.org/abs/2503.09573&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

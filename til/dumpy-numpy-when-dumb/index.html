@@ -4,16 +4,9 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>simpleeval - 受限安全的 Python 表达式评估 - Nekonull&#39;s Garden</title>
+	<title>DumPy - 没有聪明技巧，用起来更省心的 Numpy 封装 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="
-提供了一个 Python 的简单子集，限制了高风险操作（例如指数操作在数值过大的时候也可以卡死运行环境(!)）
-可以被放在各种需要表达式计算能力，但是又需要限制风险的场景下使用（例如拿来给 LLM 当计算器用）
-底层用 ast 库解析语法树，并递归节点求值。
-核心代码只有一个 py 文件，因此很容易嵌入。
-需要 Python 3.9&#43;。
-
-src: https://github.com/danthedeckie/simpleeval">
+	<meta name="description" content="NumPy 功能多，速度快，但是广播机制容易引发错误，高维操作时 dim 和 None 到处乱飞，用起来心智负担很重。鉴于此，作者封装了 DumPy，用类似循环的语法​（显式索引）表达高维操作，但实际通过​向量化编译​来加速执行；计算时使用的维度也需要显式声明表达意图，再也不用瞎猜了。">
 
 
 	
@@ -77,7 +70,7 @@ src: https://github.com/danthedeckie/simpleeval">
           
             
             
-                <li><a href="https://nekonull.me/til/simpleeval-safe-py-eval/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/dumpy-numpy-when-dumb/" class="active langselect">简体中文</a></li>
             
           
       
@@ -98,10 +91,10 @@ src: https://github.com/danthedeckie/simpleeval">
 
 <article>
 	<header><hgroup id="brand">
-	<h1>simpleeval - 受限安全的 Python 表达式评估</h1>
+	<h1>DumPy - 没有聪明技巧，用起来更省心的 Numpy 封装</h1>
 	<h5>
 		
-		<time datetime="2025-05-15 14:38:06.898 &#43;0000 UTC">2025/05/15 14:38</time>
+		<time datetime="2025-05-23 15:23:59.83 &#43;0000 UTC">2025/05/23 15:23</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -109,25 +102,16 @@ src: https://github.com/danthedeckie/simpleeval">
 </hgroup>
 <hr class="sep" />
 </header>
-	<ul>
-<li>提供了一个 Python 的简单子集，限制了高风险操作（例如指数操作在数值过大的时候也可以卡死运行环境(!)）</li>
-<li>可以被放在各种需要表达式计算能力，但是又需要限制风险的场景下使用（例如拿来给 LLM 当计算器用）</li>
-<li>底层用 <code>ast</code> 库解析语法树，并递归节点求值。</li>
-<li>核心代码只有一个 py 文件，因此很容易嵌入。</li>
-<li>需要 Python 3.9+。</li>
-</ul>
-<p>src: <a href="https://github.com/danthedeckie/simpleeval">https://github.com/danthedeckie/simpleeval</a></p>
-<p>via: <a href="https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html">https://building-with-llms-pycon-2025.readthedocs.io/en/latest/tools.html</a></p>
+	<p>NumPy 功能多，速度快，但是广播机制容易引发错误，高维操作时 dim 和 None 到处乱飞，用起来心智负担很重。鉴于此，作者封装了 DumPy，用类似循环的语法​（显式索引）表达高维操作，但实际通过​向量化编译​来加速执行；计算时使用的维度也需要显式声明表达意图，再也不用瞎猜了。</p>
+<p>src: <a href="https://dynomight.net/dumpy/">https://dynomight.net/dumpy/</a></p>
+<p>related: <a href="https://dynomight.net/numpy/">https://dynomight.net/numpy/</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/hyde-llm-fake-answer-rag/">
-		<img class="icon-text" src="/img/prev.svg"/>HyDE - 用生成的假答案来搜索嵌入 (2212.10496)</a>
+	<a class="prev-post" href="https://nekonull.me/til/simpleeval-safe-py-eval/">
+		<img class="icon-text" src="/img/prev.svg"/>simpleeval - 受限安全的 Python 表达式评估</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/dumpy-numpy-when-dumb/">DumPy - 没有聪明技巧，用起来更省心的 Numpy 封装<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
