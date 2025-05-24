@@ -4,9 +4,23 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>Enthusiam 算法 - 群聊里有人又有 AI，下一个谁发言？ - Nekonull&#39;s Garden</title>
+	<title>被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务） - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="假如一个群聊里有人又有 AI，谁应该发言？作者在试图构建这样的聊天室时遇到了这个问题。作者尝试了一些简单的方法，例如用一个中央决策器协调对话，或者是用一个小模型来判断某个模型是否应该回复，但效果都不佳。在阅读一些社会学论文后，作者提出了 “热情度” (Enthusiam) 算法：对话过程中，每个 AI 根据是否直接涉及自己、是否是历史上下文延续（如追问）、是否会打断他人、自己的性格（是否健谈）来计算一个回复分数（0~9 之间），最后选择超过阈值（例如5）且分数最高的 AI 回复。未来作者在考虑探索，是否可能像现实中根据肢体语言和眼神来判断对话回复时机那样，在文本聊天室中维护一个侧信道。">
+	<meta name="description" content="
+原因：部分服务对非预期的输入太宽容了，导致可能允许攻击者对这些服务构造特定的 HTTP 请求调用。（跨协议脚本漏洞，Cross-protocol scripting）
+
+例子：SMTP 用换行符分割命令，且会忽略无效命令；攻击者构造了一个网页，里面包含一个 multipart/form-data 的表单，插入了一些 SMTP 命令；用户点击后，请求发送到 SMTP 所在端口上，HTTP 头和其他字段被 SMTP 服务忽略，但是剩下的真 SMTP 命令会被执行。
+
+
+表现：Chrome 报错 ERR_UNSAFE_PORT
+被拦截的端口列表：
+
+Chrome: https://chromium.googlesource.com/chromium/src.git/&#43;/refs/heads/master/net/base/port_util.cc
+FireFox: https://www-archive.mozilla.org/projects/netlib/portbanning (这个链接似乎很旧了，但我没找到更新的)
+
+
+
+从列表看，重灾区在 2048 以下的端口，剩下 5000/6000 也有一些，20000 以上的高位端口就没问题了；我用的一般都是 23333，所以没遇到过这个问题。">
 
 
 	
@@ -70,7 +84,7 @@
           
             
             
-                <li><a href="https://nekonull.me/til/enthusiam-take-turns/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/brower-limited-ports/" class="active langselect">简体中文</a></li>
             
           
       
@@ -91,10 +105,10 @@
 
 <article>
 	<header><hgroup id="brand">
-	<h1>Enthusiam 算法 - 群聊里有人又有 AI，下一个谁发言？</h1>
+	<h1>被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务）</h1>
 	<h5>
 		
-		<time datetime="2025-05-24 10:04:37.47 &#43;0000 UTC">2025/05/24 10:04</time>
+		<time datetime="2025-05-24 10:52:00.431 &#43;0000 UTC">2025/05/24 10:52</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -102,18 +116,33 @@
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>假如一个群聊里有人又有 AI，谁应该发言？作者在试图构建这样的聊天室时遇到了这个问题。作者尝试了一些简单的方法，例如用一个中央决策器协调对话，或者是用一个小模型来判断某个模型是否应该回复，但效果都不佳。在阅读一些社会学论文后，作者提出了 “热情度” (Enthusiam) 算法：对话过程中，每个 AI 根据是否直接涉及自己、是否是历史上下文延续（如追问）、是否会打断他人、自己的性格（是否健谈）来计算一个回复分数（0~9 之间），最后选择超过阈值（例如5）且分数最高的 AI 回复。未来作者在考虑探索，是否可能像现实中根据肢体语言和眼神来判断对话回复时机那样，在文本聊天室中维护一个侧信道。</p>
-<p>src: <a href="https://interconnected.org/home/2025/05/23/turntaking">https://interconnected.org/home/2025/05/23/turntaking</a></p>
+	<ul>
+<li>原因：部分服务对非预期的输入太宽容了，导致可能允许攻击者对这些服务构造特定的 HTTP 请求调用。（跨协议脚本漏洞，Cross-protocol scripting）
+<ul>
+<li>例子：SMTP 用换行符分割命令，且会忽略无效命令；攻击者构造了一个网页，里面包含一个 <code>multipart/form-data</code> 的表单，插入了一些 SMTP 命令；用户点击后，请求发送到 SMTP 所在端口上，HTTP 头和其他字段被 SMTP 服务忽略，但是剩下的真 SMTP 命令会被执行。</li>
+</ul>
+</li>
+<li>表现：Chrome 报错 ERR_UNSAFE_PORT</li>
+<li>被拦截的端口列表：
+<ul>
+<li>Chrome: <a href="https://chromium.googlesource.com/chromium/src.git/&#43;/refs/heads/master/net/base/port_util.cc">https://chromium.googlesource.com/chromium/src.git/+/refs/heads/master/net/base/port_util.cc</a></li>
+<li>FireFox: <a href="https://www-archive.mozilla.org/projects/netlib/portbanning">https://www-archive.mozilla.org/projects/netlib/portbanning</a> (这个链接似乎很旧了，但我没找到更新的)</li>
+</ul>
+</li>
+</ul>
+<p>从列表看，重灾区在 2048 以下的端口，剩下 5000/6000 也有一些，20000 以上的高位端口就没问题了；我用的一般都是 23333，所以没遇到过这个问题。</p>
+<ul>
+<li>via: <a href="https://www.keenformatics.com/ports-that-are-blocked-by-browsers">https://www.keenformatics.com/ports-that-are-blocked-by-browsers</a></li>
+<li>via: <a href="https://jazzy.id.au/2012/08/23/why_does_chrome_consider_some_ports_unsafe.html">https://jazzy.id.au/2012/08/23/why_does_chrome_consider_some_ports_unsafe.html</a></li>
+<li>ref: <a href="https://superuser.com/questions/188058/which-ports-are-considered-unsafe-by-chrome">https://superuser.com/questions/188058/which-ports-are-considered-unsafe-by-chrome</a></li>
+</ul>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/anime-girl-in-anibus/">
-		<img class="icon-text" src="/img/prev.svg"/>反爬虫工具 Anubis 中的 anime girl 图像</a>
+	<a class="prev-post" href="https://nekonull.me/til/enthusiam-take-turns/">
+		<img class="icon-text" src="/img/prev.svg"/>Enthusiam 算法 - 群聊里有人又有 AI，下一个谁发言？</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/brower-limited-ports/">被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务）<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 

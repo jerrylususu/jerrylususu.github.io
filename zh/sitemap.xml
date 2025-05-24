@@ -2,11 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://nekonull.me/til/enthusiam-take-turns/</loc>
-    <lastmod>2025-05-24T10:04:37+00:00</lastmod>
-  </url><url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-05-24T10:04:37+00:00</lastmod>
+    <lastmod>2025-05-24T10:52:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -19,6 +16,12 @@
                 />
   </url><url>
     <loc>https://nekonull.me/til/</loc>
+    <lastmod>2025-05-24T10:52:00+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/brower-limited-ports/</loc>
+    <lastmod>2025-05-24T10:52:00+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/enthusiam-take-turns/</loc>
     <lastmod>2025-05-24T10:04:37+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/anime-girl-in-anibus/</loc>
