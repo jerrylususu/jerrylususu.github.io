@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 24 May 2025 09:45:58 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 May 2025 10:04:37 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enthusiam 算法 - 群聊里有人又有 AI，下一个谁发言？</title>
+      <link>https://nekonull.me/til/enthusiam-take-turns/</link>
+      <pubDate>Sat, 24 May 2025 10:04:37 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/enthusiam-take-turns/</guid>
+      <description>&lt;p&gt;假如一个群聊里有人又有 AI，谁应该发言？作者在试图构建这样的聊天室时遇到了这个问题。作者尝试了一些简单的方法，例如用一个中央决策器协调对话，或者是用一个小模型来判断某个模型是否应该回复，但效果都不佳。在阅读一些社会学论文后，作者提出了 “热情度” (Enthusiam) 算法：对话过程中，每个 AI 根据是否直接涉及自己、是否是历史上下文延续（如追问）、是否会打断他人、自己的性格（是否健谈）来计算一个回复分数（0~9 之间），最后选择超过阈值（例如5）且分数最高的 AI 回复。未来作者在考虑探索，是否可能像现实中根据肢体语言和眼神来判断对话回复时机那样，在文本聊天室中维护一个侧信道。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://interconnected.org/home/2025/05/23/turntaking&#34;&gt;https://interconnected.org/home/2025/05/23/turntaking&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>反爬虫工具 Anubis 中的 anime girl 图像</title>
       <link>https://nekonull.me/til/anime-girl-in-anibus/</link>
@@ -531,19 +542,6 @@
     &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css&amp;#34;&amp;gt;
     &amp;lt;script src=&amp;#34;https://cdn.jsdelivr.net/npm/preline@1.8.0/dist/preline.min.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;src: &lt;a href=&#34;https://mp.weixin.qq.com/s/fxzb8m-THjyzdOlXPuCFnQ&#34;&gt;https://mp.weixin.qq.com/s/fxzb8m-THjyzdOlXPuCFnQ&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Think Tool - 用 Noop Tool Call 让 LLM 记录自己的思考</title>
-      <link>https://nekonull.me/til/think-tool-no-op-tool-call/</link>
-      <pubDate>Sat, 22 Mar 2025 12:28:12 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/think-tool-no-op-tool-call/</guid>
-      <description>&lt;p&gt;给可用工具列表新增一个 &lt;code&gt;think&lt;/code&gt; 工具，只有一个必填参数 &lt;code&gt;thought&lt;/code&gt;；这个工具什么都不做，唯一的作用就是让 thought 可以在后续对话中被 tool_call 块携带。&lt;/p&gt;
-&lt;p&gt;因为是标准的 tool call，所以对于非推理模型也能用。看起来似乎在 prompt 对应调优过的情况下表现最佳，但是单独用似乎也不错。值得一试。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://www.anthropic.com/engineering/claude-think-tool&#34;&gt;https://www.anthropic.com/engineering/claude-think-tool&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
