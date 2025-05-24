@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Fri, 23 May 2025 15:23:59 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 May 2025 09:45:58 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>反爬虫工具 Anubis 中的 anime girl 图像</title>
+      <link>https://nekonull.me/til/anime-girl-in-anibus/</link>
+      <pubDate>Sat, 24 May 2025 09:45:58 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/anime-girl-in-anibus/</guid>
+      <description>&lt;p&gt;Anibus 是一个反 AI 爬虫的工具，通过工作量证明计算来放过真人并阻止爬虫。项目的名字来源于古埃及神话的死神阿努比斯，在死后会把人的心脏和羽毛放在天平上比较。这个工具已经被很多开源界的主要网站采用（甚至联合国都在用 (!)）。&lt;/p&gt;
+&lt;p&gt;在挑战进行过程中（实际执行计算的时候），界面上会显示一个 anime girl 图像。有人对此感到不满，希望作者开放隐藏或者替换图像的能力。在这篇文章中，作者 Xe 说明了自己的理由：这是个故意为之的决定，目的是避免这个开源项目成为“无偿维护基础设施的牺牲品”。简而言之，要么就用开源版本并接受自带图像，要么就付费购买商业版本来关闭或替换。（当然作为开源软件，无法避免有某个 fork 版本做了修改，但是这也引入了额外的维护成本，因此愿意这么做的人可能不多。）&lt;/p&gt;
+&lt;p&gt;看起来是一个避免自己的项目被白嫖的好主意。&lt;/p&gt;
+&lt;p&gt;src: &lt;a href=&#34;https://xeiaso.net/blog/2025/avoiding-becoming-peg-dependency/&#34;&gt;https://xeiaso.net/blog/2025/avoiding-becoming-peg-dependency/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;website: &lt;a href=&#34;https://anubis.techaro.lol/&#34;&gt;https://anubis.techaro.lol/&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>DumPy - 没有聪明技巧，用起来更省心的 Numpy 封装</title>
       <link>https://nekonull.me/til/dumpy-numpy-when-dumb/</link>
@@ -530,29 +544,6 @@
 &lt;p&gt;因为是标准的 tool call，所以对于非推理模型也能用。看起来似乎在 prompt 对应调优过的情况下表现最佳，但是单独用似乎也不错。值得一试。&lt;/p&gt;
 &lt;p&gt;src: &lt;a href=&#34;https://www.anthropic.com/engineering/claude-think-tool&#34;&gt;https://www.anthropic.com/engineering/claude-think-tool&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&#34;&gt;https://simonwillison.net/2025/Mar/21/the-think-tool/#atom-everything&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>TypeScript 中的错误处理光谱</title>
-      <link>https://nekonull.me/til/typescript-error-handling-spectrum/</link>
-      <pubDate>Thu, 20 Mar 2025 15:56:18 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/typescript-error-handling-spectrum/</guid>
-      <description>&lt;p&gt;看了 Theo 的一个视频，讲到了 TypeScript 中的错误处理，把各种“流派”按照对错误的态度（从不在意到视为核心）划分了一个光谱：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;完全不管：默认状态，到处 try catch （很不幸我也是这样的）&lt;/li&gt;
-&lt;li&gt;低度关心：认识到错误需要被明确表达，而不是被隐藏在执行流中；用 tryCatch 或类似实现，让错误在调用返回中明确（&lt;code&gt;const {data, err} = await someFunc()&lt;/code&gt;，类似于 Go 的写法）&lt;/li&gt;
-&lt;li&gt;中等关心：认为需要一个专门的库来封装错误；例如 &lt;code&gt;neverthrow&lt;/code&gt;，实现了 Rust 风格的 Ok, Err 和 chaining&lt;/li&gt;
-&lt;li&gt;高度关心：认为需要围绕错误和异常状态设计整个应用；例如 effect 作为一个完整的框架，写起来其实已经不像是 TypeScript 了&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我自己在写代码的时候，其实有的时候也会对到处 try-catch，catch 了又 throw 有点烦躁，但是不知道什么是更好的做法。看起来可以试试低度关心，再给错误层级有合理封装（至少 throw 之前包一层）。&lt;/p&gt;
-&lt;p&gt;video: &lt;a href=&#34;https://www.youtube.com/watch?v=Y6jT-IkV0VM&#34;&gt;https://www.youtube.com/watch?v=Y6jT-IkV0VM&lt;/a&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;tryCatch: &lt;a href=&#34;https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b&#34;&gt;https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;neverthrow: &lt;a href=&#34;https://github.com/supermacro/neverthrow&#34;&gt;https://github.com/supermacro/neverthrow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;effect: &lt;a href=&#34;https://effect.website/&#34;&gt;https://effect.website/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
