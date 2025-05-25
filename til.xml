@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sat, 24 May 2025 10:52:00 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 May 2025 23:14:16 +0800</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务）</title>
       <link>https://nekonull.me/til/brower-limited-ports/</link>
