@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>用 apt-file search 找缺失的文件属于哪个包 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="虽然搜索/问 LLM 可能更快些，但是原来还可以这样找缺失的文件在哪个软件包里。
+$ apt install -q --yes apt-file &amp;&amp; apt-file update
+$ apt-file search pcre2posix.h
+libpcre2-dev: /usr/include/pcre2posix.h
+$ apt-file search libpcre2-posix.so
+libpcre2-dev: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so
+libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3
+libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3.0.6
+via: https://optimizedbyotto.com/post/debian-packaging-from-git/">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/til/apt-file-search/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>用 apt-file search 找缺失的文件属于哪个包</h1>
+	<h5>
+		
+		<time datetime="2025-05-26 14:46:35.529 &#43;0000 UTC">2025/05/26 14:46</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>虽然搜索/问 LLM 可能更快些，但是原来还可以这样找缺失的文件在哪个软件包里。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ apt install -q --yes apt-file <span style="color:#f92672">&amp;&amp;</span> apt-file update
+</span></span><span style="display:flex;"><span>$ apt-file search pcre2posix.h
+</span></span><span style="display:flex;"><span>libpcre2-dev: /usr/include/pcre2posix.h
+</span></span><span style="display:flex;"><span>$ apt-file search libpcre2-posix.so
+</span></span><span style="display:flex;"><span>libpcre2-dev: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so
+</span></span><span style="display:flex;"><span>libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3
+</span></span><span style="display:flex;"><span>libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3.0.6
+</span></span></code></pre></div><p>via: <a href="https://optimizedbyotto.com/post/debian-packaging-from-git/">https://optimizedbyotto.com/post/debian-packaging-from-git/</a></p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/brower-limited-ports/">
+		<img class="icon-text" src="/img/prev.svg"/>被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务）</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
