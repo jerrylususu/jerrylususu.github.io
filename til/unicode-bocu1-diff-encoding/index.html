@@ -4,17 +4,10 @@
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="generator" content="Hugo 0.145.0">
-	<title>用 apt-file search 找缺失的文件属于哪个包 - Nekonull&#39;s Garden</title>
+	<title>BOCU-1 - Unicode 的差分编码 - Nekonull&#39;s Garden</title>
 
-	<meta name="description" content="虽然搜索/问 LLM 可能更快些，但是原来还可以这样找缺失的文件在哪个软件包里。
-$ apt install -q --yes apt-file &amp;&amp; apt-file update
-$ apt-file search pcre2posix.h
-libpcre2-dev: /usr/include/pcre2posix.h
-$ apt-file search libpcre2-posix.so
-libpcre2-dev: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so
-libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3
-libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3.0.6
-via: https://optimizedbyotto.com/post/debian-packaging-from-git/">
+	<meta name="description" content="UTF-8 作为变长编码，对 ASCII 很省空间，但是对于中文就不太友好了（一般需要 3 个 byte）。
+BOCU-1 是一个变长&quot;差分&quot;编码，每个字符不是被直接编码，而是先计算和一个 prev 字符的差值，然后用 1 到 4 个 byte 编码这个差值。对于部分占据较大连续区间的字符组合（例如 CJK 统一汉字），会直接用区间中点作为 prev，从而减少存储占用，对中文而言大概是 25%。另外实际实现时，还做了一些特殊优化，来保证 BOCU-1 编码后的二进制排序和原始文本的排序一致（意味着可以用于数据库中压缩有序的字符串列表）。">
 
 
 	
@@ -78,7 +71,7 @@ via: https://optimizedbyotto.com/post/debian-packaging-from-git/">
           
             
             
-                <li><a href="https://nekonull.me/til/apt-file-search/" class="active langselect">简体中文</a></li>
+                <li><a href="https://nekonull.me/til/unicode-bocu1-diff-encoding/" class="active langselect">简体中文</a></li>
             
           
       
@@ -99,10 +92,10 @@ via: https://optimizedbyotto.com/post/debian-packaging-from-git/">
 
 <article>
 	<header><hgroup id="brand">
-	<h1>用 apt-file search 找缺失的文件属于哪个包</h1>
+	<h1>BOCU-1 - Unicode 的差分编码</h1>
 	<h5>
 		
-		<time datetime="2025-05-26 14:46:35.529 &#43;0000 UTC">2025/05/26 14:46</time>
+		<time datetime="2025-05-31 10:59:38.907 &#43;0000 UTC">2025/05/31 10:59</time>
 		<span class="no-print">
 			<span>
 	</h5>
@@ -110,25 +103,41 @@ via: https://optimizedbyotto.com/post/debian-packaging-from-git/">
 </hgroup>
 <hr class="sep" />
 </header>
-	<p>虽然搜索/问 LLM 可能更快些，但是原来还可以这样找缺失的文件在哪个软件包里。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ apt install -q --yes apt-file <span style="color:#f92672">&amp;&amp;</span> apt-file update
-</span></span><span style="display:flex;"><span>$ apt-file search pcre2posix.h
-</span></span><span style="display:flex;"><span>libpcre2-dev: /usr/include/pcre2posix.h
-</span></span><span style="display:flex;"><span>$ apt-file search libpcre2-posix.so
-</span></span><span style="display:flex;"><span>libpcre2-dev: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so
-</span></span><span style="display:flex;"><span>libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3
-</span></span><span style="display:flex;"><span>libpcre2-posix3: /usr/lib/x86_64-linux-gnu/libpcre2-posix.so.3.0.6
-</span></span></code></pre></div><p>via: <a href="https://optimizedbyotto.com/post/debian-packaging-from-git/">https://optimizedbyotto.com/post/debian-packaging-from-git/</a></p>
+	<p>UTF-8 作为变长编码，对 ASCII 很省空间，但是对于中文就不太友好了（一般需要 3 个 byte）。</p>
+<p>BOCU-1 是一个变长&quot;差分&quot;编码，每个字符不是被直接编码，而是先计算和一个 <code>prev</code> 字符的差值，然后用 1 到 4 个 byte 编码这个差值。对于部分占据较大连续区间的字符组合（例如 CJK 统一汉字），会直接用区间中点作为 <code>prev</code>，从而减少存储占用，对中文而言大概是 25%。另外实际实现时，还做了一些特殊优化，来保证 BOCU-1 编码后的二进制排序和原始文本的排序一致（意味着可以用于数据库中压缩有序的字符串列表）。</p>
+<p>这段来自 Unicode 文档的伪代码已经很直接了：</p>
+<pre tabindex="0"><code>encode(int &amp;prev, int c) {
+    if(c&lt;=0x20) {
+        output (byte)c;
+        if(c!=0x20) {
+            prev=0x40;
+        }
+    } else {
+        int diff=c-prev;
+        // encode diff in 1..4 bytes and output them
+
+        // adjust prev
+        if(c is Hiragana) {
+            prev=middle of Hiragana;
+        } else if(c is CJK Unihan) {
+            prev=middle of CJK Unihan;
+        } else if(c is Hangul) {
+            prev=middle of Hangul;
+        } else {
+            prev=(c&amp;~0x7f)+0x40;
+        }
+    }
+}
+</code></pre><p>src: <a href="https://www.unicode.org/notes/tn6/">https://www.unicode.org/notes/tn6/</a></p>
+<p>via: <a href="https://evanhahn.com/notes-from-may-2025/">https://evanhahn.com/notes-from-may-2025/</a></p>
+<p>impl: <a href="https://github.com/aamarks/bocu/blob/master/bocu.js">https://github.com/aamarks/bocu/blob/master/bocu.js</a></p>
 
 </article>
 <nav class="no-print post-nav">
 
-	<a class="prev-post" href="https://nekonull.me/til/brower-limited-ports/">
-		<img class="icon-text" src="/img/prev.svg"/>被浏览器禁用的端口 (or 为什么连不上 6000 端口上的 HTTP 服务）</a>
+	<a class="prev-post" href="https://nekonull.me/til/apt-file-search/">
+		<img class="icon-text" src="/img/prev.svg"/>用 apt-file search 找缺失的文件属于哪个包</a>
 
-
-	<a class="next-post" href="https://nekonull.me/til/unicode-bocu1-diff-encoding/">BOCU-1 - Unicode 的差分编码<img class="icon-text" src="/img/next.svg"/>
-	</a>
 
 </nav>
 
