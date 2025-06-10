@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://nekonull.me/</loc>
-    <lastmod>2025-06-10T14:36:22+00:00</lastmod>
+    <lastmod>2025-06-10T14:54:23+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en-us"
@@ -16,7 +16,10 @@
                 />
   </url><url>
     <loc>https://nekonull.me/til/</loc>
-    <lastmod>2025-06-10T14:36:22+00:00</lastmod>
+    <lastmod>2025-06-10T14:54:23+00:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/til/json-column-as-true-data-other-column-derived/</loc>
+    <lastmod>2025-06-10T14:54:23+00:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/til/webmention/</loc>
     <lastmod>2025-06-10T14:36:22+00:00</lastmod>

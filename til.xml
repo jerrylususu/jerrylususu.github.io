@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 10 Jun 2025 14:36:22 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Jun 2025 14:54:23 +0000</lastBuildDate><atom:link href="https://nekonull.me/til.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用 JSON 数据列派生出关系数据库中的其他列</title>
+      <link>https://nekonull.me/til/json-column-as-true-data-other-column-derived/</link>
+      <pubDate>Tue, 10 Jun 2025 14:54:23 +0000</pubDate>
+      
+      <guid>https://nekonull.me/til/json-column-as-true-data-other-column-derived/</guid>
+      <description>&lt;p&gt;一个看起来很奇妙，细想下似乎又有点道理的 SQL 建表方式：Data 列存储真正的数据（JSON），其他列都从 Data 派生而来。基本上是半个文档数据库？&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;CREATE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TABLE&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;IF&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;EXISTS&lt;/span&gt; Cookie (  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Cookie   TEXT    &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;Data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;cookie&amp;#39;&lt;/span&gt;)  STORED &lt;span style=&#34;color:#66d9ef&#34;&gt;UNIQUE&lt;/span&gt;, &lt;span style=&#34;color:#75715e&#34;&gt;-- PK
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;  UserID   INTEGER &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; (&lt;span style=&#34;color:#66d9ef&#34;&gt;Data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;user_id&amp;#39;&lt;/span&gt;) STORED &lt;span style=&#34;color:#66d9ef&#34;&gt;REFERENCES&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;User&lt;/span&gt; (UserID),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Created  INTEGER &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; (unixepoch(&lt;span style=&#34;color:#66d9ef&#34;&gt;Data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;created&amp;#39;&lt;/span&gt;)) STORED,  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  LastUsed INTEGER &lt;span style=&#34;color:#66d9ef&#34;&gt;AS&lt;/span&gt; (unixepoch(&lt;span style=&#34;color:#66d9ef&#34;&gt;Data&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;last_used&amp;#39;&lt;/span&gt;)) &lt;span style=&#34;color:#66d9ef&#34;&gt;CHECK&lt;/span&gt; (LastUsed&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;),  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#66d9ef&#34;&gt;Data&lt;/span&gt;     JSONB   &lt;span style=&#34;color:#66d9ef&#34;&gt;NOT&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;via: &lt;a href=&#34;https://crawshaw.io/blog/programming-with-agents&#34;&gt;https://crawshaw.io/blog/programming-with-agents&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>WebMention - 去中心化的网站间互动</title>
       <link>https://nekonull.me/til/webmention/</link>
@@ -530,18 +548,6 @@
 &lt;p&gt;src: &lt;a href=&#34;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&#34;&gt;https://developers.google.com/fonts/docs/material_icons?hl=zh-cn#using_the_icons_in_html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;via: &lt;a href=&#34;https://webzhao.me/posts/ligature/&#34;&gt;https://webzhao.me/posts/ligature/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;office: &lt;a href=&#34;https://support.microsoft.com/zh-cn/office/-%E5%AD%97%E4%BD%93-%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E7%9A%84-opentype-%E9%80%89%E9%A1%B9-1033d3a7-511a-4d77-a2e2-d10d32889e28&#34;&gt;https://support.microsoft.com/zh-cn/office/-%E5%AD%97%E4%BD%93-%E5%AF%B9%E8%AF%9D%E6%A1%86%E4%B8%AD%E7%9A%84-opentype-%E9%80%89%E9%A1%B9-1033d3a7-511a-4d77-a2e2-d10d32889e28&lt;/a&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Pydantic Evals - 给 LLM 的单元测试</title>
-      <link>https://nekonull.me/til/pydantic-evals/</link>
-      <pubDate>Tue, 01 Apr 2025 14:55:44 +0000</pubDate>
-      
-      <guid>https://nekonull.me/til/pydantic-evals/</guid>
-      <description>&lt;p&gt;最近工作上需要临时当一次 prompt engineer，很快就发现 vibe-based prompting （凭着感觉改 prompt）是不可靠的。理想情况下，应该和传统 ML 类似，有明确定义的 eval set 让我来测试。最后是写了个小脚本来做，但是总觉得有点太粗糙了。今天看到了 Pydantic 的这个 Evals 框架，看起来是一个更干净更系统化的解决方案，抽象也很合理，未来可以试试。&lt;/p&gt;
-&lt;p&gt;src: &lt;a href=&#34;https://ai.pydantic.dev/evals/&#34;&gt;https://ai.pydantic.dev/evals/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;via: &lt;a href=&#34;https://simonwillison.net/2025/Apr/1/pydantic-evals/#atom-everything&#34;&gt;https://simonwillison.net/2025/Apr/1/pydantic-evals/#atom-everything&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
