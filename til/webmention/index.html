@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>WebMention - 去中心化的网站间互动 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="阅读其他人的博客的时候，注意到底部有个 WebMention 提交框。查了下才发现还有这样一个 W3C 标准，用简单的 HTTP 请求就能做到。以下是一些 LLM 生成的说明。
+Webmention 是一种 W3C 推荐的开放标准，旨在实现网站之间的去中心化通知。简单来说，当一个网页（称为“源”）链接或提及另一个网页（称为“目标”）时，源网页可以自动通知目标网页，从而让目标网页知道它被引用了。这使得网站能够接收并显示来自其他网站的“评论”、“引用”、“喜欢”或“转发”等互动，而无需依赖中心化的第三方服务。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/til/webmention/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>WebMention - 去中心化的网站间互动</h1>
+	<h5>
+		
+		<time datetime="2025-06-10 14:36:22.661 &#43;0000 UTC">2025/06/10 14:36</time>
+		<span class="no-print">
+			<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>阅读其他人的博客的时候，注意到底部有个 WebMention 提交框。查了下才发现还有这样一个 W3C 标准，用简单的 HTTP 请求就能做到。以下是一些 LLM 生成的说明。</p>
+<p>Webmention 是一种 W3C 推荐的开放标准，旨在实现网站之间的去中心化通知。简单来说，当一个网页（称为“源”）链接或提及另一个网页（称为“目标”）时，源网页可以自动通知目标网页，从而让目标网页知道它被引用了。这使得网站能够接收并显示来自其他网站的“评论”、“引用”、“喜欢”或“转发”等互动，而无需依赖中心化的第三方服务。</p>
+<p>简要的工作原理：</p>
+<ol>
+<li><strong>用户 A 发布文章：</strong> 用户 A 在自己的源网站上发布了一篇文章，其中包含了指向目标网站的链接。</li>
+<li><strong>发现 Webmention 端点：</strong> 源网站检测到这个外部链接后，会向目标网站发送一个 HTTP GET 请求，以查找目标网站的 Webmention 端点 URL。目标网站会在其 HTML 或 HTTP 头中返回这个信息。</li>
+<li><strong>发送 Webmention 请求：</strong> 源网站获得 Webmention 端点 URL 后，会向该端点发送一个 HTTP POST 请求，其中包含源 URL 和目标 URL。Webmention 端点会立即返回 <code>HTTP 202 Accepted</code>，表示请求已收到并正在处理中（这是一个异步过程）。</li>
+<li><strong>目标网站验证：</strong> Webmention 端点（在目标网站上）开始异步验证。它会向源网站发送一个 HTTP GET 请求，抓取源页面的内容，以确认源页面确实包含了指向目标页面的链接。这是为了防止伪造的 Webmention。</li>
+<li><strong>处理与显示：</strong>
+<ul>
+<li><strong>验证成功：</strong> 如果验证通过，目标网站会存储这个 Webmention 数据，并根据其类型（如引用、回复、喜欢等）进行处理。最终，它会在目标页面上显示这个 Webmention（例如，在文章下方显示“此文被 [源网站] 引用”）。</li>
+<li><strong>验证失败：</strong> 如果验证失败（例如，源页面并未链接到目标页面），Webmention 请求将被丢弃。</li>
+</ul>
+</li>
+</ol>
+<p>src: <a href="https://indieweb.org/Webmention">https://indieweb.org/Webmention</a></p>
+<p>via: <a href="https://shkspr.mobi/blog/2025/06/book-review-the-secret-world-of-denisovans-the-epic-story-of-the-ancient-cousins-to-sapiens-and-neanderthals-by-silvana-condemi/">https://shkspr.mobi/blog/2025/06/book-review-the-secret-world-of-denisovans-the-epic-story-of-the-ancient-cousins-to-sapiens-and-neanderthals-by-silvana-condemi/</a></p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/til/unicode-bocu1-diff-encoding/">
+		<img class="icon-text" src="/img/prev.svg"/>BOCU-1 - Unicode 的差分编码</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
