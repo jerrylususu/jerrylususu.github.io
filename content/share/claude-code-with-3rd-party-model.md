@@ -1,6 +1,6 @@
 ---
 title: 让 Claude Code 使用其他模型
-date: 2025-03-30T15:57:05+08:00
+date: 2025-06-22T19:43:02+08:00
 tags:
 - hack
 - llm
