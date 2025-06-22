@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>让 Claude Code 使用其他模型 - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="最近在尝试各类 agent 项目，大部分都支持使用任何 OpenAI 兼容 API 格式的模型提供商，但是作为这个流派最著名的 Claude Code 却只能用自家模型。自家模型其实也不错，但是对我这种无法在生产环境使用，只是用来自己探索和 side project 的场景下太贵了。搜了下似乎没有人介绍过如何让 Claude Code 和非官方模型配合使用，于是决定记录下。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/share/claude-code-3rd-party-model/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>让 Claude Code 使用其他模型</h1>
+	<h5>
+		
+		<time datetime="2025-06-22 19:43:02 &#43;0800 &#43;0800">2025/06/22 19:43</time>
+		<span class="no-print">
+			|
+				
+				<a href="/tags/hack">hack</a>
+				
+				<a href="/tags/llm">llm</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>最近在尝试各类 agent 项目，大部分都支持使用任何 OpenAI 兼容 API 格式的模型提供商，但是作为这个流派最著名的 Claude Code 却只能用自家模型。自家模型其实也不错，但是对我这种无法在生产环境使用，只是用来自己探索和 side project 的场景下太贵了。搜了下似乎没有人介绍过如何让 Claude Code 和非官方模型配合使用，于是决定记录下。</p>
+<p>这一方法的核心是 <a href="https://github.com/badlogic/lemmy/tree/main/apps/claude-bridge">Claude Bridge</a> 这个项目。实现上，和任何计算机科学问题的解决方式一样，加了一个中间层。具体而言，是 patch 了 node 的 fetch 方法，拦截所有向 Anthropic 官方的请求，转换成标准的 OpenAI 格式（其实是作者自己的一个统一 format），调用指定的提供商，在流式响应的时候再转换回 Claude 的 SSE 格式。</p>
+<ol>
+<li>安装依赖</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 官方的 claude-code</span>
+</span></span><span style="display:flex;"><span>npm install -g @anthropic-ai/claude-code
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># claude-bridge</span>
+</span></span><span style="display:flex;"><span>npm install -g @mariozechner/claude-bridge
+</span></span></code></pre></div><ol start="2">
+<li>准备 API Key 提供脚本</li>
+</ol>
+<p>这一步参考了 Claude Code 的一个 issue <a href="https://github.com/anthropics/claude-code/issues/441">How can I use my API key without signing in?</a>，以及这篇文章 <a href="https://przbadu.hashnode.dev/setting-up-claude-code-with-api-key">Setting up Claude-Code with API Key</a>。</p>
+<p>本步骤解决的问题是，Claude Code 默认情况下只能以 Claude 账号的形式登录（重定向到官方登录页），但不能在不登入账号的情况下直接使用 API Key 发起请求。然而实际上有办法绕过这一限制，只需要创建一个 <code>apiKeyHelper</code> 即可。</p>
+<p>首先在 <code>~/.claude/settings.json</code> 中增加如下内容。（文件没有的话可以先创建）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;apiKeyHelper&#34;</span>: <span style="color:#e6db74">&#34;~/.claude/anthropic_key.sh&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>然后创建 <code>~/.claude/anthropic_key.sh</code>，填入如下内容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;sk_your_anthropic_api_key&#34;</span>
+</span></span></code></pre></div><p>（因为我们会用第三方模型提供商，所以这里可以随便填写）</p>
+<p>最后给让这个 shell 脚本可执行。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chmod +x ~/.claude/anthropic_key.sh
+</span></span></code></pre></div><ol start="3">
+<li>运行 Claude Code</li>
+</ol>
+<p>用目标提供商和模型替换命令中的参数即可。第一个 openai 参数是提供商格式，也可以换成 gemini 等。详情请参考 Claude Bridge 的 readme 文件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>claude-bridge openai <span style="color:#f92672">{{</span>model_name<span style="color:#f92672">}}</span> --baseURL <span style="color:#f92672">{{</span>base_url<span style="color:#f92672">}}</span> --apiKey <span style="color:#f92672">{{</span>api_key<span style="color:#f92672">}}</span>
+</span></span></code></pre></div><p>当然这一方法也不是万能的，有一些已知限制：</p>
+<ol>
+<li>token 计数不准</li>
+<li>不能输入图片</li>
+<li>网络搜索/fetch 不可用</li>
+<li>thinking/reasoning 部分可能无法被正常解析</li>
+</ol>
+<p>（之后可能会写一篇文章对比不同的 agent，但是得看有没有时间了&hellip;）</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/comic-bbox-translator/">
+		<img class="icon-text" src="/img/prev.svg"/>comic-bbox-translator - 用 LLM 生成带边界框的翻译</a>
+
+
+</nav>
+
+
+<section id="related">
+  <h4>另请参阅</h4>
+  <ul>
+    
+  	<li><a href="/share/build-emoji-regex/">构造能匹配所有 emoji 的正则表达式</a></li>
+  	
+  	<li><a href="/posts/call-stack-is-also-a-stack/">调用栈也是栈</a></li>
+  	
+  </ul>
+</section>
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+
