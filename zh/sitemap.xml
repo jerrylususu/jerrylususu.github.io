@@ -159,6 +159,25 @@
     <loc>https://nekonull.me/share/code2prompt/</loc>
     <lastmod>2025-03-30T15:57:05+08:00</lastmod>
   </url><url>
+    <loc>https://nekonull.me/tags/hack/</loc>
+    <lastmod>2025-03-30T15:57:05+08:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en-us"
+                href="https://nekonull.me/en/tags/hack/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="zh-cn"
+                href="https://nekonull.me/tags/hack/"
+                />
+  </url><url>
+    <loc>https://nekonull.me/tags/llm/</loc>
+    <lastmod>2025-03-30T15:57:05+08:00</lastmod>
+  </url><url>
+    <loc>https://nekonull.me/share/claude-code-with-3rd-party-model/</loc>
+    <lastmod>2025-03-30T15:57:05+08:00</lastmod>
+  </url><url>
     <loc>https://nekonull.me/til/node-module-inspector/</loc>
     <lastmod>2025-03-28T15:55:59+00:00</lastmod>
   </url><url>
@@ -266,9 +285,6 @@
   </url><url>
     <loc>https://nekonull.me/share/how-to-manual-squash/</loc>
     <lastmod>2024-10-07T13:56:00+08:00</lastmod>
-  </url><url>
-    <loc>https://nekonull.me/tags/llm/</loc>
-    <lastmod>2024-10-07T13:52:00+08:00</lastmod>
   </url><url>
     <loc>https://nekonull.me/posts/llm_x_bookmark/</loc>
     <lastmod>2024-10-07T13:52:00+08:00</lastmod>
@@ -446,19 +462,6 @@
                 rel="alternate"
                 hreflang="zh-cn"
                 href="https://nekonull.me/share/css-filter-dark-mode/"
-                />
-  </url><url>
-    <loc>https://nekonull.me/tags/hack/</loc>
-    <lastmod>2021-12-13T16:50:43+03:00</lastmod>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en-us"
-                href="https://nekonull.me/en/tags/hack/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="zh-cn"
-                href="https://nekonull.me/tags/hack/"
                 />
   </url><url>
     <loc>https://nekonull.me/share/vnc-to-physical-display/</loc>
