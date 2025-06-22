@@ -49,7 +49,7 @@ chmod +x ~/.claude/anthropic_key.sh
 
 用目标提供商和模型替换命令中的参数即可。第一个 openai 参数是提供商格式，也可以换成 gemini 等。详情请参考 Claude Bridge 的 readme 文件。
 ```bash
-claude-bridge openai {{model_name}} --baseURL {{base_url}} --apiKey {{api_ket}}
+claude-bridge openai {{model_name}} --baseURL {{base_url}} --apiKey {{api_key}}
 ```
 
 当然这一方法也不是万能的，有一些已知限制：
