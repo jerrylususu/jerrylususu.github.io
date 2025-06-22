@@ -7,7 +7,53 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 10 Jun 2025 14:54:23 +0000</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Jun 2025 19:43:02 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让 Claude Code 使用其他模型</title>
+      <link>https://nekonull.me/share/claude-code-with-3rd-party-model/</link>
+      <pubDate>Sun, 22 Jun 2025 19:43:02 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/claude-code-with-3rd-party-model/</guid>
+      <description>&lt;p&gt;最近在尝试各类 agent 项目，大部分都支持使用任何 OpenAI 兼容 API 格式的模型提供商，但是作为这个流派最著名的 Claude Code 却只能用自家模型。自家模型其实也不错，但是对我这种无法在生产环境使用，只是用来自己探索和 side project 的场景下太贵了。搜了下似乎没有人介绍过如何让 Claude Code 和非官方模型配合使用，于是决定记录下。&lt;/p&gt;
+&lt;p&gt;这一方法的核心是 &lt;a href=&#34;https://github.com/badlogic/lemmy/tree/main/apps/claude-bridge&#34;&gt;Claude Bridge&lt;/a&gt; 这个项目。实现上，和任何计算机科学问题的解决方式一样，加了一个中间层。具体而言，是 patch 了 node 的 fetch 方法，拦截所有向 Anthropic 官方的请求，转换成标准的 OpenAI 格式（其实是作者自己的一个统一 format），调用指定的提供商，在流式响应的时候再转换回 Claude 的 SSE 格式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装依赖&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 官方的 claude-code&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm install -g @anthropic-ai/claude-code
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# claude-bridge&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm install -g @mariozechner/claude-bridge
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;准备 API Key 提供脚本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这一步参考了 Claude Code 的一个 issue &lt;a href=&#34;https://github.com/anthropics/claude-code/issues/441&#34;&gt;How can I use my API key without signing in?&lt;/a&gt;，以及这篇文章 &lt;a href=&#34;https://przbadu.hashnode.dev/setting-up-claude-code-with-api-key&#34;&gt;Setting up Claude-Code with API Key&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;本步骤解决的问题是，Claude Code 默认情况下只能以 Claude 账号的形式登录（重定向到官方登录页），但不能在不登入账号的情况下直接使用 API Key 发起请求。然而实际上有办法绕过这一限制，只需要创建一个 &lt;code&gt;apiKeyHelper&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;p&gt;首先在 &lt;code&gt;~/.claude/settings.json&lt;/code&gt; 中增加如下内容。（文件没有的话可以先创建）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;apiKeyHelper&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;~/.claude/anthropic_key.sh&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后创建 &lt;code&gt;~/.claude/anthropic_key.sh&lt;/code&gt;，填入如下内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sk_your_anthropic_api_key&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;（因为我们会用第三方模型提供商，所以这里可以随便填写）&lt;/p&gt;
+&lt;p&gt;最后给让这个 shell 脚本可执行。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x ~/.claude/anthropic_key.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;运行 Claude Code&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用目标提供商和模型替换命令中的参数即可。第一个 openai 参数是提供商格式，也可以换成 gemini 等。详情请参考 Claude Bridge 的 readme 文件。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;claude-bridge openai &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;model_name&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt; --baseURL &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;base_url&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt; --apiKey &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;api_ket&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然这一方法也不是万能的，有一些已知限制：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;token 计数不准&lt;/li&gt;
+&lt;li&gt;不能输入图片&lt;/li&gt;
+&lt;li&gt;网络搜索/fetch 不可用&lt;/li&gt;
+&lt;li&gt;thinking/reasoning 部分可能无法被正常解析&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;（之后可能会写一篇文章对比不同的 agent，但是得看有没有时间了&amp;hellip;）&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>和颞下颌关节紊乱共存的十年</title>
       <link>https://nekonull.me/posts/tmd-10-years/</link>
@@ -148,52 +194,6 @@
 &lt;li&gt;&lt;a href=&#34;https://github.com/yamadashy/repomix&#34;&gt;repofix&lt;/a&gt;：开发之后才关注到，前端缺少控制能力，用起来不太方便&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://github.com/simonw/files-to-prompt&#34;&gt;files-to-prompt&lt;/a&gt;：纯命令行工具，对我这种临时性探索稍微有点繁琐（但是用在其他工作流里可能比较合适）&lt;/li&gt;
 &lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>让 Claude Code 使用其他模型</title>
-      <link>https://nekonull.me/share/claude-code-with-3rd-party-model/</link>
-      <pubDate>Sun, 30 Mar 2025 15:57:05 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/claude-code-with-3rd-party-model/</guid>
-      <description>&lt;p&gt;最近在尝试各类 agent 项目，大部分都支持使用任何 OpenAI 兼容 API 格式的模型提供商，但是作为这个流派最著名的 Claude Code 却只能用自家模型。自家模型其实也不错，但是对我这种无法在生产环境使用，只是用来自己探索和 side project 的场景下太贵了。搜了下似乎没有人介绍过如何让 Claude Code 和非官方模型配合使用，于是决定记录下。&lt;/p&gt;
-&lt;p&gt;这一方法的核心是 &lt;a href=&#34;https://github.com/badlogic/lemmy/tree/main/apps/claude-bridge&#34;&gt;Claude Bridge&lt;/a&gt; 这个项目。实现上，和任何计算机科学问题的解决方式一样，加了一个中间层。具体而言，是 patch 了 node 的 fetch 方法，拦截所有向 Anthropic 官方的请求，转换成标准的 OpenAI 格式（其实是作者自己的一个统一 format），调用指定的提供商，在流式响应的时候再转换回 Claude 的 SSE 格式。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;安装依赖&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 官方的 claude-code&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm install -g @anthropic-ai/claude-code
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# claude-bridge&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;npm install -g @mariozechner/claude-bridge
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;准备 API Key 提供脚本&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;这一步参考了 Claude Code 的一个 issue &lt;a href=&#34;https://github.com/anthropics/claude-code/issues/441&#34;&gt;How can I use my API key without signing in?&lt;/a&gt;，以及这篇文章 &lt;a href=&#34;https://przbadu.hashnode.dev/setting-up-claude-code-with-api-key&#34;&gt;Setting up Claude-Code with API Key&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;本步骤解决的问题是，Claude Code 默认情况下只能以 Claude 账号的形式登录（重定向到官方登录页），但不能在不登入账号的情况下直接使用 API Key 发起请求。然而实际上有办法绕过这一限制，只需要创建一个 &lt;code&gt;apiKeyHelper&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;p&gt;首先在 &lt;code&gt;~/.claude/settings.json&lt;/code&gt; 中增加如下内容。（文件没有的话可以先创建）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#f92672&#34;&gt;&amp;#34;apiKeyHelper&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;~/.claude/anthropic_key.sh&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后创建 &lt;code&gt;~/.claude/anthropic_key.sh&lt;/code&gt;，填入如下内容：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;echo &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;sk_your_anthropic_api_key&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;（因为我们会用第三方模型提供商，所以这里可以随便填写）&lt;/p&gt;
-&lt;p&gt;最后给让这个 shell 脚本可执行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x ~/.claude/anthropic_key.sh
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;运行 Claude Code&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;用目标提供商和模型替换命令中的参数即可。第一个 openai 参数是提供商格式，也可以换成 gemini 等。详情请参考 Claude Bridge 的 readme 文件。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;claude-bridge openai &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;model_name&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt; --baseURL &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;base_url&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt; --apiKey &lt;span style=&#34;color:#f92672&#34;&gt;{{&lt;/span&gt;api_ket&lt;span style=&#34;color:#f92672&#34;&gt;}}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当然这一方法也不是万能的，有一些已知限制：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;token 计数不准&lt;/li&gt;
-&lt;li&gt;不能输入图片&lt;/li&gt;
-&lt;li&gt;网络搜索/fetch 不可用&lt;/li&gt;
-&lt;li&gt;thinking/reasoning 部分可能无法被正常解析&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;（之后可能会写一篇文章对比不同的 agent，但是得看有没有时间了&amp;hellip;）&lt;/p&gt;
 </description>
     </item>
     
