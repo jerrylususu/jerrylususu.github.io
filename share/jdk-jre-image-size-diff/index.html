@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="generator" content="Hugo 0.145.0">
+	<title>为什么 JDK 的镜像比 JRE 镜像小？ - Nekonull&#39;s Garden</title>
+
+	<meta name="description" content="TLDR：虽然 JDK 镜像内容比 JRE 镜像多，但 JDK 镜像的压缩比更高，导致最后镜像大小反而 JDK 比 JRE 小；原因是 JDK 镜像主要用于 CI/CD 流水线，对性能和耗时要求不太高，所以可以用更高的压缩比；但 JRE 镜像主要用于线上服务，对性能要求极高，因此基本没有压缩。">
+
+
+	
+	
+	
+
+
+
+
+<link rel="stylesheet" href="/css/ui.css">
+
+	
+	
+
+	<script defer src="/js/dark-mode.js"></script>
+	<link disabled id="dark-mode-theme" rel="stylesheet" href="/css/dark.css">
+	<link  rel="stylesheet" href="/css/dropdown.css">
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3973436778637330"
+	crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono">
+	
+				
+	
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-R01JLDY2KE"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-R01JLDY2KE');
+        }
+      </script>
+</head>
+
+<body>
+<header class="container no-print">
+	<div class="u-header">
+		<nav class="bar">
+	<ul><li>
+			<a href="/">
+				<img class="icon-text" src="/img/prev.svg"/>
+			</a>
+		</li><li><img class="icon-text" id="dark-mode-toggle" src="/img/moon-regular.svg" alt="Toggle Dark Mode"></a></li><li><a href="/til">TIL</a></li><li><a href="/about">关于</a></li><li><a href="/archive">存档</a></li><li><a href="/tags">标签</a></li><li><a href="/share">短文</a></li><li><a href="/posts">长文</a></li><li><a href="/project">项目</a></li>
+<li id="language-switch" class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img class="icon-text" src="/img/translate.svg" alt="Select Language"/></a>
+<ul class="dropdown-menu">
+  
+  
+  
+      
+      
+          
+      
+          
+            
+            
+                <li><a href="https://nekonull.me/share/jdk-jre-image-size-diff/" class="active langselect">简体中文</a></li>
+            
+          
+      
+  
+</ul>
+
+
+
+
+
+
+	</ul>
+</nav>
+
+	</div>
+</header>
+<main class="container">
+
+<article>
+	<header><hgroup id="brand">
+	<h1>为什么 JDK 的镜像比 JRE 镜像小？</h1>
+	<h5>
+		
+		<time datetime="2025-08-03 22:01:12 &#43;0800 &#43;0800">2025/08/03 22:01</time>
+		<span class="no-print">
+			|
+				
+				<a href="/tags/docker">docker</a>
+				
+				<a href="/tags/aiauthor">aiauthor</a>
+				<span>
+	</h5>
+	
+</hgroup>
+<hr class="sep" />
+</header>
+	<p>TLDR：虽然 JDK 镜像内容比 JRE 镜像多，但 JDK 镜像的压缩比更高，导致最后镜像大小反而 JDK 比 JRE 小；原因是 JDK 镜像主要用于 CI/CD 流水线，对性能和耗时要求不太高，所以可以用更高的压缩比；但 JRE 镜像主要用于线上服务，对性能要求极高，因此基本没有压缩。</p>
+<p>AI 贡献提示：技术探索过程主要由 Claude Code + Kimi K2 完成；文字部分主要为 Gemini Pro 2.5 编写；我仅提供探索方向指导和简单内容编辑。我已在能力范围内确认下述内容的准确性。如发现问题，欢迎留言反馈。</p>
+<p>感谢 <a href="https://github.com/ziqin/ziqin">@ziqin</a> 提出了本文的探索问题。</p>
+<hr>
+<h2 id="缘起一个反常的发现">缘起：一个反常的发现</h2>
+<p>一位群友在运行 docker image 时发现一个反常的现象：<strong>JDK镜像（111MB）竟然比JRE镜像（139MB）小了整整28MB！</strong></p>
+<pre tabindex="0"><code>REPOSITORY                            TAG           IMAGE ID       CREATED      SIZE
+bellsoft/liberica-runtime-container   jdk-21-musl   1c9d58aebbdc   2 days ago   111MB
+bellsoft/liberica-runtime-container   jre-21-musl   c59d660b1633   2 days ago   139MB
+</code></pre><p>但这感觉上不太合理，因为 JDK 是 JRE 的超集，不仅包含了 JRE 的全部功能，还包含了额外的开发工具（如 <code>javac</code>, <code>jdb</code> 等），为什么其镜像反倒还更小呢？这个反直觉的观察结果立刻激起了我们的好奇心。问题提出之时是个工作日的晚上，我并没有太多精力仔细思考，于是我让 Claude Code 来探索这个问题。</p>
+<h2 id="探案之旅层层深入拨开迷雾">探案之旅：层层深入，拨开迷雾</h2>
+<p>我们的调查遵循着从宏观到微观的路径，一步步逼近问题的核心。</p>
+<h3 id="第一站文件系统对比">第一站：文件系统对比</h3>
+<p>我们首先通过 <code>docker exec</code> 进入两个正在运行的容器，对比其内部文件系统的差异。</p>
+<ul>
+<li><strong>JDK 镜像</strong>: <code>docker exec jdk-analysis du -sh /usr/lib/jvm/liberica21-lite</code> -&gt; <strong>98.5M</strong></li>
+<li><strong>JRE 镜像</strong>: <code>docker exec jre-analysis du -sh /usr/lib/jvm/liberica21-container-jre</code> -&gt; <strong>125.2M</strong></li>
+</ul>
+<p><strong>初步结论</strong>：差异的根源在于Java安装目录本身。JDK镜像使用的是一个名为 <code>liberica21-lite</code> 的发行版，而JRE镜像使用的是 <code>liberica21-container-jre</code>。</p>
+<h3 id="第二站核心文件对比">第二站：核心文件对比</h3>
+<p>当我们继续深入，对比两者 <code>lib</code> 目录下的核心文件 <code>modules</code> 时，差异变得更加惊人：</p>
+<ul>
+<li><strong>JDK <code>modules</code> 文件</strong>: 59.3MB</li>
+<li><strong>JRE <code>modules</code> 文件</strong>: 97.1MB</li>
+</ul>
+<p><code>modules</code> 文件是Java模块化系统的核心，存储了所有的运行时模块。<strong>JRE的<code>modules</code>文件竟然比JDK的大了37.8MB！</strong> 这几乎完全解释了镜像大小的差异。</p>
+<p>但新的问题随之而来：JDK明明包含了更多的模块（如编译器 <code>jdk.compiler</code>、文档工具 <code>jdk.javadoc</code> 等），为什么它的 <code>modules</code> 文件反而更小？</p>
+<table>
+  <thead>
+      <tr>
+          <th>对比项</th>
+          <th>JDK (liberica21-lite)</th>
+          <th>JRE (liberica21-container-jre)</th>
+          <th>差异</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>模块数量</strong></td>
+          <td>69 个</td>
+          <td>49 个</td>
+          <td><strong>+20 个</strong></td>
+      </tr>
+      <tr>
+          <td><strong><code>modules</code> 文件大小</strong></td>
+          <td>59.3 MB</td>
+          <td>97.1 MB</td>
+          <td><strong>-37.8 MB</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>更多的内容，却占用了更少的空间。这背后一定有更深层次的原因。</p>
+<h3 id="第三站压缩策略对比">第三站：压缩策略对比</h3>
+<p>为了彻底搞清楚 <code>modules</code> 文件内部的秘密，我们使用 <code>jimage</code> 工具将其解压，并分析了其中包含的每一个资源。真相终于水落石出。</p>
+<p><strong>这并非内容差异，而是压缩策略的根本不同！</strong></p>
+<p>观察以下对比数据：</p>
+<table>
+  <thead>
+      <tr>
+          <th>指标</th>
+          <th>JDK (liberica21-lite)</th>
+          <th>JRE (liberica21-container-jre)</th>
+          <th>证据</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>压缩算法</strong></td>
+          <td>DEFLATE (zlib)</td>
+          <td>DEFLATE (zlib)</td>
+          <td><code>jimage</code>工具确认</td>
+      </tr>
+      <tr>
+          <td><strong>压缩级别</strong></td>
+          <td>Level 9 (最大)</td>
+          <td>Level 0 (无)</td>
+          <td>资源分析确认</td>
+      </tr>
+      <tr>
+          <td><strong>总资源数</strong></td>
+          <td>28,427</td>
+          <td>22,133</td>
+          <td><code>jimage list --verbose</code></td>
+      </tr>
+      <tr>
+          <td><strong>压缩资源数</strong></td>
+          <td>28,044 (98.7%)</td>
+          <td><strong>0 (0.0%)</strong></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><strong>未压缩资源数</strong></td>
+          <td>383 (1.3%)</td>
+          <td>22,133 (100.0%)</td>
+          <td>JRE裸奔存储</td>
+      </tr>
+      <tr>
+          <td><strong>压缩后总大小</strong></td>
+          <td>60.4 MB</td>
+          <td>100.5 MB</td>
+          <td>JRE因元数据开销反而变大</td>
+      </tr>
+      <tr>
+          <td><strong>压缩比</strong></td>
+          <td><strong>2.31 : 1</strong></td>
+          <td><strong>0.99 : 1</strong></td>
+          <td>JRE压缩比小于1</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>真正的技术根因：</strong></p>
+<ol>
+<li><strong>JDK (<code>liberica21-lite</code>)</strong>: 使用了<strong>激进的DEFLATE压缩</strong>（相当于 <code>jlink --compress=2</code>，级别9）。它将所有工具和资源（包括开发工具、调试信息、所有区域设置）都包含进来，然后用最高效的算法进行压缩，以实现最小的磁盘占用。</li>
+<li><strong>JRE (<code>liberica21-container-jre</code>)</strong>: <strong>完全没有使用压缩</strong>（相当于 <code>jlink --compress=0</code>，级别0/STORE模式）。它精心挑选了生产环境必需的运行时子集，但为了追求最快的启动速度和运行时性能，放弃了压缩。（甚至因为压缩元数据，反而引入了额外的空间开销，导致压缩比小于 1。）</li>
+</ol>
+<h2 id="设计哲学为何如此选择">设计哲学：为何如此选择？</h2>
+<p>这个看似矛盾的设计，实际上是BellSoft针对不同应用场景的深思熟虑的工程决策。</p>
+<h3 id="jdk-lite-的设计目标---compress2">JDK &ldquo;lite&rdquo; 的设计目标 (<code>--compress=2</code>)</h3>
+<ul>
+<li><strong>目标场景</strong>: CI/CD流水线、开发环境、容器构建阶段。</li>
+<li><strong>优化核心</strong>: <strong>存储和网络效率</strong>。在这些场景下，镜像的下载速度和存储成本是首要考虑因素。构建时的一次性压缩CPU开销，可以换来后续无数次快速的分发和部署。</li>
+<li><strong>策略</strong>: <strong>空间换时间（构建时）</strong>。牺牲构建时的CPU时间，换取最小的存储空间。</li>
+</ul>
+<h3 id="jre-container-jre-的设计目标---compress0">JRE &ldquo;container-jre&rdquo; 的设计目标 (<code>--compress=0</code>)</h3>
+<ul>
+<li><strong>目标场景</strong>: 生产环境运行时。</li>
+<li><strong>优化核心</strong>: <strong>运行时性能</strong>。在生产环境中，应用的启动速度、内存占用和CPU效率至关重要。免去解压步骤，意味着更快的类加载、更低的CPU消耗和更少的内存抖动。</li>
+<li><strong>策略</strong>: <strong>时间换空间（运行时）</strong>。牺牲磁盘空间，换取运行时的高性能和稳定性。</li>
+</ul>
+<h2 id="最终结论一个反直觉的真理">最终结论：一个反直觉的真理</h2>
+<p>我们最初的谜题现在有了清晰的答案：</p>
+<blockquote>
+<p><strong>JDK镜像小，是因为它用极致的压缩，换取了分发和存储的便利。</strong>
+<strong>JRE镜像大，是因为它用空间，换取了生产环境的极致性能。</strong></p></blockquote>
+<p>换句话说：</p>
+<ul>
+<li><strong>更多内容 + 更强压缩 = 更小的分发体积 (JDK)</strong></li>
+<li><strong>更少内容 + 无压缩 = 更大的分发体积 (JRE)</strong></li>
+</ul>
+<h2 id="结语">结语</h2>
+<p>这次从一个简单的 <code>docker images</code> 命令开始的探案之旅，最终带领我们深入理解了现代 Java 发行版在容器化时代的精妙设计。BellSoft Liberica 的这种差异化策略，并非一个错误，而是一个深刻理解开发者和运维者在不同阶段核心痛点的<strong>高级功能</strong>。</p>
+<p>它告诉我们，在技术的选择上，没有绝对的“好”与“坏”，只有是否“适合”。理解了这些选择背后的逻辑，我们才能在自己的工作中，做出更明智、更高效的决策。</p>
+
+</article>
+<nav class="no-print post-nav">
+
+	<a class="prev-post" href="https://nekonull.me/share/claude-code-3rd-party-model/">
+		<img class="icon-text" src="/img/prev.svg"/>让 Claude Code 使用其他模型</a>
+
+
+</nav>
+
+
+
+
+
+	
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="jerrylususu/jerrylususu.github.io"
+    data-repo-id="MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY="
+    data-category="Blog Comments"
+    data-category-id="DIC_kwDOCI3wAs4CZNcG"
+    data-mapping="pathname"
+    data-reactions-enabled="1"
+    data-input-position="top"
+    data-theme="preferred-color-scheme"
+    data-lang="zh-CN"
+    data-loading="lazy"
+    data-strict="1"
+    
+    data-theme="preferred-color-scheme"
+    crossorigin="anonymous"
+    async
+  ></script>
+
+			<hr class="sep" />
+		</main>
+		<footer class="container no-print">
+			<div class="u-footer">
+				
+
+<a href="https://github.com/jerrylususu/"><img class="icon-social" src="/img/github.svg" alt="Github"/></a>
+
+
+
+
+
+
+
+				<p>
+					
+					使用的主题: <a href="https://github.com/yursan9/manis-hugo-theme">Manis</a><br>
+					
+					
+					CC-BY-SA-4.0
+					
+					
+				</p>
+				
+				<a href="#brand">
+					<img class="icon-text" src="/img/toup.svg" alt="To Up"/>
+					<span>回到顶部</span>
+				</a>
+				
+			</div>
+		</footer>
+		
+	</body>
+</html>
+

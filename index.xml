@@ -7,7 +7,158 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 22 Jun 2025 19:43:02 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Aug 2025 22:01:12 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为什么 JDK 的镜像比 JRE 镜像小？</title>
+      <link>https://nekonull.me/share/jdk-jre-image-size-diff/</link>
+      <pubDate>Sun, 03 Aug 2025 22:01:12 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/jdk-jre-image-size-diff/</guid>
+      <description>&lt;p&gt;TLDR：虽然 JDK 镜像内容比 JRE 镜像多，但 JDK 镜像的压缩比更高，导致最后镜像大小反而 JDK 比 JRE 小；原因是 JDK 镜像主要用于 CI/CD 流水线，对性能和耗时要求不太高，所以可以用更高的压缩比；但 JRE 镜像主要用于线上服务，对性能要求极高，因此基本没有压缩。&lt;/p&gt;
+&lt;p&gt;AI 贡献提示：技术探索过程主要由 Claude Code + Kimi K2 完成；文字部分主要为 Gemini Pro 2.5 编写；我仅提供探索方向指导和简单内容编辑。我已在能力范围内确认下述内容的准确性。如发现问题，欢迎留言反馈。&lt;/p&gt;
+&lt;p&gt;感谢 &lt;a href=&#34;https://github.com/ziqin/ziqin&#34;&gt;@ziqin&lt;/a&gt; 提出了本文的探索问题。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;缘起一个反常的发现&#34;&gt;缘起：一个反常的发现&lt;/h2&gt;
+&lt;p&gt;一位群友在运行 docker image 时发现一个反常的现象：&lt;strong&gt;JDK镜像（111MB）竟然比JRE镜像（139MB）小了整整28MB！&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REPOSITORY                            TAG           IMAGE ID       CREATED      SIZE
+bellsoft/liberica-runtime-container   jdk-21-musl   1c9d58aebbdc   2 days ago   111MB
+bellsoft/liberica-runtime-container   jre-21-musl   c59d660b1633   2 days ago   139MB
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但这感觉上不太合理，因为 JDK 是 JRE 的超集，不仅包含了 JRE 的全部功能，还包含了额外的开发工具（如 &lt;code&gt;javac&lt;/code&gt;, &lt;code&gt;jdb&lt;/code&gt; 等），为什么其镜像反倒还更小呢？这个反直觉的观察结果立刻激起了我们的好奇心。问题提出之时是个工作日的晚上，我并没有太多精力仔细思考，于是我让 Claude Code 来探索这个问题。&lt;/p&gt;
+&lt;h2 id=&#34;探案之旅层层深入拨开迷雾&#34;&gt;探案之旅：层层深入，拨开迷雾&lt;/h2&gt;
+&lt;p&gt;我们的调查遵循着从宏观到微观的路径，一步步逼近问题的核心。&lt;/p&gt;
+&lt;h3 id=&#34;第一站文件系统对比&#34;&gt;第一站：文件系统对比&lt;/h3&gt;
+&lt;p&gt;我们首先通过 &lt;code&gt;docker exec&lt;/code&gt; 进入两个正在运行的容器，对比其内部文件系统的差异。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;JDK 镜像&lt;/strong&gt;: &lt;code&gt;docker exec jdk-analysis du -sh /usr/lib/jvm/liberica21-lite&lt;/code&gt; -&amp;gt; &lt;strong&gt;98.5M&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;JRE 镜像&lt;/strong&gt;: &lt;code&gt;docker exec jre-analysis du -sh /usr/lib/jvm/liberica21-container-jre&lt;/code&gt; -&amp;gt; &lt;strong&gt;125.2M&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;初步结论&lt;/strong&gt;：差异的根源在于Java安装目录本身。JDK镜像使用的是一个名为 &lt;code&gt;liberica21-lite&lt;/code&gt; 的发行版，而JRE镜像使用的是 &lt;code&gt;liberica21-container-jre&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;第二站核心文件对比&#34;&gt;第二站：核心文件对比&lt;/h3&gt;
+&lt;p&gt;当我们继续深入，对比两者 &lt;code&gt;lib&lt;/code&gt; 目录下的核心文件 &lt;code&gt;modules&lt;/code&gt; 时，差异变得更加惊人：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;JDK &lt;code&gt;modules&lt;/code&gt; 文件&lt;/strong&gt;: 59.3MB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;JRE &lt;code&gt;modules&lt;/code&gt; 文件&lt;/strong&gt;: 97.1MB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;modules&lt;/code&gt; 文件是Java模块化系统的核心，存储了所有的运行时模块。&lt;strong&gt;JRE的&lt;code&gt;modules&lt;/code&gt;文件竟然比JDK的大了37.8MB！&lt;/strong&gt; 这几乎完全解释了镜像大小的差异。&lt;/p&gt;
+&lt;p&gt;但新的问题随之而来：JDK明明包含了更多的模块（如编译器 &lt;code&gt;jdk.compiler&lt;/code&gt;、文档工具 &lt;code&gt;jdk.javadoc&lt;/code&gt; 等），为什么它的 &lt;code&gt;modules&lt;/code&gt; 文件反而更小？&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;对比项&lt;/th&gt;
+          &lt;th&gt;JDK (liberica21-lite)&lt;/th&gt;
+          &lt;th&gt;JRE (liberica21-container-jre)&lt;/th&gt;
+          &lt;th&gt;差异&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;模块数量&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;69 个&lt;/td&gt;
+          &lt;td&gt;49 个&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;+20 个&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;&lt;code&gt;modules&lt;/code&gt; 文件大小&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;59.3 MB&lt;/td&gt;
+          &lt;td&gt;97.1 MB&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;-37.8 MB&lt;/strong&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;更多的内容，却占用了更少的空间。这背后一定有更深层次的原因。&lt;/p&gt;
+&lt;h3 id=&#34;第三站压缩策略对比&#34;&gt;第三站：压缩策略对比&lt;/h3&gt;
+&lt;p&gt;为了彻底搞清楚 &lt;code&gt;modules&lt;/code&gt; 文件内部的秘密，我们使用 &lt;code&gt;jimage&lt;/code&gt; 工具将其解压，并分析了其中包含的每一个资源。真相终于水落石出。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;这并非内容差异，而是压缩策略的根本不同！&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;观察以下对比数据：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;指标&lt;/th&gt;
+          &lt;th&gt;JDK (liberica21-lite)&lt;/th&gt;
+          &lt;th&gt;JRE (liberica21-container-jre)&lt;/th&gt;
+          &lt;th&gt;证据&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;压缩算法&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;DEFLATE (zlib)&lt;/td&gt;
+          &lt;td&gt;DEFLATE (zlib)&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;jimage&lt;/code&gt;工具确认&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;压缩级别&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;Level 9 (最大)&lt;/td&gt;
+          &lt;td&gt;Level 0 (无)&lt;/td&gt;
+          &lt;td&gt;资源分析确认&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;总资源数&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;28,427&lt;/td&gt;
+          &lt;td&gt;22,133&lt;/td&gt;
+          &lt;td&gt;&lt;code&gt;jimage list --verbose&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;压缩资源数&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;28,044 (98.7%)&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0 (0.0%)&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;未压缩资源数&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;383 (1.3%)&lt;/td&gt;
+          &lt;td&gt;22,133 (100.0%)&lt;/td&gt;
+          &lt;td&gt;JRE裸奔存储&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;压缩后总大小&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;60.4 MB&lt;/td&gt;
+          &lt;td&gt;100.5 MB&lt;/td&gt;
+          &lt;td&gt;JRE因元数据开销反而变大&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;压缩比&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;2.31 : 1&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;strong&gt;0.99 : 1&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;JRE压缩比小于1&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;真正的技术根因：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;JDK (&lt;code&gt;liberica21-lite&lt;/code&gt;)&lt;/strong&gt;: 使用了&lt;strong&gt;激进的DEFLATE压缩&lt;/strong&gt;（相当于 &lt;code&gt;jlink --compress=2&lt;/code&gt;，级别9）。它将所有工具和资源（包括开发工具、调试信息、所有区域设置）都包含进来，然后用最高效的算法进行压缩，以实现最小的磁盘占用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;JRE (&lt;code&gt;liberica21-container-jre&lt;/code&gt;)&lt;/strong&gt;: &lt;strong&gt;完全没有使用压缩&lt;/strong&gt;（相当于 &lt;code&gt;jlink --compress=0&lt;/code&gt;，级别0/STORE模式）。它精心挑选了生产环境必需的运行时子集，但为了追求最快的启动速度和运行时性能，放弃了压缩。（甚至因为压缩元数据，反而引入了额外的空间开销，导致压缩比小于 1。）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;设计哲学为何如此选择&#34;&gt;设计哲学：为何如此选择？&lt;/h2&gt;
+&lt;p&gt;这个看似矛盾的设计，实际上是BellSoft针对不同应用场景的深思熟虑的工程决策。&lt;/p&gt;
+&lt;h3 id=&#34;jdk-lite-的设计目标---compress2&#34;&gt;JDK &amp;ldquo;lite&amp;rdquo; 的设计目标 (&lt;code&gt;--compress=2&lt;/code&gt;)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;目标场景&lt;/strong&gt;: CI/CD流水线、开发环境、容器构建阶段。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优化核心&lt;/strong&gt;: &lt;strong&gt;存储和网络效率&lt;/strong&gt;。在这些场景下，镜像的下载速度和存储成本是首要考虑因素。构建时的一次性压缩CPU开销，可以换来后续无数次快速的分发和部署。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;策略&lt;/strong&gt;: &lt;strong&gt;空间换时间（构建时）&lt;/strong&gt;。牺牲构建时的CPU时间，换取最小的存储空间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;jre-container-jre-的设计目标---compress0&#34;&gt;JRE &amp;ldquo;container-jre&amp;rdquo; 的设计目标 (&lt;code&gt;--compress=0&lt;/code&gt;)&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;目标场景&lt;/strong&gt;: 生产环境运行时。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优化核心&lt;/strong&gt;: &lt;strong&gt;运行时性能&lt;/strong&gt;。在生产环境中，应用的启动速度、内存占用和CPU效率至关重要。免去解压步骤，意味着更快的类加载、更低的CPU消耗和更少的内存抖动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;策略&lt;/strong&gt;: &lt;strong&gt;时间换空间（运行时）&lt;/strong&gt;。牺牲磁盘空间，换取运行时的高性能和稳定性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;最终结论一个反直觉的真理&#34;&gt;最终结论：一个反直觉的真理&lt;/h2&gt;
+&lt;p&gt;我们最初的谜题现在有了清晰的答案：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;JDK镜像小，是因为它用极致的压缩，换取了分发和存储的便利。&lt;/strong&gt;
+&lt;strong&gt;JRE镜像大，是因为它用空间，换取了生产环境的极致性能。&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;换句话说：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;更多内容 + 更强压缩 = 更小的分发体积 (JDK)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;更少内容 + 无压缩 = 更大的分发体积 (JRE)&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;结语&#34;&gt;结语&lt;/h2&gt;
+&lt;p&gt;这次从一个简单的 &lt;code&gt;docker images&lt;/code&gt; 命令开始的探案之旅，最终带领我们深入理解了现代 Java 发行版在容器化时代的精妙设计。BellSoft Liberica 的这种差异化策略，并非一个错误，而是一个深刻理解开发者和运维者在不同阶段核心痛点的&lt;strong&gt;高级功能&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;它告诉我们，在技术的选择上，没有绝对的“好”与“坏”，只有是否“适合”。理解了这些选择背后的逻辑，我们才能在自己的工作中，做出更明智、更高效的决策。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>让 Claude Code 使用其他模型</title>
       <link>https://nekonull.me/share/claude-code-3rd-party-model/</link>
@@ -2311,28 +2462,6 @@ inside: addr=0x7ffc4b13dc04
 &lt;li&gt;对图像生成类工具有更多了解（至少玩起来）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>多语言的 Hugo 博客</title>
-      <link>https://nekonull.me/share/hugo-multilang/</link>
-      <pubDate>Sat, 04 Nov 2023 20:27:43 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/hugo-multilang/</guid>
-      <description>&lt;p&gt;之前看到了某位同学的分享，提到他在将博客多语言化之后，访问量有了显著的上升，于是也想试试看。在 OpenAI 的加持下文章翻译并不是什么难事，但是想要给一个现存的 Hugo 站点增加多语言支持依然不轻松。虽然 Hugo 本身自带了多语言支持的基本特性（&lt;a href=&#34;https://gohugo.io/content-management/multilingual/&#34;&gt;文档：Hugo Multilingual&lt;/a&gt;），但是倘若选用的主题不支持，则还需要对主题进行改造。&lt;/p&gt;
-&lt;p&gt;目前对本博客，我选择了&amp;quot;按文件名翻译&amp;quot;的做法，从文档来看这似乎是对现有文件结构侵入最小的方案。简单来说，如果你的博客 Markdown 文件位于 &lt;code&gt;/content/blog.md&lt;/code&gt;，在同层级下新建一个 &lt;code&gt;blog.en.md&lt;/code&gt; 即可补充英文翻译。完成后可以通过在域名后补充 &lt;code&gt;/en/&lt;/code&gt; 路径的方式来访问。（主语言，在我这里是&amp;quot;简体中文&amp;quot;的路径不受影响，即无需补充语言后缀。）然而让用户手动补充语言路由显然是不可接受的，于是得在页面某处加一个语言选择器。这里我暂时加到了顶部。然后你的多语言博客就可以上线了。&lt;/p&gt;
-&lt;p&gt;目前已知还存在的一些问题，待之后有空再来慢慢解决吧：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;各种导航（例如左上角的后退）会回到站点根目录（也就是简体中文主页）；合理的做法是回到当前语言的对应主页&lt;/li&gt;
-&lt;li&gt;RSS feed 链接有问题，默认提供的仍然是主语言的 RSS 链接，英文的链接在 &lt;code&gt;/en/&lt;/code&gt; 路径下；这里可能要考虑一个整合的 RSS？&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;大部分的核心多语言代码可以从这个 commit 看到：&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/pull/27/commits/ca7a83d6750f1f3d940a92b95b2179f793d26dd4&#34;&gt;ca7a83d&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;更多参考链接：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://discourse.gohugo.io/t/language-switcher-in-menu/11570&#34;&gt;Language switcher in menu&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.regisphilibert.com/blog/2018/08/hugo-multilingual-part-1-managing-content-translation/&#34;&gt;Hugo Multilingual Part 1: Content translation&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
