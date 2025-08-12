@@ -7,7 +7,106 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 03 Aug 2025 22:01:12 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Aug 2025 00:45:01 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让 Claude Code 使用 tmux/screen 执行交互式操作</title>
+      <link>https://nekonull.me/share/claude-code-screen-tmux/</link>
+      <pubDate>Wed, 13 Aug 2025 00:45:01 +0800</pubDate>
+      
+      <guid>https://nekonull.me/share/claude-code-screen-tmux/</guid>
+      <description>&lt;p&gt;起因是逛 YouTube 时看到了 &lt;a href=&#34;https://www.youtube.com/@ArminRonacher&#34;&gt;Armin Ronacher&lt;/a&gt; 的这两个视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=chSL6p5u-74&#34;&gt;Claude Runs LLDB in Screen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=tg61cevJthc&#34;&gt;Claude Code Debugs with LLDB in TMUX&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;看起来很酷炫，但实际上原理很简单：screen/tmux 都支持通过命令行传递输入并返回当前正在展示的内容，只需要写个文档让 Claude Code 用就好了（见文末）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Screen: &lt;code&gt;-X stuff&lt;/code&gt; 输入，&lt;code&gt;-X hardcopy&lt;/code&gt; 输出&lt;/li&gt;
+&lt;li&gt;Tmux: &lt;code&gt;send-keys&lt;/code&gt; 输入，&lt;code&gt;capture-pane&lt;/code&gt; 输出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;甚至还可以 attach 上去看看在做什么。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Screen: &lt;code&gt;screen -r ${session_name}&lt;/code&gt; (Ctrl+A D 释放)&lt;/li&gt;
+&lt;li&gt;Tmux: &lt;code&gt;tmux attach-session -t ${session_name}&lt;/code&gt; (Ctrl+B D 释放)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两者相比，tmux 似乎更好一些，因为 screen 只能输出到文件，llm 还需要再 read 一次；tmux 的输出直接在 stdout，不用多绕一道。&lt;/p&gt;
+&lt;p&gt;这是一个 GIF 示例，展示了 Claude Code 在 tmux 中使用 gdb 解决经典的 bomb lab 问题。（加速 10x）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这只是一个通用能力的展示；如果你真的想要用 gdb，可能 &lt;a href=&#34;https://github.com/signal-slot/mcp-gdb&#34;&gt;mcp-gdb&lt;/a&gt; 是更好的选择。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/claude-code-tmux.gif&#34; alt=&#34;Demo&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;完整 prompt：&lt;/p&gt;
+&lt;pre&gt;
+# Debugging Guide for AI Agents
+
+This guide provides instructions for debugging using `gdb` within terminal multiplexers. It covers two options: `screen` and `tmux`. Use these multiplexers to run a command in a detached session, allowing for input sending, output capturing, and session management. Sessions are named using `${session_name}` for consistency.
+
+Sessions can be started with a specific command (e.g., `gdb`) or empty, with commands sent later. Examples assume a session running `gdb`.
+
+## Using Screen
+
+- **Starting the Session**: Start a detached `screen` session named `${session_name}`. Use flags like `-S` (session name), `-d` (detach), and `-m` (create even if detached). The `${command}` can be `gdb [optional-program]` or any other command.
+
+  ```bash
+  screen -S ${session_name} -d -m ${command}
+  # Example: screen -S my-debug-session -d -m gdb my_program
+  # Example: screen -S my-shell-session -d -m bash
+  ```
+
+- **Sending Input**: Send strings or commands into the session using the `stuff` command. Use `$&#39;\n&#39;` for newlines.
+
+  ```bash
+  screen -S ${session_name} -X stuff $&#39;${input_string}\n&#39;
+  # Example: screen -S my-debug-session -X stuff $&#39;run &lt; /usr/share/dict/words\n&#39;
+  # Example: screen -S my-shell-session -X stuff $&#39;ls -l\n&#39;
+  ```
+
+- **Reading Output**: Screen does not output directly to stdout, so use a workaround: Capture the session output to a text file using `-X hardcopy`, then read the file.
+
+  ```bash
+  screen -S ${session_name} -X hardcopy tmp_screen_out.txt
+  cat tmp_screen_out.txt
+  ```
+
+- **Closing the Session**: When debugging is finished, quit the session.
+
+  ```bash
+  screen -S ${session_name} -X quit
+  ```
+
+## Using Tmux
+
+- **Starting the Session**: Start a detached `tmux` session named `${session_name}`. Use `new-session` with `-s` (session name) and `-d` (detach). The `${command}` can be `gdb [optional-program]` or any other command.
+
+  ```bash
+  tmux new-session -s ${session_name} -d ${command}
+  # Example: tmux new-session -s my-debug-session -d gdb my_program
+  # Example: tmux new-session -s my-shell-session -d bash
+  ```
+
+- **Sending Input**: Send strings or commands into the session using `send-keys`. Use `C-m` for Enter (newline).
+
+  ```bash
+  tmux send-keys -t ${session_name} &#39;${input_string}&#39; C-m
+  # Example: tmux send-keys -t my-debug-session &#39;run &lt; /usr/share/dict/words&#39; C-m
+  # Example: tmux send-keys -t my-shell-session &#39;pwd&#39; C-m
+  ```
+
+- **Reading Output**: Capture the pane output directly to stdout using `capture-pane` with `-p`.
+
+  ```bash
+  tmux capture-pane -t ${session_name} -p
+  ```
+
+- **Closing the Session**: When debugging is finished, kill the session.
+
+  ```bash
+  tmux kill-session -t ${session_name}
+  ```
+```
+&lt;/pre&gt;</description>
+    </item>
+    
     <item>
       <title>为什么 JDK 的镜像比 JRE 镜像小？</title>
       <link>https://nekonull.me/share/jdk-jre-image-size-diff/</link>
@@ -2383,85 +2482,6 @@ inside: addr=0x7ffc4b13dc04
 &lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow&#34;&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar&#34;&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter&#34;&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>End of 2023</title>
-      <link>https://nekonull.me/posts/end-of-2023/</link>
-      <pubDate>Sun, 31 Dec 2023 22:46:01 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/end-of-2023/</guid>
-      <description>&lt;h1 id=&#34;end-of-2023&#34;&gt;End of 2023&lt;/h1&gt;
-&lt;p&gt;一转眼又到年底了，关注的博主和身边的好友纷纷亮出了自己的年终总结；在这个离跨年还有2个小时不到的时刻，决定还是随手写点，就当给未来的自己留下些印象了。&lt;/p&gt;
-&lt;h2 id=&#34;回顾-2023&#34;&gt;回顾 2023&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;工作
-&lt;ul&gt;
-&lt;li&gt;正常升了一级，工资涨了点；但相应的工作量也增加了很多&lt;/li&gt;
-&lt;li&gt;可以明显感觉到自己不再被视为新人，而是已经成为了部门战力的一部分&lt;/li&gt;
-&lt;li&gt;对负责的业务的复杂性有些感觉，但是了解的依然不够深入；简单的问题可以处理，复杂的问题还是得拉人一起看，没法自己独立解决&lt;/li&gt;
-&lt;li&gt;全年负责的部分没有出大事故，但是总感觉有些不安&lt;/li&gt;
-&lt;li&gt;开始有完全自己设计的内部系统了，运营也是自己负责&lt;/li&gt;
-&lt;li&gt;作为新人参与的第一个项目（参加1年+被交出去），有些不舍&lt;/li&gt;
-&lt;li&gt;接近年底的时候接了个很重要很紧急的活，被迫打破自己内向的一面到处找人推进进度，算是体会了一把成为项目owner的感觉&lt;/li&gt;
-&lt;li&gt;部门内年中、年末各出现一次大范围组织架构调整，自己所在的小组目前还尚存；同届进来的新人被优化，后续又找到了更好的新工作；自己也应该考虑这方面的可能性了&lt;/li&gt;
-&lt;li&gt;干起来还行，虽然不算特别好，但是也不坏；至少可能会先一直干下去，直到哪里突然出现重大变化&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;生活
-&lt;ul&gt;
-&lt;li&gt;依然住在家里，通勤时间是个比较困扰的问题，但是自己出去租房外短时间内应该无解&lt;/li&gt;
-&lt;li&gt;3月眼睛不舒服检查发现左右眼近视远视度数差距过大，开始戴眼镜，估计很长一段时间内都会持续了&lt;/li&gt;
-&lt;li&gt;7月检查发现胰岛素抵抗（糖尿病前期），开始定期运动，后来选到了每天中午，边运动边看一集番，从7月开始到12月初天气寒冷结束，中间因为11月生病停了两周，总体运动天数应该在100+&lt;/li&gt;
-&lt;li&gt;中午开始不吃公司食堂，成为附近kfc常客，备注不加酱多加菜（这样算下来午餐的热量摄入其实还更低）&lt;/li&gt;
-&lt;li&gt;10月去日本旅游了，算是满足了一个自己长久以来的愿望&lt;/li&gt;
-&lt;li&gt;开始固定时间去公园散步（以深圳湾公园为主），以及定期的群友聚餐；对维持精神状态有很大帮助&lt;/li&gt;
-&lt;li&gt;年初的时候用微信读书读了几本书，但是后续没有坚持下去；年末的时候买了《计算》，抽空读了一小部分，感觉还是跳着读自己感兴趣的部分比较合适&lt;/li&gt;
-&lt;li&gt;重新开始学习日语（虽然之前硬背的五十音基本已经完全忘光了）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;技术 &amp;amp; 开源活动 &amp;amp; 探索
-&lt;ul&gt;
-&lt;li&gt;工作中实际使用的技术（后端 C++ / Node.js + TypeScript，前端 Vue，数据处理 Python / SQL）基本保持同等水平，C++ 可能是稍微了解的多了一些&lt;/li&gt;
-&lt;li&gt;手里的几个开源项目依然处于维护状态，没怎么写新的（除了年底的 &lt;a href=&#34;https://github.com/jerrylususu/mainonly/tree/main&#34;&gt;mainonly&lt;/a&gt;）&lt;/li&gt;
-&lt;li&gt;参加了一次国内的 Linux 中国活动，感觉大家都还挺害羞的，主题还有点意思但是运气不好没抽到奖&lt;/li&gt;
-&lt;li&gt;探索各类 AIGC 工具，目前来看处于初步成熟阶段，可以做些事情但是能做的依然不太多
-&lt;ul&gt;
-&lt;li&gt;GPT：因为价格和付费渠道问题主要用 API，日常 3.5 基本够用，不行的话再上 4-turbo；如果只是问代码问题的话 Github Copliot 的体验更好，响应也更快（虽然 $10/月 也不算便宜就是了）；至少编写一些基本代码，或者处理某些特定疑难点已经很够用了&lt;/li&gt;
-&lt;li&gt;其他 LLM：通过 OpenRouter 试用了 Claude / Gemini / Mixtral 的 API；Claude 对于长文很好用但是最近启用了 geoblocking 没法用；Gemini 用字符数计费有些神奇但是用起来和 3.5 感觉差不多；但是 GPT 效果实在是太好，用其他模型的意义不大；还试用了一些国内的 LLM，如智浦的 GLM 系列，百川的 Baichuan 系列，对于中文来说体验更好，另外因为词库以中文为主收费也更低&lt;/li&gt;
-&lt;li&gt;SD/MD：MD 类用自然语言就可以出很惊人的效果；SD 自由度很好但是上手比较难，估计得熟读各种咒语 + 自己有足够多的时间体验&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;展望-2024&#34;&gt;展望 2024&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;工作
-&lt;ul&gt;
-&lt;li&gt;正常升级 + 不出事故，至少先活过入职两年的分界线&lt;/li&gt;
-&lt;li&gt;需要开始了解市场状态，重新开始面试准备了，至少万一被优化还有备选&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;生活
-&lt;ul&gt;
-&lt;li&gt;回暖之后可以坚持运动；体重降回正常范围&lt;/li&gt;
-&lt;li&gt;每个季度读一本工作无关的书&lt;/li&gt;
-&lt;li&gt;学习日语到N2水平&lt;/li&gt;
-&lt;li&gt;考过软考&lt;/li&gt;
-&lt;li&gt;投资学习 &amp;amp; 实践：阅读相关书籍，尝试用收入的 10% 进行一些多元的投资操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;技术 &amp;amp; 开源 &amp;amp; 探索
-&lt;ul&gt;
-&lt;li&gt;了解和学习之前没接触过的技术：React / Vue 3 / Next.js / SSR&lt;/li&gt;
-&lt;li&gt;用 Rust / Zig 写些小项目&lt;/li&gt;
-&lt;li&gt;把五十音工具改造成微信小程序&lt;/li&gt;
-&lt;li&gt;对图像生成类工具有更多了解（至少玩起来）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
