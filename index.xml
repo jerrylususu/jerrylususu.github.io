@@ -7,7 +7,45 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Wed, 13 Aug 2025 00:45:01 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 21 Sep 2025 22:58:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>软文检测器</title>
+      <link>https://nekonull.me/posts/is-it-soft-ad/</link>
+      <pubDate>Sun, 21 Sep 2025 22:58:00 +0800</pubDate>
+      
+      <guid>https://nekonull.me/posts/is-it-soft-ad/</guid>
+      <description>&lt;p&gt;读某些新闻网站或公众号的时候，常常会越读越有种隐约的广告感（&amp;ldquo;这是广告吗？&amp;quot;），直到读到文末才彻底验证（”这果然就是广告吧！“）。之前买了 GLM 20 元一个月的 coding 套餐（agent 用的是 claude code），那就顺手 vibe coding 一个小工具来识别吧。于是就有了”软文检测器“。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在线访问: &lt;a href=&#34;https://nekonull.me/is-it-soft-ad/&#34;&gt;https://nekonull.me/is-it-soft-ad/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Github: &lt;a href=&#34;https://github.com/jerrylususu/is-it-soft-ad&#34;&gt;https://github.com/jerrylususu/is-it-soft-ad&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个小 app 本身并没有什么特别值得说道的，毕竟只是顺手做的玩具，代码我也没有仔细审查，看起来似乎没啥问题而且也能跑就提交了。作为一个 llm wraper，基本上就是一个 fastapi 后端加一个很简单的 vanilla js 前端（甚至没有用框架），前端提交内容后扔给 llm，然后用 sse 推送响应，来避免前端长时间卡住不出结果。模型上用的是 gemini-flash-2.0，是我能找到的速度-质量-价格最佳平衡点，而且 gemini flash 本身就极其便宜了，极大缓解了我的 llm 用量焦虑。prompt 是 deepseek r1 写的，在 repo 的 json 文件里可以找到，生成后稍微人工调整了一下但没有大改。&lt;/p&gt;
+&lt;p&gt;有人可能会好奇，在 llm 生成响应的过程中，返回的 json 并不完整，前端是如何保证展示有效内容的呢。实际上这里参考了苹果 wwdc 25 的 &lt;a href=&#34;https://wwdcnotes.com/documentation/wwdcnotes/wwdc25-286-meet-the-foundation-models-framework/#Snapshot-streaming&#34;&gt;Snapshot streaming&lt;/a&gt;  的做法，虽然 llm 返回的响应并不是完整的 json，但是有库可以尝试从不完整的 json 解析出有效的 json，我用的是 &lt;a href=&#34;https://github.com/promplate/partial-json-parser&#34;&gt;promplate/partial-json-parser&lt;/a&gt;（原理大概是自定义一个更宽松的parser） ，在后端包一层，就可以确保前端每次 sse 拿到的 event 都是有效 json了（虽然可能部分字段不完整）。&lt;/p&gt;
+&lt;p&gt;自己稍微玩了玩，确认没啥问题了之后，就开始想怎么部署到公网上。vibe coding 极大简化了写代码（如果你不在乎这个项目的长期可维护性，只是想创建个能用的 mvp）；但是 vibe deploying 并没有成熟度能与之相当的工具链。不少人用 supabase，但是对我这样一个简单的 llm wrapper 来说未免有点太重了，部署在别人的平台上也有点感觉不太安心（担心哪天超过 free tier 被收钱，虽然概率极其之小）。自己部署的话，又有不少前期工作需要做，例如子域名、网关、https、daemon化等等。我之前大部分分享出去的小工具都是纯前端的，扔在 github pages 上就完事了，最多写个 yaml 配置下 ci，带后端的对外工具实际上这还是第一个。最后分享欲还是战胜了嫌麻烦的心态，决定后端扔在一个不怎么用的云服务器上（服务器本身的开销可以忽略不计），前端还是放 github pages。最后满打满算下来，这个项目写代码&amp;amp;自测的时间，可能还没有准备部署环境&amp;amp;实际部署的时间长。&lt;/p&gt;
+&lt;p&gt;关于 llm 的应用，其实还涉及到一个控制用量（aka 限额）的问题。虽然我倒是不太介意在这种小玩具上每个月花点小钱（一瓶无糖可乐的价格都够一个便宜 llm 模型用很久了），但是我不想失去控制我能花多少钱的能力。一开始想的是在后端自己写个限额，或者直接用现成的库，但感觉涉及到钱的话还是有些危险，于是搁置了。手写限额的话，还需要考虑状态存储，就又多引入了一层复杂性（例如 cloudflare worker kv 每天只有 1k 写额度，上 durable object 或者 d1 也太重了。）顺带吐槽下，国内好几家主流的 LLM 服务提供商，都没有 by api key 限制使用额度的能力，但是在国外（如 openrouter）或各类中转商，这是基础的不能再基础的能力了。最后找了个支持 api key 限额的中转服务商，才算放下心来，知道再怎么刷也不会把我的账户刷爆了。&lt;/p&gt;
+&lt;p&gt;最后是可观测性，出于一些小小的私心，还是希望看看有多少人用过。为此前端加了 google analytics，后端用 opentelemetry 上报 trace 到 uptrace （他们家免费额度很宽裕）。最后实际上因为没怎么做推广（只在两个论坛上发了简单介绍），当然也没啥人用，最后大概是一天10个请求的样子，我自己的请求可能就占了一半。&lt;/p&gt;
+&lt;p&gt;一些未来的可能优化点（如果我还有兴趣在这个项目上继续投入的话）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;把单纯的是否软文改成一个连续的光谱，或者至少多增加几个层级&lt;/li&gt;
+&lt;li&gt;现在对软文敏感度太高了，正常内容可能也会被认为是软文，看看怎么改 prompt 优化下&lt;/li&gt;
+&lt;li&gt;调查为啥得加 await asyncio.sleep 才能让 sse 正常工作&lt;/li&gt;
+&lt;li&gt;深入分析，补充到文内的引用&lt;/li&gt;
+&lt;li&gt;对文章按照”推广程度“染色（说实话我不太确定技术上这怎么实现）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另外还有一些想法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可能对高级用户 bring your own key 的做法会更好，还能省去我部署后端的开发&amp;amp;运营复杂度；可能可以考虑把这个项目转换成一个支持自己提供 llm 接入和使用现成后端的模式？
+&lt;ul&gt;
+&lt;li&gt;进一步地，是否存在这样的生态系统，提供了统一的 llm 接口（例如一个 js/ts sdk），用户只需要装一个插件，在插件内配置一次，各个网站就可以直接使用用户已配置的 llm 服务？（似乎 chrome 有个内置的小模型，但是很多事情小模型还是不太够用）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;之前试过扣子空间，虽然搭建简单原型没问题，但是分享起来异常困难（例如有审核流程）；如果存在更简单的分享&amp;amp;创作方式，可能这类小但是有意义的 llm wrapper 会更广泛？&lt;/li&gt;
+&lt;li&gt;与其分享一个又一个 llm wrapper ，不如分享结构化 prompt 和支持运行结构化 prompt 的工具？（例如另一个之前的小创作 &lt;a href=&#34;https://pages.nekonull.me/llm-prompt-templater.html&#34;&gt;llm-prompt-templater&lt;/a&gt; ）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这篇文章有点混乱，想到哪里就写到哪里了，只是我个人的 brain dump。如果你能读到这里，那真是辛苦了。&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>让 Claude Code 使用 tmux/screen 执行交互式操作</title>
       <link>https://nekonull.me/share/claude-code-screen-tmux/</link>
@@ -2407,82 +2445,6 @@ inside: addr=0x7ffc4b13dc04
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>2024 年了，我最近在用什么工具</title>
-      <link>https://nekonull.me/posts/tools-i-use-2024-mid/</link>
-      <pubDate>Sun, 21 Jul 2024 21:53:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/tools-i-use-2024-mid/</guid>
-      <description>&lt;h2 id=&#34;2024-年了我最近在用什么工具&#34;&gt;2024 年了，我最近在用什么工具&lt;/h2&gt;
-&lt;p&gt;去年年中，公司的主力开发设备从 Windows 换成了 Mac，之前在 Windows 上用的各类工具需要重新在 Mac 上找对应的替代品。一年磨合下来现在已经差不多稳定了，特此记录（其实之前就应该记录的，但是太懒）。如果能帮助到各位读者就更好了。当然也欢迎评论推荐更多你认为好用的工具。&lt;/p&gt;
-&lt;h2 id=&#34;独立工具&#34;&gt;独立工具&lt;/h2&gt;
-&lt;p&gt;（此处的独立指的是软件本身可以独立运行，与之相对的是插件）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://code.visualstudio.com/&#34;&gt;VS Code&lt;/a&gt;：宇宙 IDE（装了足够多插件之后）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kate-editor.org/&#34;&gt;Kate&lt;/a&gt;：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://cudatext.github.io/&#34;&gt;CudaText&lt;/a&gt;：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定&lt;/li&gt;
-&lt;li&gt;Apple Notes：用来记录手头临时的待办事项，避免消息太多跟丢&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://obsidian.md/&#34;&gt;Obsidian&lt;/a&gt;：用来做&lt;a href=&#34;https://news.ycombinator.com/item?id=40950584&#34;&gt;工作笔记&lt;/a&gt;，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.u.tools/&#34;&gt;Utools&lt;/a&gt;：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.raycast.com/&#34;&gt;RayCast&lt;/a&gt;：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.snipaste.com/&#34;&gt;Snipaste&lt;/a&gt;：截图 &amp;amp; 贴图是我工作流的重要部分，已经完全离不开了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://karabiner-elements.pqrs.org/&#34;&gt;Karabiner-Elements&lt;/a&gt;：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&amp;gt; 左 Cmd）；现在键位熟悉之后用的不多了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dwarvesf/hidden&#34;&gt;Hidden Bar&lt;/a&gt;：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/p0deje/Maccy&#34;&gt;Maccy&lt;/a&gt;：剪贴板历史（救了我好几次）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/exelban/stats&#34;&gt;Stats&lt;/a&gt;：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ther0n/UnnaturalScrollWheels&#34;&gt;UnnaturalScrollWheels&lt;/a&gt;：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://draw.io/&#34;&gt;Draw.io&lt;/a&gt;：画各种图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great&#34;&gt;EasyFind&lt;/a&gt;：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/michaelvillar/timer-app&#34;&gt;Timer&lt;/a&gt;：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://ezip.awehunt.com/&#34;&gt;MacZip&lt;/a&gt;：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ArchGPT/insomnium&#34;&gt;Insomnium&lt;/a&gt;：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://activitywatch.net/&#34;&gt;ActivityWatch&lt;/a&gt;：记录下今天上了多少班&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chatboxai.app/&#34;&gt;Chatbox&lt;/a&gt;：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;obsidian-插件&#34;&gt;Obsidian 插件&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/hub/02&amp;#43;-&amp;#43;Community&amp;#43;Expansions/02.05&amp;#43;All&amp;#43;Community&amp;#43;Expansions/Plugins/obsidian-electron-window-tweaker&#34;&gt;Electron Window Tweaker&lt;/a&gt;：让 Obsidian 窗口也能够置顶&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Vinzent03/obsidian-git&#34;&gt;Git&lt;/a&gt;：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/tasks/Introduction&#34;&gt;Tasks&lt;/a&gt;：将所有文件里的任务收集起来，创建统一的任务视图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/hdykokd/obsidian-vertical-tabs-view&#34;&gt;Vertical Tabs View&lt;/a&gt;：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）&lt;/li&gt;
-&lt;li&gt;[New Tab +]：避免同一个文件被打开在多个 tab 中&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/tadashi-aikawa/obsidian-another-quick-switcher&#34;&gt;Another Quick Switcher&lt;/a&gt;：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题&lt;/li&gt;
-&lt;li&gt;Unique Note Creator：官方插件，可以直接创建一个带有时间戳的笔记并应用模板；用来在出现新工作时创建对应的工作笔记&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;（顺带一提，为了和 VS Code 使用习惯一致，Quick Swtich 绑定到 Cmd+R，command palette 绑定到 Cmd+Shift+P）&lt;/p&gt;
-&lt;h2 id=&#34;浏览器插件&#34;&gt;浏览器插件&lt;/h2&gt;
-&lt;p&gt;（目前用的是 Edge，纵向标签页没有其他浏览器支持）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://immersivetranslate.com/?force=1&#34;&gt;沉浸式翻译&lt;/a&gt;：外文长文必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://modheader.com/&#34;&gt;ModHeader&lt;/a&gt;：调试用，主要拿来改 request header&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.inssman.com/&#34;&gt;Inssman&lt;/a&gt;：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN&#34;&gt;Earth View From Google Earth&lt;/a&gt;：在新标签页展示航拍景象，换换心情&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla&#34;&gt;Page Notes&lt;/a&gt;：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg&#34;&gt;Picture-in-Picture Extension (by Google)&lt;/a&gt;：画中画插件，&lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag 的视频都能用，摸鱼必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko&#34;&gt;Session Buddy&lt;/a&gt;：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf&#34;&gt;VerticalTabs&lt;/a&gt;：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN&#34;&gt;TamperMonkey&lt;/a&gt;：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;还有些小工具网站：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jupyter.org/try-jupyter/lab/&#34;&gt;JupyterLite&lt;/a&gt;：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://nekonull.me/day-tracker/&#34;&gt;Day Tracker&lt;/a&gt;：之前自己写的小工具，看今天还要上多久班&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;vs-code-插件&#34;&gt;VS Code 插件&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks&#34;&gt;Bookmarks&lt;/a&gt;：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens&#34;&gt;Error Lens&lt;/a&gt;：行内显示报错信息，不需要手动在波浪线上 hover 也能看到&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight&#34;&gt;Todo Highlight&lt;/a&gt;：将所有 TODO 高亮出来&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens&#34;&gt;GitLens&lt;/a&gt;：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer&#34;&gt;Live Server&lt;/a&gt;：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph&#34;&gt;Git Graph&lt;/a&gt;：GitLens 的分支图是收费功能，可以用这个插件替代&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow&#34;&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar&#34;&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter&#34;&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
-&lt;/ul&gt;
 </description>
     </item>
     
