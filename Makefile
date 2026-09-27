@@ -34,10 +34,10 @@ guard:
 	}
 
 serve: guard
-	$(HUGO) server
+	$(HUGO) server --renderToMemory
 
 draft: guard
-	$(HUGO) server -D
+	$(HUGO) server -D --renderToMemory
 
 build: guard
 	$(HUGO) --cleanDestinationDir --gc --minify --environment production \

@@ -42,7 +42,7 @@ git clone --branch v1.1.0 --depth 1 https://github.com/pgsty/oink.git oink
 
 | 命令 | 做什么 |
 | --- | --- |
-| `make serve` | 本地预览 <http://localhost:1313/> |
+| `make serve` | 本地预览 <http://localhost:1313/>（`--renderToMemory`，不写 `public/`） |
 | `make draft` | 连草稿一起预览（`hugo server -D`） |
 | `make build` | 严格构建到 `public/`，等同 CI |
 | `make new f=posts/foo.md` | 生成文章骨架 |
@@ -54,14 +54,18 @@ git clone --branch v1.1.0 --depth 1 https://github.com/pgsty/oink.git oink
 `./hugo` → `./.tools/hugo` → `../.tools/hugo` → `$PATH` 的顺序自动找 Hugo；
 想指定别的二进制用 `make serve HUGO=/path/to/hugo`。
 
+> `serve`/`draft` 带 `--renderToMemory`：预览只存在内存里，不写 `public/`。
+> 这样就不会出现「dev server 在跑时又跑了 `make build`，`--cleanDestinationDir` 清掉
+> `public/` 导致预览的 CSS/JS 404、图标消失」那类问题。
+
 裸命令等价于：
 
 ```bash
 # 把 Hugo 的缓存指到项目内（可选，避免污染 ~/.cache）
 export HUGO_CACHEDIR="$PWD/../.cache/hugo"
 
-# 本地预览
-hugo server
+# 本地预览（--renderToMemory：不写 public/，避免和 make build 互相干扰）
+hugo server --renderToMemory
 
 # 部署 workflow 跑的严格构建
 hugo --cleanDestinationDir --gc --minify --environment production \
