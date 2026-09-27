@@ -152,7 +152,7 @@ cascade:
 
 **第 5 层 · 独立页** — `about.md` / `project.md` 设 `type: blog` + `comments: false`（它们不是文章，不该有评论区）。
 
-**第 6 层 · 首页数据** — 写 `data/home/{zh,en}.yaml`（hero + 四栏目卡片 + CTA）。
+**第 6 层 · 首页数据** — 写 `data/home/{zh,en}.yaml`（最终形态是 hero + 「最新 N 条」；初期草稿里的四栏目卡片与 CTA 已删）。
 
 ---
 

@@ -7,8 +7,6 @@ sections:
       title: 最近更新
       count: 5
       link: { label: 全部长文, url: posts/ }
-  - cards
-  - cta
 
 hero:
   align: center
@@ -16,38 +14,7 @@ hero:
   title_lines:
     - words: [{ text: Always read. }]
     - words: [{ text: Mostly hack. Sometimes write. }]
-  lead: 一个用来记录长文、短文与 TIL 的个人花园，内容照旧，评论照旧。
-  note: 全部历史内容与网址均已保留
   actions:
     - { label: 长文, url: posts/, icon: fa-solid fa-book-open, style: primary }
     - { label: 短文, url: share/, icon: fa-solid fa-feather, style: ghost }
     - { label: TIL, url: til/, icon: fa-solid fa-lightbulb, style: ghost }
-
-cards:
-  eyebrow: 四个栏目
-  title: 按篇幅和目的分开
-  columns: 4
-  items:
-    - title: 长文
-      desc: （可能）更长一些的文章。
-      icon: fa-solid fa-book-open
-      url: posts/
-    - title: 短文
-      desc: 分享一些小技巧。
-      icon: fa-solid fa-feather
-      url: share/
-    - title: TIL
-      desc: Today I Learned — 简短的知识与经验。
-      icon: fa-solid fa-lightbulb
-      url: til/
-    - title: 存档
-      desc: 尘封的历史。
-      icon: fa-solid fa-box-archive
-      url: archive/
-
-cta:
-  title: 关于这个站点
-  text: 想了解更多，或者看看我在做什么。
-  actions:
-    - { label: 关于, url: about/, icon: fa-solid fa-circle-info, style: primary }
-    - { label: 项目, url: project/, icon: fa-solid fa-cubes, style: ghost }

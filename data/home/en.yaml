@@ -7,8 +7,6 @@ sections:
       title: Recently updated
       count: 5
       link: { label: All posts, url: posts/ }
-  - cards
-  - cta
 
 hero:
   align: center
@@ -16,37 +14,6 @@ hero:
   title_lines:
     - words: [{ text: Always read. }]
     - words: [{ text: Mostly hack. Sometimes write. }]
-  lead: A personal garden for long reads, short notes, and TIL entries. Same content, same comments.
-  note: Every historical URL is preserved
   actions:
     - { label: Posts, url: posts/, icon: fa-solid fa-book-open, style: primary }
     - { label: Share, url: share/, icon: fa-solid fa-feather, style: ghost }
-
-cards:
-  eyebrow: Four sections
-  title: Split by length and intent
-  columns: 4
-  items:
-    - title: Posts
-      desc: (Possibly) longer articles.
-      icon: fa-solid fa-book-open
-      url: posts/
-    - title: Share
-      desc: Tips and tricks, kept short.
-      icon: fa-solid fa-feather
-      url: share/
-    - title: TIL
-      desc: Today I Learned — short notes on what I picked up.
-      icon: fa-solid fa-lightbulb
-      url: https://nekonull.me/til/
-    - title: Archive
-      desc: History sealed in dust.
-      icon: fa-solid fa-box-archive
-      url: archive/
-
-cta:
-  title: About this site
-  text: Learn more about me, or see what I am building.
-  actions:
-    - { label: About, url: https://nekonull.me/about/, icon: fa-solid fa-circle-info, style: primary, external: true }
-    - { label: Project, url: https://nekonull.me/project/, icon: fa-solid fa-cubes, style: ghost, external: true }

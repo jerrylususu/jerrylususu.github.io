@@ -132,13 +132,15 @@ giscus 的 `repo`、`repoId`、`category`、`categoryId` 和 `mapping: pathname`
 
 ### 2.2 首页
 
-这是视觉上变化最大的一处。旧首页列出最新的长文、短文和 TIL；OINK 的首页是由
-`data/home/{zh,en}.yaml` 数据驱动的，而且没有内置的"最新 N 条"区块，所以重建版用了
-hero + 四栏目卡片 + CTA 的结构。
+这是视觉上变化最大的一处。旧首页列出最新的长文、短文和 TIL；OINK 的首页是数据驱动的落地页。
 
-`/` 本身照常工作，落地页完全由数据驱动。已新增「最新 N 条」区块（`data/home/*.yaml` 的 `recent`，
-实现见 `layouts/_partials/landing/sections/recent.html`）——取 `posts`/`share`/`til` 三个栏目的最新
-N 篇，复用主题的博客列表行样式，因此首页与栏目索引视觉一致。
+`/` 本身照常工作，最终结构收敛为 **hero + 「最近更新」**：
+
+- hero 保留标语与三个入口按钮（长文 / 短文 / TIL）；
+- 新增「最新 N 条」区块（`data/home/*.yaml` 的 `recent`，实现见
+  `layouts/_partials/landing/sections/recent.html`）——取 `posts`/`share`/`til` 三个栏目的最新 N 篇，
+  复用主题的博客列表行样式，因此首页与栏目索引视觉一致；
+- 首页的「关于」「项目」入口由导航栏提供，不再单设 CTA 区块；四栏目卡片区也已按评审意见删除。
 
 ### 2.3 英文导航
 
@@ -168,7 +170,7 @@ giscus partial —— 线上任何页面都没有 Disqus 嵌入。重建版直�
 
 | 项 | 状态 |
 | --- | --- |
-| 首页的"最新 N 条"行为 | 未复现 —— 需要你决定（见第 2.2 节） |
+| 首页 | 已实现 hero + 「最新 N 条」；原四栏目卡片与 CTA 区已删除（见第 2.2 节） |
 | `enableGitInfo` | 关闭，与旧站一致；因此没有基于 git 的"最后修改时间"，也没有贡献者信息。要开启需要完整的仓库历史。 |
 | 品牌痕迹 | 导航栏已改用站点 logo（`params.logo: img/logo_dark.jpg`），favicon 由同一张图构建时生成。页脚仍写着 "Powered by Oink"，属主题默认文案。 |
 | `themes/manis`、`themes/terminal` | 已弃用；重建版不使用旧主题 |
