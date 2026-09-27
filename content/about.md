@@ -1,4 +1,6 @@
 ---
+type: blog
+comments: false
 title: "About"
 date: 2021-04-03T00:21:09+08:00
 ---

@@ -1,4 +1,6 @@
 ---
+type: blog
+comments: false
 title: 项目
 date: 2024-08-31T23:45:30+08:00
 ---

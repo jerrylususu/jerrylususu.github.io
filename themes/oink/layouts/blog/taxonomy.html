@@ -1,0 +1,7 @@
+{{ define "main" -}}
+<div class="td-content td-shell-blog-index">
+  {{ partial "shell/taxonomy-head.html" . }}
+  {{ with partial "content/render.html" . }}<div class="td-shell-term-summary">{{ . }}</div>{{ end }}
+</div>
+{{ partial "shell/taxonomy-cards.html" . }}
+{{ end -}}

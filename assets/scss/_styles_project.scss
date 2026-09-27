@@ -1,0 +1,30 @@
+// Site-level override point. The theme imports this file last
+// (assets/scss/td/_main.scss), so these rules outrank the theme's.
+
+// OINK treats the site title as a short wordmark: Chakra Petch, 0.14em tracking,
+// and a navy-to-copper gradient clipped to the text. That reads well for a
+// one-word product name and badly for a sentence like "Nekonull's Garden", so
+// the title is reset to the body face at normal tracking and a solid ink.
+.td-site-header .td-nav-title {
+  background: none;
+  color: var(--bs-emphasis-color);
+  -webkit-text-fill-color: var(--bs-emphasis-color);
+  font-family: var(--td-ui-font-family);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+  margin-inline-end: 0;
+}
+
+// The homepage "latest N" block (layouts/_partials/landing/sections/recent.html)
+// reuses the theme's blog list. Give its "see all" link some breathing room so
+// the block sits with the same rhythm as the landing sections around it.
+.td-landing-recent-section .td-blog-posts-list {
+  margin-bottom: 0;
+}
+
+.td-landing-recent-section__more {
+  margin: 1.5rem 0 0;
+  text-align: center;
+}

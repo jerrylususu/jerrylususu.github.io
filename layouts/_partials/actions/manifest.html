@@ -1,0 +1,33 @@
+{{- /* Site override of the theme's actions/manifest.html.
+
+       This JSON blob is the Command Palette's action source. The palette, by
+       design, renders unavailable actions as disabled rows with a reason
+       rather than hiding them, so blanking the URLs in the site's
+       actions/page-urls.html override is not enough to keep the repository
+       actions out of the palette. Filter the list here instead.
+
+       Two rules:
+         1. `$drop` names the repository actions, which this blog never wants.
+         2. anything the theme reports as unavailable is removed rather than
+            shown greyed out. That covers the ChatGPT/Claude handoffs (off
+            because params.ui.page_context_menu.assistant_links is false) and
+            the version switcher (no params.versions). It also means enabling
+            one of those features brings its palette entry back by itself.
+
+       Everything that works — copy Markdown, copy link, view Markdown, print,
+       language, theme, open the repository — is passed through untouched. */ -}}
+{{- $outputFormat := lower (.Store.Get "tdOutputFormat" | default "html") -}}
+{{- $context := partialCached "actions/context.html" . .Site.BaseURL .Site.Language.Lang .RelPermalink $outputFormat -}}
+{{- $drop := slice "edit_page" "create_child_page" "create_issue" "create_project_issue" "view_history" -}}
+{{- $actions := slice -}}
+{{- range $context.actions -}}
+  {{- if and (not (in $drop .id)) .available }}{{ $actions = $actions | append . }}{{ end -}}
+{{- end -}}
+{{- return (dict
+  "version" 1
+  "language" .Site.Language.Lang
+  "actions" $actions
+  "commands" (partialCached "actions/site-commands.html" . .Site.Language.Lang .Site.BaseURL)
+  "quickLinks" (partialCached "actions/quick-links.html" . .Site.Language.Lang .Site.BaseURL)
+  "rootOrder" (partialCached "actions/root-order.html" . .Site.Language.Lang .Site.BaseURL)
+) -}}

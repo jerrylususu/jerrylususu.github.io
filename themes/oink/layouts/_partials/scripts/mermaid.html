@@ -1,0 +1,7 @@
+{{- /* The vendored Mermaid library only. Configuration, render scheduling,
+     theme changes and the zoom dialog live in the `js/chunks/mermaid-<lang>.js`
+     runtime, which is a classic script emitted after this one. */ -}}
+{{ $mermaid := resources.Get "third_party/mermaid/mermaid.min.js" -}}
+{{ if hugo.IsProduction }}{{ $mermaid = $mermaid | fingerprint }}{{ end -}}
+<script src="{{ $mermaid.RelPermalink }}"
+  {{- with $mermaid.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }}></script>

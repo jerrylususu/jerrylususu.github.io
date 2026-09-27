@@ -1,0 +1,245 @@
+# Nekonull's Garden — rebuilt on OINK (https://github.com/pgsty/oink)
+#
+# Prototype rebuild of https://github.com/jerrylususu/jerrylususu.github.io
+# Goal: identical reader-facing URLs, identical content, identical comment
+# threads, identical feed endpoints. Presentation is intentionally new.
+
+baseURL: https://nekonull.me/
+title: "Nekonull's Garden"
+# The theme is vendored at themes/oink (OINK v1.1.0, commit 3a18234) so the
+# build needs no Go toolchain and no module cache. See README.md for the
+# Hugo Module alternative.
+theme: oink
+
+defaultContentLanguage: zh
+defaultContentLanguageInSubdir: false
+enableGitInfo: false
+enableRobotsTXT: false
+timeZone: Asia/Shanghai
+
+services:
+  rss:
+    limit: 25
+  # Same measurement ID as the previous site. OINK loads it only for
+  # production HTML output, so previews stay untracked.
+  googleAnalytics:
+    id: G-R01JLDY2KE
+
+# giscus pulls the two comment palettes cross-origin: the widget injects
+# <link rel="stylesheet" crossorigin="anonymous">, so the response must carry
+# Access-Control-Allow-Origin or the stylesheet is dropped without any visible
+# error. Every giscus colour then falls back to the raw defaults -- transparent
+# backgrounds, currentColor (white) borders, white text on a near-black canvas
+# -- which reads as a harsh black comment box that matches nothing else on the
+# page. GitHub Pages already sends the header, so this only ever broke local
+# previews; `hugo server` sends no CORS headers of its own.
+server:
+  headers:
+    - for: '/css/giscus-*.css'
+      values:
+        Access-Control-Allow-Origin: '*'
+
+pagination:
+  pagerSize: 20
+
+taxonomies:
+  tag: tags
+  category: categories
+
+# The previous site published three feeds: /index.xml (everything except TIL),
+# /til.xml (TIL only), and one /index.xml per section. These output formats
+# reproduce that contract exactly.
+outputFormats:
+  RSS:
+    baseName: index
+    mediaType: application/rss+xml
+  TilRSS:
+    baseName: til
+    mediaType: application/rss+xml
+    notAlternative: true
+
+outputs:
+  home: [HTML, RSS, TilRSS, LLMS]
+  section: [HTML, RSS, print, markdown]
+  page: [HTML, markdown]
+  taxonomy: [HTML, RSS]
+  term: [HTML, RSS]
+
+# The three Goldmark settings OINK's native components depend on.
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      attribute:
+        block: true
+      wrapStandAloneImageWithinParagraph: false
+  highlight:
+    noClasses: false
+
+languages:
+  zh:
+    label: 简体中文
+    locale: zh-CN
+    weight: 1
+    title: "Nekonull's Garden"
+    hasCJKLanguage: true
+    copyright: "CC-BY-SA-4.0"
+    params:
+      description: "Always read. Mostly hack. Sometimes write."
+    menus:
+      main:
+        - identifier: about
+          name: 关于
+          pageRef: /about
+          weight: 10
+          params:
+            icon: fa-solid fa-circle-info
+        - identifier: project
+          name: 项目
+          pageRef: /project
+          weight: 20
+          params:
+            icon: fa-solid fa-cubes
+        - identifier: posts
+          name: 长文
+          url: /posts
+          weight: 30
+          params:
+            icon: fa-solid fa-book-open
+        - identifier: share
+          name: 短文
+          url: /share
+          weight: 40
+          params:
+            icon: fa-solid fa-feather
+        - identifier: til
+          name: TIL
+          url: /til
+          weight: 50
+          params:
+            icon: fa-solid fa-lightbulb
+        - identifier: archive
+          name: 存档
+          url: /archive
+          weight: 60
+          params:
+            icon: fa-solid fa-box-archive
+        - identifier: tags
+          name: 标签
+          url: /tags
+          weight: 70
+          params:
+            icon: fa-solid fa-tags
+
+  en:
+    label: English
+    locale: en-US
+    weight: 2
+    title: "Nekonull's Garden"
+    copyright: "CC-BY-SA-4.0"
+    params:
+      description: "Always read. Mostly hack. Sometimes write."
+    menus:
+      main:
+        # About and Project have no English source file, so the previous site
+        # sent English readers to the Chinese pages. Kept deliberately, via
+        # absolute URLs, because relLangURL would otherwise invent /en/about/.
+        - identifier: about
+          name: About
+          url: https://nekonull.me/about/
+          weight: 10
+          params:
+            icon: fa-solid fa-circle-info
+        - identifier: project
+          name: Project
+          url: https://nekonull.me/project/
+          weight: 20
+          params:
+            icon: fa-solid fa-cubes
+        - identifier: posts
+          name: Posts
+          url: /posts
+          weight: 30
+          params:
+            icon: fa-solid fa-book-open
+        - identifier: share
+          name: Share
+          url: /share
+          weight: 40
+          params:
+            icon: fa-solid fa-feather
+        # TIL has no English translation either; the Chinese feed is the only
+        # one that exists.
+        - identifier: til
+          name: TIL
+          url: https://nekonull.me/til/
+          weight: 50
+          params:
+            icon: fa-solid fa-lightbulb
+        - identifier: archive
+          name: Archive
+          url: /archive
+          weight: 60
+          params:
+            icon: fa-solid fa-box-archive
+        - identifier: tags
+          name: Tag
+          url: /tags
+          weight: 70
+          params:
+            icon: fa-solid fa-tags
+
+params:
+  description: "Always read. Mostly hack. Sometimes write."
+
+  # Brand mark, served through Hugo's asset pipeline. Replaces OINK's default
+  # `icons/logo.svg` in the navbar. Kept under assets/ (not static/) so the
+  # favicons partial can derive every icon from this one file at build time.
+  logo: img/logo_dark.jpg
+
+  # Same giscus repository/category as before. mapping=pathname means every
+  # existing GitHub Discussion thread is reused by the unchanged page URL.
+  comments:
+    enable: true
+    type: giscus
+    giscus:
+      repo: jerrylususu/jerrylususu.github.io
+      repoId: MDEwOlJlcG9zaXRvcnkxNDM1MTk3NDY=
+      category: Blog Comments
+      categoryId: DIC_kwDOCI3wAs4CZNcG
+      mapping: pathname
+      strict: 1
+      reactionsEnabled: 1
+      emitMetadata: 0
+      inputPosition: top
+      theme: auto
+      loading: lazy
+
+  offline_search: true
+  offline_search_index: content
+
+  github_repo: https://github.com/jerrylususu/jerrylususu.github.io
+  github_branch: master
+
+  copyright:
+    authors: '[Nekonull](https://nekonull.me/about/) · CC-BY-SA-4.0'
+    from_year: 2018
+
+  ui:
+    dark_mode: true
+    typography: system
+    theme_color: '#2563eb'
+    section_index: list
+    blog_index: list
+    blog_index_size: 20
+    sidebar_menu_foldable: true
+    sidebar_icon_policy: groups
+    backlinks: false
+    reading_time: true
+    image_zoom: true
+    # The previous site had no share row and no "did this page help?" widget.
+    share: []
+    feedback: false
+    page_context_menu:
+      assistant_links: false

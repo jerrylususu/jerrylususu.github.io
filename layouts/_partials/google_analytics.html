@@ -1,0 +1,12 @@
+{{- /* OINK's head.html calls this partial for production HTML output only.
+       Hugo 0.165 no longer ships an internal google_analytics template, so the
+       gtag snippet is inlined here. The measurement ID stays in site config. */ -}}
+{{- with site.Config.Services.GoogleAnalytics.ID -}}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', '{{ . }}');
+</script>
+{{- end -}}
