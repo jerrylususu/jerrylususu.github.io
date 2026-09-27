@@ -28,3 +28,15 @@
   margin: 1.5rem 0 0;
   text-align: center;
 }
+
+// The about-page cat signature is line art on a solid black JPEG plate, so the
+// plate has to match the page background. Invert it in light mode so the plate
+// turns white; leave it untouched in dark mode so the plate stays black.
+// (OINK resolves the theme toggle to [data-bs-theme] on <html>.)
+img.nekonull-mark {
+  filter: invert(1);
+}
+
+[data-bs-theme="dark"] img.nekonull-mark {
+  filter: none;
+}

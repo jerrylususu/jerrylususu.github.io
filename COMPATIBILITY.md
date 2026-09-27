@@ -96,8 +96,10 @@ giscus 的 `repo`、`repoId`、`category`、`categoryId` 和 `mapping: pathname`
 - **Google Analytics** —— 相同的 `G-R01JLDY2KE`，出现在 193 个 production 页面上。
   OINK 只在 production 的 HTML 输出里加载它，所以本地预览不会被统计。
 - **图片** —— `static/img/` 里的 11 个文件全部按原路径提供。
-- **内容** —— 140 个文件，正文与源仓库逐字节相同。唯一的新增是 front matter 里的几行
-  （`type` / `cascade` / `comments`），正文一个字都没动。
+- **内容** —— 140 个文件，正文与源仓库逐字节相同，只多出 front matter 里的几行
+  （`type` / `cascade` / `comments`）。唯一的正文改动是 `about.md`：头像 `<img>` 的内联
+  `filter: invert(1)` 换成 `class="nekonull-mark"`，交给站点 CSS 按亮/暗模式分别处理
+  （黑底线稿在两种模式下都能融进页面背景）。
 
 ---
 

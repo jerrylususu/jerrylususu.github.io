@@ -5,7 +5,7 @@ title: "About"
 date: 2021-04-03T00:21:09+08:00
 ---
 
-<img src="/img/nekonull.jpg" alt="nekonull" style="width:30%;filter: invert(1)" align="right">
+<img src="/img/nekonull.jpg" alt="nekonull" class="nekonull-mark" style="width:30%" align="right">
 
 <!-- <img src="/img/nekonull.png"> -->
 
