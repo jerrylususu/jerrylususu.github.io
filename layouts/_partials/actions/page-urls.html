@@ -1,0 +1,41 @@
+{{- /* Site override of the theme's actions/page-urls.html.
+
+       This blog is not edited through GitHub, so the four source-derived
+       actions (edit page, view history, create child page, create issue) have
+       nothing useful to point at. Leaving `github_repo` unset would not remove
+       them either: the Command Palette still lists them as disabled rows.
+
+       Returning empty strings here is what actually removes them. Every
+       consumer gates its markup on the URL being non-empty:
+
+         - actions/title-menu.html wraps each row in `with $actionURLs.edit`
+           and friends, so the row disappears from the page-actions menu
+         - actions/context.html marks the descriptors unavailable
+         - the site's actions/manifest.html override then drops them from the
+           Command Palette
+
+       `projectRepo` is kept so the navbar keeps its GitHub link, and
+       `markdown` / `printSection` are kept because those actions are useful.
+       Delete this file to restore the theme's behaviour. */ -}}
+{{- $p := . -}}
+{{- $markdownURL := "" -}}
+{{- with $p.AlternativeOutputFormats.Get "markdown" }}{{ $markdownURL = .RelPermalink }}{{ end -}}
+{{- $printURL := "" -}}
+{{- with $p.CurrentSection -}}
+  {{- with .AlternativeOutputFormats.Get "print" }}{{ $printURL = .RelPermalink }}{{ end -}}
+{{- end -}}
+{{- $projectRepo := "" -}}
+{{- with $p.Param "github_project_repo" }}{{ $projectRepo = . }}{{ else -}}
+  {{- with $p.Param "github_repo" }}{{ $projectRepo = . }}{{ end -}}
+{{- end -}}
+{{- return (dict
+  "markdown" $markdownURL
+  "printSection" $printURL
+  "edit" ""
+  "history" ""
+  "createChild" ""
+  "createIssue" ""
+  "createProjectIssue" ""
+  "projectRepo" $projectRepo
+  "repoPath" ""
+) -}}

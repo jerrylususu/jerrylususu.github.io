@@ -1,3 +1,8 @@
 public/
-public/*
+resources/
+.hugo_build.lock
 hugo
+
+# Local toolchain, deliberately outside version control.
+.tools/
+.cache/

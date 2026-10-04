@@ -1,0 +1,36 @@
+{{- /* Embed a ReDoc specification. Positional: one spec path/URL. Only the
+       HTML output embeds the reader; print, Markdown, and RSS get a static
+       link to the specification and register no runtime. The component
+       styles live in assets/scss/redoc.scss, loaded beside the runtime. */ -}}
+{{- partial "content/shortcode-params.html" (dict "shortcode" . "form" "positional") -}}
+{{- $ok := true -}}
+{{- if ne (len .Params) 1 -}}
+  {{- warnf "shortcode %q requires exactly one positional spec path or URL at %s; rendering nothing" .Name .Position -}}
+  {{- $ok = false -}}
+{{- end -}}
+{{- $validated := dict "valid" false -}}
+{{- if $ok -}}
+  {{- $validated = partial "content/url.html" (dict
+    "name" .Name "parameter" "spec" "position" .Position "value" (.Get 0) "kind" "image"
+  ) -}}
+  {{- $ok = $validated.valid -}}
+{{- end -}}
+{{- if $ok -}}
+{{- $url := $validated.raw -}}
+{{- if not $validated.external -}}
+  {{- $url = urls.JoinPath .Page.Site.BaseURL (strings.TrimPrefix "/" $validated.raw) -}}
+{{- end -}}
+{{- $format := lower (.Page.Store.Get "tdOutputFormat" | default "html") -}}
+{{- if in (slice "markdown" "rss") $format -}}
+[{{ partial "content/markdown-escape.html" (T "ui_openapi_spec") }}]({{ partial "content/markdown-url.html" $url }})
+{{- else if eq $format "print" -}}
+<p class="td-redoc-print">{{ T "ui_openapi_spec" }} — <a href="{{ $url }}">{{ $url }}</a></p>
+{{- else -}}
+{{- .Page.Store.Set "hasRedoc" true -}}
+{{- $id := printf "td-redoc-%s-%d" (md5 .Page.RelPermalink | truncate 8 "") .Ordinal -}}
+<div id="{{ $id }}" class="td-redoc">
+  <redoc spec-url="{{ $url }}" hide-hostname="true" hide-logo="true"
+    suppress-warnings="true" lazy-rendering native-scrollbars></redoc>
+</div>
+{{- end -}}
+{{- end -}}

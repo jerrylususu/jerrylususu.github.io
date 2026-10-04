@@ -1,0 +1,36 @@
+{{ $isSingle := true -}}
+{{ with .Parent -}}
+  {{ $isSingle = .IsHome -}}
+{{ end -}}
+<nav aria-label="breadcrumb" class="td-breadcrumbs
+    {{- if $isSingle }} td-breadcrumbs__single {{- end }}">
+  <ol class="breadcrumb">
+    {{- template "breadcrumbnav" (dict "p1" . "p2" .) }}
+  </ol>
+</nav>
+
+{{- define "breadcrumbnav" -}}
+  {{ if .p1.Parent -}}
+    {{ if not .p1.Parent.IsHome -}}
+      {{ template "breadcrumbnav" (dict "p1" .p1.Parent "p2" .p2 )  -}}
+    {{ end -}}
+  {{ else if not .p1.IsHome -}}
+    {{ template "breadcrumbnav" (dict "p1" .p1.Site.Home "p2" .p2 )  -}}
+  {{ end -}}
+  {{ $isActive :=  eq .p1 .p2 }}
+  {{- /* A generated taxonomy page is titled by Hugo from its plural, so the
+       crumb above a term borrows the localized label the taxonomy head
+       renders (a content `_index.md` title wins there too). */ -}}
+  {{- $title := .p1.LinkTitle -}}
+  {{- if eq .p1.Kind "taxonomy" -}}
+    {{- $title = partial "taxonomy-label.html" (dict "page" .p1 "key" .p1.Data.Plural) -}}
+  {{- end }}
+  <li class="breadcrumb-item{{ if $isActive }} active{{ end }}"
+      {{- if $isActive }} aria-current="page"{{ end }}>
+    {{ if or $isActive (not .p1.RelPermalink) (.p1.Params.sidebar_divider | default false) -}}
+      {{ $title -}}
+    {{ else -}}
+      <a href="{{ .p1.RelPermalink }}">{{ $title }}</a>
+    {{- end -}}
+  </li>
+{{- end -}}

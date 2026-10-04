@@ -1,0 +1,71 @@
+{{ define "recurse-toc" }}
+  {{ $s := .section }}
+  {{ $psid := .psid }}
+  {{ $pages := partial "print/children.html" $s }}
+  {{ $subSection := 1 }}
+
+  {{ range $pages }}
+    {{ $sid := printf "%s%d" $psid $subSection }}
+    {{ $subSection = add $subSection 1 }}
+    <li>
+      {{- partial "print/toc-li.html" (dict "sid" $sid "Page" .) -}}
+      {{ if .IsSection }}
+      <ul>
+        {{ template "recurse-toc" (dict "section" . "psid" (printf "%s." $sid)) }}
+      </ul>
+      {{ end }}
+    </li>
+  {{ end }}
+{{ end }}
+
+{{ define "recurse-content" }}
+  {{ $s := .section }}
+  {{ $psid := .psid }}
+  {{ $pages := partial "print/children.html" $s }}
+  {{ $subSection := 1 }}
+
+  {{ $breakOnWordCount := partial "validate.html" (dict
+      "value" ($s.Site.Param "print.section_break_wordcount") "kind" "int"
+      "min" 0 "fallback" 50 "key" "params.print.section_break_wordcount") }}
+  {{ $doPageBreak := gt (countwords $s.Content) $breakOnWordCount }}
+
+  {{ range $pages }}
+    {{ $sid := printf "%s%d" $psid $subSection }}
+    {{ $subSection = add $subSection 1 }}
+	{{ $params := dict "Page" . "PageNum" $sid "DoPageBreak" $doPageBreak }}
+    {{ partial "print/content.html" $params }}
+
+    {{ if .IsSection }}
+      {{ template "recurse-content" (dict "section" . "psid" (printf "%s." $sid) ) }}
+    {{ end }}
+	{{ $doPageBreak = true }}
+  {{ end }}
+{{ end }}
+
+<div class="td-content">
+<div class="td-page-notice td-page-notice--primary d-print-none">
+<p>
+{{ T "print_printable_section" }}
+<button type="button" class="btn btn-link p-0 align-baseline" data-td-action="print">{{ T "print_click_to_print" }}</button>.
+</p><p>
+<a href="{{ .RelPermalink }}">{{ T "print_show_regular" }}</a>.
+</p>
+</div>
+{{ partial "print/page-heading.html" . }}
+
+{{ if partial "validate.html" (dict
+    "value" (.Param "print.toc") "kind" "bool"
+    "fallback" true "key" "params.print.toc") }}
+    <ul>
+    {{ template "recurse-toc" (dict "section" .CurrentSection "psid" "") }}
+    </ul>
+{{ end }}
+
+{{- $content := partialCached "print/page-content.html" (dict "page" .) .RelPermalink -}}
+{{- $content = partial "book/namespace-print-headings.html" (dict "page" . "content" $content.plain) -}}
+<div class="content">
+      {{ $content }}
+</div>
+</div>
+
+{{ template "recurse-content" (dict "section" .CurrentSection "psid" "") }}

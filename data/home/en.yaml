@@ -1,0 +1,19 @@
+sections:
+  - hero
+  - type: recent
+    partial: landing/sections/recent.html
+    data:
+      eyebrow: Latest
+      title: Recently updated
+      count: 5
+      link: { label: All posts, url: posts/ }
+
+hero:
+  align: center
+  eyebrow: Nekonull's Garden
+  title_lines:
+    - words: [{ text: Always read. }]
+    - words: [{ text: Mostly hack. Sometimes write. }]
+  actions:
+    - { label: Posts, url: posts/, icon: fa-solid fa-book-open, style: primary }
+    - { label: Share, url: share/, icon: fa-solid fa-feather, style: ghost }

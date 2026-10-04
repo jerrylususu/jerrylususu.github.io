@@ -1,0 +1,33 @@
+{{- /* Section feeds for the four blog-typed sections. Same contract as the
+       previous site: one feed per section, full HTML content per item, guid
+       equal to the permalink so existing subscribers keep their read state. */ -}}
+{{- $pages := .RegularPages -}}
+{{- $limit := .Site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 }}{{ $pages = $pages | first $limit }}{{ end -}}
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>{{ with .Title }}{{ . }} on {{ end }}{{ .Site.Title }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>Recent content {{ with .Title }}in {{ . }} {{ end }}on {{ .Site.Title }}</description>
+    <generator>Hugo</generator>
+    <language>{{ .Site.Language.Locale }}</language>
+    {{ with .Site.Copyright }}<copyright>{{ . }}</copyright>{{ end }}
+    {{ if gt (len $pages) 0 }}
+    <lastBuildDate>{{ (index $pages.ByLastmod.Reverse 0).Lastmod.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</lastBuildDate>
+    {{ end }}
+    {{- with .OutputFormats.Get "RSS" }}
+    {{ printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML }}
+    {{- end }}
+    {{ range $pages }}
+    {{- .Store.Set "tdOutputFormat" "rss" -}}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Content | html }}</description>
+    </item>
+    {{ end }}
+  </channel>
+</rss>

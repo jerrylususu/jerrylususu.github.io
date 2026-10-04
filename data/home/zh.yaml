@@ -1,0 +1,20 @@
+sections:
+  - hero
+  - type: recent
+    partial: landing/sections/recent.html
+    data:
+      eyebrow: 最新
+      title: 最近更新
+      count: 5
+      link: { label: 全部长文, url: posts/ }
+
+hero:
+  align: center
+  eyebrow: Nekonull's Garden
+  title_lines:
+    - words: [{ text: Always read. }]
+    - words: [{ text: Mostly hack. Sometimes write. }]
+  actions:
+    - { label: 长文, url: posts/, icon: fa-solid fa-book-open, style: primary }
+    - { label: 短文, url: share/, icon: fa-solid fa-feather, style: ghost }
+    - { label: TIL, url: til/, icon: fa-solid fa-lightbulb, style: ghost }

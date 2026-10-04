@@ -1,0 +1,17 @@
+{{- $section := .section -}}
+{{- $includeSelf := .includeSelf -}}
+{{- $pages := slice -}}
+
+{{- if and $includeSelf (partial "shell/nav-page-enabled.html" $section) -}}
+  {{- $pages = $pages | append $section -}}
+{{- end -}}
+
+{{- range partial "shell/nav-children.html" (dict "section" $section) -}}
+  {{- $branch := partial "shell/nav-flatten-section.html" (dict
+      "section" .
+      "includeSelf" true
+  ) -}}
+  {{- range $branch }}{{ $pages = $pages | append . }}{{ end -}}
+{{- end -}}
+
+{{- return $pages -}}

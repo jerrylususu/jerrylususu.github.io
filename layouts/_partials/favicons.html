@@ -1,0 +1,25 @@
+{{/*
+  Site override of OINK's `_partials/favicons.html`.
+
+  The theme only links favicon files it finds in `static/`, which would mean
+  committing PNG derivatives of the logo. Instead this derives every icon from
+  the single source image at build time, using Hugo's own image processing --
+  no ImageMagick / no external tooling, and the icons can never drift from the
+  logo.
+
+  Source:  assets/img/logo_dark.jpg   (https://nekonull.com/logo_dark.jpg)
+  Outputs: /favicon-32x32.png, /favicon-96x96.png, /favicon-192x192.png,
+           /apple-touch-icon.png
+
+  Delete this file to fall back to the theme's static-file detection.
+*/ -}}
+{{- $source := "img/logo_dark.jpg" -}}
+{{- with resources.Get $source -}}
+  {{- $img := . -}}
+  {{- range (slice 32 96 192) -}}
+    {{- $icon := $img.Resize (printf "%dx%d png" . .) | resources.Copy (printf "favicon-%dx%d.png" . .) -}}
+    {{- printf `<link rel="icon" type="image/png" sizes="%dx%d" href="%s" />` . . $icon.RelPermalink | safeHTML }}{{ "\n" }}
+  {{- end -}}
+  {{- $touch := $img.Resize "180x180 png" | resources.Copy "apple-touch-icon.png" -}}
+  {{- printf `<link rel="apple-touch-icon" sizes="180x180" href="%s" />` $touch.RelPermalink | safeHTML }}{{ "\n" }}
+{{- end -}}

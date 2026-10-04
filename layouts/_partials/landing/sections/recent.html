@@ -1,0 +1,36 @@
+{{/*
+  Site-level landing section: "latest N".
+
+  OINK's landing registry has no built-in "recent posts" block, but an entry in
+  `data/home/<lang>.yaml` may point `partial:` at any template. This is that
+  template. It reuses the theme's own blog row partial, so the homepage list
+  looks exactly like the section index.
+
+  Data keys (all optional):
+    title     heading text
+    count     how many entries (default 5)
+    sections  which content sections to draw from
+              (default [posts, share, til]; `archive` is intentionally out)
+    link      { label, url } -> "see all" button under the list
+*/ -}}
+{{- $page := .page -}}
+{{- $data := .data -}}
+{{- $id := .id -}}
+{{- $count := $data.count | default 5 -}}
+{{- $sections := $data.sections | default (slice "posts" "share" "til") -}}
+{{- $latest := (where $page.Site.RegularPages "Section" "in" $sections).ByDate.Reverse | first $count -}}
+<section id="{{ $id }}" class="td-landing-section td-landing-recent-section" aria-labelledby="{{ $id }}-title">
+  <div class="td-site-container">
+    {{- partial "landing/heading.html" (dict "page" $page "data" $data "id" $id) }}
+    {{- with $latest }}
+    <ul class="td-blog-posts-list">
+      {{- range . }}{{ partial "shell/blog-row.html" (dict "page" . "linkImage" false) }}{{ end -}}
+    </ul>
+    {{- end }}
+    {{- with $data.link }}
+    <p class="td-landing-recent-section__more">
+      <a class="td-landing-button td-landing-button--{{ .style | default "ghost" }}" href="{{ .url | relLangURL }}">{{ partial "landing/markdown.html" (dict "page" $page "value" (.label | default "More")) }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </p>
+    {{- end }}
+  </div>
+</section>

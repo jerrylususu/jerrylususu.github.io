@@ -1,0 +1,26 @@
+{{- $book := . -}}
+{{- $section := .CurrentSection -}}
+{{- if .IsSection }}{{ $section = . }}{{ end -}}
+{{- $sequence := partial "book/pages.html" . -}}
+{{- $pages := slice -}}
+{{- range $sequence }}{{ if or (eq . $section) (ne .Params.no_print true) }}{{ $pages = $pages | append . }}{{ end }}{{ end -}}
+<div class="td-content td-book-print-cover">
+  {{ partial "print/page-heading.html" $section }}
+  <nav class="td-book-print-toc" aria-label="{{ T "book_toc" }}">
+    <ol>
+      {{- range $pages }}
+      <li><a href="#pg-{{ .File.UniqueID }}">{{ with .Params.book_number }}<span class="td-book-number">{{ . }}</span> {{ end }}{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ol>
+  </nav>
+</div>
+{{- range $pages -}}
+  {{- $content := partialCached "print/page-content.html" (dict "page" .) .RelPermalink -}}
+  {{- $content = partial "book/namespace-print-headings.html" (dict "page" . "content" $content.book) -}}
+  {{- if .Store.Get "hasMath" }}{{ $book.Store.Set "hasMath" true }}{{ end -}}
+<section class="td-content td-book-print-page" id="pg-{{ .File.UniqueID }}" data-td-book-page="{{ .Path }}">
+  <h1>{{ with .Params.book_number }}<span class="td-book-number">{{ . }}</span> {{ end }}{{ .Title }}</h1>
+  {{ with .Description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
+  {{ $content }}
+</section>
+{{- end -}}
