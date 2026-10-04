@@ -6,7 +6,7 @@ sections:
       eyebrow: Latest
       title: Recently updated
       count: 5
-      link: { label: All posts, url: posts/ }
+      link: { label: All articles, url: all/ }
 
 hero:
   align: center

@@ -6,7 +6,7 @@ sections:
       eyebrow: 最新
       title: 最近更新
       count: 5
-      link: { label: 全部长文, url: posts/ }
+      link: { label: 所有文章, url: all/ }
 
 hero:
   align: center

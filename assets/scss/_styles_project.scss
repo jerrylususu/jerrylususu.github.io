@@ -17,16 +17,110 @@
   margin-inline-end: 0;
 }
 
-// The homepage "latest N" block (layouts/_partials/landing/sections/recent.html)
-// reuses the theme's blog list. Give its "see all" link some breathing room so
-// the block sits with the same rhythm as the landing sections around it.
-.td-landing-recent-section .td-blog-posts-list {
-  margin-bottom: 0;
+// ---------------------------------------------------------------------------
+// Article type badge (layouts/_partials/shell/blog-type-badge.html)
+// ---------------------------------------------------------------------------
+// A section-color chip for 长文/短文/TIL/存档. It reuses the theme's badge
+// variables (Bootstrap's *-bg-subtle / *-text-emphasis pairs), which already
+// swap for dark mode; only the sizing/alignment is site-specific.
+.td-type-badge {
+  flex: none;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+// ---------------------------------------------------------------------------
+// Homepage "最近更新" compact list (layouts/_partials/landing/sections/recent.html)
+// ---------------------------------------------------------------------------
+// Date column + (badge | title, summary) body on a two-column grid, so five
+// mixed-kind entries scan as one column and every summary starts under its
+// title. Tags and reading time deliberately stay on the section indexes.
+.td-recent-list {
+  margin: -0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 6.6rem minmax(0, 1fr);
+    gap: 0 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--bs-border-color);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  &__date {
+    color: var(--bs-secondary-color);
+    font-family: var(--td-meta-font-family);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.65;
+  }
+
+  &__body {
+    min-width: 0;
+  }
+
+  &__head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.65rem;
+  }
+
+  &__title {
+    min-width: 0;
+    color: var(--bs-body-color);
+    font-weight: 600;
+    line-height: 1.5;
+
+    &:hover {
+      color: var(--td-shell-primary);
+      text-decoration: none;
+    }
+  }
+
+  &__summary {
+    margin: 0.3rem 0 0;
+    color: var(--bs-secondary-color);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  // Narrow screens: the date moves onto its own line above the title.
+  @include media-breakpoint-down(sm) {
+    &__item {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.2rem 0;
+    }
+  }
 }
 
 .td-landing-recent-section__more {
   margin: 1.5rem 0 0;
   text-align: center;
+}
+
+// ---------------------------------------------------------------------------
+// "所有文章" index (layouts/blog/all-articles.html)
+// ---------------------------------------------------------------------------
+// Reuses the theme's blog table and adds a tight type column that never wraps
+// away on narrow screens (unlike the taxonomy column it replaces).
+.td-all-articles {
+  &__type {
+    width: 1%;
+    white-space: nowrap;
+  }
+
+  // The theme pads `td-blog-table__tags` on its start edge; the type column
+  // takes that role here, with the same specificity so it is not overridden
+  // by the bare `.td-blog-table td` padding.
+  td.td-blog-table__title {
+    padding-inline-start: 1rem;
+  }
 }
 
 // The about-page cat signature is line art on a solid black JPEG plate, so the

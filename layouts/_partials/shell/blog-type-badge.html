@@ -1,0 +1,31 @@
+{{- /*
+  Article type badge: one colored chip per blog section, so a mixed list
+  (homepage "recent", the all-articles table) reads at a glance which kind of
+  article each row is.
+
+  The label comes from the section page itself (LinkTitle), so it stays in
+  sync with the section index and follows the active language. Only the color
+  and glyph are hard-coded, keyed by section name:
+
+    posts   长文 / Posts   -> info (blue)
+    share   短文 / Share   -> success (green)
+    til     TIL            -> warning (amber)
+    archive 存档 / Archive -> neutral grey
+
+  Input: a Page. Renders an <a> pointing at the section index.
+*/ -}}
+{{- $p := . -}}
+{{- $section := $p.CurrentSection -}}
+{{- if $section -}}
+  {{- $key := $section.Section | default $p.Section -}}
+  {{- $presets := dict
+      "posts"   (dict "variant" "info"    "icon" "fa-solid fa-book-open")
+      "share"   (dict "variant" "success" "icon" "fa-solid fa-feather")
+      "til"     (dict "variant" "warning" "icon" "fa-solid fa-lightbulb")
+      "archive" (dict "variant" ""        "icon" "fa-solid fa-box-archive")
+  -}}
+  {{- $preset := index $presets $key -}}
+  {{- $classes := "td-badge td-badge--filled td-type-badge" -}}
+  {{- with $preset.variant }}{{ $classes = printf "%s td-badge--%s" $classes . }}{{ end -}}
+  <a class="{{ $classes }}" href="{{ $section.RelPermalink }}">{{ with $preset.icon }}<i class="{{ . }}" aria-hidden="true"></i>{{ end }}{{ $section.LinkTitle }}</a>
+{{- end -}}

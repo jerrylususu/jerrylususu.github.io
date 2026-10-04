@@ -1,0 +1,36 @@
+{{- /*
+  "All articles" index.
+
+  One flat, date-ordered table over the three blog sections plus the archive:
+  date | type | title. No summaries and no tags on purpose -- this is the
+  index of last resort, everything the site has ever published on one page.
+
+  Bound to a section page (`content/all/_index.md`, `layout: all-articles`)
+  rather than a leaf page: a section page is not a RegularPage, so it never
+  leaks into the home feed or the section feeds.
+*/ -}}
+{{ define "main" -}}
+{{- $sections := slice "posts" "share" "til" "archive" -}}
+{{- $pages := (where .Site.RegularPages "Section" "in" $sections).ByDate.Reverse -}}
+<div class="td-content">
+  {{ partial "page-title.html" . }}
+  {{ with partial "content/render.html" . }}{{ . }}{{ end }}
+</div>
+{{- with $pages }}
+<table class="td-blog-table td-all-articles">
+  <caption class="visually-hidden">{{ $.Title }}</caption>
+  <tbody>
+    {{- range . }}
+    {{- $manualLink := cond (isset .Params "manual_link") .Params.manual_link .RelPermalink -}}
+    {{- $isExternal := isset .Params "manual_link" -}}
+    <tr>
+      <td class="td-blog-table__date">{{ if not .Date.IsZero }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Param "time_format_blog") }}</time>{{ end }}</td>
+      <td class="td-all-articles__type">{{ partial "shell/blog-type-badge.html" . }}</td>
+      <td class="td-blog-table__title"><a href="{{ $manualLink }}"{{ if $isExternal }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>{{ if $isExternal }} <i class="fa-solid fa-arrow-up-right-from-square fa-xs text-muted" aria-hidden="true"></i>{{ end }}</td>
+    </tr>
+    {{- end }}
+  </tbody>
+</table>
+{{- end }}
+{{ partial "page-end.html" . }}
+{{ end -}}

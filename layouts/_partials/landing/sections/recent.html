@@ -3,8 +3,12 @@
 
   OINK's landing registry has no built-in "recent posts" block, but an entry in
   `data/home/<lang>.yaml` may point `partial:` at any template. This is that
-  template. It reuses the theme's own blog row partial, so the homepage list
-  looks exactly like the section index.
+  template.
+
+  The row is a compact date / type badge / title line with a one-line summary
+  underneath, so the newest items across all three blog sections are scannable
+  at a glance without the full weight of a section index row (no tags, no
+  reading time, no thumbnail).
 
   Data keys (all optional):
     title     heading text
@@ -23,8 +27,29 @@
   <div class="td-site-container">
     {{- partial "landing/heading.html" (dict "page" $page "data" $data "id" $id) }}
     {{- with $latest }}
-    <ul class="td-blog-posts-list">
-      {{- range . }}{{ partial "shell/blog-row.html" (dict "page" . "linkImage" false) }}{{ end -}}
+    <ul class="td-recent-list">
+      {{- range . }}
+      {{- $manualLink := cond (isset .Params "manual_link") .Params.manual_link .RelPermalink -}}
+      {{- $isExternal := isset .Params "manual_link" -}}
+      {{- $summary := "" -}}
+      {{- if $isExternal -}}
+        {{- $summary = .Description | default .Params.summary | plainify | htmlUnescape -}}
+      {{- else -}}
+        {{- $summary = .Description | default (.Plain | htmlUnescape | truncate 180) -}}
+      {{- end -}}
+      <li class="td-recent-list__item">
+        {{- if not .Date.IsZero }}<time class="td-recent-list__date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format (.Param "time_format_blog") }}</time>{{ end }}
+        <div class="td-recent-list__body">
+          <div class="td-recent-list__head">
+            {{ partial "shell/blog-type-badge.html" . }}
+            <a class="td-recent-list__title" href="{{ $manualLink }}"{{ if $isExternal }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}{{ if $isExternal }} <i class="fa-solid fa-arrow-up-right-from-square fa-xs text-muted" aria-hidden="true"></i>{{ end }}</a>
+          </div>
+          {{- with $summary }}
+          <p class="td-recent-list__summary">{{ . }}</p>
+          {{- end }}
+        </div>
+      </li>
+      {{- end }}
     </ul>
     {{- end }}
     {{- with $data.link }}
