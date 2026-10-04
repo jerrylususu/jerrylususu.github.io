@@ -1,68 +1,64 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>算法 on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/%E7%AE%97%E6%B3%95/</link>
-    <description>Recent content in 算法 on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Tue, 10 May 2022 22:54:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Python `itertools.permutations` 使用的排列算法</title>
-      <link>https://nekonull.me/posts/py-itertools-permutation-algo/</link>
-      <pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/py-itertools-permutation-algo/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
-&lt;h2 id=&#34;引子&#34;&gt;引子&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>算法 on Nekonull's Garden</title><link>https://nekonull.me/tags/%E7%AE%97%E6%B3%95/</link><description>Recent content in 算法 on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Tue, 10 May 2022 22:54:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml"/><item><title>Python `itertools.permutations` 使用的排列算法</title><link>https://nekonull.me/posts/py-itertools-permutation-algo/</link><pubDate>Tue, 10 May 2022 22:54:00 +0800</pubDate><guid>https://nekonull.me/posts/py-itertools-permutation-algo/</guid><description>&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;：这本质上是一个基于回溯，利用元素交换的递归排列生成算法，但被重写成了循环形式（可能出于效率考量）。&lt;/p&gt;
+&lt;h2 id="引子"&gt;引子&lt;a class="td-heading-self-link" href="#%e5%bc%95%e5%ad%90" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;最近在算法复健，刷到了排列相关的题目。恰巧 Python 内置了一个非常实用的工具库 &lt;code&gt;itertools&lt;/code&gt;，其中有一个 &lt;code&gt;permutations(iterable, r)&lt;/code&gt; 方法，可以对一个给定的 iterable 生成所有大小为 &lt;code&gt;r&lt;/code&gt; 的排列，且输出按照字典序排列。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-Python&#34; data-lang=&#34;Python&#34;&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; list(permutations(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ABCD&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;))
-[(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
- (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
- (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;), 
- (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;A&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;B&amp;#39;&lt;/span&gt;), (&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;D&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;C&amp;#39;&lt;/span&gt;)]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/blockquote&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-9daaf0de-fence-0" data-td-code data-td-code-auto-id
+data-td-language="Python" data-td-line-count="5"&gt;
+&lt;div class="td-code__viewport" id="td-code-9daaf0de-fence-0-viewport" data-td-code-viewport&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-Python" data-lang="Python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ABCD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;A&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;B&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;D&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;C&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;在我之前所接触的算法中，排列生成要么是基于回溯，要么是基于字典序，但无论哪种都只能生成全排列，而无法生成这样的部分排列（指生成的排列长度 &lt;code&gt;r&lt;/code&gt; 和原输入长度 &lt;code&gt;n&lt;/code&gt; 不同）。另一条思路是先生成所有长度为 &lt;code&gt;r&lt;/code&gt; 的组合，然后再在每个组合内生成全排列，但这样无法保证输出按字典序（除非先手动收集再排序）。&lt;/p&gt;
-&lt;p&gt;于是我打开了 Python 的 &lt;code&gt;itertools&lt;/code&gt; 的官方文档，其中提供了与 CPython 实现等价的 Python 代码，&lt;code&gt;permutations&lt;/code&gt; 方法的代码如下（&lt;a href=&#34;https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations&#34;&gt;🔗&lt;/a&gt;）：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations&lt;/span&gt;(iterable, r&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;None):
-    &lt;span style=&#34;color:#75715e&#34;&gt;# permutations(&amp;#39;ABCD&amp;#39;, 2) --&amp;gt; AB AC AD BA BC BD CA CB CD DA DB DC&lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;# permutations(range(3)) --&amp;gt; 012 021 102 120 201 210&lt;/span&gt;
-    pool &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tuple(iterable)
-    n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(pool)
-    r &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; r &lt;span style=&#34;color:#f92672&#34;&gt;is&lt;/span&gt; None &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt; r
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; r &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; n:
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
-    indices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(range(n))
-    cycles &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list(range(n, n&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;r, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;))
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; tuple(pool[i] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; indices[:r])
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; n:
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; reversed(range(r)):
-            cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;-=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;:
-                indices[i:] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; indices[i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; indices[i:i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
-                cycles[i] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; i
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
-                j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cycles[i]
-                indices[i], indices[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; indices[&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;j], indices[i]
-                &lt;span style=&#34;color:#66d9ef&#34;&gt;yield&lt;/span&gt; tuple(pool[i] &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; indices[:r])
-                &lt;span style=&#34;color:#66d9ef&#34;&gt;break&lt;/span&gt;
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;else&lt;/span&gt;:
-            &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;尝试初步理解&#34;&gt;尝试初步理解&lt;/h3&gt;
+&lt;p&gt;于是我打开了 Python 的 &lt;code&gt;itertools&lt;/code&gt; 的官方文档，其中提供了与 CPython 实现等价的 Python 代码，&lt;code&gt;permutations&lt;/code&gt; 方法的代码如下（&lt;a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations"&gt;🔗&lt;/a&gt;）：&lt;/p&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-9daaf0de-fence-1" data-td-code data-td-code-auto-id
+data-td-language="python" data-td-line-count="24"&gt;
+&lt;div class="td-code__viewport" id="td-code-9daaf0de-fence-1-viewport" data-td-code-viewport&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iterable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;None&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# permutations(&amp;#39;ABCD&amp;#39;, 2) --&amp;gt; AB AC AD BA BC BD CA CB CD DA DB DC&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# permutations(range(3)) --&amp;gt; 012 021 102 120 201 210&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;pool&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;iterable&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt; &lt;span class="k"&gt;else&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;indices&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cycles&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;reversed&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cycles&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;cycles&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;cycles&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;j&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;cycles&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;yield&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pool&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;indices&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;break&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id="尝试初步理解"&gt;尝试初步理解&lt;a class="td-heading-self-link" href="#%e5%b0%9d%e8%af%95%e5%88%9d%e6%ad%a5%e7%90%86%e8%a7%a3" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;虽然顶部有两行注释，不过这也只是描述了这个方法的效果，对其原理并没有任何解释。往后继续看，可以发现算法首先构造了两个 list：&lt;code&gt;indices&lt;/code&gt; 和 &lt;code&gt;cycles&lt;/code&gt;，且之后每次输出结果（&lt;code&gt;yield&lt;/code&gt;）实际上都是将 &lt;code&gt;indices&lt;/code&gt; 中的前 &lt;code&gt;r&lt;/code&gt; 个输出。再往后算法进入了一个神秘的 &lt;code&gt;for&lt;/code&gt; 循环，对 &lt;code&gt;cycles&lt;/code&gt; 中的元素做了一些修改，用 &lt;code&gt;cycles&lt;/code&gt; 的值对 &lt;code&gt;indices&lt;/code&gt; 中的一些元素做了交换。仅从代码层面出发，对算法的理解似乎也就止步于此了。然而这并没有回答一个重要问题：为什么这个算法能工作？&lt;/p&gt;
-&lt;h3 id=&#34;寻找相关信息&#34;&gt;寻找相关信息&lt;/h3&gt;
-&lt;p&gt;考虑到 &lt;code&gt;itertools&lt;/code&gt; 库是在 Python 2.3 （2003 年 7 月）被引入标准库的，这个算法已经算得上历史悠久了。再加之 &lt;code&gt;itertools&lt;/code&gt; 库的广泛使用，这个算法的原理应该是早已被详尽记录的。带着这样的期望，我开始用各种关键词组合搜索相关信息。可惜的是，除了 Stack Overflow 上一个 2010 年的问题（&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations&#34;&gt;🔗&lt;/a&gt;），和一个知乎提问（&lt;a href=&#34;https://www.zhihu.com/question/440688033&#34;&gt;🔗&lt;/a&gt;），就没有任何其他相关的网页了，甚至连当年的提交记录都找不到。&lt;/p&gt;
+&lt;h3 id="寻找相关信息"&gt;寻找相关信息&lt;a class="td-heading-self-link" href="#%e5%af%bb%e6%89%be%e7%9b%b8%e5%85%b3%e4%bf%a1%e6%81%af" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;p&gt;考虑到 &lt;code&gt;itertools&lt;/code&gt; 库是在 Python 2.3 （2003 年 7 月）被引入标准库的，这个算法已经算得上历史悠久了。再加之 &lt;code&gt;itertools&lt;/code&gt; 库的广泛使用，这个算法的原理应该是早已被详尽记录的。带着这样的期望，我开始用各种关键词组合搜索相关信息。可惜的是，除了 Stack Overflow 上一个 2010 年的问题（&lt;a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations"&gt;🔗&lt;/a&gt;），和一个知乎提问（&lt;a href="https://www.zhihu.com/question/440688033"&gt;🔗&lt;/a&gt;），就没有任何其他相关的网页了，甚至连当年的提交记录都找不到。&lt;/p&gt;
 &lt;p&gt;既然如此，那就只能从这两个链接入手了。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Stack Overflow 的答主 Alex 写了一篇长文回答，但一开头就说「你需要理解 Permutation Cycle 的数学理论，才能理解这个算法」。于是我又回头恶补了一番组合数学，然而就算我大概知道 Permutation Cycle 是怎么一回事，对这个算法依然毫无头绪。（评论中也有人自称有 6 年抽象代数经验，但不认为这个算法与数学相关。）不过 Alex 的回答提供了一些有用的直觉，至少读完这个回答我大概理解 &lt;code&gt;cycles&lt;/code&gt; 在算法执行过程中是如何变化的了。具体而言，&lt;code&gt;cycles&lt;/code&gt; 的变化类似于「倒计时」，或者说「带借位的减法」，每次最后一位到 0 时，就会触发前面的一位减 1。然而我对&lt;code&gt;indices&lt;/code&gt; 的变化依然云里雾里。&lt;/li&gt;
 &lt;li&gt;知乎提问中，答主「杨个毛」提供了一个看起来很有说服力的回答（剧透：而且也的确如此）：「那个代码可以看成下列递归程序的强行非递归版」，指出了 &lt;code&gt;cycles&lt;/code&gt; 是&lt;strong&gt;变进制数&lt;/strong&gt;，并提供了一个原始递归版本。可惜的是，对于这个算法为什么可以输出正确结果依然没有解释（也有可能是我没有完全理解）。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;自己来&#34;&gt;自己来&lt;/h3&gt;
+&lt;h3 id="自己来"&gt;自己来&lt;a class="td-heading-self-link" href="#%e8%87%aa%e5%b7%b1%e6%9d%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;已有的信息似乎不是很充分。看来我只能自己来了。在加了一堆 &lt;code&gt;print&lt;/code&gt; 并在纸上手动模拟了多次这个算法之后，我认为我可能大概理解它的工作原理，并且可以证明其正确性了。下文将详述我的理解。&lt;/p&gt;
-&lt;h2 id=&#34;算法&#34;&gt;算法&lt;/h2&gt;
-&lt;h3 id=&#34;起步&#34;&gt;起步&lt;/h3&gt;
+&lt;h2 id="算法"&gt;算法&lt;a class="td-heading-self-link" href="#%e7%ae%97%e6%b3%95" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;h3 id="起步"&gt;起步&lt;a class="td-heading-self-link" href="#%e8%b5%b7%e6%ad%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;开始前，需要统一一下后文使用的记号：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;n&lt;/code&gt; 代表输入 iterable 的长度&lt;/li&gt;
@@ -79,14 +75,18 @@
 &lt;li&gt;理解 &lt;code&gt;indices&lt;/code&gt; 的变化，并尝试说明这个算法的正确性&lt;/li&gt;
 &lt;li&gt;尝试重新实现这个算法的「原始」递归版本&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;cycles&#34;&gt;&lt;code&gt;cycles&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id="cycles"&gt;&lt;code&gt;cycles&lt;/code&gt;&lt;a class="td-heading-self-link" href="#cycles" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;我们首先从 &lt;code&gt;cycles&lt;/code&gt; 变量入手，理解它在这个算法中是如何变化的。这个阶段我们暂时先不考虑 &lt;code&gt;indices&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;可以先指定一些具体的输入，然后尝试加一些 &lt;code&gt;print&lt;/code&gt; 语句。以 &lt;code&gt;iterable=&amp;quot;ABCD&amp;quot;, r=2&lt;/code&gt; 作为输入，在 &lt;code&gt;if&lt;/code&gt; 和 &lt;code&gt;else&lt;/code&gt; 两个分支执行前后中都插入 &lt;code&gt;print&lt;/code&gt;，可以得到如下结果：（其中中括号说明算法有输出 &lt;code&gt;yield&lt;/code&gt;，大括号部分算法无输出）&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;[4,3] -&amp;gt; [4,2] -&amp;gt; [4,1] -&amp;gt; {4,0} -&amp;gt; {4,3} -&amp;gt; 
-[3,3] -&amp;gt; [3,2] -&amp;gt; [3,1] -&amp;gt; {3,0} -&amp;gt; {3,3} -&amp;gt; 
-[2,3] -&amp;gt; [2,2] -&amp;gt; [2,1] -&amp;gt; {2,0} -&amp;gt; {2,3} -&amp;gt; 
-[1,3] -&amp;gt; [1,2] -&amp;gt; [1,1] -&amp;gt; {1,0} -&amp;gt; {1,3} -&amp;gt; {0,3} -&amp;gt; {4,3}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们可以直观感受到，似乎 &lt;code&gt;cycles&lt;/code&gt; 变量就像一个「倒计时」，或者说「带借位的减法」。&lt;/p&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-9daaf0de-fence-2" data-td-code data-td-code-auto-id
+data-td-language="" data-td-line-count="4"&gt;
+&lt;div class="td-code__viewport" id="td-code-9daaf0de-fence-2-viewport" data-td-code-viewport&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;[4,3] -&amp;gt; [4,2] -&amp;gt; [4,1] -&amp;gt; {4,0} -&amp;gt; {4,3} -&amp;gt;
+[3,3] -&amp;gt; [3,2] -&amp;gt; [3,1] -&amp;gt; {3,0} -&amp;gt; {3,3} -&amp;gt;
+[2,3] -&amp;gt; [2,2] -&amp;gt; [2,1] -&amp;gt; {2,0} -&amp;gt; {2,3} -&amp;gt;
+[1,3] -&amp;gt; [1,2] -&amp;gt; [1,1] -&amp;gt; {1,0} -&amp;gt; {1,3} -&amp;gt; {0,3} -&amp;gt; {4,3}&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;我们可以直观感受到，似乎 &lt;code&gt;cycles&lt;/code&gt; 变量就像一个「倒计时」，或者说「带借位的减法」。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;一开始 &lt;code&gt;cycles[0]&lt;/code&gt; 被初始化为 4，&lt;code&gt;cycles[1]&lt;/code&gt; 被初始化为 3。&lt;/li&gt;
 &lt;li&gt;之后的循环中，一般是 &lt;code&gt;cycles[1]&lt;/code&gt; 不断被减 1。当 &lt;code&gt;cycles[1] != 0&lt;/code&gt; 时，算法会产生一次输出。&lt;/li&gt;
@@ -107,10 +107,10 @@
 &lt;li&gt;最后在 &lt;code&gt;cycles&lt;/code&gt; 上首位为 0 时算法结束，代表所有排列的选择都已经被消耗（输出）了，已经没有更多的排列了。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;其实 &lt;code&gt;cycles&lt;/code&gt; 的变化，无论是 Stack Overflow 上的回答，还是知乎上的回答，都有相对详尽的描述。在此我只是尝试以自己的语言重述了一次而已。但接下来对 &lt;code&gt;indices&lt;/code&gt; 的理解就大部分是我自己的了。&lt;/p&gt;
-&lt;h3 id=&#34;indices&#34;&gt;&lt;code&gt;indices&lt;/code&gt;&lt;/h3&gt;
+&lt;h3 id="indices"&gt;&lt;code&gt;indices&lt;/code&gt;&lt;a class="td-heading-self-link" href="#indices" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;现在我们来看看 &lt;code&gt;indices&lt;/code&gt; 是如何变化的。和之前对 &lt;code&gt;cycles&lt;/code&gt; 的探索一样，我们也先从一个具体的例子开始：&lt;code&gt;iterable=&amp;quot;ABCDE&amp;quot;,r=3&lt;/code&gt;，并关注一个子问题：前 3 个输出（ABC, ABD, ABE）是如何产生的。为便于展示，这里我直接使用具体元素（字母）代替 index。加了一些 &lt;code&gt;print&lt;/code&gt; 后，我们可以得到如下的变化过程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://nekonull.me/img/py_permutation.png&#34; alt=&#34;py_permutation&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
+&lt;img class="td-image" src="https://nekonull.me/img/py_permutation.png" alt="py_permutation" loading="lazy" decoding="async"&gt;&lt;p&gt;这个图稍微有些复杂。以下是进一步解释。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;图的阅读顺序是从上至下，按照时间顺序展示了&lt;code&gt;indices&lt;/code&gt; 列表的变化。左侧为各阶段具体行为的标注，右侧为算法输出。&lt;/li&gt;
 &lt;li&gt;这里选择展示前 3 次输出（即 &lt;code&gt;i=2&lt;/code&gt;），对应 &lt;code&gt;cycles[2]&lt;/code&gt; 从 3 到 0 的过程。别忘了每次进入循环前 &lt;code&gt;cycles[2]&lt;/code&gt; 会被递减。&lt;/li&gt;
@@ -144,7 +144,8 @@
 &lt;/ul&gt;
 &lt;p&gt;虽然图中仅描述了一个子问题（&lt;code&gt;i=2&lt;/code&gt;，或者说&lt;code&gt;i=r-1&lt;/code&gt;），但不难发现对于其他的 &lt;code&gt;i&lt;/code&gt;∈&lt;code&gt;[0, r-1]&lt;/code&gt; 这一讨论都是成立的。这也（不严格地）说明了这一算法的确可以遍历所有的可能排列。输出顺序为字典序，则是因为每个 tick 中交换元素时都维护了 backlog 中的相对顺序。&lt;/p&gt;
 &lt;p&gt;这部分讨论有些复杂，如果不太理解（或者不完全信服）的话，可以自己多加点 &lt;code&gt;print&lt;/code&gt; ，或者手动在纸上执行感受一下。&lt;/p&gt;
-&lt;h3 id=&#34;重新实现&#34;&gt;重新实现&lt;/h3&gt;
+&lt;h3 id="重新实现"&gt;重新实现&lt;a class="td-heading-self-link" href="#%e9%87%8d%e6%96%b0%e5%ae%9e%e7%8e%b0" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;现在我们已经了解了这个算法的原理，重新实现其原始递归版本也就不难了。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;递归调用时，需要一个参数指定当前修改的元素（changing）的 index&lt;/li&gt;
@@ -152,54 +153,58 @@
 &lt;li&gt;如果 backlog 中的所有可选项都已经被选择（消耗）了，就把当前的 changing 移到 backlog 后，以撤销这一层的选择&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;以下是一个可能的 Python 重新实现。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## a reimplementation of `itertools.permutation`&lt;/span&gt;
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# helpers&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;swap&lt;/span&gt;(list, i, j):
-    list[i], list[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list[j], list[i]
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;move_to_last&lt;/span&gt;(list, i):
-    list[i:] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; list[i&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;:] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; [list[i]]
-
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;print_first_n_element&lt;/span&gt;(list, n):
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;join(list[:n]))
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# backtracking dfs&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations&lt;/span&gt;(list, r, changing_index):
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; changing_index &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; r:
-        &lt;span style=&#34;color:#75715e&#34;&gt;# we&amp;#39;ve reached the deepest level&lt;/span&gt;
-        print_first_n_element(list, r)
-        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#75715e&#34;&gt;# a pseudo `tick`&lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;# process initial permutation&lt;/span&gt;
-    &lt;span style=&#34;color:#75715e&#34;&gt;# which is just doing nothing (using the initial value)&lt;/span&gt;
-    permutations(list, r, changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
-
-    &lt;span style=&#34;color:#75715e&#34;&gt;# note: initial permutaion has been outputed, thus the minus 1&lt;/span&gt;
-    remaining_choices &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; len(list) &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt; changing_index
-    &lt;span style=&#34;color:#75715e&#34;&gt;# for (i=1;i&amp;lt;=remaining_choices;i++)&lt;/span&gt;
-    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; range(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, remaining_choices&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;):
-        &lt;span style=&#34;color:#75715e&#34;&gt;# `tick` phases&lt;/span&gt;
-        
-        &lt;span style=&#34;color:#75715e&#34;&gt;# make one swap&lt;/span&gt;
-        swap_idx &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; i
-        swap(list, changing_index, swap_idx)
-        &lt;span style=&#34;color:#75715e&#34;&gt;# finished one move at current level, now go deeper&lt;/span&gt;
-        permutations(list, r, changing_index &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
-    
-    &lt;span style=&#34;color:#75715e&#34;&gt;# `reset` phase&lt;/span&gt;
-    move_to_last(list, changing_index)
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# wrapper&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;permutations_wrapper&lt;/span&gt;(list, r):
-    permutations(list, r, &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;)
-
-&lt;span style=&#34;color:#75715e&#34;&gt;# main&lt;/span&gt;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
-    my_list &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;A&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;B&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;C&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;D&amp;#34;&lt;/span&gt;]
-    permutations_wrapper(my_list, &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;递归转循环优化&#34;&gt;递归转循环优化&lt;/h3&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-9daaf0de-fence-3" data-td-code data-td-code-auto-id
+data-td-language="python" data-td-line-count="47"&gt;
+&lt;div class="td-code__viewport" id="td-code-9daaf0de-fence-3-viewport" data-td-code-viewport&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;## a reimplementation of `itertools.permutation`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# helpers&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;swap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;move_to_last&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;:]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;print_first_n_element&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# backtracking dfs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# we&amp;#39;ve reached the deepest level&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;print_first_n_element&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# a pseudo `tick`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# process initial permutation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# which is just doing nothing (using the initial value)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# note: initial permutaion has been outputed, thus the minus 1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;remaining_choices&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# for (i=1;i&amp;lt;=remaining_choices;i++)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;remaining_choices&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# `tick` phases&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# make one swap&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;swap_idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;swap&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;swap_idx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# finished one move at current level, now go deeper&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="c1"&gt;# `reset` phase&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;move_to_last&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;changing_index&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# wrapper&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;permutations_wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;permutations&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# main&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;my_list&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;A&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;B&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;C&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;D&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;permutations_wrapper&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;my_list&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3 id="递归转循环优化"&gt;递归转循环优化&lt;a class="td-heading-self-link" href="#%e9%80%92%e5%bd%92%e8%bd%ac%e5%be%aa%e7%8e%af%e4%bc%98%e5%8c%96" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;出于性能和安全（防止爆栈）的考量，我们会想将这个算法的递归版本转换成循环版本。这需要我们用栈手动维护每一层递归的相关状态，包括递归中的变量和下一次执行的开始位置。幸运的是，对这个算法而言，我们需要维护的状态并不多。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -222,16 +227,12 @@
 &lt;/ul&gt;
 &lt;p&gt;回头看看，这实际上就是 &lt;code&gt;cycles&lt;/code&gt;。在「剩余可能数」的身份之外，&lt;code&gt;cycles&lt;/code&gt; 也承担起了维护递归状态的职责。而作者巧妙利用了 Python 列表索引可以为负数从后往前的特性，统一了 &lt;code&gt;cycles&lt;/code&gt; 的两面。&lt;/p&gt;
 &lt;p&gt;至此，我们完成了对这一算法的分析。🎉&lt;/p&gt;
-&lt;h2 id=&#34;相关链接&#34;&gt;相关链接&lt;/h2&gt;
+&lt;h2 id="相关链接"&gt;相关链接&lt;a class="td-heading-self-link" href="#%e7%9b%b8%e5%85%b3%e9%93%be%e6%8e%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Python &lt;code&gt;itertools.permutation&lt;/code&gt; 文档：&lt;a href=&#34;https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations&#34;&gt;itertools &amp;mdash; 为高效循环而创建迭代器的函数 — Python 3.10.4 文档&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;CPython &lt;code&gt;itertools.permutation&lt;/code&gt; 实现：&lt;a href=&#34;https://github.com/python/cpython/blob/main/Modules/itertoolsmodule.c#L3212&#34;&gt;cpython/itertoolsmodule.c at main · python/cpython (github.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Stack Overflow 相关问题：&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations&#34;&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;知乎相关问题：&lt;a href=&#34;https://www.zhihu.com/question/440688033&#34;&gt;如何理解Python itertools.permutations中的全排列算法？ - 知乎 (zhihu.com)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;我给 Stack Overflow 问题写的回答：&lt;a href=&#34;https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations/72177891#72177891&#34;&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;li&gt;Python &lt;code&gt;itertools.permutation&lt;/code&gt; 文档：&lt;a href="https://docs.python.org/zh-cn/3/library/itertools.html#itertools.permutations"&gt;itertools &amp;mdash; 为高效循环而创建迭代器的函数 — Python 3.10.4 文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;CPython &lt;code&gt;itertools.permutation&lt;/code&gt; 实现：&lt;a href="https://github.com/python/cpython/blob/main/Modules/itertoolsmodule.c#L3212"&gt;cpython/itertoolsmodule.c at main · python/cpython (github.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Stack Overflow 相关问题：&lt;a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations"&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;知乎相关问题：&lt;a href="https://www.zhihu.com/question/440688033"&gt;如何理解Python itertools.permutations中的全排列算法？ - 知乎 (zhihu.com)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;我给 Stack Overflow 问题写的回答：&lt;a href="https://stackoverflow.com/questions/2565619/algorithm-for-python-itertools-permutations/72177891#72177891"&gt;algorithm for python itertools.permutations - Stack Overflow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

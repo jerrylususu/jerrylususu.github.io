@@ -1,20 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>阅读 on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/%E9%98%85%E8%AF%BB/</link>
-    <description>Recent content in 阅读 on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 05 Jan 2025 23:38:12 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>读书记录《悟道领域驱动设计》</title>
-      <link>https://nekonull.me/share/book-ddd/</link>
-      <pubDate>Sun, 05 Jan 2025 23:38:12 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/book-ddd/</guid>
-      <description>&lt;ul&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>阅读 on Nekonull's Garden</title><link>https://nekonull.me/tags/%E9%98%85%E8%AF%BB/</link><description>Recent content in 阅读 on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Sun, 05 Jan 2025 23:38:12 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml"/><item><title>读书记录《悟道领域驱动设计》</title><link>https://nekonull.me/share/book-ddd/</link><pubDate>Sun, 05 Jan 2025 23:38:12 +0800</pubDate><guid>https://nekonull.me/share/book-ddd/</guid><description>&lt;ul&gt;
 &lt;li&gt;ch2 应用架构
 &lt;ul&gt;
 &lt;li&gt;贫血模型 vs 充血模型
@@ -137,7 +121,7 @@
 &lt;/li&gt;
 &lt;li&gt;ch8 领域事件
 &lt;ul&gt;
-&lt;li&gt;幂等实现：数据库唯一索引 /  状态机&lt;/li&gt;
+&lt;li&gt;幂等实现：数据库唯一索引 / 状态机&lt;/li&gt;
 &lt;li&gt;事件建模：用领域语言（例如账户被激活）；建模为值对象/贫血对象（不可变的）&lt;/li&gt;
 &lt;li&gt;应用
 &lt;ul&gt;
@@ -497,17 +481,7 @@
 &lt;li&gt;编码指南&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>读书记录《时间贫困》</title>
-      <link>https://nekonull.me/share/book-time-poverty/</link>
-      <pubDate>Mon, 12 Aug 2024 21:36:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/book-time-poverty/</guid>
-      <description>&lt;p&gt;书名：《时间贫困》&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>读书记录《时间贫困》</title><link>https://nekonull.me/share/book-time-poverty/</link><pubDate>Mon, 12 Aug 2024 21:36:00 +0800</pubDate><guid>https://nekonull.me/share/book-time-poverty/</guid><description>&lt;p&gt;书名：《时间贫困》&lt;/p&gt;
 &lt;p&gt;评价：7/10；很短的书，快的话一小时就能读完；了解到了一些和自己认知之外但符合自己真实感受的观点（e.g. 完全躺平未必会快乐）；可能会试试书中描述的行动。&lt;/p&gt;
 &lt;p&gt;版本：微信读书&lt;/p&gt;
 &lt;hr&gt;
@@ -524,7 +498,7 @@
 &lt;li&gt;&lt;strong&gt;工作场所也能交朋友&lt;/strong&gt;：如果你在工作时间内开展一些真实的人际交往活动，你的工作时间会变得更快乐、更有意义。花时间在工作中结交朋友是值得的。我们清醒的大部分时间都在办公室度过，如果把这些时间都花在痛苦的工作上，那就是一种浪费。你必须摒弃这样一种观念：在工作场合中不能展现出真实的自我。 如果办公室有个你想见的人，那么你就会有上班的动力，这个人也会帮助你在工作时间获得更多的快乐和成就感。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;不同年龄对平凡快乐的感知不同&lt;/strong&gt;：对年轻人来说，不平凡的经历比平凡的经历更让他们感到快乐；而对年长者来说，平凡的经历给他们带来的快乐不亚于不平凡的经历。换句话说，从统计学上来看，年长者从平凡的经历和不平凡的经历中获得的快乐几乎一样多。 随着年龄的增长，人们从平凡的经历中获得的快乐会越来越多，自然而然也会意识到自己所剩的生命是有限的。当人们意识到自己的时间宝贵时，就会更享受简单时刻的快乐。这些结果表明，尽管我比阿米特大不了多少，但我正在迈向人生的下一个阶段。这也就解释了我和阿米特的快乐周末为何不同。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;快乐时间是有限的&lt;/strong&gt;：一旦你认识到剩下的时间是有限的，你在这段时间里会更快乐。虽然在注意到时间如此有限后，你可能会感到不安，但你会更加关注并更容易发现那些简单的快乐。认识到“快乐的时光是短暂的”不仅有助于你度过艰难时期，还会提醒你停下脚步，这样你就不会错过一路上的美好。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;应该优先考虑带给你快乐的事&lt;/strong&gt;：研究者阿纳·凯南和拉恩·基维茨也观察到这个现象。他们巧妙地称其为“远视现象”​，即一种过于有远见的、只选未来不顾现在的倾向。这是过度自控的问题。他们指出，把苹果当零食确实比巧克力蛋糕更健康，但倘若每次都选苹果，你就永远尝不到美味的巧克力了。如果总是选择“该做之事”而非“想做之事”​，你就永远不会有享受的机会。年复一年，你只干正事，但回首往事时，你可能会因为错过了生活中应有的快乐而感到非常遗憾，比如白亚麻餐布上的羊角面包。  所以，在有限的时间里，确定、承诺并优先安排能带给你快乐的活动。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;应该优先考虑带给你快乐的事&lt;/strong&gt;：研究者阿纳·凯南和拉恩·基维茨也观察到这个现象。他们巧妙地称其为“远视现象”​，即一种过于有远见的、只选未来不顾现在的倾向。这是过度自控的问题。他们指出，把苹果当零食确实比巧克力蛋糕更健康，但倘若每次都选苹果，你就永远尝不到美味的巧克力了。如果总是选择“该做之事”而非“想做之事”​，你就永远不会有享受的机会。年复一年，你只干正事，但回首往事时，你可能会因为错过了生活中应有的快乐而感到非常遗憾，比如白亚麻餐布上的羊角面包。 所以，在有限的时间里，确定、承诺并优先安排能带给你快乐的活动。&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;拆分喜欢的活动以避免享乐适应&lt;/strong&gt;：随着时间的推移，我们会习惯现有事物，所以我们在一项活动开始时会特别敏感。这是我们最专注的时候，体验也最为强烈。因此，为了利用享乐适应，你应该把你喜欢的活动拆分开——创造更多开始，防止厌倦滋生。美好事物的延续也会带给你更多期待。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;行动&lt;/p&gt;
@@ -532,17 +506,7 @@
 &lt;li&gt;&lt;strong&gt;时间追踪&lt;/strong&gt;：记录自己的时间分配和快乐程度，找出快乐和不快乐的活动中存在的共同点&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;计算剩余时间&lt;/strong&gt;：计算一下涉及其他人的活动中，将来可能做这项活动的大概次数，也就是他们还剩下多少次机会，以及现在已经用尽了多少比例的机会&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;每周留出独处和思考的一小时&lt;/strong&gt;：舒式一小时比起之前提过的消除干扰所带来的快乐更有意义。正是在这样一段时间里，你可以更深入地处理问题、更恣意地创新、更有效地制定战略，以应对需要关注的重要决策&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>读书记录《软件设计的哲学（第2版）》</title>
-      <link>https://nekonull.me/share/book-philosophy-software-design-2nd/</link>
-      <pubDate>Sun, 28 Jul 2024 21:34:58 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/book-philosophy-software-design-2nd/</guid>
-      <description>&lt;p&gt;书名：A Philosophy of Software Design (2nd Edition)&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>读书记录《软件设计的哲学（第2版）》</title><link>https://nekonull.me/share/book-philosophy-software-design-2nd/</link><pubDate>Sun, 28 Jul 2024 21:34:58 +0800</pubDate><guid>https://nekonull.me/share/book-philosophy-software-design-2nd/</guid><description>&lt;p&gt;书名：A Philosophy of Software Design (2nd Edition)&lt;/p&gt;
 &lt;p&gt;评价：8.5/10；一开始是看到封面感觉很棒，于是就找来读了下；不是很长，三四个小时就能读完；虽然内容比较基本，但是能系统化的重新复习下也挺好的&lt;/p&gt;
 &lt;p&gt;版本：anna&amp;rsquo;s archive，llm翻译为中文&lt;/p&gt;
 &lt;hr&gt;
@@ -746,9 +710,4 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;/ol&gt;</description></item></channel></rss>

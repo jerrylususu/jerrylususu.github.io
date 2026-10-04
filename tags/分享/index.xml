@@ -1,64 +1,53 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>分享 on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</link>
-    <description>Recent content in 分享 on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Mon, 07 Oct 2024 13:52:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%88%86%E4%BA%AB/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>LLM x 书签收藏：摘要 &amp; 全文索引</title>
-      <link>https://nekonull.me/posts/llm_x_bookmark/</link>
-      <pubDate>Mon, 07 Oct 2024 13:52:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/llm_x_bookmark/</guid>
-      <description>&lt;h2 id=&#34;背景&#34;&gt;背景&lt;/h2&gt;
-&lt;p&gt;网上冲浪的时候，经常会遇到一些有趣的文章或者网站，让我有收藏起来以备后用的冲动（虽然绝大部分情况下都没有再用过）。然而一个人收藏未免有些太孤单了，因此自从 2021 年 5 月以来，我一直在使用一个名为 &lt;a href=&#34;https://github.com/osmoscraft/osmosmemo&#34;&gt;osmos::memo&lt;/a&gt; 的书签插件，将我的收藏直接记录到一个公开的 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-collection&#34;&gt;Github 存储库&lt;/a&gt;。这个插件的工作原理很简单，首先设置好 Github 的 token，然后每次点击收藏按钮都会在浏览器里临时 clone 一次，追加新收藏的条目到文件顶部，生成 commit 并提交，然后推送回 Github。但是这样简单的工作流程也十分有效，除了 token 过期的时候需要手动续期（过期前有 Github 自带的邮件提醒，所以基本上不会拖到最后），没有什么可以出错的空间，近三年半下来也已经帮我积累了 800+ 条目了。&lt;/p&gt;
-&lt;h2 id=&#34;问题&#34;&gt;问题&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>分享 on Nekonull's Garden</title><link>https://nekonull.me/tags/%E5%88%86%E4%BA%AB/</link><description>Recent content in 分享 on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Mon, 07 Oct 2024 13:52:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%88%86%E4%BA%AB/index.xml" rel="self" type="application/rss+xml"/><item><title>LLM x 书签收藏：摘要 &amp; 全文索引</title><link>https://nekonull.me/posts/llm_x_bookmark/</link><pubDate>Mon, 07 Oct 2024 13:52:00 +0800</pubDate><guid>https://nekonull.me/posts/llm_x_bookmark/</guid><description>&lt;h2 id="背景"&gt;背景&lt;a class="td-heading-self-link" href="#%e8%83%8c%e6%99%af" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;网上冲浪的时候，经常会遇到一些有趣的文章或者网站，让我有收藏起来以备后用的冲动（虽然绝大部分情况下都没有再用过）。然而一个人收藏未免有些太孤单了，因此自从 2021 年 5 月以来，我一直在使用一个名为 &lt;a href="https://github.com/osmoscraft/osmosmemo"&gt;osmos::memo&lt;/a&gt; 的书签插件，将我的收藏直接记录到一个公开的 &lt;a href="https://github.com/jerrylususu/bookmark-collection"&gt;Github 存储库&lt;/a&gt;。这个插件的工作原理很简单，首先设置好 Github 的 token，然后每次点击收藏按钮都会在浏览器里临时 clone 一次，追加新收藏的条目到文件顶部，生成 commit 并提交，然后推送回 Github。但是这样简单的工作流程也十分有效，除了 token 过期的时候需要手动续期（过期前有 Github 自带的邮件提醒，所以基本上不会拖到最后），没有什么可以出错的空间，近三年半下来也已经帮我积累了 800+ 条目了。&lt;/p&gt;
+&lt;h2 id="问题"&gt;问题&lt;a class="td-heading-self-link" href="#%e9%97%ae%e9%a2%98" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;然而目前的书签收藏流程中，依然会存在一些问题。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;书签指向的 URL 可能不再存在（例如某个博客的主人决定不再续费域名，或者是做了链接格式的调整），导致成为悬空的死链接&lt;/li&gt;
 &lt;li&gt;目前的记录项只有书签的 URL、标题和可选的标签（而且我打标签的习惯不太好，光靠标签基本上不太能找到），导致查找的时候如果对关键词记忆不清楚，很有可能找不到&lt;/li&gt;
 &lt;li&gt;书签里一大部分是长文章，时间一久很有可能忘记内容，如果只是临时找些东西，通读一次又略微有些费时费事，导致查找&amp;amp;引用效率下降。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;解决&#34;&gt;解决&lt;/h2&gt;
-&lt;p&gt;为了解决这些问题，我建立了一个新的存储库 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary&#34;&gt;bookmark-summary&lt;/a&gt;。这个存储库可以视为现有书签存储库的辅助数据，其中包含了新增书签的 Markdown 格式全文、列表摘要、一句话总结，和现有存储库之间通过 Github Actions 联动。其工作原理如下：&lt;/p&gt;
+&lt;h2 id="解决"&gt;解决&lt;a class="td-heading-self-link" href="#%e8%a7%a3%e5%86%b3" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;为了解决这些问题，我建立了一个新的存储库 &lt;a href="https://github.com/jerrylususu/bookmark-summary"&gt;bookmark-summary&lt;/a&gt;。这个存储库可以视为现有书签存储库的辅助数据，其中包含了新增书签的 Markdown 格式全文、列表摘要、一句话总结，和现有存储库之间通过 Github Actions 联动。其工作原理如下：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;我通过书签插件，在现有的书签存储库中新增了一个条目&lt;/li&gt;
-&lt;li&gt;代码提交到主干，触发名为 &lt;code&gt;summarize&lt;/code&gt; 的 Github Actions（&lt;a href=&#34;https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml&#34;&gt;yml 工作流文件&lt;/a&gt;）&lt;/li&gt;
-&lt;li&gt;Github Actions 执行，首先 checkout 书签存储库和摘要存储库，然后执行 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py&#34;&gt;process_changes.py&lt;/a&gt;
+&lt;li&gt;代码提交到主干，触发名为 &lt;code&gt;summarize&lt;/code&gt; 的 Github Actions（&lt;a href="https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml"&gt;yml 工作流文件&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;Github Actions 执行，首先 checkout 书签存储库和摘要存储库，然后执行 &lt;a href="https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py"&gt;process_changes.py&lt;/a&gt;
 &lt;ol&gt;
 &lt;li&gt;首先解析书签 README.md 文件，找到最近新增的条目标题和 URL&lt;/li&gt;
 &lt;li&gt;将 URL 保存到 Wayback Machine&lt;/li&gt;
-&lt;li&gt;输入 URL，使用 &lt;a href=&#34;https://jina.ai/reader/&#34;&gt;jina reader&lt;/a&gt; API 获取网址的 Markdown 全文，并保存到 &lt;code&gt;YYYYMM/{title}_raw.md&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;输入 URL，使用 LLM 生成列表摘要（prompt 在 &lt;code&gt;summarize_text&lt;/code&gt; 函数 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py#L80&#34;&gt;link&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;输入 URL，使用 &lt;a href="https://jina.ai/reader/"&gt;jina reader&lt;/a&gt; API 获取网址的 Markdown 全文，并保存到 &lt;code&gt;YYYYMM/{title}_raw.md&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;输入 URL，使用 LLM 生成列表摘要（prompt 在 &lt;code&gt;summarize_text&lt;/code&gt; 函数 &lt;a href="https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py#L80"&gt;link&lt;/a&gt;）&lt;/li&gt;
 &lt;li&gt;输入列表摘要，使用 LLM 生成一句话总结&lt;/li&gt;
-&lt;li&gt;将列表摘要和一句话总结保存到 &lt;code&gt;YYYYMM/{title}.md&lt;/code&gt;（&lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/blob/main/202410/2024-10-02-a-local-first-case-study-jakelazaroff.com.md&#34;&gt;效果示例&lt;/a&gt;）&lt;/li&gt;
+&lt;li&gt;将列表摘要和一句话总结保存到 &lt;code&gt;YYYYMM/{title}.md&lt;/code&gt;（&lt;a href="https://github.com/jerrylususu/bookmark-summary/blob/main/202410/2024-10-02-a-local-first-case-study-jakelazaroff.com.md"&gt;效果示例&lt;/a&gt;）&lt;/li&gt;
 &lt;li&gt;更新摘要存储库的 README.md，增加到摘要文件的链接&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;li&gt;Github Actions 提交变更到摘要存储库&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;这里的主要代码基本都是 Claude 和 GPT4o 写的，人肉做了一些小调整。后面随着使用又逐步发现了一些 bug，最近还用 o1-mini &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/issues/6&#34;&gt;修复了一个&lt;/a&gt;，算是真切感受到了 LLM 对生产力的巨大提升。目前摘要生成用的是深度求索的 deepseek-chat，便宜是真便宜（输入 1元/1M token，输出 2元/1M token，在这个场景下的成本基本上是每个月1元不到），效果也还算可以。&lt;/p&gt;
-&lt;h2 id=&#34;未来&#34;&gt;未来&lt;/h2&gt;
+&lt;p&gt;这里的主要代码基本都是 Claude 和 GPT4o 写的，人肉做了一些小调整。后面随着使用又逐步发现了一些 bug，最近还用 o1-mini &lt;a href="https://github.com/jerrylususu/bookmark-summary/issues/6"&gt;修复了一个&lt;/a&gt;，算是真切感受到了 LLM 对生产力的巨大提升。目前摘要生成用的是深度求索的 deepseek-chat，便宜是真便宜（输入 1元/1M token，输出 2元/1M token，在这个场景下的成本基本上是每个月1元不到），效果也还算可以。&lt;/p&gt;
+&lt;h2 id="未来"&gt;未来&lt;a class="td-heading-self-link" href="#%e6%9c%aa%e6%9d%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;最后是一些已知问题，以及未来可能的优化方向。当然和其他所有项目一样，欢迎 fork &amp;amp; PR。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;列表摘要质量：可能是 prompt 的问题，列表摘要倾向于每个大点下面只列两个小点，且没有充分合并需要合并的论点；可能需要考虑进一步优化 prompt，或者换用其他模型（不过我拿便宜的模型都试了一轮，基本上都存在类似问题）&lt;/li&gt;
 &lt;li&gt;数据结构化：目前摘要存储库下有个简单的 data.json，但是核心的摘要和全文内容依然是 Markdown 存储的，而不是 JSON 这类程序友好的结构化存储。可能需要考虑在 Markdown 之外另外维护一个 JSON，以备未来的查询。&lt;/li&gt;
 &lt;li&gt;代码整理和重构：目前所有逻辑都混在一个大的 Python 文件里，修改和测试起来都很烦人（实际上没有特别好的办法手动测试，目前都得靠手动注释掉部分代码）。未来一个考虑是做重构（o1-mini也给出过比较好的重构结构）+补充测试；另一个是改进书签存储库和摘要存储库的交互方式，例如通过读 git log 或者是明确传递最近书签条目的方式来触发摘要生成，而不是靠目前读文件对比的方式&lt;/li&gt;
 &lt;li&gt;向量搜索：目前虽然原文和摘要都存下来了，搜索却还是只能靠基本的文本匹配；可能可以考虑接个 embedding 模型自动生成下嵌入，存到一个 SQLite 数据库（或者用各种向量数据库 as a Service）；主要是查询的时候也得生成 embedding，英文还有小模型可以搞，中文的模型都太大了，没法直接在前端跑不依赖后端服务，这里还得再仔细想想。&lt;/li&gt;
-&lt;li&gt;自动生成每周周报：&lt;del&gt;既然现在书签有时间信息，可以考虑每周新增的书签+原文+摘要全部往 LLM 扔，自动生成一个每周摘要，放在 Github Release 里（不过不知道有没有人愿意看就是了）&lt;/del&gt; (已完成，参见 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/releases&#34;&gt;Releases&lt;/a&gt;，实现见 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary&#34;&gt;build_weekly_release.py&lt;/a&gt;，代码主要由 o1-mini 实现)&lt;/li&gt;
-&lt;li&gt;改用更现代的工具链：例如 uv，以及把依赖写在 Python 代码头部（PEP 723 &lt;a href=&#34;https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata&#34;&gt;Inline Script Metadata&lt;/a&gt;）？&lt;/li&gt;
+&lt;li&gt;自动生成每周周报：&lt;del&gt;既然现在书签有时间信息，可以考虑每周新增的书签+原文+摘要全部往 LLM 扔，自动生成一个每周摘要，放在 Github Release 里（不过不知道有没有人愿意看就是了）&lt;/del&gt; (已完成，参见 &lt;a href="https://github.com/jerrylususu/bookmark-summary/releases"&gt;Releases&lt;/a&gt;，实现见 &lt;a href="https://github.com/jerrylususu/bookmark-summary"&gt;build_weekly_release.py&lt;/a&gt;，代码主要由 o1-mini 实现)&lt;/li&gt;
+&lt;li&gt;改用更现代的工具链：例如 uv，以及把依赖写在 Python 代码头部（PEP 723 &lt;a href="https://packaging.python.org/en/latest/specifications/inline-script-metadata/#inline-script-metadata"&gt;Inline Script Metadata&lt;/a&gt;）？&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;我也想要&#34;&gt;我也想要&lt;/h2&gt;
+&lt;h2 id="我也想要"&gt;我也想要&lt;a class="td-heading-self-link" href="#%e6%88%91%e4%b9%9f%e6%83%b3%e8%a6%81" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;可以参考以下步骤，在自己的 Github 账户下部署一套类似的系统。（根据回忆写的，所以可能不太详尽）&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;参考 &lt;a href=&#34;https://github.com/osmoscraft/osmosmemo&#34;&gt;osmos::memo&lt;/a&gt; 的指引，初始化书签存储库（我的叫做 bookmark-collection），安装浏览器插件，并连接到 Github&lt;/li&gt;
+&lt;li&gt;参考 &lt;a href="https://github.com/osmoscraft/osmosmemo"&gt;osmos::memo&lt;/a&gt; 的指引，初始化书签存储库（我的叫做 bookmark-collection），安装浏览器插件，并连接到 Github&lt;/li&gt;
 &lt;li&gt;新建一个摘要存储库（我的叫做 bookmark-summary），并在其中添加一个空的 README.md 文件&lt;/li&gt;
-&lt;li&gt;将 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py&#34;&gt;process_changes.py&lt;/a&gt; 添加到摘要存储库，用实际的存储库名修改 &lt;code&gt;BOOKMARK_COLLECTION_REPO_NAME&lt;/code&gt; 和 &lt;code&gt;BOOKMARK_SUMMARY_REPO_NAME&lt;/code&gt;；如果需要的话，可以调整 &lt;code&gt;summarize_text&lt;/code&gt; 和 &lt;code&gt;one_sentence_summary&lt;/code&gt; 中的 prompt&lt;/li&gt;
-&lt;li&gt;回到书签存储库，将 &lt;a href=&#34;https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml&#34;&gt;bookmark_summary.yml&lt;/a&gt; 添加到 &lt;code&gt;.github/workflows/bookmark_summary.yml&lt;/code&gt;，用 &lt;code&gt;Github账号/书签存储库名&lt;/code&gt; 替换 22 行 &lt;code&gt;jerrylususu/bookmark-collection&lt;/code&gt;，用 &lt;code&gt;Github账号/摘要存储库名&lt;/code&gt; 替换 27 行 &lt;code&gt;jerrylususu/bookmark-summary&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;将 &lt;a href="https://github.com/jerrylususu/bookmark-summary/blob/main/process_changes.py"&gt;process_changes.py&lt;/a&gt; 添加到摘要存储库，用实际的存储库名修改 &lt;code&gt;BOOKMARK_COLLECTION_REPO_NAME&lt;/code&gt; 和 &lt;code&gt;BOOKMARK_SUMMARY_REPO_NAME&lt;/code&gt;；如果需要的话，可以调整 &lt;code&gt;summarize_text&lt;/code&gt; 和 &lt;code&gt;one_sentence_summary&lt;/code&gt; 中的 prompt&lt;/li&gt;
+&lt;li&gt;回到书签存储库，将 &lt;a href="https://github.com/jerrylususu/bookmark-collection/blob/main/.github/workflows/bookmark_summary.yml"&gt;bookmark_summary.yml&lt;/a&gt; 添加到 &lt;code&gt;.github/workflows/bookmark_summary.yml&lt;/code&gt;，用 &lt;code&gt;Github账号/书签存储库名&lt;/code&gt; 替换 22 行 &lt;code&gt;jerrylususu/bookmark-collection&lt;/code&gt;，用 &lt;code&gt;Github账号/摘要存储库名&lt;/code&gt; 替换 27 行 &lt;code&gt;jerrylususu/bookmark-summary&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;新建一个 PAT（Personal Access Token）
 &lt;ul&gt;
 &lt;li&gt;入口：Github 主页 - 右上角 Settings - 左侧列表底部 Developer Settings - 左侧列表 Personal Access Token / Fine-grained Tokens - 右侧 Generate New Token - 验证密码&lt;/li&gt;
@@ -83,96 +72,82 @@
 &lt;/li&gt;
 &lt;li&gt;至此应该配置完成了。可以用 osmos::memo 扩展添加一个书签试试，观察书签存储库中工作流是否正常运行，摘要存储库中是否生成了对应的摘要。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;勘误&#34;&gt;勘误&lt;/h2&gt;
+&lt;h2 id="勘误"&gt;勘误&lt;a class="td-heading-self-link" href="#%e5%8b%98%e8%af%af" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;感谢评论区 a1032077316 指出「我也想要一节」中的部分步骤错误，已经在文中修复&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>2024 年了，我最近在用什么工具</title>
-      <link>https://nekonull.me/posts/tools-i-use-2024-mid/</link>
-      <pubDate>Sun, 21 Jul 2024 21:53:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/tools-i-use-2024-mid/</guid>
-      <description>&lt;h2 id=&#34;2024-年了我最近在用什么工具&#34;&gt;2024 年了，我最近在用什么工具&lt;/h2&gt;
+&lt;/ul&gt;</description></item><item><title>2024 年了，我最近在用什么工具</title><link>https://nekonull.me/posts/tools-i-use-2024-mid/</link><pubDate>Sun, 21 Jul 2024 21:53:00 +0800</pubDate><guid>https://nekonull.me/posts/tools-i-use-2024-mid/</guid><description>&lt;h2 id="2024-年了我最近在用什么工具"&gt;2024 年了，我最近在用什么工具&lt;a class="td-heading-self-link" href="#2024-%e5%b9%b4%e4%ba%86%e6%88%91%e6%9c%80%e8%bf%91%e5%9c%a8%e7%94%a8%e4%bb%80%e4%b9%88%e5%b7%a5%e5%85%b7" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;去年年中，公司的主力开发设备从 Windows 换成了 Mac，之前在 Windows 上用的各类工具需要重新在 Mac 上找对应的替代品。一年磨合下来现在已经差不多稳定了，特此记录（其实之前就应该记录的，但是太懒）。如果能帮助到各位读者就更好了。当然也欢迎评论推荐更多你认为好用的工具。&lt;/p&gt;
-&lt;h2 id=&#34;独立工具&#34;&gt;独立工具&lt;/h2&gt;
+&lt;h2 id="独立工具"&gt;独立工具&lt;a class="td-heading-self-link" href="#%e7%8b%ac%e7%ab%8b%e5%b7%a5%e5%85%b7" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;（此处的独立指的是软件本身可以独立运行，与之相对的是插件）&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://code.visualstudio.com/&#34;&gt;VS Code&lt;/a&gt;：宇宙 IDE（装了足够多插件之后）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kate-editor.org/&#34;&gt;Kate&lt;/a&gt;：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://cudatext.github.io/&#34;&gt;CudaText&lt;/a&gt;：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://code.visualstudio.com/"&gt;VS Code&lt;/a&gt;：宇宙 IDE（装了足够多插件之后）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://kate-editor.org/"&gt;Kate&lt;/a&gt;：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://cudatext.github.io/"&gt;CudaText&lt;/a&gt;：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定&lt;/li&gt;
 &lt;li&gt;Apple Notes：用来记录手头临时的待办事项，避免消息太多跟丢&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://obsidian.md/&#34;&gt;Obsidian&lt;/a&gt;：用来做&lt;a href=&#34;https://news.ycombinator.com/item?id=40950584&#34;&gt;工作笔记&lt;/a&gt;，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.u.tools/&#34;&gt;Utools&lt;/a&gt;：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.raycast.com/&#34;&gt;RayCast&lt;/a&gt;：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.snipaste.com/&#34;&gt;Snipaste&lt;/a&gt;：截图 &amp;amp; 贴图是我工作流的重要部分，已经完全离不开了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://karabiner-elements.pqrs.org/&#34;&gt;Karabiner-Elements&lt;/a&gt;：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&amp;gt; 左 Cmd）；现在键位熟悉之后用的不多了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dwarvesf/hidden&#34;&gt;Hidden Bar&lt;/a&gt;：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/p0deje/Maccy&#34;&gt;Maccy&lt;/a&gt;：剪贴板历史（救了我好几次）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/exelban/stats&#34;&gt;Stats&lt;/a&gt;：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ther0n/UnnaturalScrollWheels&#34;&gt;UnnaturalScrollWheels&lt;/a&gt;：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://draw.io/&#34;&gt;Draw.io&lt;/a&gt;：画各种图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great&#34;&gt;EasyFind&lt;/a&gt;：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/michaelvillar/timer-app&#34;&gt;Timer&lt;/a&gt;：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://ezip.awehunt.com/&#34;&gt;MacZip&lt;/a&gt;：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ArchGPT/insomnium&#34;&gt;Insomnium&lt;/a&gt;：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://activitywatch.net/&#34;&gt;ActivityWatch&lt;/a&gt;：记录下今天上了多少班&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chatboxai.app/&#34;&gt;Chatbox&lt;/a&gt;：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://obsidian.md/"&gt;Obsidian&lt;/a&gt;：用来做&lt;a href="https://news.ycombinator.com/item?id=40950584"&gt;工作笔记&lt;/a&gt;，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.u.tools/"&gt;Utools&lt;/a&gt;：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.raycast.com/"&gt;RayCast&lt;/a&gt;：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.snipaste.com/"&gt;Snipaste&lt;/a&gt;：截图 &amp;amp; 贴图是我工作流的重要部分，已经完全离不开了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://karabiner-elements.pqrs.org/"&gt;Karabiner-Elements&lt;/a&gt;：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&amp;gt; 左 Cmd）；现在键位熟悉之后用的不多了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dwarvesf/hidden"&gt;Hidden Bar&lt;/a&gt;：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/p0deje/Maccy"&gt;Maccy&lt;/a&gt;：剪贴板历史（救了我好几次）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/exelban/stats"&gt;Stats&lt;/a&gt;：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ther0n/UnnaturalScrollWheels"&gt;UnnaturalScrollWheels&lt;/a&gt;：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://draw.io/"&gt;Draw.io&lt;/a&gt;：画各种图&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great"&gt;EasyFind&lt;/a&gt;：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/michaelvillar/timer-app"&gt;Timer&lt;/a&gt;：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://ezip.awehunt.com/"&gt;MacZip&lt;/a&gt;：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ArchGPT/insomnium"&gt;Insomnium&lt;/a&gt;：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://activitywatch.net/"&gt;ActivityWatch&lt;/a&gt;：记录下今天上了多少班&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chatboxai.app/"&gt;Chatbox&lt;/a&gt;：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;obsidian-插件&#34;&gt;Obsidian 插件&lt;/h2&gt;
+&lt;h2 id="obsidian-插件"&gt;Obsidian 插件&lt;a class="td-heading-self-link" href="#obsidian-%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Plugins/obsidian-electron-window-tweaker&#34;&gt;Electron Window Tweaker&lt;/a&gt;：让 Obsidian 窗口也能够置顶&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Vinzent03/obsidian-git&#34;&gt;Git&lt;/a&gt;：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/tasks/Introduction&#34;&gt;Tasks&lt;/a&gt;：将所有文件里的任务收集起来，创建统一的任务视图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/hdykokd/obsidian-vertical-tabs-view&#34;&gt;Vertical Tabs View&lt;/a&gt;：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://publish.obsidian.md/hub/02&amp;#43;-&amp;#43;Community&amp;#43;Expansions/02.05&amp;#43;All&amp;#43;Community&amp;#43;Expansions/Plugins/obsidian-electron-window-tweaker"&gt;Electron Window Tweaker&lt;/a&gt;：让 Obsidian 窗口也能够置顶&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Vinzent03/obsidian-git"&gt;Git&lt;/a&gt;：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://publish.obsidian.md/tasks/Introduction"&gt;Tasks&lt;/a&gt;：将所有文件里的任务收集起来，创建统一的任务视图&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/hdykokd/obsidian-vertical-tabs-view"&gt;Vertical Tabs View&lt;/a&gt;：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）&lt;/li&gt;
 &lt;li&gt;[New Tab +]：避免同一个文件被打开在多个 tab 中&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/tadashi-aikawa/obsidian-another-quick-switcher&#34;&gt;Another Quick Switcher&lt;/a&gt;：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/tadashi-aikawa/obsidian-another-quick-switcher"&gt;Another Quick Switcher&lt;/a&gt;：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题&lt;/li&gt;
 &lt;li&gt;Unique Note Creator：官方插件，可以直接创建一个带有时间戳的笔记并应用模板；用来在出现新工作时创建对应的工作笔记&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;（顺带一提，为了和 VS Code 使用习惯一致，Quick Swtich 绑定到 Cmd+R，command palette 绑定到 Cmd+Shift+P）&lt;/p&gt;
-&lt;h2 id=&#34;浏览器插件&#34;&gt;浏览器插件&lt;/h2&gt;
+&lt;h2 id="浏览器插件"&gt;浏览器插件&lt;a class="td-heading-self-link" href="#%e6%b5%8f%e8%a7%88%e5%99%a8%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;（目前用的是 Edge，纵向标签页没有其他浏览器支持）&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://immersivetranslate.com/?force=1&#34;&gt;沉浸式翻译&lt;/a&gt;：外文长文必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://modheader.com/&#34;&gt;ModHeader&lt;/a&gt;：调试用，主要拿来改 request header&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.inssman.com/&#34;&gt;Inssman&lt;/a&gt;：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN&#34;&gt;Earth View From Google Earth&lt;/a&gt;：在新标签页展示航拍景象，换换心情&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla&#34;&gt;Page Notes&lt;/a&gt;：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg&#34;&gt;Picture-in-Picture Extension (by Google)&lt;/a&gt;：画中画插件，&lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag 的视频都能用，摸鱼必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko&#34;&gt;Session Buddy&lt;/a&gt;：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf&#34;&gt;VerticalTabs&lt;/a&gt;：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN&#34;&gt;TamperMonkey&lt;/a&gt;：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://immersivetranslate.com/?force=1"&gt;沉浸式翻译&lt;/a&gt;：外文长文必备&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://modheader.com/"&gt;ModHeader&lt;/a&gt;：调试用，主要拿来改 request header&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.inssman.com/"&gt;Inssman&lt;/a&gt;：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN"&gt;Earth View From Google Earth&lt;/a&gt;：在新标签页展示航拍景象，换换心情&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla"&gt;Page Notes&lt;/a&gt;：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg"&gt;Picture-in-Picture Extension (by Google)&lt;/a&gt;：画中画插件，&lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag 的视频都能用，摸鱼必备&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko"&gt;Session Buddy&lt;/a&gt;：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf"&gt;VerticalTabs&lt;/a&gt;：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN"&gt;TamperMonkey&lt;/a&gt;：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;还有些小工具网站：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jupyter.org/try-jupyter/lab/&#34;&gt;JupyterLite&lt;/a&gt;：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://nekonull.me/day-tracker/&#34;&gt;Day Tracker&lt;/a&gt;：之前自己写的小工具，看今天还要上多久班&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jupyter.org/try-jupyter/lab/"&gt;JupyterLite&lt;/a&gt;：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://nekonull.me/day-tracker/"&gt;Day Tracker&lt;/a&gt;：之前自己写的小工具，看今天还要上多久班&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;vs-code-插件&#34;&gt;VS Code 插件&lt;/h2&gt;
+&lt;h2 id="vs-code-插件"&gt;VS Code 插件&lt;a class="td-heading-self-link" href="#vs-code-%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks&#34;&gt;Bookmarks&lt;/a&gt;：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens&#34;&gt;Error Lens&lt;/a&gt;：行内显示报错信息，不需要手动在波浪线上 hover 也能看到&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight&#34;&gt;Todo Highlight&lt;/a&gt;：将所有 TODO 高亮出来&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens&#34;&gt;GitLens&lt;/a&gt;：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer&#34;&gt;Live Server&lt;/a&gt;：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph&#34;&gt;Git Graph&lt;/a&gt;：GitLens 的分支图是收费功能，可以用这个插件替代&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow&#34;&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar&#34;&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter&#34;&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>分布式系统课程笔记</title>
-      <link>https://nekonull.me/posts/distributed-system-course-notes/</link>
-      <pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate>
-      
-      <guid>https://nekonull.me/posts/distributed-system-course-notes/</guid>
-      <description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks"&gt;Bookmarks&lt;/a&gt;：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens"&gt;Error Lens&lt;/a&gt;：行内显示报错信息，不需要手动在波浪线上 hover 也能看到&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight"&gt;Todo Highlight&lt;/a&gt;：将所有 TODO 高亮出来&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens"&gt;GitLens&lt;/a&gt;：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"&gt;Live Server&lt;/a&gt;：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph"&gt;Git Graph&lt;/a&gt;：GitLens 的分支图是收费功能，可以用这个插件替代&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow"&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar"&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter"&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>分布式系统课程笔记</title><link>https://nekonull.me/posts/distributed-system-course-notes/</link><pubDate>Sun, 12 Dec 2021 20:47:32 +0300</pubDate><guid>https://nekonull.me/posts/distributed-system-course-notes/</guid><description>&lt;p&gt;这学期选了一门分布式系统的课程，实际上内容大概是 MIT 的分布式系统（6.824）和普林斯顿的分布式系统（COS 418）课程的混合。大概覆盖了以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;分布式系统基础：RPC 和消息语义，逻辑时钟，分布式快照，一致性模型, CAP/FLP 理论&lt;/li&gt;
 &lt;li&gt;最终一致性系统：Bayou, DHT, Dynamo&lt;/li&gt;
@@ -188,20 +163,11 @@
 &lt;/ul&gt;
 &lt;p&gt;其中可能比较值得一提的是后两项作业，因为算是自己可能从来不会主动去写的类型，一想到可能的巨大复杂度就打退堂鼓了。不过实际上因为配套的测试比较完备，最后写起来其实也就是一个 case 一个 case 过，并没有想象中的那么困难。（不过从日志 debug 的确容易烦躁就是了。）最后实际上 Raft 和 KVRaft 都是在两天内写完的，不过的确是全神贯注的两天了。&lt;/p&gt;
 &lt;p&gt;尝试着把自己的（中文）笔记整理了一下，放在下面的链接。不过课件还是要点回课程网站手动获取，我并没有 redistribute 的权限。如有错漏，欢迎指出。
-&lt;a href=&#34;https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures&#34;&gt;All distributed system lectures&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;总而言之，上完这门课并且写完作业，稍微算是对自己实现复杂系统的能力更有一些些信心了吧。&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Utils.ahk</title>
-      <link>https://nekonull.me/posts/utils-ahk/</link>
-      <pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/utils-ahk/</guid>
-      <description>&lt;p&gt;各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://gist.github.com/jerrylususu/ca434b7c34c77968ceecd4b735af1fcf&#34;&gt;GitHub Gist&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;快速启动&#34;&gt;快速启动&lt;/h2&gt;
+&lt;a href="https://nekonull.me/distsys_notes/#/page/all%20distributed%20system%20lectures"&gt;All distributed system lectures&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;总而言之，上完这门课并且写完作业，稍微算是对自己实现复杂系统的能力更有一些些信心了吧。&lt;/p&gt;</description></item><item><title>Utils.ahk</title><link>https://nekonull.me/posts/utils-ahk/</link><pubDate>Sun, 18 Aug 2019 13:55:00 +0800</pubDate><guid>https://nekonull.me/posts/utils-ahk/</guid><description>&lt;p&gt;各种奇奇怪怪的小功能的集合&amp;hellip; 大部分都是从其他的 AutoHotKey 开发者那里抄过来的&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gist.github.com/jerrylususu/ca434b7c34c77968ceecd4b735af1fcf"&gt;GitHub Gist&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="快速启动"&gt;快速启动&lt;a class="td-heading-self-link" href="#%e5%bf%ab%e9%80%9f%e5%90%af%e5%8a%a8" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Win+N 记事本&lt;/li&gt;
 &lt;li&gt;Win+C cmd
@@ -215,7 +181,8 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;窗口透明度&#34;&gt;窗口透明度&lt;/h2&gt;
+&lt;h2 id="窗口透明度"&gt;窗口透明度&lt;a class="td-heading-self-link" href="#%e7%aa%97%e5%8f%a3%e9%80%8f%e6%98%8e%e5%ba%a6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;来源：https://autohotkey.com/board/topic/148619-set-window-always-on-top-and-change-transparency/&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -224,12 +191,14 @@
 &lt;li&gt;Alt+W 增加透明度&lt;/li&gt;
 &lt;li&gt;Alt+Q 减少透明度&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;记事本相关&#34;&gt;记事本相关&lt;/h2&gt;
+&lt;h2 id="记事本相关"&gt;记事本相关&lt;a class="td-heading-self-link" href="#%e8%ae%b0%e4%ba%8b%e6%9c%ac%e7%9b%b8%e5%85%b3" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Alt+Shift+S 把所有无标题的记事本内容复制到一个新的记事本示例&lt;/li&gt;
 &lt;li&gt;Alt+Shift+D 关闭所有无标题的记事本&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;窗口调整&#34;&gt;窗口调整&lt;/h2&gt;
+&lt;h2 id="窗口调整"&gt;窗口调整&lt;a class="td-heading-self-link" href="#%e7%aa%97%e5%8f%a3%e8%b0%83%e6%95%b4" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;来源：http://blog.sachleen.com/posts/1370369043/snapping-windows-vertically-on-portrait-display/&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -239,19 +208,11 @@
 &lt;li&gt;Win+Alt+↓ 窗口占据下班屏幕&lt;/li&gt;
 &lt;li&gt;Win+Ctrl+Alt+↑ 窗口占据上1/4屏幕&lt;/li&gt;
 &lt;li&gt;Win+Ctrl+Alt+↓ 窗口占据下1/4屏幕&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>我最近在用什么软件？</title>
-      <link>https://nekonull.me/posts/what-software-i-am-using/</link>
-      <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/what-software-i-am-using/</guid>
-      <description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
-&lt;h2 id=&#34;featured-&#34;&gt;Featured ✨&lt;/h2&gt;
-&lt;h3 id=&#34;stickies&#34;&gt;Stickies&lt;/h3&gt;
+&lt;/ul&gt;</description></item><item><title>我最近在用什么软件？</title><link>https://nekonull.me/posts/what-software-i-am-using/</link><pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate><guid>https://nekonull.me/posts/what-software-i-am-using/</guid><description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
+&lt;h2 id="featured-"&gt;Featured ✨&lt;a class="td-heading-self-link" href="#featured-" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;h3 id="stickies"&gt;Stickies&lt;a class="td-heading-self-link" href="#stickies" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Sticky Notes++。初见只以为和其他的简单便利贴软件一样，但是用起来却发现越用越离不开了：Stack, Solo, 富文本支持, 自带 to do 转换&amp;hellip; 当然，最重要的是数据安全，以及启动速度比 Windows 自带的便笺快太多了。自从用了 Stickies，我打开的 Notepad 窗口大幅减少了。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;为了解决移除外接屏幕后便利贴无法访问的问题，甚至自带 Rescue Off-screen 功能。&lt;/p&gt;
@@ -259,18 +220,23 @@
 &lt;blockquote&gt;
 &lt;p&gt;注：此前苦于 Windows 下没有合适的速记类应用，我用 Notepad 和自己写的 AHK 插件作为解决方案。按下 Win+N 即可召唤出新的 Notepad 窗口，再按下 Alt+N 即可置顶，从而实现简单的速记效果。当然，长期使用后会导致 Notepad 窗口数暴增，且不便于保存和整理，在系统崩溃时也有数据安全之虞。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3 id=&#34;snipaste&#34;&gt;Snipaste&lt;/h3&gt;
+&lt;h3 id="snipaste"&gt;Snipaste&lt;a class="td-heading-self-link" href="#snipaste" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Snip 截图，Paste 贴图。描述看起来简单，用起来却格外使用，能够在狭小的电脑屏幕上模拟出在桌上工作时随意放置各种参考资料的快感。&lt;/p&gt;
-&lt;h3 id=&#34;utools&#34;&gt;Utools&lt;/h3&gt;
+&lt;h3 id="utools"&gt;Utools&lt;a class="td-heading-self-link" href="#utools" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Windows 版本的 Spotlight，一经发现就占据了我的 &lt;code&gt;Alt+Space&lt;/code&gt;。在发现它之前，我用 Windows 自带的搜索，但是总是困扰于索引速度和作为干扰的网页搜索。有了 utools 之后总算是情景了。顺带还有插件支持。&lt;/p&gt;
-&lt;h3 id=&#34;mobaxterm&#34;&gt;MobaXTerm&lt;/h3&gt;
+&lt;h3 id="mobaxterm"&gt;MobaXTerm&lt;a class="td-heading-self-link" href="#mobaxterm" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;作为 term 类应用，自然少不了连接远程服务器的功能，但 MobaXTerm 能做的却还有很多：文件传输、服务器性能监控、一键分屏、X11 映射、自带关键词高亮&amp;hellip; 最重要的，是 Home 用途免费！&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;v12 在我的环境下表现不佳，偶有崩溃。v11 似乎更稳定一些。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3 id=&#34;gridmove&#34;&gt;GridMove&lt;/h3&gt;
+&lt;h3 id="gridmove"&gt;GridMove&lt;a class="td-heading-self-link" href="#gridmove" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;简单的分屏应用，但是支持复杂的自定义布局。尤其适合那种一边看书/教程/论文，一边做笔记的场合。当然，你也可以随意修改配置文件，让它融入你的工作流。支持多屏。&lt;/p&gt;
-&lt;h2 id=&#34;listed-&#34;&gt;Listed 📜&lt;/h2&gt;
+&lt;h2 id="listed-"&gt;Listed 📜&lt;a class="td-heading-self-link" href="#listed-" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Hourglass: 有自然语言支持的倒计时器。用来提醒我去取洗/烘干了的衣服。&lt;/li&gt;
 &lt;li&gt;Listen1: 一个软件听全网歌曲，不用担心版权孤岛。（网易云音乐也有类似插件，可用网易云音乐作为前端）&lt;/li&gt;
@@ -287,61 +253,62 @@
 &lt;li&gt;PanDownload: 百度网盘下载加速。&lt;/li&gt;
 &lt;li&gt;Video Speed Controller: (浏览器插件) 快速跳过视频废话，顺带可以练习英语听力？&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;why&#34;&gt;Why?&lt;/h2&gt;
+&lt;h2 id="why"&gt;Why?&lt;a class="td-heading-self-link" href="#why" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;常常有人问我：「装这么多软件用得着吗？ 」、「为什么你的托盘区域有 20+ 图标？」&lt;/p&gt;
-&lt;p&gt;我的回答是：「因为我希望，当我在处理任务时，身旁总能有&lt;strong&gt;趁手&lt;/strong&gt;的工具。」&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Python, Flask, Jinja, SQLite 里的坑</title>
-      <link>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link>
-      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid>
-      <description>&lt;p&gt;上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。&lt;/p&gt;
+&lt;p&gt;我的回答是：「因为我希望，当我在处理任务时，身旁总能有&lt;strong&gt;趁手&lt;/strong&gt;的工具。」&lt;/p&gt;</description></item><item><title>Python, Flask, Jinja, SQLite 里的坑</title><link>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</link><pubDate>Mon, 14 Aug 2017 00:00:00 +0800</pubDate><guid>https://nekonull.me/archive/python-flask-jinja-sqlite-%E9%87%8C%E7%9A%84%E5%9D%91/</guid><description>&lt;p&gt;上完 CS50，决定按照课程进度完成最后的 Final Project。于是开发了 Project SFLS ♫，途中遇到了许多坑，记载如下。&lt;/p&gt;
 &lt;!-- more --&gt;
-&lt;h2 id=&#34;400-bad-request&#34;&gt;400 Bad Request&lt;/h2&gt;
+&lt;h2 id="400-bad-request"&gt;400 Bad Request&lt;a class="td-heading-self-link" href="#400-bad-request" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;问题：表单与后台程序不匹配（后台调用了表单里没有的项）
 坑：手动用不可见文本框传递id，但是误将&lt;code&gt;readOnly&lt;/code&gt;设置成了&lt;code&gt;disabled&lt;/code&gt;，id读取不能，于是报错。重新改回来即可解决，亦可使用&lt;code&gt;session&lt;/code&gt;中转。&lt;/p&gt;
-&lt;h2 id=&#34;bootstrap-框架不对劲&#34;&gt;Bootstrap 框架不对劲&lt;/h2&gt;
+&lt;h2 id="bootstrap-框架不对劲"&gt;Bootstrap 框架不对劲&lt;a class="td-heading-self-link" href="#bootstrap-%e6%a1%86%e6%9e%b6%e4%b8%8d%e5%af%b9%e5%8a%b2" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;问题：本来是10-2的排布，但是却变成上面2 下面10
 坑：最后发现上面的&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;没有写&lt;code&gt;&amp;lt;/table&amp;gt;&lt;/code&gt;，造成10继续向下继承。手动修正即可。&lt;/p&gt;
-&lt;h2 id=&#34;sqlite-新建字段出错&#34;&gt;SQLite 新建字段出错&lt;/h2&gt;
+&lt;h2 id="sqlite-新建字段出错"&gt;SQLite 新建字段出错&lt;a class="td-heading-self-link" href="#sqlite-%e6%96%b0%e5%bb%ba%e5%ad%97%e6%ae%b5%e5%87%ba%e9%94%99" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;问题：建立表后再追加字段，选择&lt;code&gt;NOT NULL&lt;/code&gt;属性报错
 坑：SQLite就是这样设定的。&lt;/p&gt;
-&lt;h2 id=&#34;sqlite-多层-sql-嵌套&#34;&gt;SQLite 多层 SQL 嵌套&lt;/h2&gt;
+&lt;h2 id="sqlite-多层-sql-嵌套"&gt;SQLite 多层 SQL 嵌套&lt;a class="td-heading-self-link" href="#sqlite-%e5%a4%9a%e5%b1%82-sql-%e5%b5%8c%e5%a5%97" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;问题：部分请求中一个 SQL 套一个 SQL，难以判断。
 解决：SQLite 支持视图属性，可用其作为临时表。&lt;/p&gt;
-&lt;h2 id=&#34;sqlite-count-不能在-python-中调用&#34;&gt;SQLite &lt;code&gt;count(*)&lt;/code&gt; 不能在 Python 中调用&lt;/h2&gt;
+&lt;h2 id="sqlite-count-不能在-python-中调用"&gt;SQLite &lt;code&gt;count(*)&lt;/code&gt; 不能在 Python 中调用&lt;a class="td-heading-self-link" href="#sqlite-count-%e4%b8%8d%e8%83%bd%e5%9c%a8-python-%e4%b8%ad%e8%b0%83%e7%94%a8" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;问题：在 Python 中引用 db.execute 出来的 &lt;code&gt;count(*)&lt;/code&gt;，总是提示失败
 坑：似乎&lt;code&gt;*&lt;/code&gt;是 Python 中的特殊字符，不能乱用
 解决：用 as 将&lt;code&gt;count(*)&lt;/code&gt;改写为 &lt;code&gt;c&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;h2 id=&#34;sqlalchemy-获取出来的是-proxy-对象不能判断存在&#34;&gt;SQLAlchemy 获取出来的是 Proxy 对象，不能判断存在&lt;/h2&gt;
+&lt;h2 id="sqlalchemy-获取出来的是-proxy-对象不能判断存在"&gt;SQLAlchemy 获取出来的是 Proxy 对象，不能判断存在&lt;a class="td-heading-self-link" href="#sqlalchemy-%e8%8e%b7%e5%8f%96%e5%87%ba%e6%9d%a5%e7%9a%84%e6%98%af-proxy-%e5%af%b9%e8%b1%a1%e4%b8%8d%e8%83%bd%e5%88%a4%e6%96%ad%e5%ad%98%e5%9c%a8" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;解决：用自带的 &lt;code&gt;.scalar()&lt;/code&gt; 方法，在不存在时能返回&lt;code&gt;None&lt;/code&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;sqlalchemy-获取出的-proxy-对象其中的值难以操作&#34;&gt;SQLAlchemy 获取出的 Proxy 对象，其中的值难以操作&lt;/h2&gt;
+&lt;h2 id="sqlalchemy-获取出的-proxy-对象其中的值难以操作"&gt;SQLAlchemy 获取出的 Proxy 对象，其中的值难以操作&lt;a class="td-heading-self-link" href="#sqlalchemy-%e8%8e%b7%e5%8f%96%e5%87%ba%e7%9a%84-proxy-%e5%af%b9%e8%b1%a1%e5%85%b6%e4%b8%ad%e7%9a%84%e5%80%bc%e9%9a%be%e4%bb%a5%e6%93%8d%e4%bd%9c" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;坑：试图对&lt;code&gt;lang&lt;/code&gt;进行转换，但是提示 &lt;code&gt;Proxy&lt;/code&gt;对象不可用。
 解决：用 &lt;code&gt;CS50&lt;/code&gt; 函数库中中的 &lt;code&gt;SQL&lt;/code&gt;解决，本质上就是对 SQLAlchemy 的二次封装，获取出来的直接就是&lt;code&gt;dict&lt;/code&gt;格式，更好用了。&lt;/p&gt;
-&lt;h2 id=&#34;sql-返回单条结果读取信息报错&#34;&gt;SQL 返回单条结果，读取信息报错&lt;/h2&gt;
+&lt;h2 id="sql-返回单条结果读取信息报错"&gt;SQL 返回单条结果，读取信息报错&lt;a class="td-heading-self-link" href="#sql-%e8%bf%94%e5%9b%9e%e5%8d%95%e6%9d%a1%e7%bb%93%e6%9e%9c%e8%af%bb%e5%8f%96%e4%bf%a1%e6%81%af%e6%8a%a5%e9%94%99" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;坑：虽然返回的是单条结果，但是还是要用&lt;code&gt;for elem in dict&lt;/code&gt;处理得到真正的单条数据。&lt;/p&gt;
-&lt;h2 id=&#34;validatorjs-字段匹配总是出错&#34;&gt;Validator.js 字段匹配总是出错&lt;/h2&gt;
+&lt;h2 id="validatorjs-字段匹配总是出错"&gt;Validator.js 字段匹配总是出错&lt;a class="td-heading-self-link" href="#validatorjs-%e5%ad%97%e6%ae%b5%e5%8c%b9%e9%85%8d%e6%80%bb%e6%98%af%e5%87%ba%e9%94%99" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;坑：#指定的是id而不是name，要再设定一次id&lt;/p&gt;
-&lt;h2 id=&#34;python-3-编码报错&#34;&gt;Python 3 编码报错&lt;/h2&gt;
+&lt;h2 id="python-3-编码报错"&gt;Python 3 编码报错&lt;a class="td-heading-self-link" href="#python-3-%e7%bc%96%e7%a0%81%e6%8a%a5%e9%94%99" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;坑：代码中有中文，提示&lt;code&gt;not an ASCII character&lt;/code&gt;
 解决：文件头加上&lt;code&gt;#coding UTF-8&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;excel-导出的-csv-无法在-sqlite-上导入&#34;&gt;Excel 导出的 CSV 无法在 SQLite 上导入&lt;/h2&gt;
+&lt;h2 id="excel-导出的-csv-无法在-sqlite-上导入"&gt;Excel 导出的 CSV 无法在 SQLite 上导入&lt;a class="td-heading-self-link" href="#excel-%e5%af%bc%e5%87%ba%e7%9a%84-csv-%e6%97%a0%e6%b3%95%e5%9c%a8-sqlite-%e4%b8%8a%e5%af%bc%e5%85%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;坑：Excel 导出 CSV 的默认文件编码是 ASCI
 解决：用记事本打开，另存为 UTF-8&lt;/p&gt;
-&lt;h2 id=&#34;flask-的消息闪现不显示&#34;&gt;Flask 的消息闪现不显示&lt;/h2&gt;
+&lt;h2 id="flask-的消息闪现不显示"&gt;Flask 的消息闪现不显示&lt;a class="td-heading-self-link" href="#flask-%e7%9a%84%e6%b6%88%e6%81%af%e9%97%aa%e7%8e%b0%e4%b8%8d%e6%98%be%e7%a4%ba" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;解决：检查 layout.html 中页面逻辑，先用&lt;code&gt;with&lt;/code&gt;获取，再用&lt;code&gt;for&lt;/code&gt;得到具体的闪现消息。&lt;/p&gt;
-&lt;h2 id=&#34;页面多次重载结果不同&#34;&gt;页面多次重载结果不同&lt;/h2&gt;
+&lt;h2 id="页面多次重载结果不同"&gt;页面多次重载结果不同&lt;a class="td-heading-self-link" href="#%e9%a1%b5%e9%9d%a2%e5%a4%9a%e6%ac%a1%e9%87%8d%e8%bd%bd%e7%bb%93%e6%9e%9c%e4%b8%8d%e5%90%8c" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;解决：清空 gunicorn 缓存，重启服务器。&lt;/p&gt;
-&lt;h2 id=&#34;jinja-2-渲染出的文本框露出下一参数&#34;&gt;Jinja 2 渲染出的文本框露出下一参数&lt;/h2&gt;
+&lt;h2 id="jinja-2-渲染出的文本框露出下一参数"&gt;Jinja 2 渲染出的文本框露出下一参数&lt;a class="td-heading-self-link" href="#jinja-2-%e6%b8%b2%e6%9f%93%e5%87%ba%e7%9a%84%e6%96%87%e6%9c%ac%e6%a1%86%e9%9c%b2%e5%87%ba%e4%b8%8b%e4%b8%80%e5%8f%82%e6%95%b0" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;解决：看看引号是否完全加上了&lt;/p&gt;
-&lt;h2 id=&#34;python-提示变量定义前使用&#34;&gt;Python 提示变量定义前使用&lt;/h2&gt;
-&lt;p&gt;解决：global&lt;/p&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;h2 id="python-提示变量定义前使用"&gt;Python 提示变量定义前使用&lt;a class="td-heading-self-link" href="#python-%e6%8f%90%e7%a4%ba%e5%8f%98%e9%87%8f%e5%ae%9a%e4%b9%89%e5%89%8d%e4%bd%bf%e7%94%a8" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;解决：global&lt;/p&gt;</description></item></channel></rss>

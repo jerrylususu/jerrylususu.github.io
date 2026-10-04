@@ -1,21 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>random on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/random/</link>
-    <description>Recent content in random on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/random/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title>
-      <link>https://nekonull.me/share/random-20230910/</link>
-      <pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/random-20230910/</guid>
-      <description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
-&lt;h2 id=&#34;本周遇到的-bug&#34;&gt;本周遇到的 Bug&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Random on Nekonull's Garden</title><link>https://nekonull.me/tags/random/</link><description>Recent content in Random on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Sun, 10 Sep 2023 16:05:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/random/index.xml" rel="self" type="application/rss+xml"/><item><title>随机分享（230910）：Typescript 中 Any 关闭类型检查 &amp; Linux 中的内存占用</title><link>https://nekonull.me/share/random-20230910/</link><pubDate>Sun, 10 Sep 2023 16:05:00 +0800</pubDate><guid>https://nekonull.me/share/random-20230910/</guid><description>&lt;p&gt;（没有干货，全是湿货&amp;hellip;不过至少写一些总比完全没有写强？）&lt;/p&gt;
+&lt;h2 id="本周遇到的-bug"&gt;本周遇到的 Bug&lt;a class="td-heading-self-link" href="#%e6%9c%ac%e5%91%a8%e9%81%87%e5%88%b0%e7%9a%84-bug" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;遇到了两个前端相关的 bug，排查了很久，不过最后发现都是人的问题而非代码的问题&amp;hellip;&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;CI 坏了还能跑？
@@ -33,51 +18,62 @@
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;typescript-中-any-关闭了类型检查&#34;&gt;Typescript 中 Any 关闭了类型检查&lt;/h2&gt;
+&lt;h2 id="typescript-中-any-关闭了类型检查"&gt;Typescript 中 Any 关闭了类型检查&lt;a class="td-heading-self-link" href="#typescript-%e4%b8%ad-any-%e5%85%b3%e9%97%ad%e4%ba%86%e7%b1%bb%e5%9e%8b%e6%a3%80%e6%9f%a5" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;某后端项目，因为历史原因代码中有较多 any。最近发现代码中某处接受用户输入的位置有问题，默认值的类型不正确但依然通过了编译。示例如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 不要这样用！
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-&lt;span style=&#34;color:#75715e&#34;&gt;//    ^string[]                           ^any     ^string
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意到这里 nullish coalescing （&lt;code&gt;??&lt;/code&gt;）的默认值是个 &lt;code&gt;string&lt;/code&gt; 而非 string[]。这段代码感觉上上不应该通过编译，但是因为 &lt;code&gt;(req.body as any)&lt;/code&gt; 的 &lt;code&gt;any&lt;/code&gt; 类型禁用了类型检查，因此编译时不会再检查缺省值，实际上可以编译通过。而如果不巧后续有函数需要使用 &lt;code&gt;string[]&lt;/code&gt; 才有的方法，而 &lt;code&gt;req.body&lt;/code&gt; 中的 &lt;code&gt;names&lt;/code&gt; 的确为 undefined，就会导致问题。&lt;/p&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-0b2b7ae0-fence-0" data-td-code data-td-code-auto-id
+data-td-language="typescript" data-td-line-count="3"&gt;
+&lt;div class="td-code__viewport" id="td-code-0b2b7ae0-fence-0-viewport" data-td-code-viewport&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-typescript" data-lang="typescript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 不要这样用！
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;names&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;req&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="kt"&gt;any&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;names&lt;/span&gt; &lt;span class="o"&gt;??&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// ^string[] ^any ^string
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;注意到这里 nullish coalescing （&lt;code&gt;??&lt;/code&gt;）的默认值是个 &lt;code&gt;string&lt;/code&gt; 而非 string[]。这段代码感觉上上不应该通过编译，但是因为 &lt;code&gt;(req.body as any)&lt;/code&gt; 的 &lt;code&gt;any&lt;/code&gt; 类型禁用了类型检查，因此编译时不会再检查缺省值，实际上可以编译通过。而如果不巧后续有函数需要使用 &lt;code&gt;string[]&lt;/code&gt; 才有的方法，而 &lt;code&gt;req.body&lt;/code&gt; 中的 &lt;code&gt;names&lt;/code&gt; 的确为 undefined，就会导致问题。&lt;/p&gt;
 &lt;p&gt;要解决这个问题，需要提供了更强的类型提示，让 Typescript 的检查可以正常执行。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-typescript&#34; data-lang=&#34;typescript&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;// 直接标记可能的类型：string[] 或 undefined
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-
-&lt;span style=&#34;color:#75715e&#34;&gt;// 通过一个自定义 type 来实现
-&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;type&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;T&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;T&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;undefined&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;|&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;null&lt;/span&gt;;
-&lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt;: &lt;span style=&#34;color:#66d9ef&#34;&gt;string&lt;/span&gt;[] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#a6e22e&#34;&gt;req&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;body&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;any&lt;/span&gt;).&lt;span style=&#34;color:#a6e22e&#34;&gt;names&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Nullable&lt;/span&gt;&amp;lt;&lt;span style=&#34;color:#f92672&#34;&gt;string&lt;/span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;[]&lt;/span&gt;&amp;gt; &lt;span style=&#34;color:#f92672&#34;&gt;??&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;a href=&#34;https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC+WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB+ZzADk7uk3bgIIAWM+EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA&#34;&gt;Typescript Playground&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;linux-中的内存占用&#34;&gt;Linux 中的内存占用&lt;/h2&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-0b2b7ae0-fence-1" data-td-code data-td-code-auto-id
+data-td-language="typescript" data-td-line-count="6"&gt;
+&lt;div class="td-code__viewport" id="td-code-0b2b7ae0-fence-1-viewport" data-td-code-viewport&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-typescript" data-lang="typescript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 直接标记可能的类型：string[] 或 undefined
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;names&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;req&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="kt"&gt;any&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;names&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="kc"&gt;undefined&lt;/span&gt; &lt;span class="o"&gt;??&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// 通过一个自定义 type 来实现
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;type&lt;/span&gt; &lt;span class="nx"&gt;Nullable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;T&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;T&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="kc"&gt;undefined&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="kc"&gt;null&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;names&lt;/span&gt;: &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;[]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;req&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;body&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="kt"&gt;any&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;names&lt;/span&gt; &lt;span class="kr"&gt;as&lt;/span&gt; &lt;span class="nx"&gt;Nullable&lt;/span&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;string&lt;/span&gt;&lt;span class="err"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;??&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;a href="https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwI4wLwwN4CgYwEYgAmAngFyYC&amp;#43;WFA3FlgPQMxggygC2ADgJYA2CGAjhwQcRs1CRYYAIYcEEctDg8wAcwDaAXTQwAFIiQA6AiRiyIFsMQCUxuQqsB&amp;#43;ZzADk7uk3bgIIAWM&amp;#43;EHV9R0VjACsQNX13ABp3W1s6CQtCQhgOMUFCBAAzNQQoHnAsKWgWeUVlKFUNHT1DZFMiYgsrWRt7cM6rFTUtXQAfGABXMDzCsARM1w8veh8xGEixyuBEWShBLpAoAAthGChiLgQsU-OYADkxvj5ZPAEAHgAVAD49N5hRiamiplRmB7nw6BUZNUIAAmWr1IZNIytcyWax2BxQjq3UFPV4DBraL7zTx0IA"&gt;Typescript Playground&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="linux-中的内存占用"&gt;Linux 中的内存占用&lt;a class="td-heading-self-link" href="#linux-%e4%b8%ad%e7%9a%84%e5%86%85%e5%ad%98%e5%8d%a0%e7%94%a8" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;Linux 进程内存不同计算方法的区分：VSS, RSS, PSS, USS&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;
-  ┌────────┐
-  │        │
-  │        │        ┌────────┐
-  │ Unused │        │        │
-  │  (A)   │        │ ...    │◄───┐
-  │        │        │        │    │Other
-  │        │        ├────────┤    │Program&#39;s
-  │        │        │        │    │Share
-  ├────────┤        │ ...    │◄───┘ (D)
-  │        │        │        │
-  │ Used   │        ├────────┤
-  │  (B)   │        │        │
-  │        │        │My Share│
-  │        │        │   (C)  │
-  └────────┘        └────────┘
-
-   Exclusive         Shared
-
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以把进程的内存占用视作上图。首先程序有自己独占的虚拟内存空间（Exclusive），其中可以分为已经使用了的（B）和属于自己但还未使用的（A）。其次进程还会使用一些共享内存（Shared），例如 so 动态运行库和 mmap 映射。考虑到这些共享内存多个进程都会用到，将其完全计算在某个特定进程名下听起来就不太合理，因此这里可以考虑类似于现实中的&amp;quot;公摊面积&amp;quot;，根据实际使用的进程数把这部分内存占用平摊成 N 份，当前进程只计算其中一份（C），剩余的计算在其他进程下（D）。&lt;/p&gt;
+&lt;div class="td-code td-code--untitled" id="td-code-0b2b7ae0-fence-2" data-td-code data-td-code-auto-id
+data-td-language="" data-td-line-count="18"&gt;
+&lt;div class="td-code__viewport" id="td-code-0b2b7ae0-fence-2-viewport" data-td-code-viewport&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;
+┌────────┐
+│ │
+│ │ ┌────────┐
+│ Unused │ │ │
+│ (A) │ │ ... │◄───┐
+│ │ │ │ │Other
+│ │ ├────────┤ │Program&amp;#39;s
+│ │ │ │ │Share
+├────────┤ │ ... │◄───┘ (D)
+│ │ │ │
+│ Used │ ├────────┤
+│ (B) │ │ │
+│ │ │My Share│
+│ │ │ (C) │
+└────────┘ └────────┘
+Exclusive Shared&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;可以把进程的内存占用视作上图。首先程序有自己独占的虚拟内存空间（Exclusive），其中可以分为已经使用了的（B）和属于自己但还未使用的（A）。其次进程还会使用一些共享内存（Shared），例如 so 动态运行库和 mmap 映射。考虑到这些共享内存多个进程都会用到，将其完全计算在某个特定进程名下听起来就不太合理，因此这里可以考虑类似于现实中的&amp;quot;公摊面积&amp;quot;，根据实际使用的进程数把这部分内存占用平摊成 N 份，当前进程只计算其中一份（C），剩余的计算在其他进程下（D）。&lt;/p&gt;
 &lt;p&gt;由此我们可以得到四种不同的计算方法，见下表&lt;/p&gt;
+&lt;div class="td-table-scroll td-table-scroll--static"&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;指标&lt;/th&gt;
-&lt;th&gt;含义&lt;/th&gt;
-&lt;th&gt;组成&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;th&gt;图例&lt;/th&gt;
+&lt;th scope="col"&gt;指标&lt;/th&gt;
+&lt;th scope="col"&gt;含义&lt;/th&gt;
+&lt;th scope="col"&gt;组成&lt;/th&gt;
+&lt;th scope="col"&gt;说明&lt;/th&gt;
+&lt;th scope="col"&gt;图例&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
@@ -111,11 +107,8 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;Via：&lt;a href=&#34;https://www.bilibili.com/video/BV11z4y1L7Xx&#34;&gt;B站视频：用什么指标来衡量我的程序占用了多少内存&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;其他&#34;&gt;其他&lt;/h2&gt;
-&lt;p&gt;最后顺带一提，本博客目前把 RSS 改为了全文输出模式（参考&lt;a href=&#34;https://www.godo.dev/tutorials/hugo-full-text-rss/&#34;&gt;这篇文章&lt;/a&gt;，&lt;a href=&#34;https://github.com/jerrylususu/jerrylususu.github.io/commit/89e1c23d0b350baac0378ad735127cf17fb66c4b&#34;&gt;实际 commit&lt;/a&gt;），希望可以帮到在 RSS 阅读器中阅读本博客的读者。&lt;/p&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;/div&gt;
+&lt;p&gt;Via：&lt;a href="https://www.bilibili.com/video/BV11z4y1L7Xx"&gt;B站视频：用什么指标来衡量我的程序占用了多少内存&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="其他"&gt;其他&lt;a class="td-heading-self-link" href="#%e5%85%b6%e4%bb%96" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;p&gt;最后顺带一提，本博客目前把 RSS 改为了全文输出模式（参考&lt;a href="https://www.godo.dev/tutorials/hugo-full-text-rss/"&gt;这篇文章&lt;/a&gt;，&lt;a href="https://github.com/jerrylususu/jerrylususu.github.io/commit/89e1c23d0b350baac0378ad735127cf17fb66c4b"&gt;实际 commit&lt;/a&gt;），希望可以帮到在 RSS 阅读器中阅读本博客的读者。&lt;/p&gt;</description></item></channel></rss>

@@ -1,98 +1,79 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>备忘 on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</link>
-    <description>Recent content in 备忘 on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Sun, 21 Jul 2024 21:53:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%A4%87%E5%BF%98/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>2024 年了，我最近在用什么工具</title>
-      <link>https://nekonull.me/posts/tools-i-use-2024-mid/</link>
-      <pubDate>Sun, 21 Jul 2024 21:53:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/tools-i-use-2024-mid/</guid>
-      <description>&lt;h2 id=&#34;2024-年了我最近在用什么工具&#34;&gt;2024 年了，我最近在用什么工具&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>备忘 on Nekonull's Garden</title><link>https://nekonull.me/tags/%E5%A4%87%E5%BF%98/</link><description>Recent content in 备忘 on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Sun, 21 Jul 2024 21:53:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/%E5%A4%87%E5%BF%98/index.xml" rel="self" type="application/rss+xml"/><item><title>2024 年了，我最近在用什么工具</title><link>https://nekonull.me/posts/tools-i-use-2024-mid/</link><pubDate>Sun, 21 Jul 2024 21:53:00 +0800</pubDate><guid>https://nekonull.me/posts/tools-i-use-2024-mid/</guid><description>&lt;h2 id="2024-年了我最近在用什么工具"&gt;2024 年了，我最近在用什么工具&lt;a class="td-heading-self-link" href="#2024-%e5%b9%b4%e4%ba%86%e6%88%91%e6%9c%80%e8%bf%91%e5%9c%a8%e7%94%a8%e4%bb%80%e4%b9%88%e5%b7%a5%e5%85%b7" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;去年年中，公司的主力开发设备从 Windows 换成了 Mac，之前在 Windows 上用的各类工具需要重新在 Mac 上找对应的替代品。一年磨合下来现在已经差不多稳定了，特此记录（其实之前就应该记录的，但是太懒）。如果能帮助到各位读者就更好了。当然也欢迎评论推荐更多你认为好用的工具。&lt;/p&gt;
-&lt;h2 id=&#34;独立工具&#34;&gt;独立工具&lt;/h2&gt;
+&lt;h2 id="独立工具"&gt;独立工具&lt;a class="td-heading-self-link" href="#%e7%8b%ac%e7%ab%8b%e5%b7%a5%e5%85%b7" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;（此处的独立指的是软件本身可以独立运行，与之相对的是插件）&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://code.visualstudio.com/&#34;&gt;VS Code&lt;/a&gt;：宇宙 IDE（装了足够多插件之后）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://kate-editor.org/&#34;&gt;Kate&lt;/a&gt;：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://cudatext.github.io/&#34;&gt;CudaText&lt;/a&gt;：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://code.visualstudio.com/"&gt;VS Code&lt;/a&gt;：宇宙 IDE（装了足够多插件之后）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://kate-editor.org/"&gt;Kate&lt;/a&gt;：KDE 家的文本编辑器，功能齐全但是又没有 VS Code 那么重，临时处理些文本比较方便；之前不支持 M 系列处理器，2024 年初更新后总算支持了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://cudatext.github.io/"&gt;CudaText&lt;/a&gt;：用来当作思维 buffer，优点是自带置顶（其他软件都很难做到）和自动保存，目前已经开了 100+ Untitled Tab 了但是依然很稳定&lt;/li&gt;
 &lt;li&gt;Apple Notes：用来记录手头临时的待办事项，避免消息太多跟丢&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://obsidian.md/&#34;&gt;Obsidian&lt;/a&gt;：用来做&lt;a href=&#34;https://news.ycombinator.com/item?id=40950584&#34;&gt;工作笔记&lt;/a&gt;，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.u.tools/&#34;&gt;Utools&lt;/a&gt;：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.raycast.com/&#34;&gt;RayCast&lt;/a&gt;：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.snipaste.com/&#34;&gt;Snipaste&lt;/a&gt;：截图 &amp;amp; 贴图是我工作流的重要部分，已经完全离不开了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://karabiner-elements.pqrs.org/&#34;&gt;Karabiner-Elements&lt;/a&gt;：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&amp;gt; 左 Cmd）；现在键位熟悉之后用的不多了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/dwarvesf/hidden&#34;&gt;Hidden Bar&lt;/a&gt;：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/p0deje/Maccy&#34;&gt;Maccy&lt;/a&gt;：剪贴板历史（救了我好几次）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/exelban/stats&#34;&gt;Stats&lt;/a&gt;：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ther0n/UnnaturalScrollWheels&#34;&gt;UnnaturalScrollWheels&lt;/a&gt;：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://draw.io/&#34;&gt;Draw.io&lt;/a&gt;：画各种图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great&#34;&gt;EasyFind&lt;/a&gt;：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/michaelvillar/timer-app&#34;&gt;Timer&lt;/a&gt;：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://ezip.awehunt.com/&#34;&gt;MacZip&lt;/a&gt;：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/ArchGPT/insomnium&#34;&gt;Insomnium&lt;/a&gt;：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://activitywatch.net/&#34;&gt;ActivityWatch&lt;/a&gt;：记录下今天上了多少班&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chatboxai.app/&#34;&gt;Chatbox&lt;/a&gt;：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://obsidian.md/"&gt;Obsidian&lt;/a&gt;：用来做&lt;a href="https://news.ycombinator.com/item?id=40950584"&gt;工作笔记&lt;/a&gt;，其实就是对每个任务建一个文件，然后把所有相关信息全部丢进去；偶尔也用用 canvas 功能&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.u.tools/"&gt;Utools&lt;/a&gt;：小工具聚合器，例如 JSON 格式化、二维码生成、base64编解码、timestamp 生成和解析、变量名大小写转换；绑定到 Opt+Space&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.raycast.com/"&gt;RayCast&lt;/a&gt;：主要用来窗口切换和左右分屏，其他的功能用的不多；绑定到 Alt+Space&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.snipaste.com/"&gt;Snipaste&lt;/a&gt;：截图 &amp;amp; 贴图是我工作流的重要部分，已经完全离不开了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://karabiner-elements.pqrs.org/"&gt;Karabiner-Elements&lt;/a&gt;：之前从 Windows 切换过来的时候用于改键（左 Ctrl -&amp;gt; 左 Cmd）；现在键位熟悉之后用的不多了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dwarvesf/hidden"&gt;Hidden Bar&lt;/a&gt;：隐藏托盘区域的图标（这居然不是 OS 自带的功能？Windows 用户理解不能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/p0deje/Maccy"&gt;Maccy&lt;/a&gt;：剪贴板历史（救了我好几次）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/exelban/stats"&gt;Stats&lt;/a&gt;：用来显示内存占用（可能和我的用法相关，虽然已经是 32G 内存的配置了，但是使用超过一周依然会有内存泄漏，内存压力红了之后只能重启）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ther0n/UnnaturalScrollWheels"&gt;UnnaturalScrollWheels&lt;/a&gt;：修复外接鼠标滚动方向相反的问题（我觉得这也应该是个 OS 级别功能）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://draw.io/"&gt;Draw.io&lt;/a&gt;：画各种图&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.devontechnologies.com/apps/freeware#:~:text=Spotlight%20for%20Experts-,EasyFind,-Spotlight%20is%20great"&gt;EasyFind&lt;/a&gt;：Windows 文件搜索工具 Everything 的 MacOS 下位替代，但是总比没有强&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/michaelvillar/timer-app"&gt;Timer&lt;/a&gt;：倒计时小工具，拟物风很棒；用来提醒我该在发布单上点击下一步了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://ezip.awehunt.com/"&gt;MacZip&lt;/a&gt;：用了这么久 Mac 还是不能适应双击压缩文件自动解压的逻辑，还是能先预览下压缩包内容比较好&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ArchGPT/insomnium"&gt;Insomnium&lt;/a&gt;：类 Postman 工具，但不用登录在线账户，local-first；虽然已经停止开发，但是功能已经足够齐全了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://activitywatch.net/"&gt;ActivityWatch&lt;/a&gt;：记录下今天上了多少班&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chatboxai.app/"&gt;Chatbox&lt;/a&gt;：最好用的 OpenAI API 客户端，支持刷新上下文、显示 token 用量、消息修改、消息重放（btw 自认为目前用下来综合表现最强的 LLM 是 deepseek-coder，便宜大碗也足够智能）&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;obsidian-插件&#34;&gt;Obsidian 插件&lt;/h2&gt;
+&lt;h2 id="obsidian-插件"&gt;Obsidian 插件&lt;a class="td-heading-self-link" href="#obsidian-%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/hub/02+-+Community+Expansions/02.05+All+Community+Expansions/Plugins/obsidian-electron-window-tweaker&#34;&gt;Electron Window Tweaker&lt;/a&gt;：让 Obsidian 窗口也能够置顶&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/Vinzent03/obsidian-git&#34;&gt;Git&lt;/a&gt;：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://publish.obsidian.md/tasks/Introduction&#34;&gt;Tasks&lt;/a&gt;：将所有文件里的任务收集起来，创建统一的任务视图&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/hdykokd/obsidian-vertical-tabs-view&#34;&gt;Vertical Tabs View&lt;/a&gt;：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://publish.obsidian.md/hub/02&amp;#43;-&amp;#43;Community&amp;#43;Expansions/02.05&amp;#43;All&amp;#43;Community&amp;#43;Expansions/Plugins/obsidian-electron-window-tweaker"&gt;Electron Window Tweaker&lt;/a&gt;：让 Obsidian 窗口也能够置顶&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Vinzent03/obsidian-git"&gt;Git&lt;/a&gt;：自动把变更提交到 Git 库，避免数据丢失（我设置的是 10 分钟一次）；另外偶尔看看 blame 还有成就感（原来这个文件已经被我改了这么多次了）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://publish.obsidian.md/tasks/Introduction"&gt;Tasks&lt;/a&gt;：将所有文件里的任务收集起来，创建统一的任务视图&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/hdykokd/obsidian-vertical-tabs-view"&gt;Vertical Tabs View&lt;/a&gt;：标签页太多的时候，可以用纵向列表列出所有标签页（也和我 Edge 的使用习惯一致）&lt;/li&gt;
 &lt;li&gt;[New Tab +]：避免同一个文件被打开在多个 tab 中&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/tadashi-aikawa/obsidian-another-quick-switcher&#34;&gt;Another Quick Switcher&lt;/a&gt;：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/tadashi-aikawa/obsidian-another-quick-switcher"&gt;Another Quick Switcher&lt;/a&gt;：解决 Quick Switch 时，默认搜索结果是按照文件名排序而不是最近修改时间排序的问题&lt;/li&gt;
 &lt;li&gt;Unique Note Creator：官方插件，可以直接创建一个带有时间戳的笔记并应用模板；用来在出现新工作时创建对应的工作笔记&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;（顺带一提，为了和 VS Code 使用习惯一致，Quick Swtich 绑定到 Cmd+R，command palette 绑定到 Cmd+Shift+P）&lt;/p&gt;
-&lt;h2 id=&#34;浏览器插件&#34;&gt;浏览器插件&lt;/h2&gt;
+&lt;h2 id="浏览器插件"&gt;浏览器插件&lt;a class="td-heading-self-link" href="#%e6%b5%8f%e8%a7%88%e5%99%a8%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;（目前用的是 Edge，纵向标签页没有其他浏览器支持）&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://immersivetranslate.com/?force=1&#34;&gt;沉浸式翻译&lt;/a&gt;：外文长文必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://modheader.com/&#34;&gt;ModHeader&lt;/a&gt;：调试用，主要拿来改 request header&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.inssman.com/&#34;&gt;Inssman&lt;/a&gt;：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN&#34;&gt;Earth View From Google Earth&lt;/a&gt;：在新标签页展示航拍景象，换换心情&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla&#34;&gt;Page Notes&lt;/a&gt;：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg&#34;&gt;Picture-in-Picture Extension (by Google)&lt;/a&gt;：画中画插件，&lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag 的视频都能用，摸鱼必备&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko&#34;&gt;Session Buddy&lt;/a&gt;：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf&#34;&gt;VerticalTabs&lt;/a&gt;：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN&#34;&gt;TamperMonkey&lt;/a&gt;：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://immersivetranslate.com/?force=1"&gt;沉浸式翻译&lt;/a&gt;：外文长文必备&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://modheader.com/"&gt;ModHeader&lt;/a&gt;：调试用，主要拿来改 request header&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.inssman.com/"&gt;Inssman&lt;/a&gt;：调试用，主要拿来该 request body（其他的相关插件，例如 Requestly 似乎都要求登录）&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chrome.google.com/webstore/detail/earth-view-from-google-ea/bhloflhklmhfpedakmangadcdofhnnoh?hl=zh-CN"&gt;Earth View From Google Earth&lt;/a&gt;：在新标签页展示航拍景象，换换心情&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/page-notes/omjdheidbhoghpfdnndkgoelfiogjfla"&gt;Page Notes&lt;/a&gt;：可以保存和某个域名/ URL 相关的笔记；我自己的用法主要是在日志查询页上放一些常见的查询条件，省的来回翻找&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/picture-in-picture-extens/hkgfoiooedgoejojocmhlaklaeopbecg"&gt;Picture-in-Picture Extension (by Google)&lt;/a&gt;：画中画插件，&lt;code&gt;&amp;lt;video&amp;gt;&lt;/code&gt; tag 的视频都能用，摸鱼必备&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko"&gt;Session Buddy&lt;/a&gt;：定时备份打开的标签页，对我这种日常 100+ tab 的用户很友好&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/verticaltabs/imimolldggofidcmfdkcffpjcgaggoaf"&gt;VerticalTabs&lt;/a&gt;：在 tab 之前切换（但后来发现 Cmd+Shift+A 更好用）；现在只是用来显示打开 tab 的个数，超过 150 了就得关一批&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://chromewebstore.google.com/detail/%E7%AF%A1%E6%94%B9%E7%8C%B4/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=zh-CN"&gt;TamperMonkey&lt;/a&gt;：针对内部不好用的网站，写了很多 JS 小脚本来改善用户体验&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;还有些小工具网站：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://jupyter.org/try-jupyter/lab/&#34;&gt;JupyterLite&lt;/a&gt;：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://nekonull.me/day-tracker/&#34;&gt;Day Tracker&lt;/a&gt;：之前自己写的小工具，看今天还要上多久班&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://jupyter.org/try-jupyter/lab/"&gt;JupyterLite&lt;/a&gt;：一个基于 WebAssembly 在浏览器内运行 Python 和 Jupyter 的环境，临时写点东西或者调试都很方便&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://nekonull.me/day-tracker/"&gt;Day Tracker&lt;/a&gt;：之前自己写的小工具，看今天还要上多久班&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;vs-code-插件&#34;&gt;VS Code 插件&lt;/h2&gt;
+&lt;h2 id="vs-code-插件"&gt;VS Code 插件&lt;a class="td-heading-self-link" href="#vs-code-%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks&#34;&gt;Bookmarks&lt;/a&gt;：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens&#34;&gt;Error Lens&lt;/a&gt;：行内显示报错信息，不需要手动在波浪线上 hover 也能看到&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight&#34;&gt;Todo Highlight&lt;/a&gt;：将所有 TODO 高亮出来&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens&#34;&gt;GitLens&lt;/a&gt;：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer&#34;&gt;Live Server&lt;/a&gt;：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph&#34;&gt;Git Graph&lt;/a&gt;：GitLens 的分支图是收费功能，可以用这个插件替代&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow&#34;&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar&#34;&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter&#34;&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>我最近在用什么软件？</title>
-      <link>https://nekonull.me/posts/what-software-i-am-using/</link>
-      <pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/posts/what-software-i-am-using/</guid>
-      <description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
-&lt;h2 id=&#34;featured-&#34;&gt;Featured ✨&lt;/h2&gt;
-&lt;h3 id=&#34;stickies&#34;&gt;Stickies&lt;/h3&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks"&gt;Bookmarks&lt;/a&gt;：可以给特定的代码行加书签；大代码库或者是逻辑拆的太碎的时候需要&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens"&gt;Error Lens&lt;/a&gt;：行内显示报错信息，不需要手动在波浪线上 hover 也能看到&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight"&gt;Todo Highlight&lt;/a&gt;：将所有 TODO 高亮出来&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens"&gt;GitLens&lt;/a&gt;：和 VS Code 自己的 Git 能力配合使用，就再也用不上其他的 Git GUI 了；行内 Git Blame （浅色文字显示这一行上次的修改来源）和 File History （和该文件相关的所有 commit）很有用&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"&gt;Live Server&lt;/a&gt;：改 HTML 的时候可以临时起个服务器，文件修改后自动刷新&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph"&gt;Git Graph&lt;/a&gt;：GitLens 的分支图是收费功能，可以用这个插件替代&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow"&gt;indent-rainbow&lt;/a&gt;：缩进可视化&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar"&gt;Stats Bar&lt;/a&gt;：显示机器状态（CPU/内存/网络）；主要用来看云开发机的内存是否又爆炸了&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter"&gt;Template String Converter&lt;/a&gt;：写 TypeScript 必备，输入&lt;code&gt;$&lt;/code&gt;且时自动把当前字符串变量的 &lt;code&gt;&amp;quot;&lt;/code&gt; （一般字符串）换成 &lt;code&gt;`&lt;/code&gt;（模板字符串）&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>我最近在用什么软件？</title><link>https://nekonull.me/posts/what-software-i-am-using/</link><pubDate>Mon, 12 Aug 2019 23:11:00 +0800</pubDate><guid>https://nekonull.me/posts/what-software-i-am-using/</guid><description>&lt;p&gt;看看时间，从换电脑到现在已经3个月了，装的软件也在不知不觉间越来越多。此文用于推荐一些我觉得不错的软件，顺带也是作为备忘。有的软件没有被我列出，可能并不是因为我觉得它们不够优秀，而是我认为他们已经很知名了，不需要我再单独发文推广。&lt;/p&gt;
+&lt;h2 id="featured-"&gt;Featured ✨&lt;a class="td-heading-self-link" href="#featured-" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+&lt;h3 id="stickies"&gt;Stickies&lt;a class="td-heading-self-link" href="#stickies" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Sticky Notes++。初见只以为和其他的简单便利贴软件一样，但是用起来却发现越用越离不开了：Stack, Solo, 富文本支持, 自带 to do 转换&amp;hellip; 当然，最重要的是数据安全，以及启动速度比 Windows 自带的便笺快太多了。自从用了 Stickies，我打开的 Notepad 窗口大幅减少了。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;为了解决移除外接屏幕后便利贴无法访问的问题，甚至自带 Rescue Off-screen 功能。&lt;/p&gt;
@@ -100,18 +81,23 @@
 &lt;blockquote&gt;
 &lt;p&gt;注：此前苦于 Windows 下没有合适的速记类应用，我用 Notepad 和自己写的 AHK 插件作为解决方案。按下 Win+N 即可召唤出新的 Notepad 窗口，再按下 Alt+N 即可置顶，从而实现简单的速记效果。当然，长期使用后会导致 Notepad 窗口数暴增，且不便于保存和整理，在系统崩溃时也有数据安全之虞。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3 id=&#34;snipaste&#34;&gt;Snipaste&lt;/h3&gt;
+&lt;h3 id="snipaste"&gt;Snipaste&lt;a class="td-heading-self-link" href="#snipaste" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Snip 截图，Paste 贴图。描述看起来简单，用起来却格外使用，能够在狭小的电脑屏幕上模拟出在桌上工作时随意放置各种参考资料的快感。&lt;/p&gt;
-&lt;h3 id=&#34;utools&#34;&gt;Utools&lt;/h3&gt;
+&lt;h3 id="utools"&gt;Utools&lt;a class="td-heading-self-link" href="#utools" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;Windows 版本的 Spotlight，一经发现就占据了我的 &lt;code&gt;Alt+Space&lt;/code&gt;。在发现它之前，我用 Windows 自带的搜索，但是总是困扰于索引速度和作为干扰的网页搜索。有了 utools 之后总算是情景了。顺带还有插件支持。&lt;/p&gt;
-&lt;h3 id=&#34;mobaxterm&#34;&gt;MobaXTerm&lt;/h3&gt;
+&lt;h3 id="mobaxterm"&gt;MobaXTerm&lt;a class="td-heading-self-link" href="#mobaxterm" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;作为 term 类应用，自然少不了连接远程服务器的功能，但 MobaXTerm 能做的却还有很多：文件传输、服务器性能监控、一键分屏、X11 映射、自带关键词高亮&amp;hellip; 最重要的，是 Home 用途免费！&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;v12 在我的环境下表现不佳，偶有崩溃。v11 似乎更稳定一些。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h3 id=&#34;gridmove&#34;&gt;GridMove&lt;/h3&gt;
+&lt;h3 id="gridmove"&gt;GridMove&lt;a class="td-heading-self-link" href="#gridmove" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h3&gt;
 &lt;p&gt;简单的分屏应用，但是支持复杂的自定义布局。尤其适合那种一边看书/教程/论文，一边做笔记的场合。当然，你也可以随意修改配置文件，让它融入你的工作流。支持多屏。&lt;/p&gt;
-&lt;h2 id=&#34;listed-&#34;&gt;Listed 📜&lt;/h2&gt;
+&lt;h2 id="listed-"&gt;Listed 📜&lt;a class="td-heading-self-link" href="#listed-" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Hourglass: 有自然语言支持的倒计时器。用来提醒我去取洗/烘干了的衣服。&lt;/li&gt;
 &lt;li&gt;Listen1: 一个软件听全网歌曲，不用担心版权孤岛。（网易云音乐也有类似插件，可用网易云音乐作为前端）&lt;/li&gt;
@@ -128,21 +114,13 @@
 &lt;li&gt;PanDownload: 百度网盘下载加速。&lt;/li&gt;
 &lt;li&gt;Video Speed Controller: (浏览器插件) 快速跳过视频废话，顺带可以练习英语听力？&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;why&#34;&gt;Why?&lt;/h2&gt;
+&lt;h2 id="why"&gt;Why?&lt;a class="td-heading-self-link" href="#why" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;p&gt;常常有人问我：「装这么多软件用得着吗？ 」、「为什么你的托盘区域有 20+ 图标？」&lt;/p&gt;
-&lt;p&gt;我的回答是：「因为我希望，当我在处理任务时，身旁总能有&lt;strong&gt;趁手&lt;/strong&gt;的工具。」&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>备忘：重装系统后需要重新安装的程序</title>
-      <link>https://nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</link>
-      <pubDate>Sun, 06 Aug 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</guid>
-      <description>&lt;p&gt;RT&lt;/p&gt;
+&lt;p&gt;我的回答是：「因为我希望，当我在处理任务时，身旁总能有&lt;strong&gt;趁手&lt;/strong&gt;的工具。」&lt;/p&gt;</description></item><item><title>备忘：重装系统后需要重新安装的程序</title><link>https://nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</link><pubDate>Sun, 06 Aug 2017 00:00:00 +0800</pubDate><guid>https://nekonull.me/archive/%E5%A4%87%E5%BF%98%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F%E5%90%8E%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E7%9A%84%E7%A8%8B%E5%BA%8F/</guid><description>&lt;p&gt;RT&lt;/p&gt;
 &lt;!-- more --&gt;
-&lt;h2 id=&#34;windows&#34;&gt;Windows&lt;/h2&gt;
+&lt;h2 id="windows"&gt;Windows&lt;a class="td-heading-self-link" href="#windows" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;浏览器：Chrome（大家都懂的，快就一个字）&lt;/li&gt;
 &lt;li&gt;压缩软件：Bandizip（没广告，界面简洁）&lt;/li&gt;
@@ -159,7 +137,8 @@
 &lt;li&gt;看图：XnView（开源免费）&lt;/li&gt;
 &lt;li&gt;Markdown：Typora（用过的都懂）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;chrome-插件&#34;&gt;Chrome 插件&lt;/h2&gt;
+&lt;h2 id="chrome-插件"&gt;Chrome 插件&lt;a class="td-heading-self-link" href="#chrome-%e6%8f%92%e4%bb%b6" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;CaretTab（漂亮的新标签页）&lt;/li&gt;
 &lt;li&gt;Chrono下载管理器（替换自带下载）&lt;/li&gt;
@@ -174,7 +153,8 @@
 &lt;li&gt;优酷HTML5播放器 （广告ByeBye）&lt;/li&gt;
 &lt;li&gt;哔哩哔哩助手（顾名思义）&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;windows-其他&#34;&gt;Windows 其他&lt;/h2&gt;
+&lt;h2 id="windows-其他"&gt;Windows 其他&lt;a class="td-heading-self-link" href="#windows-%e5%85%b6%e4%bb%96" aria-label="标题锚点"&gt;&lt;/a&gt;
+&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;SS（嘿嘿嘿）&lt;/li&gt;
 &lt;li&gt;Git&lt;/li&gt;
@@ -187,9 +167,4 @@
 &lt;li&gt;Cmder（命令提示符增强）&lt;/li&gt;
 &lt;li&gt;WinRM Manager（管理Win + R 运行）&lt;/li&gt;
 &lt;li&gt;UsbEAm Hosts Editior（治 Steam 和 Windows 应用商店 连不上去）&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;/ol&gt;</description></item></channel></rss>

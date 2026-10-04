@@ -1,20 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>VM on Nekonull&#39;s Garden</title>
-    <link>https://nekonull.me/tags/vm/</link>
-    <description>Recent content in VM on Nekonull&#39;s Garden</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <copyright>CC-BY-SA-4.0</copyright>
-    <lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/vm/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>WSL2, Docker, Virtualbox</title>
-      <link>https://nekonull.me/share/wsl2-docker-virtualbox/</link>
-      <pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate>
-      
-      <guid>https://nekonull.me/share/wsl2-docker-virtualbox/</guid>
-      <description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VM on Nekonull's Garden</title><link>https://nekonull.me/tags/vm/</link><description>Recent content in VM on Nekonull's Garden</description><generator>Hugo</generator><language>zh-CN</language><copyright>CC-BY-SA-4.0</copyright><lastBuildDate>Thu, 29 Oct 2020 02:25:00 +0800</lastBuildDate><atom:link href="https://nekonull.me/tags/vm/index.xml" rel="self" type="application/rss+xml"/><item><title>WSL2, Docker, Virtualbox</title><link>https://nekonull.me/share/wsl2-docker-virtualbox/</link><pubDate>Thu, 29 Oct 2020 02:25:00 +0800</pubDate><guid>https://nekonull.me/share/wsl2-docker-virtualbox/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;2021/4/9 更新:
 VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hyper-V 后端了。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -36,9 +20,4 @@ VMWare Player 16+ 无须配置，在检测到 Hyper-V 启动后自动调用 Hype
 &lt;ul&gt;
 &lt;li&gt;VirtualBox 因为换了虚拟化后端，已有的暂停的虚拟机，启动的时候会丢失数据，建议关机之后再迁移&lt;/li&gt;
 &lt;li&gt;VirtualBox 的 VM 性能可能会下降，64-bit Guest 尤其严重，32-bit Guest 还好（如果用 Hyper-V 作为后端，可以看到 VM 执行界面右下角是一个乌龟图标）&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-  </channel>
-</rss>
+&lt;/ul&gt;</description></item></channel></rss>
