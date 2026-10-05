@@ -1,0 +1,7 @@
+# Footer social icon row (layouts/_partials/shell/social-links.html).
+footer_rss: RSS feed
+footer_rss_desc: Everything except TIL
+footer_til_rss: TIL feed
+footer_til_rss_desc: TIL entries only
+footer_github: GitHub
+footer_github_desc: '@jerrylususu'

@@ -219,6 +219,10 @@ params:
   offline_search: true
   offline_search_index: content
 
+  # GitHub profile linked from the footer icon row
+  # (layouts/_partials/shell/social-links.html), matching the old manis
+  # `params.github`. The repo above is what OINK's "edit this page" uses.
+  github: https://github.com/jerrylususu/
   github_repo: https://github.com/jerrylususu/jerrylususu.github.io
   github_branch: master
 

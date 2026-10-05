@@ -134,3 +134,92 @@ img.nekonull-mark {
 [data-bs-theme="dark"] img.nekonull-mark {
   filter: none;
 }
+
+// ---------------------------------------------------------------------------
+// Footer feed/GitHub icons (layouts/_partials/shell/social-links.html)
+// ---------------------------------------------------------------------------
+// Restores the pre-OINK social row and parks it at the head of the right-hand
+// utility dock, with a hairline rule separating it from the language/theme
+// controls. Inline SVGs inherit the footline link color; sizing matches the
+// dock's 24px targets / 14px glyphs.
+.td-shell-footline__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  margin-inline-end: 0.4rem;
+  padding-inline-end: 0.4rem;
+  border-inline-end: 1px solid var(--bs-border-color);
+
+  a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+}
+
+// OINK ships no tooltip component (its icon buttons use the delayed native
+// `title`), so this is a small CSS-only one borrowed from the theme's
+// `.td-nav-hover-menu__pop` panel: same tokens, radius and shadow, opening
+// upward from the footer like the other dock popovers. Two lines: the feed or
+// profile name, then what it points at.
+.td-shell-footline__social-tip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline-end: 0;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 8px;
+  background: var(--bs-body-bg);
+  box-shadow: var(--td-brand-shadow-md);
+  color: var(--bs-body-color);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(2px);
+  transition:
+    opacity var(--td-motion-duration) var(--td-shell-ease-color),
+    transform var(--td-motion-duration) var(--td-shell-ease-color),
+    visibility var(--td-motion-duration);
+  pointer-events: none;
+
+  &-label {
+    font-weight: 600;
+  }
+
+  &-desc {
+    color: var(--bs-secondary-color);
+  }
+}
+
+.td-shell-footline__social a:hover .td-shell-footline__social-tip,
+.td-shell-footline__social a:focus-visible .td-shell-footline__social-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+// Below lg the footline stacks into centered rows; the separator would read as
+// a stray tick there, so drop it.
+@include media-breakpoint-down(lg) {
+  .td-shell-footline__social {
+    margin-inline-end: 0;
+    padding-inline-end: 0;
+    border-inline-end: 0;
+  }
+}

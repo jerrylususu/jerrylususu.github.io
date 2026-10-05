@@ -1,0 +1,32 @@
+{{- /* Feed + profile icon row in the site footer, restoring the pre-OINK social
+       icons: the plain feed mark, the TIL feed mark (feed + lightbulb dot), and
+       GitHub. The SVGs live in assets/icons and are inlined so they inherit
+       `currentColor` and follow the light/dark theme.
+
+       Feed URLs are read from the site home's output formats so they stay
+       language-aware (`/index.xml` for zh, `/en/index.xml` for en); the GitHub
+       profile comes from params.github.
+
+       Each link carries a two-line hover tooltip (title + description) built
+       from the i18n strings below; styles live in _styles_project.scss.
+
+       Rendered from `shell/footer-line.html` into the right-hand utility dock,
+       so it shows on every page, like the old manis footer did. */ -}}
+{{- $links := slice -}}
+{{- with .Site.Home.OutputFormats.Get "RSS" -}}
+  {{- $links = $links | append (dict "url" .RelPermalink "icon" "feed" "label" (T "footer_rss") "desc" (T "footer_rss_desc")) -}}
+{{- end -}}
+{{- with .Site.Home.OutputFormats.Get "TilRSS" -}}
+  {{- $links = $links | append (dict "url" .RelPermalink "icon" "feed-til" "label" (T "footer_til_rss") "desc" (T "footer_til_rss_desc")) -}}
+{{- end -}}
+{{- with .Site.Params.github -}}
+  {{- $links = $links | append (dict "url" . "icon" "github" "label" (T "footer_github") "desc" (T "footer_github_desc") "external" true) -}}
+{{- end -}}
+{{- with $links -}}
+<div class="td-shell-footline__social">
+  {{- range . }}
+  {{- $svg := resources.Get (printf "icons/%s.svg" .icon) -}}
+  <a href="{{ .url }}"{{ if .external }} target="_blank" rel="noopener noreferrer"{{ end }} aria-label="{{ .label }}">{{ with $svg }}{{ .Content | safeHTML }}{{ end }}<span class="td-shell-footline__social-tip"><span class="td-shell-footline__social-tip-label">{{ .label }}</span>{{ with .desc }}<span class="td-shell-footline__social-tip-desc">{{ . }}</span>{{ end }}</span></a>
+  {{- end }}
+</div>
+{{- end -}}

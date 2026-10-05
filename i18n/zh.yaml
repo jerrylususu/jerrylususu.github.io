@@ -1,0 +1,10 @@
+# Footer social icon row (layouts/_partials/shell/social-links.html).
+# Project-level keys; Hugo merges them over the theme's translation table.
+# The two feeds split by content: the main one excludes TIL, the TIL one is
+# TIL-only (see hugo.yaml outputFormats).
+footer_rss: RSS 订阅
+footer_rss_desc: 除 TIL 外的全部内容
+footer_til_rss: TIL 订阅
+footer_til_rss_desc: 仅 TIL 内容
+footer_github: GitHub
+footer_github_desc: '@jerrylususu'
