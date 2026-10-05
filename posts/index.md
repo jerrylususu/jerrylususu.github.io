@@ -10,6 +10,7 @@ LLMS 索引： [llms.txt](/llms.txt)
 
 本节页面：
 
+- [2026 秋随记](/posts/2026-fall/): 一不小心又一年没更新了；不过我还活着！
 - [软文检测器](/posts/is-it-soft-ad/): 以及如何（错误地）部署一个 LLM app
 - [和颞下颌关节紊乱共存的十年](/posts/tmd-10-years/): 衷心祝愿你没听说过这个疾病
 - [The drive to develop](/posts/the-drive-to-develop/): 一期关于 LLM 辅助编程的杂谈
